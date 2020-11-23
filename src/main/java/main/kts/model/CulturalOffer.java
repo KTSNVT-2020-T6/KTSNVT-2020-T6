@@ -1,6 +1,8 @@
 package main.kts.model; 
 import java.util.*;
 
+
+//@Entity
 public class CulturalOffer {
    private double averageRate;
    private String description;
@@ -11,25 +13,25 @@ public class CulturalOffer {
    
    public ArrayList<Post> post;
    public Type type;
-   public ArrayList<Image> image;
+//   public ArrayList<Image> image;
    
 public CulturalOffer() {
 	super();
 }
 
-public CulturalOffer(double averageRate, String description, String name, Date date, double lat, double lon,
-		ArrayList<Post> post, Type type, ArrayList<Image> image) {
-	super();
-	this.averageRate = averageRate;
-	this.description = description;
-	this.name = name;
-	this.date = date;
-	this.lat = lat;
-	this.lon = lon;
-	this.post = post;
-	this.type = type;
-	this.image = image;
-}
+//public CulturalOffer(double averageRate, String description, String name, Date date, double lat, double lon,
+//		ArrayList<Post> post, Type type, ArrayList<Image> image) {
+//	super();
+//	this.averageRate = averageRate;
+//	this.description = description;
+//	this.name = name;
+//	this.date = date;
+//	this.lat = lat;
+//	this.lon = lon;
+//	this.post = post;
+//	this.type = type;
+//	this.image = image;
+//}
 
 public double getAverageRate() {
 	return averageRate;
@@ -95,13 +97,13 @@ public void setType(Type type) {
 	this.type = type;
 }
 
-public ArrayList<Image> getImage() {
-	return image;
-}
-
-public void setImage(ArrayList<Image> image) {
-	this.image = image;
-}
+//public ArrayList<Image> getImage() {
+//	return image;
+//}
+//
+//public void setImage(ArrayList<Image> image) {
+//	this.image = image;
+//}
    
    
    

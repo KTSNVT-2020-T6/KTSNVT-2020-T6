@@ -1,12 +1,13 @@
-package main.kts.model; 
-import java.util.*;
+package main.kts.model;
 
+
+//@Entity
 public class Rate {
    private int number;
    
-   public RegistredUser registredUser;
+   public RegisteredUser registredUser;
    public CulturalOffer culturalOffer;
-public Rate(int number, RegistredUser registredUser, CulturalOffer culturalOffer) {
+   public Rate(int number, RegisteredUser registredUser, CulturalOffer culturalOffer) {
 	super();
 	this.number = number;
 	this.registredUser = registredUser;
@@ -21,10 +22,10 @@ public int getNumber() {
 public void setNumber(int number) {
 	this.number = number;
 }
-public RegistredUser getRegistredUser() {
+public RegisteredUser getRegistredUser() {
 	return registredUser;
 }
-public void setRegistredUser(RegistredUser registredUser) {
+public void setRegistredUser(RegisteredUser registredUser) {
 	this.registredUser = registredUser;
 }
 public CulturalOffer getCulturalOffer() {

@@ -1,6 +1,7 @@
-package main.kts.model; 
-import java.util.*;
+package main.kts.model;
 
+
+//@Entity
 public class Type {
    private String name;
    private String description;

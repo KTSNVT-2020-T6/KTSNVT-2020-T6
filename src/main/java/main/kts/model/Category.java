@@ -1,6 +1,9 @@
 package main.kts.model; 
 import java.util.*;
 
+
+
+//@Entity
 public class Category {
    private String name;
    private String description;
