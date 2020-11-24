@@ -4,29 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import main.kts.model.CulturalOffer;
+
 @Service
-public class CulturalOfferService implements ServiceInterface{
+public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 
 	@Override
-	public List findAll() {
+	public List<CulturalOffer> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object findOne(Long id) {
+	public CulturalOffer findOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object create(Object entity) throws Exception {
+	public CulturalOffer create(CulturalOffer entity) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object update(Object entity, Long id) throws Exception {
+	public CulturalOffer update(CulturalOffer entity, Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

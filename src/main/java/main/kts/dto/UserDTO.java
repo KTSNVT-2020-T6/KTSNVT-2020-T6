@@ -1,6 +1,6 @@
 package main.kts.dto;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 public class UserDTO {
 	
@@ -12,14 +12,14 @@ public class UserDTO {
 	private Boolean verified;
 	   
 	public ImageDTO imageDTO;
-	public ArrayList<AuthorityDTO> authorityDTO;
+	public Set<AuthorityDTO> authorityDTO;
 	
 	public UserDTO() {
 		super();
 	}
 	
 	public UserDTO(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
-			ImageDTO imageDTO, ArrayList<AuthorityDTO> authorityDTO) {
+			ImageDTO imageDTO, Set<AuthorityDTO> authorityDTO) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -87,11 +87,11 @@ public class UserDTO {
 		this.imageDTO = imageDTO;
 	}
 
-	public ArrayList<AuthorityDTO> getAuthorityDTO() {
+	public Set<AuthorityDTO> getAuthorityDTO() {
 		return authorityDTO;
 	}
 
-	public void setAuthorityDTO(ArrayList<AuthorityDTO> authorityDTO) {
+	public void setAuthorityDTO(Set<AuthorityDTO> authorityDTO) {
 		this.authorityDTO = authorityDTO;
 	}
 	

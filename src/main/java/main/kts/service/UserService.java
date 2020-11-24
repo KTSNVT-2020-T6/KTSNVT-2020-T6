@@ -4,29 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import main.kts.model.User;
+
 @Service
-public class UserService implements ServiceInterface{
+public class UserService implements ServiceInterface<User>{
 
 	@Override
-	public List findAll() {
+	public List<User> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object findOne(Long id) {
+	public User findOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object create(Object entity) throws Exception {
+	public User create(User entity) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object update(Object entity, Long id) throws Exception {
+	public User update(User entity, Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

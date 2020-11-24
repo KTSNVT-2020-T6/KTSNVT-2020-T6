@@ -1,49 +1,67 @@
-package main.kts.model; 
-import java.util.*;
+package main.kts.model;
 
+import java.util.Date;
 
-//@Entity
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Post {
-   private String text;
-   private Date date;
-   
-//   public Image image;
 
-public Post() {
-	super();
-}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-//public Post(String text, Date date, Image image) {
-//	super();
-//	this.text = text;
-//	this.date = date;
-//	this.image = image;
-//}
+	@Column(unique = false, nullable = false)
+	private String text;
 
-public String getText() {
-	return text;
-}
+	@Column(unique = false, nullable = false)
+	private Date date;
 
-public void setText(String text) {
-	this.text = text;
-}
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "image_id", nullable = true)
+	public Image image;
 
-public Date getDate() {
-	return date;
-}
+	public Post() {
+		super();
+	}
 
-public void setDate(Date date) {
-	this.date = date;
-}
+	public Post(String text, Date date, Image image) {
+		super();
+		this.text = text;
+		this.date = date;
+		this.image = image;
+	}
 
-//public Image getImage() {
-//	return image;
-//}
-//
-//public void setImage(Image image) {
-//	this.image = image;
-//}
-   
-   
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
 
 }

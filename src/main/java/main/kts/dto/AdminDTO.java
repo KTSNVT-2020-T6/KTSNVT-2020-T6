@@ -1,27 +1,27 @@
 package main.kts.dto;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 
 
 public class AdminDTO extends UserDTO{
 	
-	public ArrayList<CulturalOfferDTO> culturalOfferDTO;
+	public Set<CulturalOfferDTO> culturalOfferDTO;
 	
 	public AdminDTO() {
 		super();
 	}
 
-	public AdminDTO(ArrayList<CulturalOfferDTO> culturalOfferDTO) {
+	public AdminDTO(Set<CulturalOfferDTO> culturalOfferDTO) {
 		super();
 		this.culturalOfferDTO = culturalOfferDTO;
 	}
 
-	public ArrayList<CulturalOfferDTO> getCulturalOfferDTO() {
+	public Set<CulturalOfferDTO> getCulturalOfferDTO() {
 		return culturalOfferDTO;
 	}
 
-	public void setCulturalOfferDTO(ArrayList<CulturalOfferDTO> culturalOfferDTO) {
+	public void setCulturalOfferDTO(Set<CulturalOfferDTO> culturalOfferDTO) {
 		this.culturalOfferDTO = culturalOfferDTO;
 	}
 	

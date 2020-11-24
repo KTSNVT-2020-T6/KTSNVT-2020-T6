@@ -4,29 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import main.kts.model.Rate;
+
 @Service
-public class RateService implements ServiceInterface{
+public class RateService implements ServiceInterface<Rate>{
 
 	@Override
-	public List findAll() {
+	public List<Rate> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object findOne(Long id) {
+	public Rate findOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object create(Object entity) throws Exception {
+	public Rate create(Rate entity) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object update(Object entity, Long id) throws Exception {
+	public Rate update(Rate entity, Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

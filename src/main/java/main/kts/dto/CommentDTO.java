@@ -9,17 +9,19 @@ public class CommentDTO {
 	   
 	public RegisteredUserDTO registeredUserDTO;
 	public ImageDTO imageDTO;
+	public CulturalOfferDTO culturalOfferDTO;
 	
 	public CommentDTO() {
 		super();
 	}
 			
-	public CommentDTO(String text, Date date, RegisteredUserDTO registeredUserDTO, ImageDTO imageDTO) {
+	public CommentDTO(String text, Date date, RegisteredUserDTO registeredUserDTO, ImageDTO imageDTO, CulturalOfferDTO culturalOfferDTO) {
 		super();
 		this.text = text;
 		this.date = date;
 		this.registeredUserDTO = registeredUserDTO;
 		this.imageDTO = imageDTO;
+		this.culturalOfferDTO = culturalOfferDTO;
 	}
 
 	public String getText() {
@@ -52,6 +54,18 @@ public class CommentDTO {
 
 	public void setImageDTO(ImageDTO imageDTO) {
 		this.imageDTO = imageDTO;
+	}
+
+	public CulturalOfferDTO getCulturalOfferDTO() {
+		return culturalOfferDTO;
+	}
+
+	public void setCulturalOfferDTO(CulturalOfferDTO culturalOfferDTO) {
+		this.culturalOfferDTO = culturalOfferDTO;
+	}
+
+	public RegisteredUserDTO getRegisteredUserDTO() {
+		return registeredUserDTO;
 	}
 	
 	

@@ -1,51 +1,61 @@
-package main.kts.model; 
-import java.util.*;
+package main.kts.model;
 
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-//@Entity
+@Entity
 public class Category {
-   private String name;
-   private String description;
-   
-   public ArrayList<Type> type;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-public Category(String name, String description, ArrayList<Type> type) {
-	super();
-	this.name = name;
-	this.description = description;
-	this.type = type;
-}
+	@Column(unique = true, nullable = false)
+	private String name;
 
-public Category() {
-	super();
-}
+	@Column(unique = false, nullable = false)
+	private String description;
 
-public String getName() {
-	return name;
-}
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+	public Set<Type> type;
 
-public void setName(String name) {
-	this.name = name;
-}
+	public Category(String name, String description, Set<Type> type) {
+		this.name = name;
+		this.description = description;
+		this.type = type;
+	}
 
-public String getDescription() {
-	return description;
-}
+	public Category() {
+	}
 
-public void setDescription(String description) {
-	this.description = description;
-}
+	public String getName() {
+		return name;
+	}
 
-public ArrayList<Type> getType() {
-	return type;
-}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-public void setType(ArrayList<Type> type) {
-	this.type = type;
-}
-   
-   
-   
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Set<Type> getType() {
+		return type;
+	}
+
+	public void setType(Set<Type> type) {
+		this.type = type;
+	}
 
 }

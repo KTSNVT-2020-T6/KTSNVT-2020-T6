@@ -1,6 +1,6 @@
 package main.kts.dto;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 
 public class CategoryDTO {
@@ -8,13 +8,13 @@ public class CategoryDTO {
 	private String name;
 	private String description;
 	   
-	public ArrayList<TypeDTO> typeDTO;
+	public Set<TypeDTO> typeDTO;
 
 	public CategoryDTO() {
 		super();
 	}
 	
-	public CategoryDTO(String name, String description, ArrayList<TypeDTO> typeDTO) {
+	public CategoryDTO(String name, String description, Set<TypeDTO> typeDTO) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -37,11 +37,11 @@ public class CategoryDTO {
 		this.description = description;
 	}
 
-	public ArrayList<TypeDTO> getTypeDTO() {
+	public Set<TypeDTO> getTypeDTO() {
 		return typeDTO;
 	}
 
-	public void setTypeDTO(ArrayList<TypeDTO> typeDTO) {
+	public void setTypeDTO(Set<TypeDTO> typeDTO) {
 		this.typeDTO = typeDTO;
 	}
 	

@@ -4,29 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import main.kts.model.Comment;
+
 @Service
-public class CommentService implements ServiceInterface{
+public class CommentService implements ServiceInterface<Comment>{
 
 	@Override
-	public List findAll() {
+	public List<Comment> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object findOne(Long id) {
+	public Comment findOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object create(Object entity) throws Exception {
+	public Comment create(Comment entity) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object update(Object entity, Long id) throws Exception {
+	public Comment update(Comment entity, Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

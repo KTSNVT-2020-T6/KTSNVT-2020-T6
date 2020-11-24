@@ -4,29 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import main.kts.model.Post;
+
 @Service
-public class PostService implements ServiceInterface{
+public class PostService implements ServiceInterface<Post>{
 
 	@Override
-	public List findAll() {
+	public List<Post> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object findOne(Long id) {
+	public Post findOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object create(Object entity) throws Exception {
+	public Post create(Post entity) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object update(Object entity, Long id) throws Exception {
+	public Post update(Post entity, Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

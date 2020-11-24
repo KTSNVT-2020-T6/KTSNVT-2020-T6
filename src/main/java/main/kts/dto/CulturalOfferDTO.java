@@ -1,6 +1,6 @@
 package main.kts.dto;
 
-import java.util.ArrayList;
+import java.util.Set;
 import java.util.Date;
 
 
@@ -13,16 +13,17 @@ public class CulturalOfferDTO {
 	private double lat;
 	private double lon;
 	   
-	public ArrayList<PostDTO> postDTO;
+	public Set<PostDTO> postDTO;
 	public TypeDTO typeDTO;
-	public ArrayList<ImageDTO> imageDTO;
+	public Set<ImageDTO> imageDTO;
+	public Set<CommentDTO> commentDTO;
 	
 	public CulturalOfferDTO() {
 		super();
 	}
 	
 	public CulturalOfferDTO(double averageRate, String description, String name, Date date, double lat, double lon,
-			ArrayList<PostDTO> postDTO, TypeDTO typeDTO, ArrayList<ImageDTO> imageDTO) {
+			Set<PostDTO> postDTO, TypeDTO typeDTO, Set<ImageDTO> imageDTO, Set<CommentDTO> commentDTO) {
 		super();
 		this.averageRate = averageRate;
 		this.description = description;
@@ -33,6 +34,7 @@ public class CulturalOfferDTO {
 		this.postDTO = postDTO;
 		this.typeDTO = typeDTO;
 		this.imageDTO = imageDTO;
+		this.commentDTO = commentDTO;
 	}
 
 	public double getAverageRate() {
@@ -83,11 +85,11 @@ public class CulturalOfferDTO {
 		this.lon = lon;
 	}
 
-	public ArrayList<PostDTO> getPostDTO() {
+	public Set<PostDTO> getPostDTO() {
 		return postDTO;
 	}
 
-	public void setPostDTO(ArrayList<PostDTO> postDTO) {
+	public void setPostDTO(Set<PostDTO> postDTO) {
 		this.postDTO = postDTO;
 	}
 
@@ -99,12 +101,28 @@ public class CulturalOfferDTO {
 		this.typeDTO = typeDTO;
 	}
 
-	public ArrayList<ImageDTO> getImage() {
+	public Set<ImageDTO> getImage() {
 		return imageDTO;
 	}
 
-	public void setImage(ArrayList<ImageDTO> imageDTO) {
+	public void setImage(Set<ImageDTO> imageDTO) {
 		this.imageDTO = imageDTO;
+	}
+
+	public Set<ImageDTO> getImageDTO() {
+		return imageDTO;
+	}
+
+	public void setImageDTO(Set<ImageDTO> imageDTO) {
+		this.imageDTO = imageDTO;
+	}
+
+	public Set<CommentDTO> getCommentDTO() {
+		return commentDTO;
+	}
+
+	public void setCommentDTO(Set<CommentDTO> commentDTO) {
+		this.commentDTO = commentDTO;
 	}
 
 	

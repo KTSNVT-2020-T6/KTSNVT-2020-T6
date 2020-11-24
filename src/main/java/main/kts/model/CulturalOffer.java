@@ -1,113 +1,162 @@
-package main.kts.model; 
-import java.util.*;
+package main.kts.model;
 
+import java.util.Set;
+import java.util.Date;
 
-//@Entity
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public class CulturalOffer {
-   private double averageRate;
-   private String description;
-   private String name;
-   private Date date;
-   private double lat;
-   private double lon;
-   
-   public ArrayList<Post> post;
-   public Type type;
-//   public ArrayList<Image> image;
-   
-public CulturalOffer() {
-	super();
-}
 
-//public CulturalOffer(double averageRate, String description, String name, Date date, double lat, double lon,
-//		ArrayList<Post> post, Type type, ArrayList<Image> image) {
-//	super();
-//	this.averageRate = averageRate;
-//	this.description = description;
-//	this.name = name;
-//	this.date = date;
-//	this.lat = lat;
-//	this.lon = lon;
-//	this.post = post;
-//	this.type = type;
-//	this.image = image;
-//}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-public double getAverageRate() {
-	return averageRate;
-}
+	@Column(unique = false, nullable = true)
+	private double averageRate;
 
-public void setAverageRate(double averageRate) {
-	this.averageRate = averageRate;
-}
+	@Column(unique = false, nullable = true)
+	private String description;
 
-public String getDescription() {
-	return description;
-}
+	@Column(unique = true, nullable = false)
+	private String name;
 
-public void setDescription(String description) {
-	this.description = description;
-}
+	@Column(unique = false, nullable = true)
+	private Date date;
 
-public String getName() {
-	return name;
-}
+	@Column(unique = false, nullable = false)
+	private double lat;
 
-public void setName(String name) {
-	this.name = name;
-}
+	@Column(unique = false, nullable = false)
+	private double lon;
 
-public Date getDate() {
-	return date;
-}
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cultural_offer_id", nullable = true)
+	public Set<Post> post;
 
-public void setDate(Date date) {
-	this.date = date;
-}
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "type_id", nullable = false)
+	public Type type;
 
-public double getLat() {
-	return lat;
-}
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cultural_offer_id", nullable = true)
+	public Set<Image> image;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "culturalOffer")
+	public Set<Comment> comment;
 
-public void setLat(double lat) {
-	this.lat = lat;
-}
+	public CulturalOffer() {
+	}
 
-public double getLon() {
-	return lon;
-}
+	public CulturalOffer(double averageRate, String description, String name, Date date, double lat, double lon,
+			Set<Post> post, Type type, Set<Image> image, Set<Comment> comment) {
+		this.averageRate = averageRate;
+		this.description = description;
+		this.name = name;
+		this.date = date;
+		this.lat = lat;
+		this.lon = lon;
+		this.post = post;
+		this.type = type;
+		this.image = image;
+		this.comment = comment;
+	}
 
-public void setLon(double lon) {
-	this.lon = lon;
-}
+	public double getAverageRate() {
+		return averageRate;
+	}
 
-public ArrayList<Post> getPost() {
-	return post;
-}
+	public void setAverageRate(double averageRate) {
+		this.averageRate = averageRate;
+	}
 
-public void setPost(ArrayList<Post> post) {
-	this.post = post;
-}
+	public String getDescription() {
+		return description;
+	}
 
-public Type getType() {
-	return type;
-}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-public void setType(Type type) {
-	this.type = type;
-}
+	public String getName() {
+		return name;
+	}
 
-//public ArrayList<Image> getImage() {
-//	return image;
-//}
-//
-//public void setImage(ArrayList<Image> image) {
-//	this.image = image;
-//}
-   
-   
-   
+	public void setName(String name) {
+		this.name = name;
+	}
 
-   
-  
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLon() {
+		return lon;
+	}
+
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
+
+	public Set<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(Set<Post> post) {
+		this.post = post;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public Set<Image> getImage() {
+		return image;
+	}
+
+	public void setImage(Set<Image> image) {
+		this.image = image;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Set<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(Set<Comment> comment) {
+		this.comment = comment;
+	}
+
 }

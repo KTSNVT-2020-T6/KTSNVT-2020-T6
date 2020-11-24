@@ -4,29 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import main.kts.model.Authority;
+
 @Service
-public class AuthorityService implements ServiceInterface{
+public class AuthorityService implements ServiceInterface<Authority>{
 
 	@Override
-	public List findAll() {
+	public List<Authority> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object findOne(Long id) {
+	public Authority findOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object create(Object entity) throws Exception {
+	public Authority create(Authority entity) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object update(Object entity, Long id) throws Exception {
+	public Authority update(Authority entity, Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -8,11 +8,11 @@ import javax.persistence.Id;
 
 @Entity
 public class Image {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String name;
 	@Column(nullable = false)
