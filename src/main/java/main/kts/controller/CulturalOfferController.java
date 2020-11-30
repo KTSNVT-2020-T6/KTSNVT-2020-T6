@@ -97,7 +97,17 @@ public class CulturalOfferController {
     }
 	
 	private boolean validateCulturalOfferDTO(CulturalOfferDTO culturalOfferDTO) {
-		// TODO
+		if(culturalOfferDTO.getDescription() == null || culturalOfferDTO.getDescription().equals(""))
+			return false;
+		if(culturalOfferDTO.getName() == null || culturalOfferDTO.getName().equals(""))
+			return false;
+		if(culturalOfferDTO.getLat() < -90 || culturalOfferDTO.getLat() > 90)
+			return false;
+		if(culturalOfferDTO.getLon() < -180 || culturalOfferDTO.getLon() > 180)
+			return false;
+		if(culturalOfferDTO.getTypeDTO() == null)
+			return false;
+		
 		return true;
 	}
 }
