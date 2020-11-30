@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import main.kts.dto.AuthorityDTO;
+import main.kts.dto.ImageDTO;
 import main.kts.dto.UserDTO;
 import main.kts.model.Authority;
 import main.kts.model.Image;
@@ -33,8 +34,13 @@ public class UserMapper implements MapperInterface<User, UserDTO>{
 
 	@Override
 	public UserDTO toDto(User entity) {
-		// TODO Auto-generated method stub
-		return null;
+		ImageDTO imageDTO = imageMapper.toDto(entity.getImage());
+		Set<AuthorityDTO> authoritiesDTO = new HashSet<AuthorityDTO>();
+		for (Authority authority : entity.getAuthority()) {
+			authoritiesDTO.add(authorityMapper.toDto(authority));
+		}
+		return new UserDTO(entity.getFirstName(), entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified(), imageDTO, authoritiesDTO);
+		
 	}
 
 }
