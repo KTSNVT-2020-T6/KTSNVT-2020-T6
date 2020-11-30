@@ -1,8 +1,11 @@
 package main.kts.helper;
 
+import org.springframework.stereotype.Component;
+
 import main.kts.dto.AuthorityDTO;
 import main.kts.model.Authority;
 
+@Component
 public class AuthorityMapper implements MapperInterface<Authority, AuthorityDTO>{
 
 	@Override

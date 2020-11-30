@@ -11,6 +11,12 @@ public class RateDTO {
 		super();
 	}
 	
+	@Override
+	public String toString() {
+		return "RateDTO [number=" + number + ", registredUserDTO=" + registredUserDTO + ", culturalOfferDTO="
+				+ culturalOfferDTO + "]";
+	}
+
 	public RateDTO(int number, RegisteredUserDTO registredUserDTO, CulturalOfferDTO culturalOfferDTO) {
 		super();
 		this.number = number;
