@@ -12,38 +12,48 @@ import main.kts.repository.AuthorityRepository;
 public class AuthorityService implements ServiceInterface<Authority>{
 
 	@Autowired 
-	private AuthorityRepository repository;
+	private AuthorityRepository authorityRepository;
+	
 	@Override
 	public List<Authority> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return authorityRepository.findAll();
 	}
 
 	@Override
 	public Authority findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return authorityRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public Authority create(Authority entity) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Authority a = new Authority();
+		a.setRole(entity.getRole());
+		return a;
 	}
 
 	@Override
 	public Authority update(Authority entity, Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Authority existingA = authorityRepository.findById(id).orElse(null);
+		if(existingA == null) {
+			throw new Exception("Authority with given id doesn't exist");
+		}
+		existingA.setRole(entity.getRole());
+		return authorityRepository.save(existingA);
 	}
 
 	@Override
 	public void delete(Long id) throws Exception {
-		// TODO Auto-generated method stub
+		Authority existingA = authorityRepository.findById(id).orElse(null);
+		if(existingA == null) {
+			throw new Exception("Authority with given id doesn't exist");
+		}
+		authorityRepository.delete(existingA);
+	
 		
 	}
 	public Authority findByRole(String role) throws Exception {
-		return  repository.findByRole(role);
+		return  authorityRepository.findByRole(role);
 		
 	}
 
