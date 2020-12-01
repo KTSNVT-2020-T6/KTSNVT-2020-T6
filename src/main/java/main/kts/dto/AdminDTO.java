@@ -12,6 +12,7 @@ public class AdminDTO extends UserDTO{
 		super();
 	}
 	
+	
 	public AdminDTO(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
 			ImageDTO imageDTO, Set<AuthorityDTO> authorityDTO, Set<CulturalOfferDTO> culturalOfferDTO) {
 		super();
