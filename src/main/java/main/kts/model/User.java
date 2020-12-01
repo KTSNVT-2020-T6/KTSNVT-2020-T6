@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,34 +26,34 @@ import javax.persistence.Table;
 public abstract class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Long id;
 
 	@Column(nullable = false)
-	private String firstName;
+	protected String firstName;
 
 	@Column(nullable = false)
-	private String lastName;
+	protected String lastName;
 
 	@Column(unique = true)
-	private String email;
+	protected String email;
 
 	@Column(nullable = false)
-	private String password;
+	protected String password;
 
 	@Column(nullable = false)
-	private Boolean active;
+	protected Boolean active;
 
 	@Column(nullable = false)
-	private Boolean verified;
+	protected Boolean verified;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "image_id", nullable = true)
-	public Image image;
+	protected Image image;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", nullable = false)
-	public Set<Authority> authority;
+	@ManyToMany(fetch = FetchType.EAGER)
+	//@JoinColumn(name = "user_id", nullable = false)
+	protected Set<Authority> authority;
 
 	public User() {
 		super();

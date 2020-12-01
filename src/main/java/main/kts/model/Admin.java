@@ -20,6 +20,20 @@ public class Admin extends User {
 	public Admin() {
 		super();
 	}
+	
+	public Admin(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
+			Image image, Set<Authority> authority, Set<CulturalOffer> culturalOffers) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.active = active;
+		this.verified = verified;
+		this.image = image;
+		this.authority = authority;
+		this.culturalOffer = culturalOffers;
+	}
 
 	public Admin(Set<CulturalOffer> culturalOffer) {
 		super();

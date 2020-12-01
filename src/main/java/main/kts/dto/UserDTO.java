@@ -4,15 +4,15 @@ import java.util.Set;
 
 public class UserDTO {
 	
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String password;
-	private Boolean active;
-	private Boolean verified;
+	protected String firstName;
+	protected String lastName;
+	protected String email;
+	protected String password;
+	protected Boolean active;
+	protected Boolean verified;
 	   
-	public ImageDTO imageDTO;
-	public Set<AuthorityDTO> authorityDTO;
+	protected ImageDTO imageDTO;
+	protected Set<AuthorityDTO> authorityDTO;
 	
 	public UserDTO() {
 		super();
