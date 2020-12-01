@@ -33,8 +33,9 @@ public class Post {
 		super();
 	}
 
-	public Post(String text, Date date, Image image) {
+	public Post(Long id, String text, Date date, Image image) {
 		super();
+		this.id = id;
 		this.text = text;
 		this.date = date;
 		this.image = image;
@@ -62,6 +63,14 @@ public class Post {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

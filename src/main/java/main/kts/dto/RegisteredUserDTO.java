@@ -8,8 +8,8 @@ public class RegisteredUserDTO extends UserDTO{
 		super();
 	}
 	
-	public RegisteredUserDTO(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
+	public RegisteredUserDTO(Long id, String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
 			ImageDTO imageDTO, Set<AuthorityDTO> authorityDTO) {
-		super(firstName, lastName, email, password, active, verified, imageDTO, authorityDTO);
+		super(id, firstName, lastName, email, password, active, verified, imageDTO, authorityDTO);
 	}
 }

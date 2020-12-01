@@ -3,6 +3,7 @@ package main.kts.dto;
 
 public class TypeDTO {
 
+	private Long id;
 	private String name;
 	private String description;   
 	public CategoryDTO categoryDTO;
@@ -11,11 +12,20 @@ public class TypeDTO {
 		super();
 	}
 	
-	public TypeDTO(String name, String description, CategoryDTO categoryDTO) {
+	public TypeDTO(Long id, String name, String description, CategoryDTO categoryDTO) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.categoryDTO = categoryDTO;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

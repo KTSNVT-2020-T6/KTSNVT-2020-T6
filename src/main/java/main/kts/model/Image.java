@@ -22,8 +22,9 @@ public class Image {
 		super();
 	}
 
-	public Image(String name, String relativePath) {
+	public Image(Long id, String name, String relativePath) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.relativePath = relativePath;
 	}

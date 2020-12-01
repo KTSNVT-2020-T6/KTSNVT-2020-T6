@@ -14,9 +14,10 @@ public class RegisteredUser extends User {
 		super();
 	}
 	
-	public RegisteredUser(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
+	public RegisteredUser(Long id, String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
 			Image image, Set<Authority> authority) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

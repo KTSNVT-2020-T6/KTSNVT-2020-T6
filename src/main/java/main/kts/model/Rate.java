@@ -28,11 +28,20 @@ public class Rate {
 	@JoinColumn(name = "cultural_offer_id", nullable = true)
 	public CulturalOffer culturalOffer;
 
-	public Rate(int number, RegisteredUser registredUser, CulturalOffer culturalOffer) {
+	public Rate(Long id, int number, RegisteredUser registredUser, CulturalOffer culturalOffer) {
 		super();
+		this.id = id;
 		this.number = number;
 		this.registredUser = registredUser;
 		this.culturalOffer = culturalOffer;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Rate() {

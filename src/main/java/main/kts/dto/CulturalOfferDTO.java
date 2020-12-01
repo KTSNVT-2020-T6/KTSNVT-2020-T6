@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class CulturalOfferDTO {
 	
+	private Long id;
 	private double averageRate;
 	private String description;
 	private String name;
@@ -22,9 +23,10 @@ public class CulturalOfferDTO {
 		super();
 	}
 	
-	public CulturalOfferDTO(double averageRate, String description, String name, Date date, double lat, double lon,
+	public CulturalOfferDTO(Long id, double averageRate, String description, String name, Date date, double lat, double lon,
 			Set<PostDTO> postDTO, TypeDTO typeDTO, Set<ImageDTO> imageDTO, Set<CommentDTO> commentDTO) {
 		super();
+		this.id = id;
 		this.averageRate = averageRate;
 		this.description = description;
 		this.name = name;
@@ -35,6 +37,14 @@ public class CulturalOfferDTO {
 		this.typeDTO = typeDTO;
 		this.imageDTO = imageDTO;
 		this.commentDTO = commentDTO;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public double getAverageRate() {

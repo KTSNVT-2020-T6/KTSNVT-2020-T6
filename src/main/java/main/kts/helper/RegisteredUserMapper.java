@@ -20,14 +20,14 @@ public class RegisteredUserMapper implements MapperInterface<RegisteredUser, Reg
 	public RegisteredUser toEntity(RegisteredUserDTO dto) {
 		Set<Authority> auth = new HashSet<Authority>();
 		auth.add(new Authority("REGISTERED_USER"));
-		return new RegisteredUser(dto.getFirstName(), dto.getLastName(),dto.getEmail(), dto.getPassword(), dto.getActive(), dto.getVerified(), imageMapper.toEntity(dto.getImageDTO()), auth);
+		return new RegisteredUser(dto.getId(),dto.getFirstName(), dto.getLastName(),dto.getEmail(), dto.getPassword(), dto.getActive(), dto.getVerified(), imageMapper.toEntity(dto.getImageDTO()), auth);
 	}
 
 	@Override
 	public RegisteredUserDTO toDto(RegisteredUser entity) {
 		Set<AuthorityDTO> auth = new HashSet<AuthorityDTO>();
 		auth.add(new AuthorityDTO("REGISTERED_USER"));
-		RegisteredUserDTO rudto = new RegisteredUserDTO(entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified()
+		RegisteredUserDTO rudto = new RegisteredUserDTO(entity.getId(),entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified()
 				, imageMapper.toDto(entity.getImage()), auth);
 		System.out.println(rudto);
 		return rudto;

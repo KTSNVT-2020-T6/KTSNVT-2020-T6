@@ -21,7 +21,7 @@ public class RateMapper implements MapperInterface<Rate, RateDTO>{
 	public Rate toEntity(RateDTO dto) {
 		RegisteredUser registeredUser = registeredUserMapper.toEntity(dto.getRegistredUserDTO());
 		CulturalOffer culturalOffer = culturalOfferMapper.toEntity(dto.getCulturalOfferDTO());
-		return new Rate(dto.getNumber(),registeredUser, culturalOffer);
+		return new Rate(dto.getId(),dto.getNumber(),registeredUser, culturalOffer);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class RateMapper implements MapperInterface<Rate, RateDTO>{
 
 		RegisteredUserDTO registeredUserDTO = registeredUserMapper.toDto(entity.getRegistredUser());
 		CulturalOfferDTO culturalOfferDTO = culturalOfferMapper.toDto(entity.getCulturalOffer());
-		return new RateDTO(entity.getNumber(), registeredUserDTO, culturalOfferDTO);
+		return new RateDTO(entity.getId(),entity.getNumber(), registeredUserDTO, culturalOfferDTO);
 	}
 
 }
