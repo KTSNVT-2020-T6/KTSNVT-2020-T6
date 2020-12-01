@@ -1,42 +1,119 @@
 package main.kts.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Admin;
+import main.kts.model.Authority;
+import main.kts.repository.AdminRepository;
+import main.kts.repository.AuthorityRepository;
+
 
 @Service
 public class AdminService implements ServiceInterface<Admin>{
 
+	@Autowired 
+	private AdminRepository repository;
+	
+	@Autowired 
+	private AuthorityRepository authorityRepository;
 	@Override
 	public List<Admin> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll();
 	}
 
 	@Override
 	public Admin findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id).orElse(null);
 	}
 
 	@Override
 	public Admin create(Admin entity) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		//if admin already exists
+		Admin admin = repository.findByEmail(entity.getEmail());
+		if (admin != null)
+			throw new Exception("Admin with given id already exist");
+			
+		//else make new admin instance
+		Admin a = new Admin();
+		a.setFirstName(entity.getFirstName());
+		a.setLastName(entity.getLastName());
+		a.setEmail(entity.getEmail());
+		a.setPassword(entity.getPassword());
+		a.setActive(true);
+		a.setVerified(false);
+		a.setImage(entity.getImage());
+		Set<Authority> set = new HashSet<Authority>();
+		set.add(authorityRepository.findByRole("ROLE_ADMIN"));
+		a.setAuthority(set);
+		if(entity.getImage() != null)
+			a.setImage(entity.getImage());
+		else // default profile image will be loaded, remove null then
+			a.setImage(null);
+		a.setCulturalOffer(entity.getCulturalOffer());
+        return a;
+
 	}
 
 	@Override
 	public Admin update(Admin entity, Long id) throws Exception {
-		// TODO Auto-generated method stub
+		Admin a = repository.findById(id).orElse(null);
+		if(a == null)
+			throw new Exception("Admin with given id doesn't exist");
+		//validate new 
+		validateAttributes(a);	
+		String oldEmail = a.getEmail();
+		
+		Admin checkAdmin;
+		if(oldEmail != entity.getEmail()) {
+			//check in dataBase the new one
+			checkAdmin = repository.findByEmail(entity.getEmail());
+			//if exist then exception
+		    if(checkAdmin != null)
+		    	throw new Exception("User with given email already exist");
+		    a.setEmail(entity.getEmail());
+		}
+		a.setFirstName(entity.getFirstName());
+		a.setLastName(entity.getLastName());
+		a.setPassword(entity.getPassword());
+		a.setVerified(entity.getVerified());
+		a.setImage(entity.getImage());
+		if(entity.getImage() != null)
+			a.setImage(entity.getImage());
+		else // default profile image will be loaded, remove null then
+			a.setImage(null);
+		a.setCulturalOffer(entity.getCulturalOffer());
+		//treba save ovde
+		
 		return null;
+	}
+
+	private void validateAttributes(Admin a) throws Exception {
+		if(a.getFirstName() == null)
+			throw new Exception("Admin's first name is empty.");
+		if(a.getLastName() == null)
+			throw new Exception("Admin's last name is empty.");
+		if(a.getEmail() == null)
+			throw new Exception("Admin's email is empty.");
+		if(a.getPassword() == null)
+			throw new Exception("Admin's password is empty.");
 	}
 
 	@Override
 	public void delete(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		Admin a = repository.findById(id).orElse(null);
+		if(a == null)
+			throw new Exception("Admin doesn't exist.");
+		//when it is the last one set it cann't be done
+		a.setActive(false);
+	}
+
+	public Admin findByEmail(String email) {
+		return repository.findByEmail(email);
 	}
 
 }

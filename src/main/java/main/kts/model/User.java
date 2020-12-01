@@ -132,8 +132,8 @@ public abstract class User {
 		return authority;
 	}
 
-	public void setAuthority(Set<Authority> authority) {
-		this.authority = authority;
+	public void setAuthority(Set<Authority> set) {
+		this.authority = set;
 	}
 
 	public Long getId() {
