@@ -1,5 +1,7 @@
 package main.kts.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.AdminDTO;
+import main.kts.dto.UserDTO;
 import main.kts.helper.AdminMapper;
 import main.kts.model.Admin;
+import main.kts.model.User;
 import main.kts.service.AdminService;
 
 @RestController
@@ -26,6 +30,12 @@ public class AdminController {
 	
 	@Autowired
 	private AdminMapper mapper;
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<AdminDTO>> getAllAdmins(){
+		List<Admin> admins = service.findAllAdmin();
+		return new ResponseEntity<>(toDTOAdminsList(admins), HttpStatus.OK);
+	}
 	
 	@RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<AdminDTO> createAdmin(@RequestBody AdminDTO adminDTO){
@@ -80,6 +90,12 @@ public class AdminController {
 		
 		return true;
 	}
-    
+	private List<AdminDTO> toDTOAdminsList(List<Admin> admins) {
+		List<AdminDTO> listDTO = new ArrayList<AdminDTO>();
+        for (Admin u: admins) {
+        	listDTO.add(mapper.toDto(u));
+        }
+        return listDTO;
+	}
 
 }
