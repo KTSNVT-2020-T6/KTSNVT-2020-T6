@@ -2,41 +2,57 @@ package main.kts.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Image;
+import main.kts.repository.ImageRepository;
 
 @Service
 public class ImageService implements ServiceInterface<Image>{
 
+	@Autowired
+	private ImageRepository imageRepository;
+	
 	@Override
 	public List<Image> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return imageRepository.findAll();
 	}
 
 	@Override
 	public Image findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return imageRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public Image create(Image entity) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		//make new image instance
+		Image i = new Image();
+		i.setName(entity.getName());
+		i.setrelativePath(entity.getrelativePath());
+		
+		i = imageRepository.save(i);
+		return i;
 	}
 
 	@Override
 	public Image update(Image entity, Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Image existingImage = imageRepository.findById(id).orElse(null);
+		if(existingImage == null) {
+			throw new Exception("Image with given id doesn't exist");
+		}
+		
+		existingImage.setName(entity.getName());
+		return imageRepository.save(existingImage);
 	}
 
 	@Override
 	public void delete(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		Image existingImage = imageRepository.findById(id).orElse(null);
+		if(existingImage == null) {
+			throw new Exception("Image with given id doesn't exist");
+		}
+		imageRepository.delete(existingImage);		
 	}
 
 }

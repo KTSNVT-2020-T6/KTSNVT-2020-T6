@@ -2,41 +2,74 @@ package main.kts.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Post;
+import main.kts.repository.ImageRepository;
+import main.kts.repository.PostRepository;
 
 @Service
-public class PostService implements ServiceInterface<Post>{
+public class PostService implements ServiceInterface<Post> {
+
+	@Autowired
+	private PostRepository postRepository;
+
+	@Autowired
+	private ImageRepository imageRepository;
 
 	@Override
 	public List<Post> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return postRepository.findAll();
 	}
 
 	@Override
 	public Post findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return postRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public Post create(Post entity) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		// if image doesn't exist
+		if (imageRepository.findById(entity.getImage().getId()).orElse(null) == null)
+			throw new Exception("Image doesn't exist");
+		
+
+		// if post with same image exists
+		Post existingPost= postRepository.findOneByImageId(entity.getImage().getId());
+		if (existingPost != null)
+			throw new Exception("Given image already represents some post");
+
+		// make new post instance
+		Post p= new Post();
+		p.setDate(entity.getDate());
+		p.setImage(entity.getImage());
+		p.setText(entity.getText());
+
+		p = postRepository.save(p);
+		return p;
 	}
 
 	@Override
 	public Post update(Post entity, Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Post existingPost = postRepository.findById(id).orElse(null);
+		if(existingPost == null) {
+			throw new Exception("Post with given id doesn't exist");
+		}
+		
+		existingPost.setImage(entity.getImage());
+		existingPost.setDate(entity.getDate());
+		existingPost.setText(entity.getText());
+		return postRepository.save(existingPost);
 	}
 
 	@Override
 	public void delete(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		Post existingPost = postRepository.findById(id).orElse(null);
+		if(existingPost == null) {
+			throw new Exception("Post with given id doesn't exist");
+		}
+		postRepository.delete(existingPost);
 	}
 
 }
