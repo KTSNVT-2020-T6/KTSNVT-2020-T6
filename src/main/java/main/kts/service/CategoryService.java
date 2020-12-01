@@ -2,40 +2,58 @@ package main.kts.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Category;
+import main.kts.model.Type;
+import main.kts.repository.CategoryRepository;
 
 @Service
 public class CategoryService implements ServiceInterface<Category>{
 
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
 	@Override
 	public List<Category> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryRepository.findAll();
 	}
 
 	@Override
 	public Category findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public Category create(Category entity) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Category c = new Category();
+		c.setName(entity.getName());
+		c.setDescription(entity.getDescription());
+		c.setType(entity.getType());
+		return c;
 	}
 
 	@Override
 	public Category update(Category entity, Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Category existingCat = categoryRepository.findById(id).orElse(null);
+		if(existingCat == null) {
+			throw new Exception("Category with given id doesn't exist");
+		}
+		existingCat.setName(entity.getName());
+		existingCat.setDescription(entity.getDescription());
+		existingCat.setType(entity.getType());
+		
+		return categoryRepository.save(existingCat);
 	}
 
 	@Override
 	public void delete(Long id) throws Exception {
-		// TODO Auto-generated method stub
+		Category existingCat = categoryRepository.findById(id).orElse(null);
+		if(existingCat == null) {
+			throw new Exception("Category with given id doesn't exist");
+		}
+		categoryRepository.delete(existingCat);
 		
 	}
 
