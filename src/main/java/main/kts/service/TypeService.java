@@ -39,7 +39,7 @@ public class TypeService implements ServiceInterface<Type>{
 	public Type update(Type entity, Long id) throws Exception {
 		Type existingT = typeRepository.findById(id).orElse(null);
 		if(existingT == null) {
-			throw new Exception("Type eith given id doesn't exist");
+			throw new Exception("Type with given id doesn't exist");
 		}
 		existingT.setName(entity.getName());
 		existingT.setDescription(entity.getDescription());
@@ -52,7 +52,7 @@ public class TypeService implements ServiceInterface<Type>{
 	public void delete(Long id) throws Exception {
 		Type existingT = typeRepository.findById(id).orElse(null);
 		if(existingT == null) {
-			throw new Exception("Type eith given id doesn't exist");
+			throw new Exception("Type with given id doesn't exist");
 		}
 		typeRepository.delete(existingT);
 	}
