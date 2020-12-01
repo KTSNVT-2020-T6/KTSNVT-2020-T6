@@ -7,5 +7,6 @@ import main.kts.model.Authority;
 
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authority, Long>{
+	Authority findByRole(String role);
 
 }
