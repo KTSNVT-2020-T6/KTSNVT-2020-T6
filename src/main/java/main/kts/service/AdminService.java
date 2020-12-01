@@ -48,7 +48,7 @@ public class AdminService implements ServiceInterface<Admin>{
 		a.setVerified(false);
 		a.setImage(entity.getImage());
 		Set<Authority> set = new HashSet<Authority>();
-		set.add(authorityRepository.findByRole("ROLE_ADMIN"));
+		set.add(authorityRepository.findByRole("ADMIN"));
 		a.setAuthority(set);
 		if(entity.getImage() != null)
 			a.setImage(entity.getImage());
@@ -87,9 +87,8 @@ public class AdminService implements ServiceInterface<Admin>{
 		else // default profile image will be loaded, remove null then
 			a.setImage(null);
 		a.setCulturalOffer(entity.getCulturalOffer());
-		//treba save ovde
 		
-		return null;
+		return repository.save(a);
 	}
 
 	private void validateAttributes(Admin a) throws Exception {
@@ -114,6 +113,10 @@ public class AdminService implements ServiceInterface<Admin>{
 
 	public Admin findByEmail(String email) {
 		return repository.findByEmail(email);
+	}
+
+	public List<Admin> findAllAdmin() {
+		return repository.findAllAdmin();
 	}
 
 }

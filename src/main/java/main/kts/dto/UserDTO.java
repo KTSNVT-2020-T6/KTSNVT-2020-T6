@@ -32,6 +32,7 @@ public class UserDTO {
 		this.imageDTO = imageDTO;
 		this.authorityDTO = authorityDTO;
 	}
+	
 	public Long getId() {
 		return id;
 	}
