@@ -1,8 +1,5 @@
 package main.kts.helper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import main.kts.dto.CommentDTO;
 import main.kts.dto.CulturalOfferDTO;
 import main.kts.dto.ImageDTO;
@@ -11,15 +8,19 @@ import main.kts.model.Comment;
 import main.kts.model.CulturalOffer;
 import main.kts.model.Image;
 import main.kts.model.RegisteredUser;
-@Component
+
 public class CommentMapper implements MapperInterface<Comment, CommentDTO>{
 
-	@Autowired 
-	RegisteredUserMapper registeredUserMapper;
-	@Autowired
-	ImageMapper imageMapper;
-	@Autowired 
-	CulturalOfferMapper culturalOfferMapper;
+	 
+	RegisteredUserMapper registeredUserMapper = new RegisteredUserMapper();
+	
+	ImageMapper imageMapper = new ImageMapper();
+	 
+	CulturalOfferMapper culturalOfferMapper = new CulturalOfferMapper();
+	
+	public CommentMapper() {
+		
+	}
 	
 	@Override
 	public Comment toEntity(CommentDTO dto) {

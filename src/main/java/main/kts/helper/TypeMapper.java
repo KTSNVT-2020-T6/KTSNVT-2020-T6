@@ -1,18 +1,18 @@
 package main.kts.helper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import main.kts.dto.CategoryDTO;
 import main.kts.dto.TypeDTO;
 import main.kts.model.Category;
 import main.kts.model.Type;
 
-@Component
 public class TypeMapper implements MapperInterface<Type, TypeDTO>{
 
-	@Autowired 
-	CategoryMapper categoryMapper;
+	 
+	CategoryMapper categoryMapper = new CategoryMapper();
+	
+	public TypeMapper() {
+		
+	}
 	
 	@Override
 	public Type toEntity(TypeDTO dto) {

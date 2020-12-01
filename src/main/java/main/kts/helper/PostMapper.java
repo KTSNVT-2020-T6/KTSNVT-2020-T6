@@ -1,18 +1,16 @@
 package main.kts.helper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import main.kts.dto.ImageDTO;
 import main.kts.dto.PostDTO;
 import main.kts.model.Image;
 import main.kts.model.Post;
 
-@Component
 public class PostMapper implements MapperInterface<Post, PostDTO> {
 
-	@Autowired
-	ImageMapper imageMapper;
+	
+	ImageMapper imageMapper = new ImageMapper();
+	
+	public PostMapper() {}
 	
 	@Override
 	public Post toEntity(PostDTO dto) {

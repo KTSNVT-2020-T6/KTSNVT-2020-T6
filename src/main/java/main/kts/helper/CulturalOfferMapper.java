@@ -3,9 +3,6 @@ package main.kts.helper;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import main.kts.dto.CommentDTO;
 import main.kts.dto.CulturalOfferDTO;
 import main.kts.dto.ImageDTO;
@@ -16,17 +13,14 @@ import main.kts.model.CulturalOffer;
 import main.kts.model.Image;
 import main.kts.model.Post;
 import main.kts.model.Type;
-@Component
+
 public class CulturalOfferMapper implements MapperInterface<CulturalOffer, CulturalOfferDTO>{
 
-	@Autowired
-	PostMapper postMapper;
-	@Autowired
-	TypeMapper typeMapper;
-	@Autowired 
-	ImageMapper imageMapper;
-	@Autowired
-	CommentMapper commentMapper;
+	PostMapper postMapper = new PostMapper();
+	TypeMapper typeMapper = new TypeMapper();
+	ImageMapper imageMapper = new ImageMapper();
+	
+	public CulturalOfferMapper() {}
 	
 	@Override
 	public CulturalOffer toEntity(CulturalOfferDTO dto) {
@@ -38,10 +32,7 @@ public class CulturalOfferMapper implements MapperInterface<CulturalOffer, Cultu
 		
 		for(ImageDTO imageDTO : dto.getImageDTO()) 
 			images.add(imageMapper.toEntity(imageDTO));
-		
-		for(CommentDTO commentDTO : dto.getCommentDTO()) 
-			comments.add(commentMapper.toEntity(commentDTO));
-		
+	
 		Type type = typeMapper.toEntity(dto.getTypeDTO());
 		return new CulturalOffer(dto.getAverageRate(), dto.getDescription(), dto.getName(), dto.getDate(), dto.getLat(), dto.getLon(), posts, type, images, comments);
 	}
@@ -56,10 +47,7 @@ public class CulturalOfferMapper implements MapperInterface<CulturalOffer, Cultu
 		
 		for(Image image : entity.getImage()) 
 			imagesDTO.add(imageMapper.toDto(image));
-		
-		for(Comment comment : entity.getComment()) 
-			commentsDTO.add(commentMapper.toDto(comment));
-		
+
 		TypeDTO typeDTO = typeMapper.toDto(entity.getType());
 		return new CulturalOfferDTO(entity.getAverageRate(), entity.getDescription(), entity.getName(), entity.getDate(), entity.getLat(), entity.getLon(), postsDTO, typeDTO, imagesDTO, commentsDTO);
 	}
