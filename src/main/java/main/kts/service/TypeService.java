@@ -33,6 +33,7 @@ public class TypeService implements ServiceInterface<Type>{
 		t.setCategory(entity.getCategory());
 		return t;
 	}
+	
 
 	@Override
 	public Type update(Type entity, Long id) throws Exception {
