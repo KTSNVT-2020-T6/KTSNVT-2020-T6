@@ -3,6 +3,7 @@ package main.kts.dto;
 
 public class RateDTO {
 	
+	private Long id;
 	private int number;   
 	public RegisteredUserDTO registredUserDTO;
 	public CulturalOfferDTO culturalOfferDTO;
@@ -17,11 +18,20 @@ public class RateDTO {
 				+ culturalOfferDTO + "]";
 	}
 
-	public RateDTO(int number, RegisteredUserDTO registredUserDTO, CulturalOfferDTO culturalOfferDTO) {
+	public RateDTO(Long id, int number, RegisteredUserDTO registredUserDTO, CulturalOfferDTO culturalOfferDTO) {
 		super();
+		this.id = id;
 		this.number = number;
 		this.registredUserDTO = registredUserDTO;
 		this.culturalOfferDTO = culturalOfferDTO;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public int getNumber() {

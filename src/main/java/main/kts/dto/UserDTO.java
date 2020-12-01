@@ -4,6 +4,7 @@ import java.util.Set;
 
 public class UserDTO {
 	
+	protected Long id;
 	protected String firstName;
 	protected String lastName;
 	protected String email;
@@ -18,9 +19,10 @@ public class UserDTO {
 		super();
 	}
 	
-	public UserDTO(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
+	public UserDTO(Long id, String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
 			ImageDTO imageDTO, Set<AuthorityDTO> authorityDTO) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -30,7 +32,13 @@ public class UserDTO {
 		this.imageDTO = imageDTO;
 		this.authorityDTO = authorityDTO;
 	}
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

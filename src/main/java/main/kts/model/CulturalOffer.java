@@ -57,8 +57,9 @@ public class CulturalOffer {
 	public CulturalOffer() {
 	}
 
-	public CulturalOffer(double averageRate, String description, String name, Date date, double lat, double lon,
+	public CulturalOffer(Long id,double averageRate, String description, String name, Date date, double lat, double lon,
 			Set<Post> post, Type type, Set<Image> image, Set<Comment> comment) {
+		this.id = id;
 		this.averageRate = averageRate;
 		this.description = description;
 		this.name = name;

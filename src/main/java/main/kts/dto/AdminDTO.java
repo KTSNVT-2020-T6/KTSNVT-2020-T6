@@ -13,9 +13,10 @@ public class AdminDTO extends UserDTO{
 	}
 	
 	
-	public AdminDTO(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
+	public AdminDTO(Long id,String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
 			ImageDTO imageDTO, Set<AuthorityDTO> authorityDTO, Set<CulturalOfferDTO> culturalOfferDTO) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

@@ -21,8 +21,14 @@ public class Admin extends User {
 		super();
 	}
 	
-	public Admin(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
-			Image image, Set<Authority> authority, Set<CulturalOffer> culturalOffers) {
+
+	public Admin(Set<CulturalOffer> culturalOffer) {
+		super();
+		this.culturalOffer = culturalOffer;
+	}
+
+	public Admin(Long id, String firstName, String lastName, String email, String password, Boolean active,
+			Boolean verified, Image image, Set<Authority> auth, Set<CulturalOffer> culturalOffers) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -31,13 +37,8 @@ public class Admin extends User {
 		this.active = active;
 		this.verified = verified;
 		this.image = image;
-		this.authority = authority;
+		this.authority = auth;
 		this.culturalOffer = culturalOffers;
-	}
-
-	public Admin(Set<CulturalOffer> culturalOffer) {
-		super();
-		this.culturalOffer = culturalOffer;
 	}
 
 	public Set<CulturalOffer> getCulturalOffer() {

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class CommentDTO {
 	
+	private Long id;
 	private String text;
 	private Date date;
 	   
@@ -15,13 +16,22 @@ public class CommentDTO {
 		super();
 	}
 			
-	public CommentDTO(String text, Date date, RegisteredUserDTO registeredUserDTO, ImageDTO imageDTO, CulturalOfferDTO culturalOfferDTO) {
+	public CommentDTO(Long id, String text, Date date, RegisteredUserDTO registeredUserDTO, ImageDTO imageDTO, CulturalOfferDTO culturalOfferDTO) {
 		super();
+		this.id = id;
 		this.text = text;
 		this.date = date;
 		this.registeredUserDTO = registeredUserDTO;
 		this.imageDTO = imageDTO;
 		this.culturalOfferDTO = culturalOfferDTO;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getText() {

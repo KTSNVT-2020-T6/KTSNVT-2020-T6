@@ -25,7 +25,8 @@ public class Category {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
 	public Set<Type> type;
 
-	public Category(String name, String description, Set<Type> type) {
+	public Category(Long id, String name, String description, Set<Type> type) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.type = type;
@@ -58,4 +59,13 @@ public class Category {
 		this.type = type;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
 }

@@ -27,7 +27,7 @@ public class CommentMapper implements MapperInterface<Comment, CommentDTO>{
 		RegisteredUser registeredUser = registeredUserMapper.toEntity(dto.getRegisteredUserDTO());
 		Image image = imageMapper.toEntity(dto.getImageDTO());
 		CulturalOffer culturalOffer = culturalOfferMapper.toEntity(dto.getCulturalOfferDTO());
-		return new Comment(dto.getText(), dto.getDate(), registeredUser, image, culturalOffer);
+		return new Comment(dto.getId(),dto.getText(), dto.getDate(), registeredUser, image, culturalOffer);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class CommentMapper implements MapperInterface<Comment, CommentDTO>{
 		RegisteredUserDTO registeredUserDTO = registeredUserMapper.toDto(entity.getRegistredUser());
 		ImageDTO imageDTO = imageMapper.toDto(entity.getImage());
 		CulturalOfferDTO culturalOfferDTO = culturalOfferMapper.toDto(entity.getCulturalOffer());
-		return new CommentDTO(entity.getText(), entity.getDate(), registeredUserDTO, imageDTO, culturalOfferDTO);
+		return new CommentDTO(entity.getId(),entity.getText(), entity.getDate(), registeredUserDTO, imageDTO, culturalOfferDTO);
 	}
 
 }

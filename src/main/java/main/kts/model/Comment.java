@@ -37,7 +37,8 @@ public class Comment {
 	@JoinColumn(name = "cultural_offer_id", nullable = false)
 	public CulturalOffer culturalOffer;
 
-	public Comment(String text, Date date, RegisteredUser registredUser, Image image, CulturalOffer culturalOffer) {
+	public Comment(Long id, String text, Date date, RegisteredUser registredUser, Image image, CulturalOffer culturalOffer) {
+		this.id = id;
 		this.text = text;
 		this.date = date;
 		this.registredUser = registredUser;

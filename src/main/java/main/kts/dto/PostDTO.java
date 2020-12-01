@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class PostDTO {
 	
+	private Long id;
 	private String text;
 	private Date date;
 	   
@@ -13,11 +14,20 @@ public class PostDTO {
 		super();
 	}
 	
-	public PostDTO(String text, Date date, ImageDTO imageDTO) {
+	public PostDTO(Long id, String text, Date date, ImageDTO imageDTO) {
 		super();
+		this.id = id;
 		this.text = text;
 		this.date = date;
 		this.imageDTO = imageDTO;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getText() {

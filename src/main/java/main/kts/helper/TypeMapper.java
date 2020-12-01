@@ -17,13 +17,13 @@ public class TypeMapper implements MapperInterface<Type, TypeDTO>{
 	@Override
 	public Type toEntity(TypeDTO dto) {
 		Category category = categoryMapper.toEntity(dto.getCategoryDTO());
-		return new Type(dto.getName(), dto.getDescription(), category);
+		return new Type(dto.getId(),dto.getName(), dto.getDescription(), category);
 	}
 
 	@Override
 	public TypeDTO toDto(Type entity) {
 		CategoryDTO categoryDTO = categoryMapper.toDto(entity.getCategory());
-		return new TypeDTO(entity.getName(), entity.getDescription(), categoryDTO);
+		return new TypeDTO(entity.getId(),entity.getName(), entity.getDescription(), categoryDTO);
 	}
 
 }

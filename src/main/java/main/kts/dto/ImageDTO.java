@@ -2,6 +2,7 @@ package main.kts.dto;
 
 public class ImageDTO {
 
+	private Long id;
 	private String name;
 	private String relativePath;
 	
@@ -9,10 +10,18 @@ public class ImageDTO {
 		super();
 	}
 	
-	public ImageDTO(String name, String relativePath) {
+	public ImageDTO(Long id, String name, String relativePath) {
 		super();
 		this.name = name;
 		this.relativePath = relativePath;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

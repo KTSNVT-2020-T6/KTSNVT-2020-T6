@@ -16,7 +16,7 @@ public class AuthorityMapper implements MapperInterface<Authority, AuthorityDTO>
 
 	@Override
 	public AuthorityDTO toDto(Authority entity) {
-		return new AuthorityDTO(entity.getRole());
+		return new AuthorityDTO(entity.getId(), entity.getRole());
 	}
 
 }
