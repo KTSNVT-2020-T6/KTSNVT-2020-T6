@@ -34,7 +34,6 @@ public class PostService implements ServiceInterface<Post> {
 		if (imageRepository.findById(entity.getImage().getId()).orElse(null) == null)
 			throw new Exception("Image doesn't exist");
 		
-
 		// if post with same image exists
 		Post existingPost= postRepository.findOneByImageId(entity.getImage().getId());
 		if (existingPost != null)
