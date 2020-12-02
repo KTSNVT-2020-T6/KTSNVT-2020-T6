@@ -99,11 +99,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		return repository.save(u);
 	}
 
-	private void validateAttributes(RegisteredUser u) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void delete(Long id) throws Exception {
 		RegisteredUser a = repository.findById(id).orElse(null);
@@ -113,16 +109,18 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		a.setActive(false);
 		
 	}
-	private void validateAttributes(Admin a) throws Exception {
-		if(a.getFirstName() == null)
+	private void validateAttributes(RegisteredUser u) throws Exception {
+		if(u.getFirstName() == null)
 			throw new Exception("Registered user's first name is empty.");
-		if(a.getLastName() == null)
+		if(u.getLastName() == null)
 			throw new Exception("Registered user's last name is empty.");
-		if(a.getEmail() == null)
+		if(u.getEmail() == null)
 			throw new Exception("Registered user's email is empty.");
-		if(a.getPassword() == null)
+		if(u.getPassword() == null)
 			throw new Exception("Registered user's password is empty.");
+		
 	}
+
 
 	public List<RegisteredUser> findAllRegisteredUser() {
 		return repository.findAllRegisteredUser();

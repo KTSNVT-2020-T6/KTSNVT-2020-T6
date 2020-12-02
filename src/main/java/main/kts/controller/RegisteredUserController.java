@@ -28,8 +28,7 @@ public class RegisteredUserController {
 	@Autowired
 	private RegisteredUserService service;
 	
-	@Autowired
-	private RegisteredUserMapper mapper;
+	private RegisteredUserMapper mapper = new RegisteredUserMapper();
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<RegisteredUserDTO>> getAllRegUsers(){

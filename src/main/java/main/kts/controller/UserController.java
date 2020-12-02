@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.UserDTO;
 import main.kts.helper.UserMapper;
-import main.kts.model.Post;
 import main.kts.model.User;
 import main.kts.service.UserService;
 
@@ -25,10 +24,11 @@ public class UserController {
 	@Autowired 
 	private UserService service;
 	
-	private UserMapper userMapper;
+	private UserMapper userMapper = new UserMapper();
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
+		System.out.println("Dsadsadasdas");
 		List<User> users = service.findAll();
 		return new ResponseEntity<>(toDTOUsersList(users), HttpStatus.OK);
 	}

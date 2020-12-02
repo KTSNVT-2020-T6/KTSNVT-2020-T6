@@ -27,12 +27,12 @@ public class AdminController {
 	
 	@Autowired 
 	private AdminService service;
-	
-	@Autowired
-	private AdminMapper mapper;
+
+	private AdminMapper mapper = new AdminMapper();
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<AdminDTO>> getAllAdmins(){
+		System.out.println("JEL UDJE");
 		List<Admin> admins = service.findAllAdmin();
 		return new ResponseEntity<>(toDTOAdminsList(admins), HttpStatus.OK);
 	}
