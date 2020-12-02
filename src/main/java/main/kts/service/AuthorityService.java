@@ -29,7 +29,7 @@ public class AuthorityService implements ServiceInterface<Authority>{
 	public Authority create(Authority entity) throws Exception {
 		Authority a = new Authority();
 		a.setRole(entity.getRole());
-		return a;
+		return authorityRepository.save(a);
 	}
 
 	@Override

@@ -30,6 +30,21 @@ values (5.0, '2020-12-25 19:30:00', 'opisneki', 44.05, 45.02, 'obilazak muzeja',
 insert into cultural_offer (average_rate, date, description, lat, lon, name, type_id, admin_id)
 values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'exit', 3, 1);
 
+insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)
+values (2, 1);
+insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)
+values (2, 2);
+
+insert into post (date, text, image_id, cultural_offer_id)
+values('2020-12-24 19:30:00', 'gosti iznenadjenja', 4, 2);
+insert into post (date, text, image_id, cultural_offer_id)
+values('2020-10-24 19:30:00', 'promocija knjige', 1, 1);
+
+insert into comment (date, text, image_id, cultural_offer_id, registred_user_id)
+values ('2020-10-24 19:30:00', 'puno eksponata ima', 1, 1, 2);
+insert into comment (date, text, image_id, cultural_offer_id, registred_user_id)
+values ('2020-10-24 19:30:00', 'mnogo velika guzva', 4, 2, 3);
+
 insert into rate (number, cultural_offer_id, registred_user_id) values (5, 1, 2);
 insert into rate (number, cultural_offer_id, registred_user_id) values (5, 2, 3);
 -- 

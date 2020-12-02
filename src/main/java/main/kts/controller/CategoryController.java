@@ -64,7 +64,7 @@ public class CategoryController {
 		return new ResponseEntity<>(categoryMapper.toDto(category), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long id){
 		Category category;
 		if(!this.validateCategoryDTO(categoryDTO))
@@ -79,13 +79,13 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
+	public ResponseEntity<String> deleteCategory(@PathVariable Long id){
 		try {
 			categoryService.delete(id);
 		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 	
 	

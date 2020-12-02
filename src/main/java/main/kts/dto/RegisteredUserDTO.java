@@ -16,6 +16,7 @@ public class RegisteredUserDTO extends UserDTO{
 	public RegisteredUserDTO(Long id, String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
 			ImageDTO imageDTO, Set<AuthorityDTO> authorityDTO, Set<CulturalOfferDTO> favoriteCulturalOffersDTO) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

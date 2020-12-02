@@ -31,7 +31,7 @@ public class TypeService implements ServiceInterface<Type>{
 		t.setName(entity.getName());
 		t.setDescription(entity.getDescription());
 		t.setCategory(entity.getCategory());
-		return t;
+		return typeRepository.save(t);
 	}
 	
 

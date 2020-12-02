@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import main.kts.dto.CulturalOfferDTO;
 import main.kts.dto.TypeDTO;
 import main.kts.helper.TypeMapper;
-import main.kts.model.CulturalOffer;
+import main.kts.model.Category;
 import main.kts.model.Type;
+import main.kts.service.CategoryService;
 import main.kts.service.TypeService;
 
 @RestController
@@ -27,6 +27,9 @@ public class TypeController {
 	private TypeService typeService;
 	
 	private TypeMapper typeMapper;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	public TypeController() {
 		super();
@@ -52,10 +55,15 @@ public class TypeController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<TypeDTO> createType(@RequestBody TypeDTO typeDTO){
 		Type type;
+		Category category;
 		if(!this.validateTypeDTO(typeDTO))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		try {
-			type = typeService.create(typeMapper.toEntity(typeDTO));
+			category = categoryService.findOne(typeDTO.getCategoryDTO().getId());
+			type = typeMapper.toEntity(typeDTO);
+			type.setCategory(category);
+			type = typeService.create(type);	
+			
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -66,10 +74,14 @@ public class TypeController {
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TypeDTO> updateType(@RequestBody TypeDTO typeDTO,  @PathVariable Long id){
 		Type type;
+		Category category;
 		if(!this.validateTypeDTO(typeDTO))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		try {
-			type = typeService.update(typeMapper.toEntity(typeDTO), id);
+			category = categoryService.findOne(typeDTO.getCategoryDTO().getId());
+			type = typeMapper.toEntity(typeDTO);
+			type.setCategory(category);
+			type = typeService.update(type, id);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -78,13 +90,13 @@ public class TypeController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteType(@PathVariable Long id){
+	public ResponseEntity<String> deleteType(@PathVariable Long id){
 		try {
 			typeService.delete(id);
 		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 	
 	

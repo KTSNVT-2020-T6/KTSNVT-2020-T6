@@ -80,13 +80,13 @@ public class AuthorityController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteAuthority(@PathVariable Long id){
+	public ResponseEntity<String> deleteAuthority(@PathVariable Long id){
 		try {
 			authorityService.delete(id);
 		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 	
 	private boolean validateAuthorityDTO(AuthorityDTO authorityDTO) {

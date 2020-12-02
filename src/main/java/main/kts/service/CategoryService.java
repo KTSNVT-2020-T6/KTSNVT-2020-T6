@@ -1,5 +1,6 @@
 package main.kts.service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class CategoryService implements ServiceInterface<Category>{
 		Category c = new Category();
 		c.setName(entity.getName());
 		c.setDescription(entity.getDescription());
-		c.setType(entity.getType());
-		return c;
+		c.setType(new HashSet<Type>());
+		return categoryRepository.save(c);
 	}
 
 	@Override

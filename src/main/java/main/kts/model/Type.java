@@ -23,7 +23,7 @@ public class Type {
 	@Column(unique = false, nullable = false)
 	private String description;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", nullable = false)
 	public Category category;
 

@@ -23,6 +23,12 @@ public class Authority {
 		super();
 		this.role = role;
 	}
+	
+	public Authority(Long id, String role) {
+		super();
+		this.id = id;
+		this.role = role;
+	}
 
 	public String getRole() {
 		return role;
