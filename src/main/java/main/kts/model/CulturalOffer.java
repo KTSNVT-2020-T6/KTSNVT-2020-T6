@@ -43,15 +43,15 @@ public class CulturalOffer {
 	@JoinColumn(name = "cultural_offer_id", nullable = true)
 	public Set<Post> post;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "type_id", nullable = false)
 	public Type type;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name = "cultural_offer_id", nullable = true)
 	public Set<Image> image;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "culturalOffer")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "culturalOffer")
 	public Set<Comment> comment;
 
 	public CulturalOffer() {

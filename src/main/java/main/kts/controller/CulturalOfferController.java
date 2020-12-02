@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import main.kts.dto.CulturalOfferDTO;
 import main.kts.helper.CulturalOfferMapper;
 import main.kts.model.CulturalOffer;
+import main.kts.model.Type;
 import main.kts.service.CulturalOfferService;
+import main.kts.service.TypeService;
 
 @RestController
 @RequestMapping(value = "/api/culturaloffer", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -24,6 +26,9 @@ public class CulturalOfferController {
 	
 	@Autowired
 	private CulturalOfferService culturalOfferService;
+	
+	@Autowired
+	private TypeService typeService;
 	
 	private CulturalOfferMapper culturalOfferMapper;
 	
@@ -50,15 +55,18 @@ public class CulturalOfferController {
     
     @RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<CulturalOfferDTO> createCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO){
-    	CulturalOffer culturalOffer;
-    	
+    	CulturalOffer culturalOffer = null;
+    	Type type;
     	if(!this.validateCulturalOfferDTO(culturalOfferDTO))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	
         try {
-            culturalOffer = culturalOfferService.create(culturalOfferMapper.toEntity(culturalOfferDTO));
+        	type = typeService.findOne(culturalOfferDTO.getTypeDTO().getId());
+        	culturalOffer = culturalOfferMapper.toEntity(culturalOfferDTO);
+        	culturalOffer.setType(type);
+            culturalOffer = culturalOfferService.create(culturalOffer);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CulturalOfferDTO(),HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
@@ -67,8 +75,15 @@ public class CulturalOfferController {
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferDTO> updateCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO, @PathVariable Long id){
         CulturalOffer culturalOffer;
+        Type type;
+        if(!this.validateCulturalOfferDTO(culturalOfferDTO))
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	
         try {
-            culturalOffer = culturalOfferService.update(culturalOfferMapper.toEntity(culturalOfferDTO), id);
+        	type = typeService.findOne(culturalOfferDTO.getTypeDTO().getId());
+        	culturalOffer = culturalOfferMapper.toEntity(culturalOfferDTO);
+        	culturalOffer.setType(type);
+            culturalOffer = culturalOfferService.update(culturalOffer, id);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
