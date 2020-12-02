@@ -18,7 +18,7 @@ import main.kts.model.User;
 import main.kts.service.UserService;
 
 @RestController
-@RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 	
 	@Autowired 
@@ -28,12 +28,11 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
-		System.out.println("Dsadsadasdas");
 		List<User> users = service.findAll();
 		return new ResponseEntity<>(toDTOUsersList(users), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
 		User u = service.findOne(id);
 		if (u == null) {

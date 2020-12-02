@@ -38,7 +38,7 @@ public abstract class User {
 	@Column(unique = true)
 	protected String email;
 
-	@Column(nullable = false)
+	@Column(unique=false,nullable = false)
 	protected String password;
 
 	@Column(nullable = false)

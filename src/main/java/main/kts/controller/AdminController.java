@@ -22,7 +22,7 @@ import main.kts.model.User;
 import main.kts.service.AdminService;
 
 @RestController
-@RequestMapping(value = "/api/admins", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/admin", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminController {
 	
 	@Autowired 
@@ -32,7 +32,6 @@ public class AdminController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<AdminDTO>> getAllAdmins(){
-		System.out.println("JEL UDJE");
 		List<Admin> admins = service.findAllAdmin();
 		return new ResponseEntity<>(toDTOAdminsList(admins), HttpStatus.OK);
 	}
@@ -50,6 +49,7 @@ public class AdminController {
 
         return new ResponseEntity<>(mapper.toDto(admin), HttpStatus.CREATED);
     }
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AdminDTO> updateAdmin(@RequestBody AdminDTO adminDTO, @PathVariable Long id){
         Admin admin;

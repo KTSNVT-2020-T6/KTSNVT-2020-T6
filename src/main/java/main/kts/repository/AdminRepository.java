@@ -13,7 +13,7 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 
 	Admin findByEmail(String email);
 
-	@Query(value = "SELECT * FROM USER WHERE TYPE == 'admin'", nativeQuery = true)
+	@Query(value = "SELECT * FROM USERS WHERE TYPE = 'admin'", nativeQuery = true)
 	List<Admin> findAllAdmin();
 	
 }
