@@ -43,6 +43,7 @@ public class ImageService implements ServiceInterface<Image>{
 		}
 		
 		existingImage.setName(entity.getName());
+		existingImage.setRelativePath(entity.getRelativePath());
 		return imageRepository.save(existingImage);
 	}
 

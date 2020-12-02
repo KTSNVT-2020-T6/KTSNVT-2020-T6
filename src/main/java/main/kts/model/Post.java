@@ -25,7 +25,7 @@ public class Post {
 	@Column(unique = false, nullable = false)
 	private Date date;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "image_id", nullable = true)
 	public Image image;
 

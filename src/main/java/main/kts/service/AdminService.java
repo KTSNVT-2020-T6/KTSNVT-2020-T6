@@ -53,7 +53,6 @@ public class AdminService implements ServiceInterface<Admin>{
 		a.setPassword(entity.getPassword());
 		a.setActive(true);
 		a.setVerified(false);
-		a.setImage(entity.getImage());
 		Set<Authority> set = new HashSet<Authority>();
 		set.add(authorityRepository.findByRole("ADMIN"));
 		a.setAuthority(set);

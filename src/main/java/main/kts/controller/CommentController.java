@@ -17,7 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import main.kts.dto.CommentDTO;
 import main.kts.helper.CommentMapper;
 import main.kts.model.Comment;
+import main.kts.model.CulturalOffer;
+import main.kts.model.Image;
+import main.kts.model.RegisteredUser;
 import main.kts.service.CommentService;
+import main.kts.service.CulturalOfferService;
+import main.kts.service.ImageService;
+import main.kts.service.RegisteredUserService;
 
 @RestController
 @RequestMapping(value = "/api/comment", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,6 +34,13 @@ public class CommentController {
 
 	private CommentMapper commentMapper;
 
+	@Autowired
+	private ImageService imageService;
+	@Autowired
+	private CulturalOfferService culturalOfferService;
+	@Autowired
+	private RegisteredUserService registeredUserService;
+	
 	public CommentController() {
 		commentMapper = new CommentMapper();
 	}
@@ -61,12 +74,21 @@ public class CommentController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) {
 		Comment comment;
-
+		Image image;
+		CulturalOffer culturalOffer;
+		RegisteredUser registeredUser;
 		if (!this.validateCommentDTO(commentDTO))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 		try {
-			comment = commentService.create(commentMapper.toEntity(commentDTO));
+			image = imageService.findOne(commentDTO.getImageDTO().getId());
+			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferDTO().getId());
+			registeredUser = registeredUserService.findOne(commentDTO.getRegisteredUserDTO().getId());
+			comment = commentMapper.toEntity(commentDTO);
+			comment.setImage(image);
+			comment.setCulturalOffer(culturalOffer);
+			comment.setRegistredUser(registeredUser);
+			comment = commentService.create(comment);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -77,8 +99,18 @@ public class CommentController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CommentDTO> updateComment(@RequestBody CommentDTO commentDTO, @PathVariable Long id) {
 		Comment comment;
+		Image image;
+		CulturalOffer culturalOffer;
+		RegisteredUser registeredUser;
 		try {
-			comment = commentService.update(commentMapper.toEntity(commentDTO), id);
+			image = imageService.findOne(commentDTO.getImageDTO().getId());
+			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferDTO().getId());
+			registeredUser = registeredUserService.findOne(commentDTO.getRegisteredUserDTO().getId());
+			comment = commentMapper.toEntity(commentDTO);
+			comment.setImage(image);
+			comment.setCulturalOffer(culturalOffer);
+			comment.setRegistredUser(registeredUser);
+			comment = commentService.update(comment, id);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -87,14 +119,14 @@ public class CommentController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
+	public ResponseEntity<String> deleteComment(@PathVariable Long id) {
 		try {
 			commentService.delete(id);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 
 	private List<CommentDTO> toCommentDTOList(List<Comment> comments) {

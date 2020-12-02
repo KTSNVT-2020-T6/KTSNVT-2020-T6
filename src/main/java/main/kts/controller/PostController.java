@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.PostDTO;
 import main.kts.helper.PostMapper;
+import main.kts.model.Image;
 import main.kts.model.Post;
+import main.kts.service.ImageService;
 import main.kts.service.PostService;
 
 @RestController
@@ -28,6 +30,9 @@ public class PostController {
 
 	private PostMapper postMapper;
 
+	@Autowired
+	private ImageService imageService;
+	
 	public PostController() {
 		postMapper = new PostMapper();
 	}
@@ -61,12 +66,15 @@ public class PostController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
 		Post post;
-
+		Image image;
 		if (!this.validatePostDTO(postDTO))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 		try {
-			post = postService.create(postMapper.toEntity(postDTO));
+			image = imageService.findOne(postDTO.getImageDTO().getId());
+			post = postMapper.toEntity(postDTO);
+			post.setImage(image);
+			post = postService.create(post);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -77,8 +85,12 @@ public class PostController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO, @PathVariable Long id) {
 		Post post;
+		Image image;
 		try {
-			post = postService.update(postMapper.toEntity(postDTO), id);
+			image = imageService.findOne(postDTO.getImageDTO().getId());
+			post = postMapper.toEntity(postDTO);
+			post.setImage(image);
+			post = postService.update(post, id);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -87,14 +99,14 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+	public ResponseEntity<String> deletePost(@PathVariable Long id) {
 		try {
 			postService.delete(id);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 
 	private List<PostDTO> toPostDTOList(List<Post> posts) {
