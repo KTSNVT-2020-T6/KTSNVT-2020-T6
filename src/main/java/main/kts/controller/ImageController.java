@@ -4,8 +4,11 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,14 +53,15 @@ public class ImageController {
 		return new ResponseEntity<>(imageMapper.toDto(image), HttpStatus.OK);
 	}
 
-//  @RequestMapping(value = "/page", method=RequestMethod.GET)
-//  public ResponseEntity<Page<ImageDTO>> loadCharactersPage(Pageable pageable) {
-//  	Page<Image> images = imageService.findAllPage(pageable);
-//  	if(images == null){
-//          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//      }
-//  	return new ResponseEntity<>(toImageDTOPage(images), HttpStatus.OK);
-//  }
+    @RequestMapping(value="/",method=RequestMethod.GET)
+    public ResponseEntity<Page<ImageDTO>> loadImagePage(Pageable pageable) {
+    	Page<Image> images = imageService.findAll(pageable);
+    	if(images == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	Page<ImageDTO> imagesDTO = toImageDTOPage(images);
+    	return new ResponseEntity<>(imagesDTO, HttpStatus.OK);
+    }
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<ImageDTO> createImage(@RequestBody ImageDTO imageDTO) {
@@ -106,10 +110,16 @@ public class ImageController {
 		return imageDTOS;
 	}
 
-//	private Object toImageDTOPage(Page<Image> images) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	private Page<ImageDTO> toImageDTOPage(Page<Image> images) {
+		Page<ImageDTO> dtoPage = images.map(new Function<Image, ImageDTO>() {
+		    @Override
+		    public ImageDTO apply(Image entity) {
+		    	ImageDTO dto = imageMapper.toDto(entity);
+		        return dto;
+		    }
+		});
+		return dtoPage;
+	}
 
 	private boolean validateImageDTO(ImageDTO imageDTO) {
 		if(imageDTO.getRelativePath() == null) 

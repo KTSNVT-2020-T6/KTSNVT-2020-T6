@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Comment;
@@ -140,6 +142,10 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 	        return false;
 	    }
 		return true;
+	}
+
+	public Page<CulturalOffer> findAll(Pageable pageable) {
+		return culturalOfferRepository.findAll(pageable);
 	}
 
 }

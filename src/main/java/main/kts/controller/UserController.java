@@ -2,8 +2,11 @@ package main.kts.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,16 @@ public class UserController {
 		return new ResponseEntity<>(toDTOUsersList(users), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/",method=RequestMethod.GET)
+    public ResponseEntity<Page<UserDTO>> loadUsersPage(Pageable pageable) {
+    	Page<User> users = service.findAll(pageable);
+    	if(users == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	Page<UserDTO> usersDTO = toUsersDTOPage(users);
+    	return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+    }
+	
 	@RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
 		User u = service.findOne(id);
@@ -55,6 +68,17 @@ public class UserController {
         	listDTO.add(userMapper.toDto(u));
         }
         return listDTO;
+	}
+	
+	private Page<UserDTO> toUsersDTOPage(Page<User> users) {
+		Page<UserDTO> dtoPage = users.map(new Function<User, UserDTO>() {
+		    @Override
+		    public UserDTO apply(User entity) {
+		    	UserDTO dto = userMapper.toDto(entity);
+		        return dto;
+		    }
+		});
+		return dtoPage;
 	}
 
 }

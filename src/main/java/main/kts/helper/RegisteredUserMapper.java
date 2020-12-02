@@ -5,7 +5,6 @@ import java.util.Set;
 
 import main.kts.dto.AuthorityDTO;
 import main.kts.dto.CulturalOfferDTO;
-import main.kts.dto.PostDTO;
 import main.kts.dto.RegisteredUserDTO;
 import main.kts.model.Authority;
 import main.kts.model.CulturalOffer;

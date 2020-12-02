@@ -3,6 +3,8 @@ package main.kts.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Image;
@@ -54,6 +56,10 @@ public class ImageService implements ServiceInterface<Image>{
 			throw new Exception("Image with given id doesn't exist");
 		}
 		imageRepository.delete(existingImage);		
+	}
+
+	public Page<Image> findAll(Pageable pageable) {
+		return imageRepository.findAll(pageable);
 	}
 
 }

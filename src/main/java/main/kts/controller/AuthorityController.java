@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.AuthorityDTO;
-import main.kts.dto.TypeDTO;
 import main.kts.helper.AuthorityMapper;
 import main.kts.model.Authority;
-import main.kts.model.Type;
 import main.kts.service.AuthorityService;
 
 @RestController

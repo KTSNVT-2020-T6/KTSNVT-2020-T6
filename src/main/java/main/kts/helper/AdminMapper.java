@@ -6,11 +6,9 @@ import java.util.Set;
 import main.kts.dto.AdminDTO;
 import main.kts.dto.AuthorityDTO;
 import main.kts.dto.CulturalOfferDTO;
-import main.kts.dto.RegisteredUserDTO;
 import main.kts.model.Admin;
 import main.kts.model.Authority;
 import main.kts.model.CulturalOffer;
-import main.kts.model.RegisteredUser;
 
 public class AdminMapper implements MapperInterface<Admin, AdminDTO>{
 	

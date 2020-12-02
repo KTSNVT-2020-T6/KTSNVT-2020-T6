@@ -3,6 +3,8 @@ package main.kts.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Post;
@@ -64,6 +66,10 @@ public class PostService implements ServiceInterface<Post> {
 			throw new Exception("Post with given id doesn't exist");
 		}
 		postRepository.delete(existingPost);
+	}
+
+	public Page<Post> findAll(Pageable pageable) {
+		return postRepository.findAll(pageable);
 	}
 
 }

@@ -3,8 +3,11 @@ package main.kts.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.CategoryDTO;
-import main.kts.dto.TypeDTO;
 import main.kts.helper.CategoryMapper;
 import main.kts.model.Category;
-import main.kts.model.Type;
 import main.kts.service.CategoryService;
 
 @RestController
@@ -39,6 +40,16 @@ public class CategoryController {
 		List<Category> categories = categoryService.findAll();
 		return new ResponseEntity<>(toCategoryDTOList(categories), HttpStatus.OK);
 	}
+	
+    @RequestMapping(value="/",method=RequestMethod.GET)
+    public ResponseEntity<Page<CategoryDTO>> loadCategoryPage(Pageable pageable) {
+    	Page<Category> categorys = categoryService.findAll(pageable);
+    	if(categorys == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	Page<CategoryDTO> categorysDTO = toCategoryDTOPage(categorys);
+    	return new ResponseEntity<>(categorysDTO, HttpStatus.OK);
+    }
 	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
@@ -104,4 +115,15 @@ public class CategoryController {
         }
         return categoriesDTO;
     }
+	
+	private Page<CategoryDTO> toCategoryDTOPage(Page<Category> categorys) {
+		Page<CategoryDTO> dtoPage = categorys.map(new Function<Category, CategoryDTO>() {
+		    @Override
+		    public CategoryDTO apply(Category entity) {
+		    	CategoryDTO dto = categoryMapper.toDto(entity);
+		        return dto;
+		    }
+		});
+		return dtoPage;
+	}
 }

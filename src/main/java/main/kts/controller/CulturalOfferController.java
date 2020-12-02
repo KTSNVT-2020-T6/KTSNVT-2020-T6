@@ -2,8 +2,11 @@ package main.kts.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +54,16 @@ public class CulturalOfferController {
         }
 
         return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="/",method=RequestMethod.GET)
+    public ResponseEntity<Page<CulturalOfferDTO>> loadRatePage(Pageable pageable) {
+    	Page<CulturalOffer> culturalOffers = culturalOfferService.findAll(pageable);
+    	if(culturalOffers == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	Page<CulturalOfferDTO> culturalOffersDTO = toCulturalOfferDTOPage(culturalOffers);
+    	return new ResponseEntity<>(culturalOffersDTO, HttpStatus.OK);
     }
     
     @RequestMapping(method=RequestMethod.POST)
@@ -110,6 +123,17 @@ public class CulturalOfferController {
         }
         return culturalOfferDTOS;
     }
+	
+	private Page<CulturalOfferDTO> toCulturalOfferDTOPage(Page<CulturalOffer> culturalOffers) {
+		Page<CulturalOfferDTO> dtoPage = culturalOffers.map(new Function<CulturalOffer, CulturalOfferDTO>() {
+		    @Override
+		    public CulturalOfferDTO apply(CulturalOffer entity) {
+		    	CulturalOfferDTO dto = culturalOfferMapper.toDto(entity);
+		        return dto;
+		    }
+		});
+		return dtoPage;
+	}
 	
 	private boolean validateCulturalOfferDTO(CulturalOfferDTO culturalOfferDTO) {
 		if(culturalOfferDTO.getDescription() == null || culturalOfferDTO.getDescription().equals(""))

@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.AdminDTO;
-import main.kts.dto.UserDTO;
 import main.kts.helper.AdminMapper;
 import main.kts.model.Admin;
-import main.kts.model.User;
 import main.kts.service.AdminService;
 
 @RestController

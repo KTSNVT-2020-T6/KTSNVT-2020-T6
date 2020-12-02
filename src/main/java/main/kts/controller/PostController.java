@@ -3,8 +3,11 @@ package main.kts.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,14 +57,15 @@ public class PostController {
 		return new ResponseEntity<>(postMapper.toDto(post), HttpStatus.OK);
 	}
 
-//    @RequestMapping(value = "/page", method=RequestMethod.GET)
-//    public ResponseEntity<Page<PostDTO>> loadCharactersPage(Pageable pageable) {
-//    	Page<Post> posts = postService.findAllPage(pageable);
-//    	if(posts == null){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    	return new ResponseEntity<>(toPostDTOPage(posts), HttpStatus.OK);
-//    }
+    @RequestMapping(value="/",method=RequestMethod.GET)
+    public ResponseEntity<Page<PostDTO>> loadPostPage(Pageable pageable) {
+    	Page<Post> posts = postService.findAll(pageable);
+    	if(posts == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	Page<PostDTO> postsDTO = toPostDTOPage(posts);
+    	return new ResponseEntity<>(postsDTO, HttpStatus.OK);
+    }
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
@@ -117,11 +121,16 @@ public class PostController {
 		return postDTOS;
 	}
 
-	
-//	private Object toPostDTOPage(Page<Post> posts) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	private Page<PostDTO> toPostDTOPage(Page<Post> posts) {
+		Page<PostDTO> dtoPage = posts.map(new Function<Post, PostDTO>() {
+		    @Override
+		    public PostDTO apply(Post entity) {
+		    	PostDTO dto = postMapper.toDto(entity);
+		        return dto;
+		    }
+		});
+		return dtoPage;
+	}
 
 	private boolean validatePostDTO(PostDTO postDTO) {
 		if(postDTO.getDate() == null) 

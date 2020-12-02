@@ -1,9 +1,10 @@
 package main.kts.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.User;
@@ -42,6 +43,10 @@ public class UserService implements ServiceInterface<User>{
 	public void delete(Long id) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Page<User> findAll(Pageable pageable) {
+		return repository.findAll(pageable);
 	}
 
 }

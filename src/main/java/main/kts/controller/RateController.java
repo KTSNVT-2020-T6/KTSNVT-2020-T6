@@ -2,6 +2,7 @@ package main.kts.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,14 +61,15 @@ public class RateController {
         return new ResponseEntity<>(rateMapper.toDto(rate), HttpStatus.OK);
     }
     
-//    @RequestMapping(value = "/page", method=RequestMethod.GET)
-//    public ResponseEntity<Page<RateDTO>> loadCharactersPage(Pageable pageable) {
-//    	Page<Rate> rates = rateService.findAllPage(pageable);
-//    	if(rates == null){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    	return new ResponseEntity<>(toRateDTOPage(rates), HttpStatus.OK);
-//    }
+    @RequestMapping(value="/",method=RequestMethod.GET)
+    public ResponseEntity<Page<RateDTO>> loadRatePage(Pageable pageable) {
+    	Page<Rate> rates = rateService.findAll(pageable);
+    	if(rates == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	Page<RateDTO> ratesDTO = toRateDTOPage(rates);
+    	return new ResponseEntity<>(ratesDTO, HttpStatus.OK);
+    }
     
 
 	@RequestMapping(method=RequestMethod.POST)
@@ -132,10 +134,16 @@ public class RateController {
         return rateDTOS;
     }
 	
-//	private Object toRateDTOPage(Page<Rate> rates) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	private Page<RateDTO> toRateDTOPage(Page<Rate> rates) {
+		Page<RateDTO> dtoPage = rates.map(new Function<Rate, RateDTO>() {
+		    @Override
+		    public RateDTO apply(Rate entity) {
+		    	RateDTO dto = rateMapper.toDto(entity);
+		        return dto;
+		    }
+		});
+		return dtoPage;
+	}
 	
 	private boolean validateRateDTO(RateDTO rateDTO) {
 		if(rateDTO.getNumber() <= 0 || rateDTO.getNumber() > 5)
