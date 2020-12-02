@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.RateDTO;
 import main.kts.helper.RateMapper;
+import main.kts.model.CulturalOffer;
 import main.kts.model.Rate;
+import main.kts.model.RegisteredUser;
+import main.kts.service.CulturalOfferService;
 import main.kts.service.RateService;
+import main.kts.service.RegisteredUserService;
 
 @RestController
 @RequestMapping(value = "/api/rate", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,6 +33,12 @@ public class RateController {
 
 	private RateMapper rateMapper;
 
+	@Autowired
+	private RegisteredUserService registeredUserService;
+	
+	@Autowired
+	private CulturalOfferService culturalOfferService;
+	
 	public RateController() {
 		rateMapper = new RateMapper();
 	}
@@ -63,12 +73,18 @@ public class RateController {
 	@RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<RateDTO> createRate(@RequestBody RateDTO rateDTO){
     	Rate rate;
-
+    	RegisteredUser registeredUser;
+    	CulturalOffer culturalOffer;
     	if(!this.validateRateDTO(rateDTO))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	
         try {
-            rate = rateService.create(rateMapper.toEntity(rateDTO));
+        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserDTO().getId());
+        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferDTO().getId());
+        	rate = rateMapper.toEntity(rateDTO);
+        	rate.setCulturalOffer(culturalOffer);
+        	rate.setRegistredUser(registeredUser);
+            rate = rateService.create(rate);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -79,8 +95,16 @@ public class RateController {
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RateDTO> updateRate(@RequestBody RateDTO rateDTO, @PathVariable Long id){
         Rate rate;
+        RegisteredUser registeredUser;
+    	CulturalOffer culturalOffer;
         try {
-            rate = rateService.update(rateMapper.toEntity(rateDTO), id);
+        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserDTO().getId());
+        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferDTO().getId());
+        	rate = rateMapper.toEntity(rateDTO);
+        	rate.setCulturalOffer(culturalOffer);
+        	rate.setRegistredUser(registeredUser);
+            rate = rateService.update(rate, id);
+            
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -89,14 +113,14 @@ public class RateController {
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteRate(@PathVariable Long id){
+    public ResponseEntity<String> deleteRate(@PathVariable Long id){
         try {
             rateService.delete(id);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
     
 	

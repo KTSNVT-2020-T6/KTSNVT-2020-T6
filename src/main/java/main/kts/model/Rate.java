@@ -21,10 +21,10 @@ public class Rate {
 	@Column(unique = false, nullable = true)
 	private int number;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	public RegisteredUser registredUser;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "cultural_offer_id", nullable = true)
 	public CulturalOffer culturalOffer;
 
