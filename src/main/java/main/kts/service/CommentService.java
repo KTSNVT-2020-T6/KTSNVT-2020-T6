@@ -86,4 +86,8 @@ public class CommentService implements ServiceInterface<Comment> {
 		return commentRepository.findAll(pageable);
 	}
 
+	public List<Comment> findAllByCulturalOfferId(Long id) {
+		return commentRepository.findAllByCulturalOfferId(id);
+	}
+
 }

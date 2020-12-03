@@ -132,6 +132,17 @@ public class CommentController {
 
 		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
+	@RequestMapping(value="/culturaloffer_comments/{id}",method = RequestMethod.GET)
+	public ResponseEntity<List<CommentDTO>> getAllCommentsForCulturalOffer(@PathVariable Long id) {
+		//pronadji prvo kulturnu ponudu, da li stvarno postoji taj id.
+		CulturalOffer co = culturalOfferService.findOne(id);
+		if(co == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+			
+		List<Comment> comments = commentService.findAllByCulturalOfferId(id);
+		return new ResponseEntity<>(toCommentDTOList(comments), HttpStatus.OK);
+	}
 
 	private List<CommentDTO> toCommentDTOList(List<Comment> comments) {
 		List<CommentDTO> commentDTOS = new ArrayList<>();
