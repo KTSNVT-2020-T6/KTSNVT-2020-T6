@@ -29,6 +29,8 @@ insert into cultural_offer (average_rate, date, description, lat, lon, name, typ
 values (5.0, '2020-12-25 19:30:00', 'opisneki', 44.05, 45.02, 'obilazak muzeja', 1, 1);
 insert into cultural_offer (average_rate, date, description, lat, lon, name, type_id, admin_id)
 values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'exit', 3, 1);
+insert into cultural_offer (average_rate, date, description, lat, lon, name, type_id, admin_id)
+values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'djiasjasij', 3, 1);
 
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)
 values (2, 1);

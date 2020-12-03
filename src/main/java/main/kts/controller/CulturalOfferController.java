@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.CulturalOfferDTO;
+import main.kts.dto.RegisteredUserDTO;
 import main.kts.helper.CulturalOfferMapper;
 import main.kts.model.CulturalOffer;
+import main.kts.model.RegisteredUser;
 import main.kts.model.Type;
 import main.kts.service.CulturalOfferService;
+import main.kts.service.RegisteredUserService;
 import main.kts.service.TypeService;
 
 @RestController
@@ -114,7 +117,7 @@ public class CulturalOfferController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+  
 	
 	private List<CulturalOfferDTO> toCulturalOfferDTOList(List<CulturalOffer> culturalOffers){
         List<CulturalOfferDTO> culturalOfferDTOS = new ArrayList<>();
