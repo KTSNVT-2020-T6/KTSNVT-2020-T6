@@ -116,12 +116,10 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 			u.setImage(oldImage); 
 		}
 		
-		u.setFavoriteCulturalOffers(entity.getFavoriteCulturalOffers());
-		
+		u.setFavoriteCulturalOffers(entity.getFavoriteCulturalOffers());	
 		return repository.save(u);
 	}
 
-	
 	@Override
 	public void delete(Long id) throws Exception {
 		RegisteredUser a = repository.findById(id).orElse(null);
