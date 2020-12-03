@@ -16,4 +16,8 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 
 	@Query(value = "SELECT * FROM USERS WHERE TYPE = 'registered_user'", nativeQuery = true)
 	List<RegisteredUser> findAllRegisteredUser();
+
+	@Query(value = "SELECT * FROM USERS_FAVORITE_CULTURAL_OFFERS WHERE"
+			+ " FAVORITE_CULTURAL_OFFERS_ID = ?1 ", nativeQuery = true)
+	List<Long> findByIdCO(Long id);
 }

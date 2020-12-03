@@ -161,6 +161,11 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		return true;
 	}
 
+	public List<Long> findByIdCO(Long id) {
+		return repository.findByIdCO(id);
+	}
+
+
 
 
 }
