@@ -20,4 +20,7 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 	@Query(value = "SELECT * FROM USERS_FAVORITE_CULTURAL_OFFERS WHERE"
 			+ " FAVORITE_CULTURAL_OFFERS_ID = ?1 ", nativeQuery = true)
 	List<Long> findByIdCO(Long id);
+
+	@Query(value = "SELECT * FROM USERS WHERE id = ?1", nativeQuery = true)
+	RegisteredUser findByIdRU(Long l);
 }

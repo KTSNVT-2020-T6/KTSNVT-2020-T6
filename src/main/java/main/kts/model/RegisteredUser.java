@@ -56,4 +56,5 @@ public class RegisteredUser extends User {
 		this.favoriteCulturalOffers = favoriteCulturalOffers;
 	}
 
+
 }

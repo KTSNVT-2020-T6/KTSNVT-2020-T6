@@ -17,14 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.CulturalOfferDTO;
-import main.kts.dto.RegisteredUserDTO;
 import main.kts.helper.CulturalOfferMapper;
 import main.kts.model.CulturalOffer;
-import main.kts.model.RegisteredUser;
 import main.kts.model.Type;
 import main.kts.service.CulturalOfferService;
-import main.kts.service.RegisteredUserService;
 import main.kts.service.TypeService;
+
 
 @RestController
 @RequestMapping(value = "/api/culturaloffer", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -109,6 +107,7 @@ public class CulturalOfferController {
     
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCulturalOffer(@PathVariable Long id){
+
         try {
             culturalOfferService.delete(id);
         } catch (Exception e) {
