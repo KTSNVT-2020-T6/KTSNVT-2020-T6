@@ -2,6 +2,7 @@ package main.kts.service;
 
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,19 +17,24 @@ import main.kts.model.CulturalOffer;
 import main.kts.model.Image;
 import main.kts.model.Post;
 import main.kts.model.Rate;
+import main.kts.model.RegisteredUser;
 import main.kts.repository.CulturalOfferRepository;
 import main.kts.repository.ImageRepository;
 import main.kts.repository.RateRepository;
+import main.kts.repository.RegisteredUserRepository;
+
 
 @Service
 public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 
 	@Autowired
 	private CulturalOfferRepository culturalOfferRepository;
-	
+	@Autowired
+	private RegisteredUserRepository registeredUserRepository;
 	@Autowired
 	private RateRepository rateRepository;
-	
+	@Autowired
+	private EmailService emailService;
 	@Autowired
 	private ImageRepository imageRepository;
 	
@@ -128,7 +134,21 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 		for (Rate rate : rates) {
 			rateRepository.delete(rate);
 		}
+		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
+		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
+		emailService.nofiticationForUpdateCulturalOffer(users, existingCO.getName());
 		culturalOfferRepository.delete(existingCO);
+		
+	}
+
+	private ArrayList<RegisteredUser> getListOfRegisteredUser(List<Long> usersId) {
+		
+		ArrayList<RegisteredUser> users = new ArrayList<RegisteredUser>();
+		for(Long l: usersId) {
+			RegisteredUser ru = registeredUserRepository.findByIdRU(l);
+			users.add(ru);
+		}
+		return users;
 	}
 
 	private boolean validateImage(Image image) {

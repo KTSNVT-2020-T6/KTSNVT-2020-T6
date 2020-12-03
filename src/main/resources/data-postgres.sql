@@ -9,7 +9,7 @@ insert into image (name, relative_path) values ('slika4', 'path4.jpg');
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
 values ('admin', true,'admin@gmail.com', 'Marko','Markovic','sifra',true,1);
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
-values ('registered_user',true,'user@gmail.com', 'Ivan','Ivanovic','sifra123',true,2);
+values ('registered_user',true,'trajkovicka.9909@gmail.com', 'Ivan','Ivanovic','sifra123',true,2);
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
 values ('registered_user',true,'user2@gmail.com', 'Ivana','Ivanovic','sifra1234',true,3);
 
