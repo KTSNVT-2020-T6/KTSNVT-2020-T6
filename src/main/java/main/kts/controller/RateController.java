@@ -2,6 +2,7 @@ package main.kts.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.RateDTO;
 import main.kts.helper.RateMapper;
+import main.kts.model.CulturalOffer;
 import main.kts.model.Rate;
+import main.kts.model.RegisteredUser;
+import main.kts.service.CulturalOfferService;
 import main.kts.service.RateService;
+import main.kts.service.RegisteredUserService;
 
 @RestController
 @RequestMapping(value = "/api/rate", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,6 +34,12 @@ public class RateController {
 
 	private RateMapper rateMapper;
 
+	@Autowired
+	private RegisteredUserService registeredUserService;
+	
+	@Autowired
+	private CulturalOfferService culturalOfferService;
+	
 	public RateController() {
 		rateMapper = new RateMapper();
 	}
@@ -50,25 +61,32 @@ public class RateController {
         return new ResponseEntity<>(rateMapper.toDto(rate), HttpStatus.OK);
     }
     
-//    @RequestMapping(value = "/page", method=RequestMethod.GET)
-//    public ResponseEntity<Page<RateDTO>> loadCharactersPage(Pageable pageable) {
-//    	Page<Rate> rates = rateService.findAllPage(pageable);
-//    	if(rates == null){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    	return new ResponseEntity<>(toRateDTOPage(rates), HttpStatus.OK);
-//    }
+    @RequestMapping(value="/",method=RequestMethod.GET)
+    public ResponseEntity<Page<RateDTO>> loadRatePage(Pageable pageable) {
+    	Page<Rate> rates = rateService.findAll(pageable);
+    	if(rates == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	Page<RateDTO> ratesDTO = toRateDTOPage(rates);
+    	return new ResponseEntity<>(ratesDTO, HttpStatus.OK);
+    }
     
 
 	@RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<RateDTO> createRate(@RequestBody RateDTO rateDTO){
     	Rate rate;
-
+    	RegisteredUser registeredUser;
+    	CulturalOffer culturalOffer;
     	if(!this.validateRateDTO(rateDTO))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	
         try {
-            rate = rateService.create(rateMapper.toEntity(rateDTO));
+        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserDTO().getId());
+        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferDTO().getId());
+        	rate = rateMapper.toEntity(rateDTO);
+        	rate.setCulturalOffer(culturalOffer);
+        	rate.setRegistredUser(registeredUser);
+            rate = rateService.create(rate);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -79,8 +97,16 @@ public class RateController {
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RateDTO> updateRate(@RequestBody RateDTO rateDTO, @PathVariable Long id){
         Rate rate;
+        RegisteredUser registeredUser;
+    	CulturalOffer culturalOffer;
         try {
-            rate = rateService.update(rateMapper.toEntity(rateDTO), id);
+        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserDTO().getId());
+        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferDTO().getId());
+        	rate = rateMapper.toEntity(rateDTO);
+        	rate.setCulturalOffer(culturalOffer);
+        	rate.setRegistredUser(registeredUser);
+            rate = rateService.update(rate, id);
+            
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -89,14 +115,14 @@ public class RateController {
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteRate(@PathVariable Long id){
+    public ResponseEntity<String> deleteRate(@PathVariable Long id){
         try {
             rateService.delete(id);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
     
 	
@@ -108,10 +134,16 @@ public class RateController {
         return rateDTOS;
     }
 	
-//	private Object toRateDTOPage(Page<Rate> rates) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	private Page<RateDTO> toRateDTOPage(Page<Rate> rates) {
+		Page<RateDTO> dtoPage = rates.map(new Function<Rate, RateDTO>() {
+		    @Override
+		    public RateDTO apply(Rate entity) {
+		    	RateDTO dto = rateMapper.toDto(entity);
+		        return dto;
+		    }
+		});
+		return dtoPage;
+	}
 	
 	private boolean validateRateDTO(RateDTO rateDTO) {
 		if(rateDTO.getNumber() <= 0 || rateDTO.getNumber() > 5)

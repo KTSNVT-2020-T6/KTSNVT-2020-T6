@@ -15,7 +15,7 @@ public class RegisteredUserMapper implements MapperInterface<RegisteredUser, Reg
 
 	
 	ImageMapper imageMapper = new ImageMapper();
-	
+	CulturalOfferMapper mapper = new CulturalOfferMapper();
 	public RegisteredUserMapper() {}
 	
 	@Override
@@ -23,6 +23,10 @@ public class RegisteredUserMapper implements MapperInterface<RegisteredUser, Reg
 		Set<Authority> auth = new HashSet<Authority>();
 		auth.add(new Authority("REGISTERED_USER"));
 		Set<CulturalOffer> offers = new HashSet<CulturalOffer>();
+
+		for (CulturalOfferDTO cud : dto.getFavoriteCulturalOffersDTO()) 
+			offers.add(mapper.toEntity(cud));
+		
 		return new RegisteredUser(dto.getId(),dto.getFirstName(), dto.getLastName(),dto.getEmail(), dto.getPassword(), dto.getActive(), dto.getVerified(), imageMapper.toEntity(dto.getImageDTO()), auth,
 				offers);
 	}
@@ -32,8 +36,9 @@ public class RegisteredUserMapper implements MapperInterface<RegisteredUser, Reg
 		Set<AuthorityDTO> auth = new HashSet<AuthorityDTO>();
 		auth.add(new AuthorityDTO("REGISTERED_USER"));
 		Set<CulturalOfferDTO> offers = new HashSet<CulturalOfferDTO>();
-		
-		///SET OF CULTURAL OFFERS NEED TO BE CONVERTED 
+
+		for (CulturalOffer cu : entity.getFavoriteCulturalOffers()) 
+			offers.add(mapper.toDto(cu));
 		RegisteredUserDTO rudto = new RegisteredUserDTO(entity.getId(),entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified()
 				, imageMapper.toDto(entity.getImage()), auth,offers);
 		System.out.println(rudto);

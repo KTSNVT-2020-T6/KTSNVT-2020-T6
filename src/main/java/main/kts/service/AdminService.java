@@ -1,5 +1,7 @@
 package main.kts.service;
 
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,8 +11,11 @@ import org.springframework.stereotype.Service;
 
 import main.kts.model.Admin;
 import main.kts.model.Authority;
+import main.kts.model.CulturalOffer;
+import main.kts.model.Image;
 import main.kts.repository.AdminRepository;
 import main.kts.repository.AuthorityRepository;
+import main.kts.repository.ImageRepository;
 
 
 @Service
@@ -18,6 +23,8 @@ public class AdminService implements ServiceInterface<Admin>{
 
 	@Autowired 
 	private AdminRepository repository;
+	@Autowired 
+	private ImageRepository imageRepository;
 	
 	@Autowired 
 	private AuthorityRepository authorityRepository;
@@ -46,46 +53,64 @@ public class AdminService implements ServiceInterface<Admin>{
 		a.setPassword(entity.getPassword());
 		a.setActive(true);
 		a.setVerified(false);
-		a.setImage(entity.getImage());
 		Set<Authority> set = new HashSet<Authority>();
 		set.add(authorityRepository.findByRole("ADMIN"));
 		a.setAuthority(set);
-		if(entity.getImage() != null)
+		if(entity.getImage() != null) {
+			if(validateImage(entity.getImage())) 
+				imageRepository.save(entity.getImage());
+			
+			else
+			{
+				throw new Exception("Relative path isn't valid.");
+			}
+			
 			a.setImage(entity.getImage());
-		else // default profile image will be loaded, remove null then
-			a.setImage(null);
-		a.setCulturalOffer(entity.getCulturalOffer());
-        return a;
+		}
+		else
+			a.setImage(null); // or default image??
+		a.setCulturalOffer( new HashSet<CulturalOffer>());
+        return repository.save(a);
 
 	}
 
+	
 	@Override
 	public Admin update(Admin entity, Long id) throws Exception {
 		Admin a = repository.findById(id).orElse(null);
 		if(a == null)
 			throw new Exception("Admin with given id doesn't exist");
-		//validate new 
 		validateAttributes(a);	
 		String oldEmail = a.getEmail();
-		
 		Admin checkAdmin;
-		if(oldEmail != entity.getEmail()) {
-			//check in dataBase the new one
+		if(!oldEmail.equals(entity.getEmail())) {
 			checkAdmin = repository.findByEmail(entity.getEmail());
-			//if exist then exception
 		    if(checkAdmin != null)
 		    	throw new Exception("User with given email already exist");
 		    a.setEmail(entity.getEmail());
 		}
+		else {
+			a.setEmail(oldEmail);
+		}
 		a.setFirstName(entity.getFirstName());
 		a.setLastName(entity.getLastName());
 		a.setPassword(entity.getPassword());
-		a.setVerified(entity.getVerified());
-		a.setImage(entity.getImage());
-		if(entity.getImage() != null)
-			a.setImage(entity.getImage());
-		else // default profile image will be loaded, remove null then
-			a.setImage(null);
+		Image oldImage = a.getImage();
+		
+		if(entity.getImage() != null && ( !oldImage.getName().equals(entity.getImage().getName())
+				|| !oldImage.getrelativePath().equals(entity.getImage().getrelativePath()))) {
+			
+			if(validateImage(entity.getImage())) {
+				Image image = imageRepository.save(entity.getImage());
+				a.setImage(image);
+			}
+			else
+				throw new Exception("Relative path isn't valid.");	
+		}
+		else {
+			
+			a.setImage(oldImage); 
+		}
 		a.setCulturalOffer(entity.getCulturalOffer());
 		
 		return repository.save(a);
@@ -107,8 +132,8 @@ public class AdminService implements ServiceInterface<Admin>{
 		Admin a = repository.findById(id).orElse(null);
 		if(a == null)
 			throw new Exception("Admin doesn't exist.");
-		//when it is the last one set it cann't be done
 		a.setActive(false);
+		a = repository.save(a);
 	}
 
 	public Admin findByEmail(String email) {
@@ -118,5 +143,18 @@ public class AdminService implements ServiceInterface<Admin>{
 	public List<Admin> findAllAdmin() {
 		return repository.findAllAdmin();
 	}
+	private boolean validateImage(Image image) {
+		if(image.getRelativePath() == null) 
+			return false;
+		if(image.getName() == null) 
+			return false;
+		try {
+	        Paths.get(image.getRelativePath());
+	    } catch (InvalidPathException | NullPointerException ex) {
+	        return false;
+	    }
+		return true;
+	}
+
 
 }

@@ -1,5 +1,7 @@
 package main.kts.service;
 
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,11 +9,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import main.kts.model.Admin;
 import main.kts.model.Authority;
 import main.kts.model.CulturalOffer;
+import main.kts.model.Image;
 import main.kts.model.RegisteredUser;
 import main.kts.repository.AuthorityRepository;
+import main.kts.repository.ImageRepository;
 import main.kts.repository.RegisteredUserRepository;
 
 @Service
@@ -19,6 +22,9 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 
 	@Autowired
 	private RegisteredUserRepository repository;
+	
+	@Autowired 
+	private ImageRepository imageRepository;
 	
 	@Autowired 
 	private AuthorityRepository authorityRepository;
@@ -40,8 +46,6 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		RegisteredUser ru = repository.findByEmail(entity.getEmail());
 		if (ru  != null)
 			throw new Exception("User is already registered");
-		
-		//else make new admin instance
 		RegisteredUser ruser = new RegisteredUser();
 		ruser.setFirstName(entity.getFirstName());
 		ruser.setLastName(entity.getLastName());
@@ -51,20 +55,27 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		ruser.setVerified(false);
 		ruser.setImage(entity.getImage());
 		Set<Authority> set = new HashSet<Authority>();
+		
 		set.add(authorityRepository.findByRole("REGISTERED_USER"));
 		ruser.setAuthority(set);
-		if(entity.getImage() != null)
+		if(entity.getImage() != null) {
+			if(validateImage(entity.getImage())) 
+				imageRepository.save(entity.getImage());
+			
+			else
+			{
+				throw new Exception("Relative path isn't valid.");
+			}
+			
 			ruser.setImage(entity.getImage());
-		else // default profile image will be loaded, remove null then
-			ruser.setImage(null);
-		Set<CulturalOffer> set1 = new HashSet<CulturalOffer>();
-		if(entity.getFavoriteCulturalOffers().isEmpty())
-			set1 = new HashSet<CulturalOffer>();
+		}
 		else
-			set1 = entity.getFavoriteCulturalOffers();
-		ruser.setFavoriteCulturalOffers(set1);
-        return ruser;
+			ruser.setImage(null);
+		ruser.setFavoriteCulturalOffers(new HashSet<CulturalOffer>());
+        return repository.save(ruser);
 	}
+
+	
 
 	@Override
 	public RegisteredUser update(RegisteredUser entity, Long id) throws Exception {
@@ -76,36 +87,46 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		String oldEmail = u.getEmail();
 		
 		RegisteredUser checkRegisteredUser;
-		if(oldEmail != entity.getEmail()) {
-			//check in dataBase the new one
+		if(!oldEmail.equals(entity.getEmail())) {
 			checkRegisteredUser = repository.findByEmail(entity.getEmail());
-			//if exist then exception
 		    if(checkRegisteredUser != null)
-		    	throw new Exception("Email already exist");
+		    	throw new Exception("User with given email already exist");
 		    u.setEmail(entity.getEmail());
+		}
+		else {
+			u.setEmail(oldEmail);
 		}
 		u.setFirstName(entity.getFirstName());
 		u.setLastName(entity.getLastName());
 		u.setPassword(entity.getPassword());
 		u.setVerified(entity.getVerified());
-		u.setImage(entity.getImage());
-		if(entity.getImage() != null)
-			u.setImage(entity.getImage());
-		else // default profile image will be loaded, remove null then
-			u.setImage(null);
-		u.setFavoriteCulturalOffers(entity.getFavoriteCulturalOffers());
-		//treba save ovde
+		Image oldImage = u.getImage();
+		if(entity.getImage() != null && ( !oldImage.getName().equals(entity.getImage().getName())
+				|| !oldImage.getrelativePath().equals(entity.getImage().getrelativePath()))) {
+			
+			if(validateImage(entity.getImage())) {
+				Image image = imageRepository.save(entity.getImage());
+				u.setImage(image);
+			}
+			else
+				throw new Exception("Relative path isn't valid.");	
+		}
+		else {
+			
+			u.setImage(oldImage); 
+		}
+		
+		u.setFavoriteCulturalOffers(entity.getFavoriteCulturalOffers());	
 		return repository.save(u);
 	}
-
 
 	@Override
 	public void delete(Long id) throws Exception {
 		RegisteredUser a = repository.findById(id).orElse(null);
 		if(a == null)
 			throw new Exception("Registered user doesn't exist.");
-		//when it is the last one set it cann't be done
 		a.setActive(false);
+		a = repository.save(a);
 		
 	}
 	private void validateAttributes(RegisteredUser u) throws Exception {
@@ -117,7 +138,9 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 			throw new Exception("Registered user's email is empty.");
 		if(u.getPassword() == null)
 			throw new Exception("Registered user's password is empty.");
+		
 	}
+
 
 	public List<RegisteredUser> findAllRegisteredUser() {
 		return repository.findAllRegisteredUser();
@@ -125,6 +148,19 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	public RegisteredUser findByEmail(String email) {
 		return repository.findByEmail(email);
 	}
+	private boolean validateImage(Image image) {
+		if(image.getRelativePath() == null) 
+			return false;
+		if(image.getName() == null) 
+			return false;
+		try {
+	        Paths.get(image.getRelativePath());
+	    } catch (InvalidPathException | NullPointerException ex) {
+	        return false;
+	    }
+		return true;
+	}
+
 
 
 }

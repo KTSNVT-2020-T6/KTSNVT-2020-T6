@@ -3,6 +3,8 @@ package main.kts.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Comment;
@@ -78,6 +80,10 @@ public class CommentService implements ServiceInterface<Comment> {
 			throw new Exception("Comment with given id doesn't exist");
 		}
 		commentRepository.delete(existingComment);	
+	}
+
+	public Page<Comment> findAll(Pageable pageable) {
+		return commentRepository.findAll(pageable);
 	}
 
 }

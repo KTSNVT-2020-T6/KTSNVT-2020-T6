@@ -30,6 +30,7 @@ public class Admin extends User {
 	public Admin(Long id, String firstName, String lastName, String email, String password, Boolean active,
 			Boolean verified, Image image, Set<Authority> auth, Set<CulturalOffer> culturalOffers) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

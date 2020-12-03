@@ -135,6 +135,14 @@ public class CulturalOfferDTO {
 		this.commentDTO = commentDTO;
 	}
 
+	@Override
+	public String toString() {
+		return "CulturalOfferDTO [id=" + id + ", averageRate=" + averageRate + ", description=" + description
+				+ ", name=" + name + ", date=" + date + ", lat=" + lat + ", lon=" + lon + ", postDTO=" + postDTO
+				+ ", typeDTO=" + typeDTO + ", imageDTO=" + imageDTO + ", commentDTO=" + commentDTO + ", getId()="
+				+ getId() + "]";
+	}
+
 	
 	
 }

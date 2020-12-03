@@ -22,22 +22,19 @@ import main.kts.model.RegisteredUser;
 import main.kts.service.RegisteredUserService;
 
 @RestController
-@RequestMapping(value = "/api/registered_users", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/registered_user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RegisteredUserController {
 	
 	@Autowired
 	private RegisteredUserService service;
 	
-	@Autowired
-	private RegisteredUserMapper mapper;
+	private RegisteredUserMapper mapper = new RegisteredUserMapper();
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<RegisteredUserDTO>> getAllRegUsers(){
 		List<RegisteredUser> admins = service.findAllRegisteredUser();
 		return new ResponseEntity<>(toDTORegsUserList(admins), HttpStatus.OK);
 	}
-
-
 
 	@RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<RegisteredUserDTO> createRegisteredUser(@RequestBody RegisteredUserDTO registeredUserDTO){

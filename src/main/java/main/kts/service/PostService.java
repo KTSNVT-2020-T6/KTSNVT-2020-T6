@@ -3,6 +3,8 @@ package main.kts.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Post;
@@ -33,11 +35,6 @@ public class PostService implements ServiceInterface<Post> {
 		// if image doesn't exist
 		if (imageRepository.findById(entity.getImage().getId()).orElse(null) == null)
 			throw new Exception("Image doesn't exist");
-		
-		// if post with same image exists
-		Post existingPost= postRepository.findOneByImageId(entity.getImage().getId());
-		if (existingPost != null)
-			throw new Exception("Given image already represents some post");
 
 		// make new post instance
 		Post p= new Post();
@@ -69,6 +66,10 @@ public class PostService implements ServiceInterface<Post> {
 			throw new Exception("Post with given id doesn't exist");
 		}
 		postRepository.delete(existingPost);
+	}
+
+	public Page<Post> findAll(Pageable pageable) {
+		return postRepository.findAll(pageable);
 	}
 
 }
