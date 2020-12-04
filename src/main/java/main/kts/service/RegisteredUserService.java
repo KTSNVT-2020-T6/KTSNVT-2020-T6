@@ -1,7 +1,6 @@
 package main.kts.service;
 
-import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,10 +10,8 @@ import org.springframework.stereotype.Service;
 
 import main.kts.model.Authority;
 import main.kts.model.CulturalOffer;
-import main.kts.model.Image;
 import main.kts.model.RegisteredUser;
 import main.kts.repository.AuthorityRepository;
-import main.kts.repository.ImageRepository;
 import main.kts.repository.RegisteredUserRepository;
 
 @Service
@@ -22,9 +19,6 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 
 	@Autowired
 	private RegisteredUserRepository repository;
-	
-	@Autowired 
-	private ImageRepository imageRepository;
 	
 	@Autowired 
 	private AuthorityRepository authorityRepository;
@@ -53,20 +47,11 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		ruser.setPassword(entity.getPassword());
 		ruser.setActive(true);
 		ruser.setVerified(false);
-		ruser.setImage(entity.getImage());
 		Set<Authority> set = new HashSet<Authority>();
 		
 		set.add(authorityRepository.findByRole("REGISTERED_USER"));
 		ruser.setAuthority(set);
 		if(entity.getImage() != null) {
-			if(validateImage(entity.getImage())) 
-				imageRepository.save(entity.getImage());
-			
-			else
-			{
-				throw new Exception("Relative path isn't valid.");
-			}
-			
 			ruser.setImage(entity.getImage());
 		}
 		else
@@ -100,21 +85,11 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		u.setLastName(entity.getLastName());
 		u.setPassword(entity.getPassword());
 		u.setVerified(entity.getVerified());
-		Image oldImage = u.getImage();
-		if(entity.getImage() != null && ( !oldImage.getName().equals(entity.getImage().getName())
-				|| !oldImage.getrelativePath().equals(entity.getImage().getrelativePath()))) {
-			
-			if(validateImage(entity.getImage())) {
-				Image image = imageRepository.save(entity.getImage());
-				u.setImage(image);
-			}
-			else
-				throw new Exception("Relative path isn't valid.");	
+		if(entity.getImage() != null) {
+			u.setImage(entity.getImage());
 		}
-		else {
-			
-			u.setImage(oldImage); 
-		}
+		else
+			u.setImage(null);
 		
 		u.setFavoriteCulturalOffers(entity.getFavoriteCulturalOffers());	
 		return repository.save(u);
@@ -148,18 +123,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	public RegisteredUser findByEmail(String email) {
 		return repository.findByEmail(email);
 	}
-	private boolean validateImage(Image image) {
-		if(image.getRelativePath() == null) 
-			return false;
-		if(image.getName() == null) 
-			return false;
-		try {
-	        Paths.get(image.getRelativePath());
-	    } catch (InvalidPathException | NullPointerException ex) {
-	        return false;
-	    }
-		return true;
-	}
+
 
 	public List<Long> findByIdCO(Long id) {
 		return repository.findByIdCO(id);

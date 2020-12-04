@@ -23,9 +23,8 @@ import main.kts.repository.ImageRepository;
 import main.kts.repository.RateRepository;
 import main.kts.repository.RegisteredUserRepository;
 
-
 @Service
-public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
+public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 
 	@Autowired
 	private CulturalOfferRepository culturalOfferRepository;
@@ -37,7 +36,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 	private EmailService emailService;
 	@Autowired
 	private ImageRepository imageRepository;
-	
+
 	@Override
 	public List<CulturalOffer> findAll() {
 		return culturalOfferRepository.findAll();
@@ -55,31 +54,20 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 		co.setAverageRate(0.0);
 		co.setDescription(entity.getDescription());
 		co.setName(entity.getName());
-		if(entity.getDate() != null)
+		if (entity.getDate() != null)
 			co.setDate(entity.getDate());
 		else
 			co.setDate(null);
 		co.setLat(entity.getLat());
 		co.setLon(entity.getLon());
 		co.setType(entity.getType());
-		if(entity.getImage() != null) {
-			for(Image i : entity.getImage()) {
-				if(validateImage(i)) {
-					imageRepository.save(i);
-				}
-				else
-				{
-					throw new Exception("Relative path isn't valid.");
-				}
-			}
-			
+		if (entity.getImage() != null) {
 			co.setImage(entity.getImage());
-		}
-		else
+		} else
 			co.setImage(null); // or default image??
 		co.setComment(new HashSet<Comment>());
 		co.setPost(new HashSet<Post>());
-		
+
 		co = culturalOfferRepository.save(co);
 		return co;
 	}
@@ -87,14 +75,14 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 	@Override
 	public CulturalOffer update(CulturalOffer entity, Long id) throws Exception {
 		CulturalOffer existingCO = culturalOfferRepository.findById(id).orElse(null);
-		if(existingCO == null) {
+		if (existingCO == null) {
 			throw new Exception("Cultural offer with given id doesn't exist");
 		}
-		
+
 		/***
-		 *  set everything except averageRate, posts and comments 
-		 *  (it is changed only through other methods)
-		 */ 
+		 * set everything except averageRate, posts and comments (it is changed only
+		 * through other methods)
+		 */
 		existingCO.setDescription(entity.getDescription());
 		existingCO.setName(entity.getName());
 		existingCO.setDate(entity.getDate());
@@ -102,32 +90,18 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 		existingCO.setLon(entity.getLon());
 		existingCO.setType(entity.getType());
 		Set<Image> oldImages = imageRepository.findAllByCulturalOfferId(id);
-		if(entity.getImage() != null) {
-			for(Image i : entity.getImage()) {
-				if(validateImage(i)) {
-					imageRepository.save(i);
-					oldImages.add(i);
-				}
-				else
-				{
-					throw new Exception("Not valid.");
-				}
-			}
-			
-			existingCO.setImage(oldImages);
-		}
+		existingCO.setImage(oldImages);
 
-		
 		return culturalOfferRepository.save(existingCO);
 	}
 
 	@Override
 	public void delete(Long id) throws Exception {
 		CulturalOffer existingCO = culturalOfferRepository.findById(id).orElse(null);
-		if(existingCO == null) {
+		if (existingCO == null) {
 			throw new Exception("Cultural offer with given id doesn't exist");
 		}
-		
+
 		// find and delete all rates connected to this offer
 		// comments, posts and images are also deleted because of CascadeType.ALL
 		List<Rate> rates = rateRepository.findAllByCulturalOfferId(existingCO.getId());
@@ -138,31 +112,19 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer>{
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
 		emailService.nofiticationForUpdateCulturalOffer(users, existingCO.getName());
 		culturalOfferRepository.delete(existingCO);
-		
+
 	}
 
 	private ArrayList<RegisteredUser> getListOfRegisteredUser(List<Long> usersId) {
-		
+
 		ArrayList<RegisteredUser> users = new ArrayList<RegisteredUser>();
-		for(Long l: usersId) {
+		for (Long l : usersId) {
 			RegisteredUser ru = registeredUserRepository.findByIdRU(l);
 			users.add(ru);
 		}
 		return users;
 	}
 
-	private boolean validateImage(Image image) {
-		if(image.getRelativePath() == null) 
-			return false;
-		if(image.getName() == null) 
-			return false;
-		try {
-	        Paths.get(image.getRelativePath());
-	    } catch (InvalidPathException | NullPointerException ex) {
-	        return false;
-	    }
-		return true;
-	}
 
 	public Page<CulturalOffer> findAll(Pageable pageable) {
 		return culturalOfferRepository.findAll(pageable);

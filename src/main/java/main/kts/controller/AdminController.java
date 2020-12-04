@@ -3,7 +3,7 @@ package main.kts.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
- 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import main.kts.dto.AdminDTO;
 import main.kts.helper.AdminMapper;
 import main.kts.model.Admin;
+import main.kts.model.Image;
 import main.kts.service.AdminService;
+import main.kts.service.ImageService;
 
 @RestController
 @RequestMapping(value = "/api/admin", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -25,6 +27,9 @@ public class AdminController {
 	
 	@Autowired 
 	private AdminService service;
+	
+	@Autowired 
+	private ImageService imageService;
 
 	private AdminMapper mapper = new AdminMapper();
 	
@@ -37,10 +42,14 @@ public class AdminController {
 	@RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<AdminDTO> createAdmin(@RequestBody AdminDTO adminDTO){
 		Admin admin;
+		Image image;
 		if(!this.validate(adminDTO))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
-            admin = service.create(mapper.toEntity(adminDTO));
+        	image = imageService.findOne(adminDTO.getImageDTO().getId());
+            admin = mapper.toEntity(adminDTO);
+            admin.setImage(image);
+        	admin = service.create(admin);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -51,8 +60,12 @@ public class AdminController {
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AdminDTO> updateAdmin(@RequestBody AdminDTO adminDTO, @PathVariable Long id){
         Admin admin;
+        Image image;
         try {
-            admin = service.update(mapper.toEntity(adminDTO), id);
+        	image = imageService.findOne(adminDTO.getImageDTO().getId());
+            admin = mapper.toEntity(adminDTO);
+            admin.setImage(image);
+        	admin = service.update(admin, id);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -1,7 +1,9 @@
 package main.kts.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.CulturalOfferDTO;
+import main.kts.dto.ImageDTO;
 import main.kts.helper.CulturalOfferMapper;
 import main.kts.model.CulturalOffer;
+import main.kts.model.Image;
 import main.kts.model.Type;
 import main.kts.service.CulturalOfferService;
+import main.kts.service.ImageService;
 import main.kts.service.TypeService;
 
 
@@ -33,6 +38,9 @@ public class CulturalOfferController {
 	
 	@Autowired
 	private TypeService typeService;
+	
+	@Autowired
+	private ImageService imageService;
 	
 	private CulturalOfferMapper culturalOfferMapper;
 	
@@ -71,14 +79,19 @@ public class CulturalOfferController {
     public ResponseEntity<CulturalOfferDTO> createCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO){
     	CulturalOffer culturalOffer = null;
     	Type type;
+    	Set<Image> images = new HashSet<Image>();
     	if(!this.validateCulturalOfferDTO(culturalOfferDTO))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	
         try {
+        	for (ImageDTO i : culturalOfferDTO.getImageDTO()) {
+        		images.add(imageService.findOne(i.getId()));
+        	}
         	type = typeService.findOne(culturalOfferDTO.getTypeDTO().getId());
         	culturalOffer = culturalOfferMapper.toEntity(culturalOfferDTO);
         	culturalOffer.setType(type);
-            culturalOffer = culturalOfferService.create(culturalOffer);
+        	culturalOffer.setImage(images);
+        	culturalOffer = culturalOfferService.create(culturalOffer);
         } catch (Exception e) {
             return new ResponseEntity<>(new CulturalOfferDTO(),HttpStatus.BAD_REQUEST);
         }
@@ -90,14 +103,19 @@ public class CulturalOfferController {
     public ResponseEntity<CulturalOfferDTO> updateCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO, @PathVariable Long id){
         CulturalOffer culturalOffer;
         Type type;
+        Set<Image> images = new HashSet<Image>();
         if(!this.validateCulturalOfferDTO(culturalOfferDTO))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	
         try {
+        	for (ImageDTO i : culturalOfferDTO.getImageDTO()) {
+        		images.add(imageService.findOne(i.getId()));
+        	}
         	type = typeService.findOne(culturalOfferDTO.getTypeDTO().getId());
         	culturalOffer = culturalOfferMapper.toEntity(culturalOfferDTO);
         	culturalOffer.setType(type);
-            culturalOffer = culturalOfferService.update(culturalOffer, id);
+        	culturalOffer.setImage(images);
+        	culturalOffer = culturalOfferService.update(culturalOffer, id);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
