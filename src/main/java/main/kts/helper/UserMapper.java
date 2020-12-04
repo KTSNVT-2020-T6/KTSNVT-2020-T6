@@ -30,8 +30,9 @@ public class UserMapper implements MapperInterface<User, UserDTO>{
 		for (Authority authority : entity.getAuthority()) {
 			authoritiesDTO.add(authorityMapper.toDto(authority));
 		}
-		return new UserDTO(entity.getId(),entity.getFirstName(), entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified(), imageDTO, authoritiesDTO);
-		
+		return new UserDTO(entity.getId(),entity.getFirstName(), entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified(), imageDTO.getId());
 	}
+	
+	
 
 }

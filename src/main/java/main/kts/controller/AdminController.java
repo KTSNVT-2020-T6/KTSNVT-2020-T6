@@ -46,7 +46,7 @@ public class AdminController {
 		if(!this.validate(adminDTO))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
-        	image = imageService.findOne(adminDTO.getImageDTO().getId());
+        	image = imageService.findOne(adminDTO.getIdImageDTO());
             admin = mapper.toEntity(adminDTO);
             admin.setImage(image);
         	admin = service.create(admin);
@@ -54,15 +54,17 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(mapper.toDto(admin), HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.toDto(admin),HttpStatus.CREATED);
     }
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AdminDTO> updateAdmin(@RequestBody AdminDTO adminDTO, @PathVariable Long id){
         Admin admin;
         Image image;
+        if(!this.validate(adminDTO))
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
-        	image = imageService.findOne(adminDTO.getImageDTO().getId());
+        	image = imageService.findOne(adminDTO.getIdImageDTO());
             admin = mapper.toEntity(adminDTO);
             admin.setImage(image);
         	admin = service.update(admin, id);

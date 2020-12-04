@@ -12,15 +12,22 @@ public class UserDTO {
 	protected Boolean active;
 	protected Boolean verified;
 	   
-	protected ImageDTO imageDTO;
-	protected Set<AuthorityDTO> authorityDTO;
+	protected Long idImageDTO;
+	//protected Set<AuthorityDTO> authorityDTO;
 	
 	public UserDTO() {
 		super();
 	}
-	
+	public UserDTO(String firstName, String lastName, String email, String password, Long imageDTO) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.idImageDTO = imageDTO;
+	}
 	public UserDTO(Long id, String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
-			ImageDTO imageDTO, Set<AuthorityDTO> authorityDTO) {
+			Long imageDTO) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -29,9 +36,21 @@ public class UserDTO {
 		this.password = password;
 		this.active = active;
 		this.verified = verified;
-		this.imageDTO = imageDTO;
-		this.authorityDTO = authorityDTO;
+		this.idImageDTO = imageDTO;
 	}
+//	public UserDTO(Long id, String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
+//			Long imageDTO, Set<AuthorityDTO> authorityDTO) {
+//		super();
+//		this.id = id;
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.email = email;
+//		this.password = password;
+//		this.active = active;
+//		this.verified = verified;
+//		this.idImageDTO = imageDTO;
+//		this.authorityDTO = authorityDTO;
+//	}
 	
 	public Long getId() {
 		return id;
@@ -87,21 +106,20 @@ public class UserDTO {
 	public void setVerified(Boolean verified) {
 		this.verified = verified;
 	}
+//	public Set<AuthorityDTO> getAuthorityDTO() {
+//		return authorityDTO;
+//	}
+//
+//	public void setAuthorityDTO(Set<AuthorityDTO> authorityDTO) {
+//		this.authorityDTO = authorityDTO;
+//	}
 
-	public ImageDTO getImageDTO() {
-		return imageDTO;
+	public Long getIdImageDTO() {
+		return idImageDTO;
 	}
 
-	public void setImageDTO(ImageDTO imageDTO) {
-		this.imageDTO = imageDTO;
-	}
-
-	public Set<AuthorityDTO> getAuthorityDTO() {
-		return authorityDTO;
-	}
-
-	public void setAuthorityDTO(Set<AuthorityDTO> authorityDTO) {
-		this.authorityDTO = authorityDTO;
+	public void setIdImageDTO(Long idImageDTO) {
+		this.idImageDTO = idImageDTO;
 	}
 	
 	

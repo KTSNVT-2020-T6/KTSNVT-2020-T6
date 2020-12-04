@@ -42,6 +42,14 @@ public class Admin extends User {
 		this.culturalOffer = culturalOffers;
 	}
 
+	public Admin(String firstName, String lastName, String email, String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+	}
+
+
 	public Set<CulturalOffer> getCulturalOffer() {
 		return culturalOffer;
 	}

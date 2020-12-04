@@ -51,7 +51,7 @@ public class RegisteredUserController {
 		if(!this.validate(registeredUserDTO))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
-        	image = imageService.findOne(registeredUserDTO.getImageDTO().getId());
+        	image = imageService.findOne(registeredUserDTO.getIdImageDTO());
         	registeredUser = mapper.toEntity(registeredUserDTO);
         	registeredUser.setImage(image);
         	registeredUser = service.create(registeredUser);
@@ -65,8 +65,10 @@ public class RegisteredUserController {
     public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@RequestBody RegisteredUserDTO registeredUserDTO, @PathVariable Long id){
 		RegisteredUser registeredUser;
         Image image;
+        if(!this.validate(registeredUserDTO))
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		try {
-			image = imageService.findOne(registeredUserDTO.getImageDTO().getId());
+			image = imageService.findOne(registeredUserDTO.getIdImageDTO());
         	registeredUser = mapper.toEntity(registeredUserDTO);
         	registeredUser.setImage(image);
         	registeredUser = service.update(registeredUser, id);

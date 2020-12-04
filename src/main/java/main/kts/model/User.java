@@ -59,21 +59,6 @@ public abstract class User {
 		super();
 	}
 
-	public User(String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
-			Image image, Set<Authority> authority) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.active = active;
-		this.verified = verified;
-		this.image = image;
-		this.authority = authority;
-	}
-	
-	
-
 	public User(Long id, String firstName, String lastName, String email, String password, Boolean active,
 			Boolean verified, Image image, Set<Authority> authority) {
 		super();

@@ -40,6 +40,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		RegisteredUser ru = repository.findByEmail(entity.getEmail());
 		if (ru  != null)
 			throw new Exception("User is already registered");
+		
 		RegisteredUser ruser = new RegisteredUser();
 		ruser.setFirstName(entity.getFirstName());
 		ruser.setLastName(entity.getLastName());
@@ -48,7 +49,6 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		ruser.setActive(true);
 		ruser.setVerified(false);
 		Set<Authority> set = new HashSet<Authority>();
-		
 		set.add(authorityRepository.findByRole("REGISTERED_USER"));
 		ruser.setAuthority(set);
 		if(entity.getImage() != null) {
@@ -67,15 +67,13 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		RegisteredUser u = repository.findById(id).orElse(null);
 		if(u == null)
 			throw new Exception("User doesn't registered");
-		//validate new 
-		validateAttributes(u);	
 		String oldEmail = u.getEmail();
-		
 		RegisteredUser checkRegisteredUser;
 		if(!oldEmail.equals(entity.getEmail())) {
 			checkRegisteredUser = repository.findByEmail(entity.getEmail());
-		    if(checkRegisteredUser != null)
+		    if(checkRegisteredUser != null) {
 		    	throw new Exception("User with given email already exist");
+		    }
 		    u.setEmail(entity.getEmail());
 		}
 		else {
@@ -84,14 +82,9 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		u.setFirstName(entity.getFirstName());
 		u.setLastName(entity.getLastName());
 		u.setPassword(entity.getPassword());
-		u.setVerified(entity.getVerified());
 		if(entity.getImage() != null) {
 			u.setImage(entity.getImage());
 		}
-		else
-			u.setImage(null);
-		
-		u.setFavoriteCulturalOffers(entity.getFavoriteCulturalOffers());	
 		return repository.save(u);
 	}
 
@@ -102,21 +95,8 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 			throw new Exception("Registered user doesn't exist.");
 		a.setActive(false);
 		a = repository.save(a);
-		
 	}
-	private void validateAttributes(RegisteredUser u) throws Exception {
-		if(u.getFirstName() == null)
-			throw new Exception("Registered user's first name is empty.");
-		if(u.getLastName() == null)
-			throw new Exception("Registered user's last name is empty.");
-		if(u.getEmail() == null)
-			throw new Exception("Registered user's email is empty.");
-		if(u.getPassword() == null)
-			throw new Exception("Registered user's password is empty.");
-		
-	}
-
-
+	
 	public List<RegisteredUser> findAllRegisteredUser() {
 		return repository.findAllRegisteredUser();
 	}

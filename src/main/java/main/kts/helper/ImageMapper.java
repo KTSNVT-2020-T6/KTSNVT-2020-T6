@@ -17,5 +17,8 @@ public class ImageMapper implements MapperInterface<Image, ImageDTO> {
 	public ImageDTO toDto(Image entity) {
 		return new ImageDTO(entity.getId(),entity.getName(), entity.getrelativePath());
 	}
+	public Long toDtoUser(Image entity) {
+		return entity.getId();
+	}
 
 }

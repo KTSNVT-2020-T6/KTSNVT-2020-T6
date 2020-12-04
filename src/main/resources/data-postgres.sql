@@ -6,6 +6,7 @@ insert into image (name, relative_path) values ('slika2', 'path2.jpg');
 insert into image (name, relative_path) values ('slika3', 'path3.jpg');
 insert into image (name, relative_path) values ('slika4', 'path4.jpg');
 insert into image (name, relative_path) values ('slika5','path5.jpg');
+insert into image (name, relative_path) values ('slika6','path6.jpg');
 
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
 values ('admin', true,'admin@gmail.com', 'Marko','Markovic','sifra',true,1);

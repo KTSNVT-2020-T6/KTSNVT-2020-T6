@@ -34,12 +34,9 @@ public class AdminService implements ServiceInterface<Admin>{
 
 	@Override
 	public Admin create(Admin entity) throws Exception {
-		//if admin already exists
 		Admin admin = repository.findByEmail(entity.getEmail());
 		if (admin != null)
 			throw new Exception("Admin with given id already exist");
-			
-		//else make new admin instance
 		Admin a = new Admin();
 		a.setFirstName(entity.getFirstName());
 		a.setLastName(entity.getLastName());
@@ -55,7 +52,7 @@ public class AdminService implements ServiceInterface<Admin>{
 		}
 		else
 			a.setImage(null); // or default image??
-		a.setCulturalOffer( new HashSet<CulturalOffer>());
+		a.setCulturalOffer(new HashSet<CulturalOffer>());
         return repository.save(a);
 
 	}
@@ -81,14 +78,9 @@ public class AdminService implements ServiceInterface<Admin>{
 		a.setFirstName(entity.getFirstName());
 		a.setLastName(entity.getLastName());
 		a.setPassword(entity.getPassword());
-		
 		if(entity.getImage() != null) {	
 			a.setImage(entity.getImage());
 		}
-		else
-			a.setImage(null); // or default image??
-		
-		a.setCulturalOffer(entity.getCulturalOffer());
 		
 		return repository.save(a);
 	}
