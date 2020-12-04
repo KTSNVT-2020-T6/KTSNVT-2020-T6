@@ -86,8 +86,8 @@ public class CommentController {
 
 		try {
 			image = imageService.findOne(commentDTO.getImageDTO().getId());
-			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferDTO().getId());
-			registeredUser = registeredUserService.findOne(commentDTO.getRegisteredUserDTO().getId());
+			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferId());
+			registeredUser = registeredUserService.findOne(commentDTO.getUserId());
 			comment = commentMapper.toEntity(commentDTO);
 			comment.setImage(image);
 			comment.setCulturalOffer(culturalOffer);
@@ -108,8 +108,8 @@ public class CommentController {
 		RegisteredUser registeredUser;
 		try {
 			image = imageService.findOne(commentDTO.getImageDTO().getId());
-			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferDTO().getId());
-			registeredUser = registeredUserService.findOne(commentDTO.getRegisteredUserDTO().getId());
+			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferId());
+			registeredUser = registeredUserService.findOne(commentDTO.getUserId());
 			comment = commentMapper.toEntity(commentDTO);
 			comment.setImage(image);
 			comment.setCulturalOffer(culturalOffer);
@@ -164,9 +164,9 @@ public class CommentController {
 	}
 
 	private boolean validateCommentDTO(CommentDTO commentDTO) {
-		if (commentDTO.getRegistredUserDTO() == null)
+		if (commentDTO.getUserId() == null)
 			return false;
-		if (commentDTO.getCulturalOfferDTO() == null)
+		if (commentDTO.getCulturalOfferId() == null)
 			return false;
 		if(commentDTO.getDate() == null) 
 			return false;

@@ -41,7 +41,8 @@ public class PostService implements ServiceInterface<Post> {
 		p.setDate(entity.getDate());
 		p.setImage(entity.getImage());
 		p.setText(entity.getText());
-
+		p.setActive(true);
+		
 		p = postRepository.save(p);
 		return p;
 	}
@@ -65,7 +66,8 @@ public class PostService implements ServiceInterface<Post> {
 		if(existingPost == null) {
 			throw new Exception("Post with given id doesn't exist");
 		}
-		postRepository.delete(existingPost);
+		existingPost.setActive(false);
+		postRepository.save(existingPost);
 	}
 
 	public Page<Post> findAll(Pageable pageable) {

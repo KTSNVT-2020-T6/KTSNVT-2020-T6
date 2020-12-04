@@ -32,7 +32,7 @@ public class ImageService implements ServiceInterface<Image>{
 		Image i = new Image();
 		i.setName(entity.getName());
 		i.setrelativePath(entity.getrelativePath());
-		
+		i.setActive(true);
 		i = imageRepository.save(i);
 		return i;
 	}
@@ -43,7 +43,6 @@ public class ImageService implements ServiceInterface<Image>{
 		if(existingImage == null) {
 			throw new Exception("Image with given id doesn't exist");
 		}
-		
 		existingImage.setName(entity.getName());
 		existingImage.setRelativePath(entity.getRelativePath());
 		return imageRepository.save(existingImage);
@@ -55,7 +54,8 @@ public class ImageService implements ServiceInterface<Image>{
 		if(existingImage == null) {
 			throw new Exception("Image with given id doesn't exist");
 		}
-		imageRepository.delete(existingImage);		
+		existingImage.setActive(false);
+		imageRepository.save(existingImage);
 	}
 
 	public Page<Image> findAll(Pageable pageable) {

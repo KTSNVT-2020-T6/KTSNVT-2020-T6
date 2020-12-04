@@ -8,23 +8,29 @@ public class CommentDTO {
 	private String text;
 	private Date date;
 	   
-	public RegisteredUserDTO registeredUserDTO;
+	public String nameSurname;
+	public Long userId;
+	public ImageDTO userImage;
 	public ImageDTO imageDTO;
-	public CulturalOfferDTO culturalOfferDTO;
+	public Long culturalOfferId;
 	
 	public CommentDTO() {
 		super();
 	}
-			
-	public CommentDTO(Long id, String text, Date date, RegisteredUserDTO registeredUserDTO, ImageDTO imageDTO, CulturalOfferDTO culturalOfferDTO) {
+	
+	public CommentDTO(Long id, String text, Date date, String nameSurname, Long userId, ImageDTO userImage,
+			ImageDTO imageDTO, Long culturalOfferId) {
 		super();
 		this.id = id;
 		this.text = text;
 		this.date = date;
-		this.registeredUserDTO = registeredUserDTO;
+		this.nameSurname = nameSurname;
+		this.userId = userId;
+		this.userImage = userImage;
 		this.imageDTO = imageDTO;
-		this.culturalOfferDTO = culturalOfferDTO;
+		this.culturalOfferId = culturalOfferId;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -50,14 +56,6 @@ public class CommentDTO {
 		this.date = date;
 	}
 
-	public RegisteredUserDTO getRegistredUserDTO() {
-		return registeredUserDTO;
-	}
-
-	public void setRegisteredUserDTO(RegisteredUserDTO registeredUserDTO) {
-		this.registeredUserDTO = registeredUserDTO;
-	}
-
 	public ImageDTO getImageDTO() {
 		return imageDTO;
 	}
@@ -66,18 +64,46 @@ public class CommentDTO {
 		this.imageDTO = imageDTO;
 	}
 
-	public CulturalOfferDTO getCulturalOfferDTO() {
-		return culturalOfferDTO;
+
+	public String getNameSurname() {
+		return nameSurname;
 	}
 
-	public void setCulturalOfferDTO(CulturalOfferDTO culturalOfferDTO) {
-		this.culturalOfferDTO = culturalOfferDTO;
+
+	public void setNameSurname(String nameSurname) {
+		this.nameSurname = nameSurname;
 	}
 
-	public RegisteredUserDTO getRegisteredUserDTO() {
-		return registeredUserDTO;
+
+	public Long getUserId() {
+		return userId;
 	}
-	
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+
+	public ImageDTO getUserImage() {
+		return userImage;
+	}
+
+
+	public void setUserImage(ImageDTO userImage) {
+		this.userImage = userImage;
+	}
+
+
+	public Long getCulturalOfferId() {
+		return culturalOfferId;
+	}
+
+
+	public void setCulturalOfferId(Long culturalOfferId) {
+		this.culturalOfferId = culturalOfferId;
+	}
+
 	
 	
 }

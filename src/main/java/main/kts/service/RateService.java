@@ -53,7 +53,7 @@ public class RateService implements ServiceInterface<Rate>{
 		r.setNumber(entity.getNumber());
 		r.setRegistredUser(entity.getRegistredUser());
 		r.setCulturalOffer(entity.getCulturalOffer());
-		
+		r.setActive(true);
 		// update average rate
 		CulturalOffer co = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
 		List<Rate> rates = rateRepository.findAllByCulturalOfferId(co.getId());
@@ -91,7 +91,8 @@ public class RateService implements ServiceInterface<Rate>{
 		if(existingRate == null) {
 			throw new Exception("Rate with given id doesn't exist");
 		}
-		rateRepository.delete(existingRate);		
+		existingRate.setActive(false);
+		rateRepository.save(existingRate);		
 	}
 
 	public Page<Rate> findAll(Pageable pageable) {

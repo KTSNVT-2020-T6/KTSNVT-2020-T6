@@ -34,6 +34,7 @@ public class CategoryService implements ServiceInterface<Category>{
 		c.setName(entity.getName());
 		c.setDescription(entity.getDescription());
 		c.setType(new HashSet<Type>());
+		c.setActive(true);
 		return categoryRepository.save(c);
 	}
 
@@ -56,7 +57,8 @@ public class CategoryService implements ServiceInterface<Category>{
 		if(existingCat == null) {
 			throw new Exception("Category with given id doesn't exist");
 		}
-		categoryRepository.delete(existingCat);
+		existingCat.setActive(false);
+		categoryRepository.save(existingCat);
 		
 	}
 

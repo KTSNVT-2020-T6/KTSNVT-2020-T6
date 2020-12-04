@@ -54,6 +54,9 @@ public class CulturalOffer {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "culturalOffer")
 	public Set<Comment> comment;
 
+	@Column(nullable = false)
+	private Boolean active;
+	
 	public CulturalOffer() {
 	}
 
@@ -70,6 +73,7 @@ public class CulturalOffer {
 		this.type = type;
 		this.image = image;
 		this.comment = comment;
+		this.active = true;
 	}
 
 	public double getAverageRate() {
@@ -158,6 +162,14 @@ public class CulturalOffer {
 
 	public void setComment(Set<Comment> comment) {
 		this.comment = comment;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 }

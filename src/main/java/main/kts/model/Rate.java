@@ -28,12 +28,16 @@ public class Rate {
 	@JoinColumn(name = "cultural_offer_id", nullable = true)
 	public CulturalOffer culturalOffer;
 
+	@Column(nullable = false)
+	private Boolean active;
+	
 	public Rate(Long id, int number, RegisteredUser registredUser, CulturalOffer culturalOffer) {
 		super();
 		this.id = id;
 		this.number = number;
 		this.registredUser = registredUser;
 		this.culturalOffer = culturalOffer;
+		this.active = true;
 	}
 
 	public Long getId() {
@@ -72,4 +76,13 @@ public class Rate {
 		this.culturalOffer = culturalOffer;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	
 }

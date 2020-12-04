@@ -13,11 +13,14 @@ public class Image {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 	@Column(nullable = false, unique = true)
 	private String relativePath;
 
+	@Column(nullable = false)
+	private Boolean active;
+	
 	public Image() {
 		super();
 	}
@@ -27,6 +30,7 @@ public class Image {
 		this.id = id;
 		this.name = name;
 		this.relativePath = relativePath;
+		this.active = true;
 	}
 
 	public String getName() {
@@ -59,6 +63,14 @@ public class Image {
 
 	public void setRelativePath(String relativePath) {
 		this.relativePath = relativePath;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 	
 	

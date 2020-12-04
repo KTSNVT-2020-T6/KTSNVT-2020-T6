@@ -25,11 +25,15 @@ public class Category {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
 	public Set<Type> type;
 
+	@Column(nullable = false)
+	private Boolean active;
+	
 	public Category(Long id, String name, String description, Set<Type> type) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.type = type;
+		this.active = true;
 	}
 
 	public Category() {
@@ -65,6 +69,14 @@ public class Category {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	

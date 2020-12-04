@@ -37,6 +37,9 @@ public class Comment {
 	@JoinColumn(name = "cultural_offer_id", nullable = false)
 	public CulturalOffer culturalOffer;
 
+	@Column(nullable = false)
+	private Boolean active;
+	
 	public Comment(Long id, String text, Date date, RegisteredUser registredUser, Image image, CulturalOffer culturalOffer) {
 		this.id = id;
 		this.text = text;
@@ -44,6 +47,7 @@ public class Comment {
 		this.registredUser = registredUser;
 		this.image = image;
 		this.culturalOffer = culturalOffer;
+		this.active = true;
 	}
 
 	public Comment() {
@@ -96,5 +100,14 @@ public class Comment {
 	public void setCulturalOffer(CulturalOffer culturalOffer) {
 		this.culturalOffer = culturalOffer;
 	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+	
 
 }

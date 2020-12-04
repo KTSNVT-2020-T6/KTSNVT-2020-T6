@@ -1,7 +1,5 @@
 package main.kts.service;
 
-import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -67,7 +65,8 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 			co.setImage(null); // or default image??
 		co.setComment(new HashSet<Comment>());
 		co.setPost(new HashSet<Post>());
-
+		co.setActive(true);
+		
 		co = culturalOfferRepository.save(co);
 		return co;
 	}
@@ -106,12 +105,14 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		// comments, posts and images are also deleted because of CascadeType.ALL
 		List<Rate> rates = rateRepository.findAllByCulturalOfferId(existingCO.getId());
 		for (Rate rate : rates) {
-			rateRepository.delete(rate);
+			rate.setActive(false);
+			rateRepository.save(rate);
 		}
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
 		emailService.nofiticationForUpdateCulturalOffer(users, existingCO.getName());
-		culturalOfferRepository.delete(existingCO);
+		existingCO.setActive(false);
+		culturalOfferRepository.save(existingCO);
 
 	}
 

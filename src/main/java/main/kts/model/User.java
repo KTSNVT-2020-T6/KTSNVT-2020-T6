@@ -47,7 +47,7 @@ public abstract class User {
 	@Column(nullable = false)
 	protected Boolean verified;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "image_id", nullable = true)
 	protected Image image;
 

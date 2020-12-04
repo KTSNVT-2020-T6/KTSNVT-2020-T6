@@ -33,6 +33,7 @@ public class TypeService implements ServiceInterface<Type>{
 		t.setName(entity.getName());
 		t.setDescription(entity.getDescription());
 		t.setCategory(entity.getCategory());
+		t.setActive(true);
 		return typeRepository.save(t);
 	}
 	
@@ -56,7 +57,8 @@ public class TypeService implements ServiceInterface<Type>{
 		if(existingT == null) {
 			throw new Exception("Type with given id doesn't exist");
 		}
-		typeRepository.delete(existingT);
+		existingT.setActive(false);
+		typeRepository.save(existingT);
 	}
 
 	public Page<Type> findAll(Pageable pageable) {

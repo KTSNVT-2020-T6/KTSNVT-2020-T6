@@ -27,6 +27,9 @@ public class Type {
 	@JoinColumn(name = "category_id", nullable = false)
 	public Category category;
 
+	@Column(nullable = false)
+	private Boolean active;
+	
 	public Type() {
 		super();
 	}
@@ -37,6 +40,7 @@ public class Type {
 		this.name = name;
 		this.description = description;
 		this.category = category;
+		this.active = true;
 	}
 
 	public Long getId() {
@@ -69,6 +73,14 @@ public class Type {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 }

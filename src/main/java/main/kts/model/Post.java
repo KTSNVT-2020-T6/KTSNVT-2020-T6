@@ -29,6 +29,9 @@ public class Post {
 	@JoinColumn(name = "image_id", nullable = true)
 	public Image image;
 
+	@Column(nullable = false)
+	private Boolean active;
+	
 	public Post() {
 		super();
 	}
@@ -39,6 +42,7 @@ public class Post {
 		this.text = text;
 		this.date = date;
 		this.image = image;
+		this.active = true;
 	}
 
 	public String getText() {
@@ -72,5 +76,14 @@ public class Post {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+	
 
 }

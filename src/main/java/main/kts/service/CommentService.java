@@ -55,7 +55,7 @@ public class CommentService implements ServiceInterface<Comment> {
 		c.setImage(entity.getImage());
 		c.setRegistredUser(entity.getRegistredUser());
 		c.setText(entity.getText());
-		
+		c.setActive(true);
 		c = commentRepository.save(c);
 		return c;
 	}
@@ -79,7 +79,8 @@ public class CommentService implements ServiceInterface<Comment> {
 		if(existingComment == null) {
 			throw new Exception("Comment with given id doesn't exist");
 		}
-		commentRepository.delete(existingComment);	
+		existingComment.setActive(false);
+		commentRepository.save(existingComment);	
 	}
 
 	public Page<Comment> findAll(Pageable pageable) {
