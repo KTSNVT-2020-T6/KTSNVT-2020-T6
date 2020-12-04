@@ -18,12 +18,12 @@ public class TypeService implements ServiceInterface<Type>{
 
 	@Override
 	public List<Type> findAll() {
-		return typeRepository.findAll();
+		return typeRepository.findByActive(true);
 	}
 
 	@Override
 	public Type findOne(Long id) {
-		return typeRepository.findById(id).orElse(null);
+		return typeRepository.findByIdAndActive(id, true).orElse(null);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class TypeService implements ServiceInterface<Type>{
 	}
 
 	public Page<Type> findAll(Pageable pageable) {
-		return typeRepository.findAll(pageable);
+		return typeRepository.findByActive(pageable, true);
 	}
 
 	

@@ -81,8 +81,8 @@ public class RateController {
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	
         try {
-        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserDTO().getId());
-        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferDTO().getId());
+        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserId());
+        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferId());
         	rate = rateMapper.toEntity(rateDTO);
         	rate.setCulturalOffer(culturalOffer);
         	rate.setRegistredUser(registeredUser);
@@ -100,8 +100,8 @@ public class RateController {
         RegisteredUser registeredUser;
     	CulturalOffer culturalOffer;
         try {
-        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserDTO().getId());
-        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferDTO().getId());
+        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserId());
+        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferId());
         	rate = rateMapper.toEntity(rateDTO);
         	rate.setCulturalOffer(culturalOffer);
         	rate.setRegistredUser(registeredUser);
@@ -148,9 +148,9 @@ public class RateController {
 	private boolean validateRateDTO(RateDTO rateDTO) {
 		if(rateDTO.getNumber() <= 0 || rateDTO.getNumber() > 5)
 			return false;
-		if(rateDTO.getRegistredUserDTO() == null) 
+		if(rateDTO.getRegistredUserId() == null) 
 			return false;
-		if(rateDTO.getCulturalOfferDTO() == null) 
+		if(rateDTO.getCulturalOfferId() == null) 
 			return false;
 		return true;
 	}

@@ -18,15 +18,16 @@ public class UserService implements ServiceInterface<User>{
 	
 	@Override
 	public List<User> findAll() {
-		return repository.findAll();
+		return repository.findAllByActive(true);
 	}
 
 	@Override
 	public User findOne(Long id) {
-		return repository.findById(id).orElse(null);
+		return repository.findByIdAndActive(id, true).orElse(null);
 	}
+	
 	public User findByEmail(String email) {
-		return repository.findByEmail(email);
+		return repository.findByEmailAndActive(email, true);
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class UserService implements ServiceInterface<User>{
 	}
 
 	public Page<User> findAll(Pageable pageable) {
-		return repository.findAll(pageable);
+		return repository.findByActive(pageable, true);
 	}
 
 }

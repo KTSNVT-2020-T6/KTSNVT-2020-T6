@@ -22,14 +22,15 @@ public class AdminService implements ServiceInterface<Admin>{
 	
 	@Autowired 
 	private AuthorityRepository authorityRepository;
+	
 	@Override
 	public List<Admin> findAll() {
-		return repository.findAll();
+		return repository.findAllAdmin();
 	}
 
 	@Override
 	public Admin findOne(Long id) {
-		return repository.findById(id).orElse(null);
+		return repository.findByIdAndActive(id, true).orElse(null);
 	}
 
 	@Override
@@ -106,7 +107,7 @@ public class AdminService implements ServiceInterface<Admin>{
 	}
 
 	public Admin findByEmail(String email) {
-		return repository.findByEmail(email);
+		return repository.findByEmailAndActive(email, true);
 	}
 
 	public List<Admin> findAllAdmin() {

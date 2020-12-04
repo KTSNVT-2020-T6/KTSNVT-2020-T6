@@ -16,8 +16,10 @@ import main.kts.model.Image;
 import main.kts.model.Post;
 import main.kts.model.Rate;
 import main.kts.model.RegisteredUser;
+import main.kts.repository.CommentRepository;
 import main.kts.repository.CulturalOfferRepository;
 import main.kts.repository.ImageRepository;
+import main.kts.repository.PostRepository;
 import main.kts.repository.RateRepository;
 import main.kts.repository.RegisteredUserRepository;
 
@@ -31,18 +33,22 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 	@Autowired
 	private RateRepository rateRepository;
 	@Autowired
+	private CommentRepository commentRepository;
+	@Autowired
+	private PostRepository postRepository;
+	@Autowired
 	private EmailService emailService;
 	@Autowired
 	private ImageRepository imageRepository;
 
 	@Override
 	public List<CulturalOffer> findAll() {
-		return culturalOfferRepository.findAll();
+		return culturalOfferRepository.findByActive(true);
 	}
 
 	@Override
 	public CulturalOffer findOne(Long id) {
-		return culturalOfferRepository.findById(id).orElse(null);
+		return culturalOfferRepository.findByIdAndActive(id, true).orElse(null);
 	}
 
 	@Override
@@ -101,13 +107,21 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 			throw new Exception("Cultural offer with given id doesn't exist");
 		}
 
-		// find and delete all rates connected to this offer
-		// comments, posts and images are also deleted because of CascadeType.ALL
+		// find and delete all rates, comments, posts and images connected to this offer
 		List<Rate> rates = rateRepository.findAllByCulturalOfferId(existingCO.getId());
 		for (Rate rate : rates) {
 			rate.setActive(false);
 			rateRepository.save(rate);
 		}
+		for (Post post : existingCO.getPost()) {
+			post.setActive(false);
+			postRepository.save(post);
+		}
+		for (Comment comment : existingCO.getComment()) {
+			comment.setActive(false);
+			commentRepository.save(comment);
+		}
+	
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
 		emailService.nofiticationForUpdateCulturalOffer(users, existingCO.getName());
@@ -128,7 +142,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 
 
 	public Page<CulturalOffer> findAll(Pageable pageable) {
-		return culturalOfferRepository.findAll(pageable);
+		return culturalOfferRepository.findByActive(pageable, true);
 	}
 
 }

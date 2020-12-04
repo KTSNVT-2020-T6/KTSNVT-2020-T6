@@ -18,12 +18,12 @@ public class ImageService implements ServiceInterface<Image>{
 	
 	@Override
 	public List<Image> findAll() {
-		return imageRepository.findAll();
+		return imageRepository.findByActive(true);
 	}
 
 	@Override
 	public Image findOne(Long id) {
-		return imageRepository.findById(id).orElse(null);
+		return imageRepository.findByIdAndActive(id, true).orElse(null);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class ImageService implements ServiceInterface<Image>{
 	}
 
 	public Page<Image> findAll(Pageable pageable) {
-		return imageRepository.findAll(pageable);
+		return imageRepository.findByActive(pageable, true);
 	}
 
 }

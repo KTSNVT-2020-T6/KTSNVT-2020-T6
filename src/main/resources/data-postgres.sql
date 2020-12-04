@@ -30,7 +30,7 @@ insert into type (name, description, category_id, active) values ('opera', 'oper
 insert into cultural_offer (average_rate, date, description, lat, lon, name, type_id, admin_id, active)
 values (5.0, '2020-12-25 19:30:00', 'opisneki', 44.05, 45.02, 'obilazak muzeja', 1, 1, true);
 insert into cultural_offer (average_rate, date, description, lat, lon, name, type_id, admin_id, active)
-values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'exit', 3, 1, true);
+values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'exit', 3, 1, false);
 insert into cultural_offer (average_rate, date, description, lat, lon, name, type_id, admin_id, active)
 values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'djiasjasij', 3, 1, true);
 

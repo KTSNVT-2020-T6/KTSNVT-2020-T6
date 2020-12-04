@@ -25,12 +25,12 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	
 	@Override
 	public List<RegisteredUser> findAll() {
-		return repository.findAll();
+		return repository.findByActive(true);
 	}
 
 	@Override
 	public RegisteredUser findOne(Long id) {
-		return repository.findById(id).orElse(null);
+		return repository.findByIdAndActive(id, true).orElse(null);
 
 	}
 
@@ -101,7 +101,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		return repository.findAllRegisteredUser();
 	}
 	public RegisteredUser findByEmail(String email) {
-		return repository.findByEmail(email);
+		return repository.findByEmailAndActive(email, true);
 	}
 
 

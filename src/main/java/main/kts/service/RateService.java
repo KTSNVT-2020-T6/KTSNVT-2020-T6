@@ -27,12 +27,12 @@ public class RateService implements ServiceInterface<Rate>{
 	
 	@Override
 	public List<Rate> findAll() {
-		return rateRepository.findAll();
+		return rateRepository.findByActive(true);
 	}
 
 	@Override
 	public Rate findOne(Long id) {
-		return rateRepository.findById(id).orElse(null);
+		return rateRepository.findByIdAndActive(id, true).orElse(null);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class RateService implements ServiceInterface<Rate>{
 	}
 
 	public Page<Rate> findAll(Pageable pageable) {
-		return rateRepository.findAll(pageable);
+		return rateRepository.findByActive(pageable, true);
 	}
 
 }

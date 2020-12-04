@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import main.kts.model.Category;
 import main.kts.model.Type;
 import main.kts.repository.CategoryRepository;
+import main.kts.repository.TypeRepository;
 
 @Service
 public class CategoryService implements ServiceInterface<Category>{
@@ -18,14 +19,17 @@ public class CategoryService implements ServiceInterface<Category>{
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	@Autowired
+	private TypeRepository typeRepository;
+	
 	@Override
 	public List<Category> findAll() {
-		return categoryRepository.findAll();
+		return categoryRepository.findByActive(true);
 	}
 
 	@Override
 	public Category findOne(Long id) {
-		return categoryRepository.findById(id).orElse(null);
+		return categoryRepository.findByIdAndActive(id, true).orElse(null);
 	}
 
 	@Override
@@ -57,13 +61,18 @@ public class CategoryService implements ServiceInterface<Category>{
 		if(existingCat == null) {
 			throw new Exception("Category with given id doesn't exist");
 		}
+		
+		for (Type type : existingCat.getType()) {
+			type.setActive(false);
+			typeRepository.save(type);
+		}
 		existingCat.setActive(false);
 		categoryRepository.save(existingCat);
 		
 	}
 
 	public Page<Category> findAll(Pageable pageable) {
-		return categoryRepository.findAll(pageable);
+		return categoryRepository.findByActive(pageable, true);
 	}
 
 }

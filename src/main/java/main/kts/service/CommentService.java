@@ -30,12 +30,12 @@ public class CommentService implements ServiceInterface<Comment> {
 
 	@Override
 	public List<Comment> findAll() {
-		return commentRepository.findAll();
+		return commentRepository.findByActive(true);
 	}
 
 	@Override
 	public Comment findOne(Long id) {
-		return commentRepository.findById(id).orElse(null);
+		return commentRepository.findByIdAndActive(id, true).orElse(null);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class CommentService implements ServiceInterface<Comment> {
 	}
 
 	public Page<Comment> findAll(Pageable pageable) {
-		return commentRepository.findAll(pageable);
+		return commentRepository.findByActive(pageable, true);
 	}
 
 	public List<Comment> findAllByCulturalOfferId(Long id) {

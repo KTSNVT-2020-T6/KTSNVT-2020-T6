@@ -5,25 +5,19 @@ public class RateDTO {
 	
 	private Long id;
 	private int number;   
-	public RegisteredUserDTO registredUserDTO;
-	public CulturalOfferDTO culturalOfferDTO;
+	public Long registredUserId;
+	public Long culturalOfferId;
 	
 	public RateDTO() {
 		super();
 	}
-	
-	@Override
-	public String toString() {
-		return "RateDTO [number=" + number + ", registredUserDTO=" + registredUserDTO + ", culturalOfferDTO="
-				+ culturalOfferDTO + "]";
-	}
 
-	public RateDTO(Long id, int number, RegisteredUserDTO registredUserDTO, CulturalOfferDTO culturalOfferDTO) {
+	public RateDTO(Long id, int number, Long registredUserId, Long culturalOfferId) {
 		super();
 		this.id = id;
 		this.number = number;
-		this.registredUserDTO = registredUserDTO;
-		this.culturalOfferDTO = culturalOfferDTO;
+		this.registredUserId = registredUserId;
+		this.culturalOfferId = culturalOfferId;
 	}
 
 	public Long getId() {
@@ -42,23 +36,20 @@ public class RateDTO {
 		this.number = number;
 	}
 
-	public RegisteredUserDTO getRegistredUserDTO() {
-		return registredUserDTO;
+	public Long getRegistredUserId() {
+		return registredUserId;
 	}
 
-	public void setRegistredUserDTO(RegisteredUserDTO registredUserDTO) {
-		this.registredUserDTO = registredUserDTO;
+	public void setRegistredUserId(Long registredUserId) {
+		this.registredUserId = registredUserId;
 	}
 
-	public CulturalOfferDTO getCulturalOfferDTO() {
-		return culturalOfferDTO;
+	public Long getCulturalOfferId() {
+		return culturalOfferId;
 	}
 
-	public void setCulturalOfferDTO(CulturalOfferDTO culturalOfferDTO) {
-		this.culturalOfferDTO = culturalOfferDTO;
+	public void setCulturalOfferId(Long culturalOfferId) {
+		this.culturalOfferId = culturalOfferId;
 	}
-	
-
-	
 	
 }

@@ -21,8 +21,7 @@ public class CategoryMapper implements MapperInterface<Category, CategoryDTO> {
 
 	@Override
 	public CategoryDTO toDto(Category entity) {
-		Set<TypeDTO> typesDTO = new HashSet<TypeDTO>();
-		return new CategoryDTO(entity.getId(),entity.getName(), entity.getDescription(), typesDTO);
+		return new CategoryDTO(entity.getId(),entity.getName(), entity.getDescription());
 	}
 	
 }

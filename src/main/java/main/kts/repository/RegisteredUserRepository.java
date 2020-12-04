@@ -1,6 +1,7 @@
 package main.kts.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,7 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 	RegisteredUser findByEmail(String email);
 	
 
-	@Query(value = "SELECT * FROM USERS WHERE TYPE = 'registered_user'", nativeQuery = true)
+	@Query(value = "SELECT * FROM USERS WHERE TYPE = 'registered_user' AND ACTIVE = TRUE", nativeQuery = true)
 	List<RegisteredUser> findAllRegisteredUser();
 
 	@Query(value = "SELECT * FROM USERS_FAVORITE_CULTURAL_OFFERS WHERE"
@@ -23,4 +24,13 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 
 	@Query(value = "SELECT * FROM USERS WHERE id = ?1", nativeQuery = true)
 	RegisteredUser findByIdRU(Long l);
+
+
+	Optional<RegisteredUser> findByIdAndActive(Long id, boolean b);
+
+
+	List<RegisteredUser> findByActive(boolean b);
+
+
+	RegisteredUser findByEmailAndActive(String email, boolean b);
 }

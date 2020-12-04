@@ -22,12 +22,12 @@ public class PostService implements ServiceInterface<Post> {
 
 	@Override
 	public List<Post> findAll() {
-		return postRepository.findAll();
+		return postRepository.findByActive(true);
 	}
 
 	@Override
 	public Post findOne(Long id) {
-		return postRepository.findById(id).orElse(null);
+		return postRepository.findByIdAndActive(id, true).orElse(null);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class PostService implements ServiceInterface<Post> {
 	}
 
 	public Page<Post> findAll(Pageable pageable) {
-		return postRepository.findAll(pageable);
+		return postRepository.findByActive(pageable, true);
 	}
 
 }
