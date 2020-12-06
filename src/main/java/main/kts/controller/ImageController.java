@@ -5,23 +5,34 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import main.kts.dto.ImageDTO;
 import main.kts.helper.ImageMapper;
 import main.kts.model.Image;
+import main.kts.service.FileService;
 import main.kts.service.ImageService;
 
 @RestController
@@ -32,6 +43,9 @@ public class ImageController {
 	ImageService imageService;
 
 	ImageMapper imageMapper;
+
+	@Autowired
+	FileService storageService;
 
 	public ImageController() {
 		imageMapper = new ImageMapper();
@@ -56,32 +70,38 @@ public class ImageController {
 		return new ResponseEntity<>(imageMapper.toDto(image), HttpStatus.OK);
 	}
 
-    @RequestMapping(value="/",method=RequestMethod.GET)
-    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
-    public ResponseEntity<Page<ImageDTO>> loadImagePage(Pageable pageable) {
-    	Page<Image> images = imageService.findAll(pageable);
-    	if(images == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    	Page<ImageDTO> imagesDTO = toImageDTOPage(images);
-    	return new ResponseEntity<>(imagesDTO, HttpStatus.OK);
-    }
-
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
-	public ResponseEntity<ImageDTO> createImage(@RequestBody ImageDTO imageDTO) {
-		Image image;
+	public ResponseEntity<Page<ImageDTO>> loadImagePage(Pageable pageable) {
+		Page<Image> images = imageService.findAll(pageable);
+		if (images == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		Page<ImageDTO> imagesDTO = toImageDTOPage(images);
+		return new ResponseEntity<>(imagesDTO, HttpStatus.OK);
+	}
 
+	@RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data"})
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
+	public ResponseEntity<String> createImage(@RequestBody MultipartFile file) {
+		Image image;
+		String message = "";
+		System.out.println(file.toString());
+		System.out.println(file.getName() + " OVO JE IME SLIKE");
+		System.out.println(file.getOriginalFilename()+" ORIGINAL...");
+		System.out.println(file.getResource()+" RESOURCE");
+		ImageDTO imageDTO = new ImageDTO(file.getName(), file.getOriginalFilename());
 		if (!this.validateImageDTO(imageDTO))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
 		try {
+			storageService.save(file);
+			message = "Uploaded the file successfully: " + file.getOriginalFilename();
 			image = imageService.create(imageMapper.toEntity(imageDTO));
+			return new ResponseEntity<>(message, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
 		}
-
-		return new ResponseEntity<>(imageMapper.toDto(image), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -119,25 +139,25 @@ public class ImageController {
 
 	private Page<ImageDTO> toImageDTOPage(Page<Image> images) {
 		Page<ImageDTO> dtoPage = images.map(new Function<Image, ImageDTO>() {
-		    @Override
-		    public ImageDTO apply(Image entity) {
-		    	ImageDTO dto = imageMapper.toDto(entity);
-		        return dto;
-		    }
+			@Override
+			public ImageDTO apply(Image entity) {
+				ImageDTO dto = imageMapper.toDto(entity);
+				return dto;
+			}
 		});
 		return dtoPage;
 	}
 
 	private boolean validateImageDTO(ImageDTO imageDTO) {
-		if(imageDTO.getRelativePath() == null) 
+		if (imageDTO.getRelativePath() == null)
 			return false;
-		if(imageDTO.getName() == null) 
+		if (imageDTO.getName() == null)
 			return false;
 		try {
-	        Paths.get(imageDTO.getRelativePath());
-	    } catch (InvalidPathException | NullPointerException ex) {
-	        return false;
-	    }
+			Paths.get(imageDTO.getRelativePath());
+		} catch (InvalidPathException | NullPointerException ex) {
+			return false;
+		}
 		return true;
 	}
 }
