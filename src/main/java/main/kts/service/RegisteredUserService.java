@@ -1,6 +1,7 @@
 package main.kts.service;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -123,6 +124,14 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 
 	public List<Long> findByIdCO(Long id) {
 		return repository.findByIdCO(id);
+	}
+
+	public List<CulturalOffer> findAllSubscribedCO(Long id) {
+		RegisteredUser user = repository.findById(id).orElse(null);
+		List<CulturalOffer> favoriteCO = new ArrayList<CulturalOffer>();
+		for (CulturalOffer o : user.getFavoriteCulturalOffers()) 
+			favoriteCO.add(o);
+		return favoriteCO;
 	}
 
 
