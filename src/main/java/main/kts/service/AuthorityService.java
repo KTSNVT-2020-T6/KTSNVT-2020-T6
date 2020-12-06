@@ -1,6 +1,8 @@
 package main.kts.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,5 +58,19 @@ public class AuthorityService implements ServiceInterface<Authority>{
 		return  authorityRepository.findByRole(role);
 		
 	}
+
+    public Set<Authority> findById(Long id) {
+        Authority auth = this.authorityRepository.getOne(id);
+        Set<Authority> auths = new HashSet<Authority>();
+        auths.add(auth);
+        return auths;
+    }
+
+    public Set<Authority> findByName(String name) {
+        Authority auth = this.authorityRepository.findByRole(name);
+        Set<Authority> auths = new HashSet<Authority>();
+        auths.add(auth);
+        return auths;
+    }
 
 }

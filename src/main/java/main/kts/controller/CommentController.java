@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +50,7 @@ public class CommentController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<CommentDTO>> getAllComments() {
 		List<Comment> comments = commentService.findAll();
 
@@ -56,6 +58,7 @@ public class CommentController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<CommentDTO> getComment(@PathVariable Long id) {
 		Comment comment = commentService.findOne(id);
 		if (comment == null) {
@@ -66,6 +69,7 @@ public class CommentController {
 	}
 
     @RequestMapping(value="/",method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<CommentDTO>> loadRatePage(Pageable pageable) {
     	Page<Comment> comments = commentService.findAll(pageable);
     	if(comments == null){
@@ -76,6 +80,7 @@ public class CommentController {
     }
 
 	@RequestMapping(method = RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) {
 		Comment comment;
 		Image image;
@@ -101,6 +106,7 @@ public class CommentController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<CommentDTO> updateComment(@RequestBody CommentDTO commentDTO, @PathVariable Long id) {
 		Comment comment;
 		Image image;
@@ -123,6 +129,7 @@ public class CommentController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<String> deleteComment(@PathVariable Long id) {
 		try {
 			commentService.delete(id);
@@ -133,6 +140,7 @@ public class CommentController {
 		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 	@RequestMapping(value="/culturaloffer_comments/{id}",method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<CommentDTO>> getAllCommentsForCulturalOffer(@PathVariable Long id) {
 		//pronadji prvo kulturnu ponudu, da li stvarno postoji taj id.
 		CulturalOffer co = culturalOfferService.findOne(id);

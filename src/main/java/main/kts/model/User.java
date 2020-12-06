@@ -1,6 +1,12 @@
 package main.kts.model;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +29,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 
-public abstract class User {
+public class User implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,9 +61,17 @@ public abstract class User {
 	//@JoinColumn(name = "user_id", nullable = false)
 	protected Set<Authority> authority;
 
+	@Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
+	
 	public User() {
 		super();
 	}
+	
+	public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
 	public User(Long id, String firstName, String lastName, String email, String password, Boolean active,
 			Boolean verified, Image image, Set<Authority> authority) {
@@ -71,6 +85,13 @@ public abstract class User {
 		this.verified = verified;
 		this.image = image;
 		this.authority = authority;
+	}
+
+	public User(String email2, String password2, String firstName2, String lastName2) {
+		this.firstName = firstName2;
+		this.lastName = lastName2;
+		this.email = email2;
+		this.password = password2;
 	}
 
 	public String getFirstName() {
@@ -102,6 +123,8 @@ public abstract class User {
 	}
 
 	public void setPassword(String password) {
+		Timestamp now = new Timestamp(new Date().getTime());
+        this.setLastPasswordResetDate(now);
 		this.password = password;
 	}
 
@@ -143,6 +166,44 @@ public abstract class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public Timestamp getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authority;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
 	}
 
 }

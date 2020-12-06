@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,7 @@ public class RateController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<RateDTO>> getAllRates() {
 		List<Rate> rates = rateService.findAll();
 
@@ -52,6 +54,7 @@ public class RateController {
 	}
 	
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<RateDTO> getRate(@PathVariable Long id){
         Rate rate = rateService.findOne(id);
         if(rate == null){
@@ -62,6 +65,7 @@ public class RateController {
     }
     
     @RequestMapping(value="/",method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<RateDTO>> loadRatePage(Pageable pageable) {
     	Page<Rate> rates = rateService.findAll(pageable);
     	if(rates == null){
@@ -73,6 +77,7 @@ public class RateController {
     
 
 	@RequestMapping(method=RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<RateDTO> createRate(@RequestBody RateDTO rateDTO){
     	Rate rate;
     	RegisteredUser registeredUser;
@@ -95,6 +100,7 @@ public class RateController {
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<RateDTO> updateRate(@RequestBody RateDTO rateDTO, @PathVariable Long id){
         Rate rate;
         RegisteredUser registeredUser;
@@ -115,6 +121,7 @@ public class RateController {
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<String> deleteRate(@PathVariable Long id){
         try {
             rateService.delete(id);

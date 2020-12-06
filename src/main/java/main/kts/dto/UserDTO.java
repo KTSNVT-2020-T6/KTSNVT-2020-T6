@@ -18,6 +18,13 @@ public class UserDTO {
 	public UserDTO() {
 		super();
 	}
+	
+	public UserDTO(Long id, String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.id = id;
+	}
 	public UserDTO(String firstName, String lastName, String email, String password, Long imageDTO) {
 		super();
 		this.firstName = firstName;
@@ -38,19 +45,7 @@ public class UserDTO {
 		this.verified = verified;
 		this.idImageDTO = imageDTO;
 	}
-//	public UserDTO(Long id, String firstName, String lastName, String email, String password, Boolean active, Boolean verified,
-//			Long imageDTO, Set<AuthorityDTO> authorityDTO) {
-//		super();
-//		this.id = id;
-//		this.firstName = firstName;
-//		this.lastName = lastName;
-//		this.email = email;
-//		this.password = password;
-//		this.active = active;
-//		this.verified = verified;
-//		this.idImageDTO = imageDTO;
-//		this.authorityDTO = authorityDTO;
-//	}
+
 	
 	public Long getId() {
 		return id;
@@ -106,13 +101,7 @@ public class UserDTO {
 	public void setVerified(Boolean verified) {
 		this.verified = verified;
 	}
-//	public Set<AuthorityDTO> getAuthorityDTO() {
-//		return authorityDTO;
-//	}
-//
-//	public void setAuthorityDTO(Set<AuthorityDTO> authorityDTO) {
-//		this.authorityDTO = authorityDTO;
-//	}
+
 
 	public Long getIdImageDTO() {
 		return idImageDTO;

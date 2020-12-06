@@ -1,11 +1,14 @@
 package main.kts.model;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @DiscriminatorValue("registered_user")
@@ -61,6 +64,16 @@ public class RegisteredUser extends User {
 
 	public void setFavoriteCulturalOffers(Set<CulturalOffer> favoriteCulturalOffers) {
 		this.favoriteCulturalOffers = favoriteCulturalOffers;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authority;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
 	}
 
 

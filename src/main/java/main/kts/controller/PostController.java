@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,7 @@ public class PostController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<PostDTO>> getAllPosts() {
 		List<Post> posts = postService.findAll();
 
@@ -48,6 +50,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<PostDTO> getPost(@PathVariable Long id) {
 		Post post = postService.findOne(id);
 		if (post == null) {
@@ -58,6 +61,7 @@ public class PostController {
 	}
 
     @RequestMapping(value="/",method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<PostDTO>> loadPostPage(Pageable pageable) {
     	Page<Post> posts = postService.findAll(pageable);
     	if(posts == null){
@@ -68,6 +72,7 @@ public class PostController {
     }
 
 	@RequestMapping(method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
 		Post post;
 		Image image;
@@ -87,6 +92,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO, @PathVariable Long id) {
 		Post post;
 		Image image;
@@ -103,6 +109,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> deletePost(@PathVariable Long id) {
 		try {
 			postService.delete(id);
