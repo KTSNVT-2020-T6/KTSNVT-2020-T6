@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +50,7 @@ public class CulturalOfferController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<CulturalOfferDTO>> getAllCulturalOffers() {
 		List<CulturalOffer> culturalOffers = culturalOfferService.findAll();
 
@@ -56,6 +58,7 @@ public class CulturalOfferController {
 	}
 	
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<CulturalOfferDTO> getCulturalOffer(@PathVariable Long id){
         CulturalOffer culturalOffer = culturalOfferService.findOne(id);
         if(culturalOffer == null){
@@ -66,6 +69,7 @@ public class CulturalOfferController {
     }
     
     @RequestMapping(value="/",method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<CulturalOfferDTO>> loadRatePage(Pageable pageable) {
     	Page<CulturalOffer> culturalOffers = culturalOfferService.findAll(pageable);
     	if(culturalOffers == null){
@@ -76,6 +80,7 @@ public class CulturalOfferController {
     }
     
     @RequestMapping(method=RequestMethod.POST)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CulturalOfferDTO> createCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO){
     	CulturalOffer culturalOffer = null;
     	Type type;
@@ -100,6 +105,7 @@ public class CulturalOfferController {
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CulturalOfferDTO> updateCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO, @PathVariable Long id){
         CulturalOffer culturalOffer;
         Type type;
@@ -124,6 +130,7 @@ public class CulturalOfferController {
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteCulturalOffer(@PathVariable Long id){
 
         try {

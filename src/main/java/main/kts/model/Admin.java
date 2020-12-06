@@ -1,5 +1,6 @@
 package main.kts.model;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @DiscriminatorValue("admin")
@@ -56,6 +59,18 @@ public class Admin extends User {
 
 	public void setCulturalOffer(Set<CulturalOffer> culturalOffer) {
 		this.culturalOffer = culturalOffer;
+	}
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authority;
+	}
+
+
+	@Override
+	public String getUsername() {
+		return this.email;
 	}
 
 }

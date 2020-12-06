@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,7 @@ public class ImageController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<ImageDTO>> getAllImages() {
 		List<Image> images = imageService.findAll();
 
@@ -44,6 +46,7 @@ public class ImageController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<ImageDTO> getImage(@PathVariable Long id) {
 		Image image = imageService.findOne(id);
 		if (image == null) {
@@ -54,6 +57,7 @@ public class ImageController {
 	}
 
     @RequestMapping(value="/",method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<ImageDTO>> loadImagePage(Pageable pageable) {
     	Page<Image> images = imageService.findAll(pageable);
     	if(images == null){
@@ -64,6 +68,7 @@ public class ImageController {
     }
 
 	@RequestMapping(method = RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<ImageDTO> createImage(@RequestBody ImageDTO imageDTO) {
 		Image image;
 
@@ -80,6 +85,7 @@ public class ImageController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<ImageDTO> updateImage(@RequestBody ImageDTO imageDTO, @PathVariable Long id) {
 		Image image;
 		try {
@@ -92,6 +98,7 @@ public class ImageController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
 		try {
 			imageService.delete(id);

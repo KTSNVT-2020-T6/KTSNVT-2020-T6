@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,12 +40,14 @@ public class RegisteredUserController {
 	private RegisteredUserMapper mapper = new RegisteredUserMapper();
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<RegisteredUserDTO>> getAllRegUsers(){
 		List<RegisteredUser> admins = service.findAllRegisteredUser();
 		return new ResponseEntity<>(toDTORegsUserList(admins), HttpStatus.OK);
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<RegisteredUserDTO> createRegisteredUser(@RequestBody RegisteredUserDTO registeredUserDTO){
 		RegisteredUser registeredUser;
 		Image image;
@@ -62,6 +65,7 @@ public class RegisteredUserController {
         return new ResponseEntity<>(mapper.toDto(registeredUser), HttpStatus.CREATED);
     }
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@RequestBody RegisteredUserDTO registeredUserDTO, @PathVariable Long id){
 		RegisteredUser registeredUser;
         Image image;
@@ -79,6 +83,7 @@ public class RegisteredUserController {
         return new ResponseEntity<>(mapper.toDto(registeredUser), HttpStatus.OK);
     }
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Void> deleteRegisteredUser(@PathVariable Long id){
         try {
             service.delete(id);
@@ -89,6 +94,7 @@ public class RegisteredUserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 	@RequestMapping(value="/interested/{id}",method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<Integer> getAllInterestedUsers(@PathVariable Long id) {
     	CulturalOffer co = culturalOfferService.findOne(id);
     	if(co == null)

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,12 +31,14 @@ public class UserController {
 	private UserMapper userMapper = new UserMapper();
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
 		List<User> users = service.findAll();
 		return new ResponseEntity<>(toDTOUsersList(users), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<UserDTO>> loadUsersPage(Pageable pageable) {
     	Page<User> users = service.findAll(pageable);
     	if(users == null){
@@ -46,6 +49,7 @@ public class UserController {
     }
 	
 	@RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
 		User u = service.findOne(id);
 		if (u == null) {
@@ -54,6 +58,7 @@ public class UserController {
 		return new ResponseEntity<>(userMapper.toDto(u), HttpStatus.OK);
 	}
 	@RequestMapping(value = "/{email}", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
 		User u = service.findByEmail(email);
 		if (u == null) {

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,7 @@ public class TypeController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<TypeDTO>> getAllTypes() {
 		List<Type> types = typeService.findAll();
 
@@ -47,6 +49,7 @@ public class TypeController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<TypeDTO> getType(@PathVariable Long id){
 		Type type = typeService.findOne(id);
 		if(type == null) {
@@ -56,6 +59,7 @@ public class TypeController {
 	}
 	
     @RequestMapping(value="/",method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<TypeDTO>> loadTypePage(Pageable pageable) {
     	Page<Type> types = typeService.findAll(pageable);
     	if(types == null){
@@ -66,6 +70,7 @@ public class TypeController {
     }
 	
 	@RequestMapping(method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<TypeDTO> createType(@RequestBody TypeDTO typeDTO){
 		Type type;
 		Category category;
@@ -85,6 +90,7 @@ public class TypeController {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<TypeDTO> updateType(@RequestBody TypeDTO typeDTO,  @PathVariable Long id){
 		Type type;
 		Category category;
@@ -103,6 +109,7 @@ public class TypeController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> deleteType(@PathVariable Long id){
 		try {
 			typeService.delete(id);

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,12 +37,14 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<CategoryDTO>> getAllCategories(){
 		List<Category> categories = categoryService.findAll();
 		return new ResponseEntity<>(toCategoryDTOList(categories), HttpStatus.OK);
 	}
 	
     @RequestMapping(value="/",method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<CategoryDTO>> loadCategoryPage(Pageable pageable) {
     	Page<Category> categorys = categoryService.findAll(pageable);
     	if(categorys == null){
@@ -53,6 +56,7 @@ public class CategoryController {
 	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<CategoryDTO> getType(@PathVariable Long id){
 		Category category = categoryService.findOne(id);
 		if(category == null) {
@@ -62,6 +66,7 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
 		Category category;
 		if(!this.validateCategoryDTO(categoryDTO))
@@ -76,6 +81,7 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long id){
 		Category category;
 		if(!this.validateCategoryDTO(categoryDTO))
@@ -90,6 +96,7 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> deleteCategory(@PathVariable Long id){
 		try {
 			categoryService.delete(id);
