@@ -17,6 +17,11 @@ public class ImageDTO {
 		this.relativePath = relativePath;
 	}
 
+	public ImageDTO(String name2, String originalFilename) {
+		this.name = name2;
+		this.relativePath = originalFilename;
+	}
+
 	public Long getId() {
 		return id;
 	}
