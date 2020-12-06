@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.CulturalOfferDTO;
 import main.kts.dto.ImageDTO;
+import main.kts.dto.RegisteredUserDTO;
 import main.kts.helper.CulturalOfferMapper;
 import main.kts.model.CulturalOffer;
 import main.kts.model.Image;
@@ -77,6 +78,17 @@ public class CulturalOfferController {
 
         return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
     }
+    
+    @RequestMapping(value="/subscriptions", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('REGISTERED_USER')")
+	public ResponseEntity<List<CulturalOfferDTO>> getSubscribedCulturalOffer(){
+    	RegisteredUser registeredUser;
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((User) currentUser.getPrincipal()).getEmail();
+        registeredUser = registeredUserService.findByEmail(username);
+    	List<CulturalOffer> subscribedOffers = registeredUserService.findAllSubscribedCO(registeredUser.getId());
+		return new ResponseEntity<>(toCulturalOfferDTOList(subscribedOffers), HttpStatus.OK);
+	}
     
     @RequestMapping(value="/",method=RequestMethod.GET)
     @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")

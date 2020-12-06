@@ -45,6 +45,7 @@ public class RegisteredUserController {
 		List<RegisteredUser> admins = service.findAllRegisteredUser();
 		return new ResponseEntity<>(toDTORegsUserList(admins), HttpStatus.OK);
 	}
+	
 
 	@RequestMapping(method=RequestMethod.POST)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
