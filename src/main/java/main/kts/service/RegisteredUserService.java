@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Authority;
 import main.kts.model.CulturalOffer;
 import main.kts.model.RegisteredUser;
+import main.kts.model.User;
 import main.kts.repository.AuthorityRepository;
+import main.kts.repository.CulturalOfferRepository;
 import main.kts.repository.RegisteredUserRepository;
 
 @Service
@@ -23,6 +27,9 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	@Autowired 
 	private AuthorityRepository authorityRepository;
 	
+	@Autowired 
+	private CulturalOfferRepository culturalOfferRepository;
+	
 	@Override
 	public List<RegisteredUser> findAll() {
 		return repository.findByActive(true);
@@ -31,8 +38,8 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	@Override
 	public RegisteredUser findOne(Long id) {
 		return repository.findByIdAndActive(id, true).orElse(null);
-
 	}
+	
 
 	@Override
 	public RegisteredUser create(RegisteredUser entity) throws Exception {
@@ -104,6 +111,15 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		return repository.findByEmailAndActive(email, true);
 	}
 
+	public void subscribeUser(Long id) {
+		RegisteredUser registeredUser;
+		CulturalOffer culturalOffer = culturalOfferRepository.getOne(id);
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((User) currentUser.getPrincipal()).getEmail();
+        registeredUser = this.findByEmail(username);
+        registeredUser.getFavoriteCulturalOffers().add(culturalOffer);
+        repository.save(registeredUser);
+	}
 
 	public List<Long> findByIdCO(Long id) {
 		return repository.findByIdCO(id);

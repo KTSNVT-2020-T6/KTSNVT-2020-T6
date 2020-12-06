@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +26,13 @@ import main.kts.dto.ImageDTO;
 import main.kts.helper.CulturalOfferMapper;
 import main.kts.model.CulturalOffer;
 import main.kts.model.Image;
+import main.kts.model.RegisteredUser;
 import main.kts.model.Type;
+import main.kts.model.User;
+import main.kts.repository.CulturalOfferRepository;
 import main.kts.service.CulturalOfferService;
 import main.kts.service.ImageService;
+import main.kts.service.RegisteredUserService;
 import main.kts.service.TypeService;
 
 
@@ -42,6 +48,10 @@ public class CulturalOfferController {
 	
 	@Autowired
 	private ImageService imageService;
+	
+	@Autowired
+	private RegisteredUserService registeredUserService;
+	
 	
 	private CulturalOfferMapper culturalOfferMapper;
 	
@@ -102,6 +112,17 @@ public class CulturalOfferController {
         }
 
         return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
+    }
+ 
+    @RequestMapping(value="/subscribe/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('REGISTERED_USER')")
+    public ResponseEntity<String> subscribeUserToCulturalOffer(@PathVariable Long id){
+        registeredUserService.subscribeUser(id);
+        try {
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Subscription done", HttpStatus.OK);
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
