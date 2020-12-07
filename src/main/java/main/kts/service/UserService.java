@@ -50,7 +50,6 @@ public class UserService implements ServiceInterface<User> {
 		// u.setUsername(entity.getUsername());
 		// pre nego sto postavimo lozinku u atribut hesiramo je
 		u.setPassword(passwordEncoder.encode(entity.getPassword()));
-		System.out.println(passwordEncoder.encode(entity.getPassword())+" HESIRANA SIFRA");
 		u.setFirstName(entity.getFirstName());
 		u.setLastName(entity.getLastName());
 		u.setEmail(entity.getEmail());

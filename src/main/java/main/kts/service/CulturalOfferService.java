@@ -8,14 +8,19 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import main.kts.model.Admin;
 import main.kts.model.Comment;
 import main.kts.model.CulturalOffer;
 import main.kts.model.Image;
 import main.kts.model.Post;
 import main.kts.model.Rate;
 import main.kts.model.RegisteredUser;
+import main.kts.model.User;
+import main.kts.repository.AdminRepository;
 import main.kts.repository.CommentRepository;
 import main.kts.repository.CulturalOfferRepository;
 import main.kts.repository.ImageRepository;
@@ -30,6 +35,8 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 	private CulturalOfferRepository culturalOfferRepository;
 	@Autowired
 	private RegisteredUserRepository registeredUserRepository;
+	@Autowired
+	private AdminRepository adminRepository;
 	@Autowired
 	private RateRepository rateRepository;
 	@Autowired
@@ -72,8 +79,17 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		co.setComment(new HashSet<Comment>());
 		co.setPost(new HashSet<Post>());
 		co.setActive(true);
-		
+
 		co = culturalOfferRepository.save(co);
+
+		// set admin that created this cultural offer
+		Admin admin;
+		Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = ((User) currentUser.getPrincipal()).getEmail();
+		admin = adminRepository.findByEmail(username);
+		admin.getCulturalOffer().add(co);
+		adminRepository.save(admin);
+		
 		return co;
 	}
 
@@ -96,7 +112,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		existingCO.setType(entity.getType());
 		Set<Image> oldImages = imageRepository.findAllByCulturalOfferId(id);
 		existingCO.setImage(oldImages);
-		
+
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
 		emailService.nofiticationForUpdateCulturalOffer(users, existingCO.getName());
@@ -125,7 +141,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 			comment.setActive(false);
 			commentRepository.save(comment);
 		}
-	
+
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
 		emailService.nofiticationForDeleteCulturalOffer(users, existingCO.getName());
@@ -144,7 +160,6 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		return users;
 	}
 
-
 	public Page<CulturalOffer> findAll(Pageable pageable) {
 		return culturalOfferRepository.findByActive(pageable, true);
 	}
@@ -153,7 +168,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		culturalOfferRepository.save(culturalOffer);
 		List<Long> usersId = registeredUserRepository.findByIdCO(culturalOffer.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
-		emailService.nofiticationForAddingPost(users, culturalOffer.getName());		
+		emailService.nofiticationForAddingPost(users, culturalOffer.getName());
 	}
 
 }

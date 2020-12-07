@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Authority;
@@ -30,6 +31,9 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	
 	@Autowired 
 	private CulturalOfferRepository culturalOfferRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<RegisteredUser> findAll() {
@@ -53,7 +57,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		ruser.setFirstName(entity.getFirstName());
 		ruser.setLastName(entity.getLastName());
 		ruser.setEmail(entity.getEmail());
-		ruser.setPassword(entity.getPassword());
+		ruser.setPassword(passwordEncoder.encode(entity.getPassword()));
 		ruser.setActive(true);
 		ruser.setVerified(false);
 		Set<Authority> set = new HashSet<Authority>();
@@ -89,7 +93,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		}
 		u.setFirstName(entity.getFirstName());
 		u.setLastName(entity.getLastName());
-		u.setPassword(entity.getPassword());
+		u.setPassword(passwordEncoder.encode(entity.getPassword()));
 		if(entity.getImage() != null) {
 			u.setImage(entity.getImage());
 		}
