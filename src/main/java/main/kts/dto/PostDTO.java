@@ -9,6 +9,7 @@ public class PostDTO {
 	private Date date;
 	   
 	public ImageDTO imageDTO;
+	public Long culturalOfferId;
 
 	public PostDTO() {
 		super();
@@ -52,6 +53,14 @@ public class PostDTO {
 
 	public void setImageDTO(ImageDTO imageDTO) {
 		this.imageDTO = imageDTO;
+	}
+
+	public Long getCulturalOfferId() {
+		return culturalOfferId;
+	}
+
+	public void setCulturalOfferId(Long culturalOfferId) {
+		this.culturalOfferId = culturalOfferId;
 	}
 	
 	

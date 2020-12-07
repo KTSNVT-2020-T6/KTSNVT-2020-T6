@@ -1,5 +1,6 @@
 package main.kts.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Post;
+import main.kts.model.RegisteredUser;
 import main.kts.repository.ImageRepository;
 import main.kts.repository.PostRepository;
 
