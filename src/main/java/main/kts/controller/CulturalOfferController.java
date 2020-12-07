@@ -92,7 +92,7 @@ public class CulturalOfferController {
     
     @RequestMapping(value="/",method=RequestMethod.GET)
     @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
-    public ResponseEntity<Page<CulturalOfferDTO>> loadRatePage(Pageable pageable) {
+    public ResponseEntity<Page<CulturalOfferDTO>> loadCulturalOfferPage(Pageable pageable) {
     	Page<CulturalOffer> culturalOffers = culturalOfferService.findAll(pageable);
     	if(culturalOffers == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

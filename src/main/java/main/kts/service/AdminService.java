@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Admin;
@@ -22,6 +23,9 @@ public class AdminService implements ServiceInterface<Admin>{
 	
 	@Autowired 
 	private AuthorityRepository authorityRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<Admin> findAll() {
@@ -42,7 +46,7 @@ public class AdminService implements ServiceInterface<Admin>{
 		a.setFirstName(entity.getFirstName());
 		a.setLastName(entity.getLastName());
 		a.setEmail(entity.getEmail());
-		a.setPassword(entity.getPassword());
+		a.setPassword(passwordEncoder.encode(entity.getPassword()));
 		a.setActive(true);
 		a.setVerified(false);
 		Set<Authority> set = new HashSet<Authority>();
@@ -78,7 +82,7 @@ public class AdminService implements ServiceInterface<Admin>{
 		}
 		a.setFirstName(entity.getFirstName());
 		a.setLastName(entity.getLastName());
-		a.setPassword(entity.getPassword());
+		a.setPassword(passwordEncoder.encode(entity.getPassword()));
 		if(entity.getImage() != null) {	
 			a.setImage(entity.getImage());
 		}
