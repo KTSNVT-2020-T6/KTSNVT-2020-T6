@@ -103,4 +103,9 @@ public class UserService implements ServiceInterface<User> {
 		return repository.findByActive(pageable, true);
 	}
 
+	public void save(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

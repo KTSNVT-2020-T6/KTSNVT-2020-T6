@@ -96,6 +96,10 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		existingCO.setType(entity.getType());
 		Set<Image> oldImages = imageRepository.findAllByCulturalOfferId(id);
 		existingCO.setImage(oldImages);
+		
+		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
+		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
+		emailService.nofiticationForUpdateCulturalOffer(users, existingCO.getName());
 
 		return culturalOfferRepository.save(existingCO);
 	}
@@ -124,7 +128,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 	
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
-		emailService.nofiticationForUpdateCulturalOffer(users, existingCO.getName());
+		emailService.nofiticationForDeleteCulturalOffer(users, existingCO.getName());
 		existingCO.setActive(false);
 		culturalOfferRepository.save(existingCO);
 
@@ -143,6 +147,13 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 
 	public Page<CulturalOffer> findAll(Pageable pageable) {
 		return culturalOfferRepository.findByActive(pageable, true);
+	}
+
+	public void saveAndSendMail(CulturalOffer culturalOffer) throws Exception {
+		culturalOfferRepository.save(culturalOffer);
+		List<Long> usersId = registeredUserRepository.findByIdCO(culturalOffer.getId());
+		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
+		emailService.nofiticationForAddingPost(users, culturalOffer.getName());		
 	}
 
 }

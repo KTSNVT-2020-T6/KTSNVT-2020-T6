@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.PostDTO;
 import main.kts.helper.PostMapper;
+import main.kts.model.CulturalOffer;
 import main.kts.model.Image;
 import main.kts.model.Post;
+import main.kts.service.CulturalOfferService;
 import main.kts.service.ImageService;
 import main.kts.service.PostService;
 
@@ -36,6 +38,9 @@ public class PostController {
 
 	@Autowired
 	private ImageService imageService;
+	
+	@Autowired
+	private CulturalOfferService culturalOfferService;
 	
 	public PostController() {
 		postMapper = new PostMapper();
@@ -76,14 +81,21 @@ public class PostController {
 	public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
 		Post post;
 		Image image;
+		CulturalOffer culturalOffer;
+		
 		if (!this.validatePostDTO(postDTO))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
+		
 		try {
+			culturalOffer = culturalOfferService.findOne(postDTO.getCulturalOfferId());
 			image = imageService.findOne(postDTO.getImageDTO().getId());
 			post = postMapper.toEntity(postDTO);
 			post.setImage(image);
+			
 			post = postService.create(post);
+			culturalOffer.getPost().add(post);
+			culturalOfferService.saveAndSendMail(culturalOffer);
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -145,6 +157,8 @@ public class PostController {
 		if(postDTO.getText() == null) 
 			return false;
 		if(postDTO.getDate().before(new Date()))
+			return false;
+		if(postDTO.getCulturalOfferId() == null)
 			return false;
 		return true;
 		
