@@ -173,4 +173,13 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		emailService.nofiticationForAddingPost(users, culturalOffer.getName());
 	}
 
+	public List<CulturalOffer> findByCity(String city) {
+		return culturalOfferRepository.findByCity(city);
+	}
+
+	public List<CulturalOffer> findByContent(String content) {
+		
+		return culturalOfferRepository.findByContent(content);
+	}
+
 }
