@@ -65,6 +65,11 @@ public class TypeService implements ServiceInterface<Type>{
 		return typeRepository.findByActive(pageable, true);
 	}
 
+	public List<Type> findTypesOfCategory(Long id) {
+		
+		return typeRepository.findTypesOfCategory(id);
+	}
+
 	
 	
 }

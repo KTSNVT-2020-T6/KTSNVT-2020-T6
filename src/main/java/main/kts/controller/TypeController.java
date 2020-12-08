@@ -58,6 +58,16 @@ public class TypeController {
 		return new ResponseEntity<>(typeMapper.toDto(type), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/category/{id}", method=RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<TypeDTO>> getTypesOfCategory(@PathVariable Long id){
+		List<Type> types = typeService.findTypesOfCategory(id);
+		if(types == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(toTypeDTOList(types), HttpStatus.OK);
+	}
+	
     @RequestMapping(value="/",method=RequestMethod.GET)
     @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<TypeDTO>> loadTypePage(Pageable pageable) {
