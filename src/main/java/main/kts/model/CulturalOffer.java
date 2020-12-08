@@ -38,6 +38,10 @@ public class CulturalOffer {
 
 	@Column(unique = false, nullable = false)
 	private double lon;
+	
+	@Column(unique = false, nullable = false)
+	private String city;
+
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cultural_offer_id", nullable = true)
@@ -74,6 +78,32 @@ public class CulturalOffer {
 		this.image = image;
 		this.comment = comment;
 		this.active = true;
+	}
+
+	public CulturalOffer(Long id, double averageRate, String description, String name, Date date, double lat,
+			double lon, String city, Set<Post> post, Type type, Set<Image> image, Set<Comment> comment) {
+		super();
+		this.id = id;
+		this.averageRate = averageRate;
+		this.description = description;
+		this.name = name;
+		this.date = date;
+		this.lat = lat;
+		this.lon = lon;
+		this.city = city;
+		this.post = post;
+		this.type = type;
+		this.image = image;
+		this.comment = comment;
+		this.active = true;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public double getAverageRate() {

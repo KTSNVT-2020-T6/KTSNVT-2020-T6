@@ -200,6 +200,8 @@ public class CulturalOfferController {
 			return false;
 		if(culturalOfferDTO.getName() == null || culturalOfferDTO.getName().equals(""))
 			return false;
+		if(culturalOfferDTO.getCity() == null || culturalOfferDTO.getCity().equals(""))
+			return false;
 		if(culturalOfferDTO.getLat() < -90 || culturalOfferDTO.getLat() > 90)
 			return false;
 		if(culturalOfferDTO.getLon() < -180 || culturalOfferDTO.getLon() > 180)

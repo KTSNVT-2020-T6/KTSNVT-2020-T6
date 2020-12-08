@@ -71,6 +71,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 			co.setDate(null);
 		co.setLat(entity.getLat());
 		co.setLon(entity.getLon());
+		co.setCity(entity.getCity());
 		co.setType(entity.getType());
 		if (entity.getImage() != null) {
 			co.setImage(entity.getImage());
@@ -110,6 +111,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		existingCO.setLat(entity.getLat());
 		existingCO.setLon(entity.getLon());
 		existingCO.setType(entity.getType());
+		existingCO.setCity(entity.getCity());
 		Set<Image> oldImages = imageRepository.findAllByCulturalOfferId(id);
 		existingCO.setImage(oldImages);
 

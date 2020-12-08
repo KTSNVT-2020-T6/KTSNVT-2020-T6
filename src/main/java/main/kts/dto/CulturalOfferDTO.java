@@ -9,6 +9,7 @@ public class CulturalOfferDTO {
 	private double averageRate;
 	private String description;
 	private String name;
+	private String city;
 	private Date date;
 	private double lat;
 	private double lon;
@@ -26,6 +27,23 @@ public class CulturalOfferDTO {
 		this.averageRate = averageRate;
 		this.description = description;
 		this.name = name;
+		this.date = date;
+		this.lat = lat;
+		this.lon = lon;
+		this.typeDTO = typeDTO;
+		this.imageDTO = imageDTO;
+	}
+	
+	
+
+	public CulturalOfferDTO(Long id, double averageRate, String description, String name, String city, Date date,
+			double lat, double lon, TypeDTO typeDTO, Set<ImageDTO> imageDTO) {
+		super();
+		this.id = id;
+		this.averageRate = averageRate;
+		this.description = description;
+		this.name = name;
+		this.city = city;
 		this.date = date;
 		this.lat = lat;
 		this.lon = lon;
@@ -104,4 +122,14 @@ public class CulturalOfferDTO {
 	public void setImageDTO(Set<ImageDTO> imageDTO) {
 		this.imageDTO = imageDTO;
 	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	
 }

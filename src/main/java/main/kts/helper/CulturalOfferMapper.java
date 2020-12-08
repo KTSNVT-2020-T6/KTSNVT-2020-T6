@@ -29,7 +29,7 @@ public class CulturalOfferMapper implements MapperInterface<CulturalOffer, Cultu
 			images.add(imageMapper.toEntity(imageDTO));
 	
 		Type type = typeMapper.toEntity(dto.getTypeDTO());
-		return new CulturalOffer(dto.getId(),dto.getAverageRate(), dto.getDescription(), dto.getName(), dto.getDate(), dto.getLat(), dto.getLon(), posts, type, images, comments);
+		return new CulturalOffer(dto.getId(),dto.getAverageRate(), dto.getDescription(), dto.getName(), dto.getDate(), dto.getLat(), dto.getLon(), dto.getCity(), posts, type, images, comments);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class CulturalOfferMapper implements MapperInterface<CulturalOffer, Cultu
 			imagesDTO.add(imageMapper.toDto(image));
 
 		TypeDTO typeDTO = typeMapper.toDto(entity.getType());
-		return new CulturalOfferDTO(entity.getId(),entity.getAverageRate(), entity.getDescription(), entity.getName(), entity.getDate(), entity.getLat(), entity.getLon(), typeDTO, imagesDTO);
+		return new CulturalOfferDTO(entity.getId(),entity.getAverageRate(), entity.getDescription(), entity.getName(),entity.getCity(), entity.getDate(), entity.getLat(), entity.getLon(), typeDTO, imagesDTO);
 	}
 
 }
