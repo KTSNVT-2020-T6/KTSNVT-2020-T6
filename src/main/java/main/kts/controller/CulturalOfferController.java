@@ -82,14 +82,12 @@ public class CulturalOfferController {
     @RequestMapping(value="/from_city/{city}", method = RequestMethod.GET)
 	public ResponseEntity<List<CulturalOfferDTO>> getCulturalOffersFromCity(@PathVariable String city) {
 		List<CulturalOffer> culturalOffers = culturalOfferService.findByCity(city.toUpperCase());
-
 		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
 	}
     
     @RequestMapping(value="/content/{content}", method = RequestMethod.GET)
 	public ResponseEntity<List<CulturalOfferDTO>> getCulturalOffersByContent(@PathVariable String content) {
 		List<CulturalOffer> culturalOffers = culturalOfferService.findByContent(content.toUpperCase());
-
 		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
 	}
     
