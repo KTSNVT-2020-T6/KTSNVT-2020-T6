@@ -86,17 +86,16 @@ public class ImageController {
 	public ResponseEntity<String> createImage(@RequestBody MultipartFile file) {
 		Image image;
 		String message = "";
-		System.out.println(file.toString());
-		System.out.println(file.getName() + " OVO JE IME SLIKE");
-		System.out.println(file.getOriginalFilename()+" ORIGINAL...");
-		System.out.println(file.getResource()+" RESOURCE");
-		ImageDTO imageDTO = new ImageDTO(file.getName(), file.getOriginalFilename());
+		ImageDTO imageDTO = new ImageDTO(file.getOriginalFilename(), "src/main/resources/static/images/"+file.getOriginalFilename());
 		if (!this.validateImageDTO(imageDTO))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		try {
-			storageService.save(file);
-			message = "Uploaded the file successfully: " + file.getOriginalFilename();
 			image = imageService.create(imageMapper.toEntity(imageDTO));
+			Long id = image.getId();
+			image = imageService.update(new Image(id, "file"+id+".jpg", "src/main/resources/static/images/file"+id+".jpg"), image.getId());
+			storageService.save(file, image.getId());
+			message = "Uploaded the file successfully: " + file.getOriginalFilename();
+			
 			return new ResponseEntity<>(message, HttpStatus.OK);
 		} catch (Exception e) {
 			message = "Could not upload the file: " + file.getOriginalFilename() + "!";
