@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileService {
 
-  private final Path root = Paths.get("static/images");
+  private final Path root = Paths.get("src/main/resources/static/images");
 
   
   public void init() {
@@ -28,9 +28,9 @@ public class FileService {
   }
 
   
-  public void save(MultipartFile file) {
+  public void save(MultipartFile file, Long id) {
     try {
-      Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+      Files.copy(file.getInputStream(), this.root.resolve(file.getName()+id+".jpg"));
     } catch (Exception e) {
       throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
     }
