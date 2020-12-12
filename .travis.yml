@@ -4,6 +4,11 @@ language: java
 jdk: openjdk8
 before_install: 
   - chmod +x server/mvnw
+before_script:
+  - psql -c 'create database ktsdb;' -U postgres
+
+services:
+  - postgresql
 script: 
   - cd server 
   - ./mvnw clean install
@@ -12,7 +17,5 @@ script:
     - Dsonar.host.url=http://localhost:9000 \
     - Dsonar.login=34fd8c2e0a77f0a62a68a3ffcf2c581d5f27f52f
 
-services:
-- postgresql
 
 
