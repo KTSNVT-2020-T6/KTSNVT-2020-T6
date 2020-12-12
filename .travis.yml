@@ -9,6 +9,10 @@ before_script:
 services:
   - postgresql
   
+before_install: 
+  - chmod +x server/mvnw
+
+  
 script: 
   - cd server 
   - ./mvnw clean install
