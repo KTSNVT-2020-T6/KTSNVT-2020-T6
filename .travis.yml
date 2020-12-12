@@ -3,7 +3,7 @@ sudo: required
 language: java
 jdk: openjdk8
 before_install: 
-  - chmod +x server/mvn
+  - chmod +x server/mvnw
 script: 
   - cd server 
   - ./mvn clean install
