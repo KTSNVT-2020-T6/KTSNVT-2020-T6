@@ -79,7 +79,6 @@
 	<dependency>
     		<groupId>org.sonarsource.sonarqube</groupId>
     		<artifactId>sonar-plugin-api</artifactId>
-    		<version>8.6.0.39681</version>
 	</dependency>
 	</dependencies>
 
@@ -92,7 +91,6 @@
   			<plugin>
         			<groupId>org.sonarsource.scanner.maven</groupId>
         			<artifactId>sonar-maven-plugin</artifactId>
-        			<version>3.6.3</version>
       			</plugin>
 		</plugins>
 
