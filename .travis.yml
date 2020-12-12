@@ -7,3 +7,5 @@ before_install:
 script: 
   - cd server 
   - ./mvnw clean install
+services:
+  - postgresql
