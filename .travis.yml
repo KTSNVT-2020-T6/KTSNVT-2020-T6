@@ -3,7 +3,7 @@ sudo: required
 language: java
 jdk: openjdk8
 before_install: 
-  - chmod +x server/mvnw
+  - chmod +x ./mvnw
 before_script:
   - psql -c 'create database ktsdb;' -U postgres
 
