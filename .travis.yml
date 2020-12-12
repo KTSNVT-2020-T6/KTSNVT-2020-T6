@@ -9,6 +9,10 @@ before_script:
 
 services:
   - postgresql
+  
+addons:
+  sonarqube: true
+  
 script: 
   - cd server 
   - ./mvnw clean install
