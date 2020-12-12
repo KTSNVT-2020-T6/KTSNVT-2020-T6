@@ -6,6 +6,6 @@ before_install:
   - chmod +x server/mvnw
 script: 
   - cd server 
-  - ./mvn clean install
+  - ./mvnw clean install
 services:
   - postgresql
