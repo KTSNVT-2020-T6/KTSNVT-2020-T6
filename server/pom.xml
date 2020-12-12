@@ -89,9 +89,14 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
   			
 		</plugins>
+		<pluginRepositories>
+   				<pluginRepository> 
+    					<id>maven2</id> 
+    					<url>https://repo.maven.apache.org/maven2/</url> 
+  				</pluginRepository> 
+		</pluginRepositories>
 	</build>
 
 </project>
