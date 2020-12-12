@@ -3,9 +3,9 @@ sudo: required
 language: java
 jdk: openjdk8
 before_install: 
-  - chmod +x server/mvnw
+  - chmod +x server/mvn
 script: 
   - cd server 
-  - ./mvnw clean install
+  - ./mvn clean install
 services:
   - postgresql
