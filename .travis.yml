@@ -15,13 +15,13 @@ services:
 
 addons:
   sonarcloud:
-    organization: ktsnvt2020
+    organization: ktsnvt
     token: 64583aa2b01b4a6ee8657f7883c7f1aadf7ab75a
 
 script: 
   - cd server 
   - ./mvnw clean install
-  - ./mvnw sonar:sonar -Dsonar.projectKey=milicapoparic_KTSNVT-2020-T6 -Dsonar.organization=ktsnvt2020 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=64583aa2b01b4a6ee8657f7883c7f1aadf7ab75a
+  - ./mvnw sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6_KTSNVT-2020-T6 -Dsonar.organization=ktsnvt -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=64583aa2b01b4a6ee8657f7883c7f1aadf7ab75a
   
 
 
