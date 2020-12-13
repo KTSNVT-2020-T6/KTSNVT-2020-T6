@@ -14,7 +14,6 @@
 	<name>KTS_NVT</name>
 	<description>Project for NVT and KTS</description>
 
-
 	<properties>
 		<java.version>1.8</java.version>
 		
