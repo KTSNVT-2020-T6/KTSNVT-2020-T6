@@ -16,7 +16,11 @@ before_install:
 script: 
   - cd server 
   - ./mvnw clean install 
-  - ./mvnw sonar:sonar -Dsonar.projectKey=ktsnvt -Dsonar.host.url=http://localhost:9000 -Dsonar.login=fd3dbcdcd9935ba02c48eee16d9b2e4bc864d7c4
+  - ./mvnw sonar:sonar
+  - ./mvnw clean verify-P sonar \
+  - Dsonar.projectKey=ktsnvt \
+  - Dsonar.host.url=http://localhost:9000 \
+  - Dsonar.login=fd3dbcdcd9935ba02c48eee16d9b2e4bc864d7c4
 
 
 
