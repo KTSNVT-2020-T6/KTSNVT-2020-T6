@@ -15,14 +15,7 @@
 	<description>Project for NVT and KTS</description>
 
 	<properties>
-		<java.version>1.8</java.version>
-		
-		
-  		<sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
-  		<sonar.login>34fd8c2e0a77f0a62a68a3ffcf2c581d5f27f52f</sonar.login>
-  		<sonar.language>java</sonar.language>
-  		<sonar.scm.provider>git</sonar.scm.provider>
-		
+		<java.version>1.8</java.version>		
 	</properties>
 
 	<dependencies>
@@ -90,11 +83,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-  			<plugin>
-                		<groupId>org.sonarsource.scanner.maven</groupId>
-                		<artifactId>sonar-maven-plugin</artifactId>
-                		<version>2.5.2</version>
-            		</plugin>
 		</plugins>
 		
 
