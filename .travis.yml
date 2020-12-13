@@ -3,7 +3,6 @@ sudo: required
 language: java
 jdk: openjdk11
 
-
 before_install: 
   - chmod +x server/mvnw
   
