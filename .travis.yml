@@ -16,20 +16,20 @@ services:
 script: 
   - cd server 
   - ./mvnw clean install
-  - ./mvnw verify sonar:sonar
+  - ./mvnw -X verify sonar:sonar
   -./mvnw sonar:sonar \
-  -Dsonar.projectKey=ktsnvt \
-  -Dsonar.host.url=http://localhost:9000/sonar \
-  -Dsonar.login=34fd8c2e0a77f0a62a68a3ffcf2c581d5f27f52f
+  - Dsonar.projectKey=ktsnvt \
+  - Dsonar.host.url=http://localhost:9000 \
+  - Dsonar.login=34fd8c2e0a77f0a62a68a3ffcf2c581d5f27f52f
   
-  sonar.projectVersion=1.0
+  - sonar.projectVersion=1.0
 
-  sonar.sources=. 
+  - sonar.sources=. 
 
-  sonar.language=java
+  - sonar.language=java
 
 
-  sonar.sourceEncoding=UTF-8
+  - sonar.sourceEncoding=UTF-8
 
   
 
