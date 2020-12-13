@@ -1,5 +1,3 @@
-after_failure:
-  - git reset --hard HEAD~1
 dist: trusty
 sudo: required
 language: java
