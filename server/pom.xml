@@ -19,7 +19,7 @@
 		
 		
   		<sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
-  		<sonar.login>be2fe3y27f07db354983dfxysdsa5256</sonar.login>
+  		<sonar.login>34fd8c2e0a77f0a62a68a3ffcf2c581d5f27f52f</sonar.login>
   		<sonar.language>java</sonar.language>
   		<sonar.scm.provider>git</sonar.scm.provider>
 		
