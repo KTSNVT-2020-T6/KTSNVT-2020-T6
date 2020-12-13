@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>	
 		<sonar.projectKey>ktsnvt</sonar.projectKey>
-		<sonar.organization>ktsnvt2020</sonar.organization>
+		<sonar.organization>ktsnvt</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.login>64583aa2b01b4a6ee8657f7883c7f1aadf7ab75a</sonar.login>
 	</properties>
