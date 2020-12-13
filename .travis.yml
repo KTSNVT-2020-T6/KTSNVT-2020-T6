@@ -15,7 +15,8 @@ services:
 
 script: 
   - cd server 
-  - ./mvnw clean install 
+  - ./mvnw clean install
+  - ./mvnw verify sonar:sonar
   -./mvnw sonar:sonar \
   -Dsonar.projectKey=ktsnvt \
   -Dsonar.host.url=http://localhost:9000/sonar \
