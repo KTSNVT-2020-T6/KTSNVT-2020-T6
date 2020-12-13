@@ -21,6 +21,7 @@ addons:
 script: 
   - cd server 
   - ./mvnw clean install
+  - export JAVA_HOME=/path/to/java11
   - ./mvnw sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6_KTSNVT-2020-T6 -Dsonar.organization=ktsnvt -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=64583aa2b01b4a6ee8657f7883c7f1aadf7ab75a
   
 
