@@ -20,7 +20,7 @@ addons:
 script: 
   - cd server 
   - ./mvnw clean install
-  - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6
+  - ./mvnw sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6_KTSNVT-2020-T6 -Dsonar.organization=KTSNVT-2020-T6 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=5505c51e689b73abc7924b1a44fa947266e29338
   
 
 
