@@ -15,8 +15,8 @@ services:
 
 addons:
   sonarcloud:
-    organization: isamrstim10
-    token: 516077734a5d445922fc70aecd855673d2dcecb9
+    organization: KTSNVT-2020-T6
+    token: 64583aa2b01b4a6ee8657f7883c7f1aadf7ab75a
 
 script: 
   - cd server 
