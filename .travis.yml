@@ -14,8 +14,8 @@ services:
 
 addons:
   sonarcloud:
-    organization: KTSNVT-2020-T6
-    token: 64583aa2b01b4a6ee8657f7883c7f1aadf7ab75a
+    organization: ktsnvt-2020-t6
+    token: 5505c51e689b73abc7924b1a44fa947266e29338
 
 script: 
   - cd server 
