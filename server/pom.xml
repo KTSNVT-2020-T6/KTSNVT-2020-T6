@@ -15,7 +15,12 @@
 	<description>Project for NVT and KTS</description>
 
 	<properties>
-		<java.version>1.8</java.version>		
+		<java.version>1.8</java.version>	
+		<java.version>1.8</java.version>
+		<sonar.projectKey>ktsnvt</sonar.projectKey>
+		<sonar.organization>KTSNVT-2020-T6</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.login>64583aa2b01b4a6ee8657f7883c7f1aadf7ab75a</sonar.login>
 	</properties>
 
 	<dependencies>
@@ -82,6 +87,26 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			 <plugin>
+				    <groupId>org.jacoco</groupId>
+				    <artifactId>jacoco-maven-plugin</artifactId>
+				    <version>0.8.2</version>
+				    <executions>
+				      <execution>
+				        <id>default-prepare-agent</id>
+				        <goals>
+				          <goal>prepare-agent</goal>
+				        </goals>
+				      </execution>
+				      <execution>
+				        <id>default-report</id>
+				        <phase>prepare-package</phase>
+				        <goals>
+				          <goal>report</goal>
+				        </goals>
+				      </execution>
+				    </executions>
 			</plugin>
 		</plugins>
 		
