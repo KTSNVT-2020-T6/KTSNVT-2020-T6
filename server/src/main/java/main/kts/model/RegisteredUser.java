@@ -1,6 +1,7 @@
 package main.kts.model;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
@@ -83,6 +84,12 @@ public class RegisteredUser extends User {
 		this.verified = verified;
 	}
 
+	public RegisteredUser(Long registeredUserId) {
+		this.id = registeredUserId;
+		this.active = true;
+		this.verified = true;
+	}
+
 	public Set<CulturalOffer> getFavoriteCulturalOffers() {
 		return favoriteCulturalOffers;
 	}
@@ -100,6 +107,24 @@ public class RegisteredUser extends User {
 	public String getUsername() {
 		return this.email;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        RegisteredUser ru = (RegisteredUser) o;
+        if (ru.getId() == null || id == null) {
+            if(ru.getEmail().equals(getEmail())){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, ru.getId());
+    }
 
 
 }

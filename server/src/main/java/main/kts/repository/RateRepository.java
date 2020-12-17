@@ -14,8 +14,8 @@ import main.kts.model.Rate;
 @Repository
 public interface RateRepository extends JpaRepository<Rate, Long>{
 
-	@Query(value = "SELECT * FROM RATE WHERE REGISTRED_USER_ID = ?1 AND ACTIVE = TRUE", nativeQuery = true)
-	Rate findOneByRegisteredUserId(Long id);
+	@Query(value = "SELECT * FROM RATE WHERE REGISTRED_USER_ID = ?1 AND CULTURAL_OFFER_ID = ?2 AND ACTIVE = TRUE", nativeQuery = true)
+	Rate findOneByRegisteredUserIdAndCulturalOfferId(Long id, Long id2);
 	
 	@Query(value = "SELECT * FROM RATE WHERE CULTURAL_OFFER_ID = ?1 AND ACTIVE = TRUE", nativeQuery = true)
 	List<Rate> findAllByCulturalOfferId(Long id);

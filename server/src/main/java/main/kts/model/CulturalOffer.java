@@ -2,6 +2,7 @@ package main.kts.model;
 
 import java.util.Set;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
 
 @Entity
 public class CulturalOffer {
@@ -96,6 +98,12 @@ public class CulturalOffer {
 		this.image = image;
 		this.comment = comment;
 		this.active = true;
+	}
+
+	public CulturalOffer(Long culturalOfferId) {
+		this.id = culturalOfferId;
+		this.active = true;
+		this.averageRate = 5;
 	}
 
 	public String getCity() {
@@ -201,5 +209,23 @@ public class CulturalOffer {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CulturalOffer co = (CulturalOffer) o;
+        if (co.getId() == null || id == null) {
+            if(co.getName().equals(getName())){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, co.getId());
+    }
 
 }

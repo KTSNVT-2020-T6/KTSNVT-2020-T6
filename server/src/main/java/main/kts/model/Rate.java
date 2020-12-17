@@ -1,5 +1,7 @@
 package main.kts.model;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +36,14 @@ public class Rate {
 	public Rate(Long id, int number, RegisteredUser registredUser, CulturalOffer culturalOffer) {
 		super();
 		this.id = id;
+		this.number = number;
+		this.registredUser = registredUser;
+		this.culturalOffer = culturalOffer;
+		this.active = true;
+	}
+	
+	public Rate(int number, RegisteredUser registredUser, CulturalOffer culturalOffer) {
+		super();
 		this.number = number;
 		this.registredUser = registredUser;
 		this.culturalOffer = culturalOffer;
@@ -84,5 +94,22 @@ public class Rate {
 		this.active = active;
 	}
 
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Rate rate = (Rate) o;
+        if (rate.getId() == null || id == null) {
+            if(rate.getNumber() == getNumber()){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, rate.getId());
+    }
 	
 }
