@@ -15,7 +15,7 @@ values ('admin', true,'admin@gmail.com', 'Marko','Markovic','$2a$10$RVzuprKddsjd
 insert into users (type, active, email, first_name, last_name, password, verified)
 values ('admin', true,'admin1@gmail.com', 'Jova','Jovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true);
 insert into users (type, active, email, first_name, last_name, password, verified)
-values ('registered_user',true,'trajkovicka.9909@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true);
+values ('registered_user',true,'use1.9909@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true);
 insert into users (type, active, email, first_name, last_name, password, verified)
 values ('registered_user',true,'user2@gmail.com', 'Ivana','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true);
 
