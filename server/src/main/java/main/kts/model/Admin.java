@@ -53,6 +53,29 @@ public class Admin extends User {
 	}
 
 
+	public Admin(Long id, String firstName, String lastName, String email,
+			String password, boolean active, boolean verified) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.active = active;
+		this.verified = verified;
+	}
+
+
+	public Admin(String firstName, String lastName, String email, String password,
+			boolean active, boolean verified) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.active = active;
+		this.verified = verified;
+	}
+
+
 	public Set<CulturalOffer> getCulturalOffer() {
 		return culturalOffer;
 	}
@@ -72,5 +95,14 @@ public class Admin extends User {
 	public String getUsername() {
 		return this.email;
 	}
+
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
+
+	
 
 }

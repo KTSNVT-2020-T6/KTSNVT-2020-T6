@@ -10,12 +10,14 @@ insert into image (name, relative_path, active) values ('slika4', 'path4.jpg', t
 insert into image (name, relative_path, active) values ('slika5','path5.jpg', true);
 insert into image (name, relative_path, active) values ('slika6','path6.jpg', true);
 
-insert into users (type, active, email, first_name, last_name, password, verified, image_id)
-values ('admin', true,'admin@gmail.com', 'Marko','Markovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,1);
-insert into users (type, active, email, first_name, last_name, password, verified, image_id)
-values ('registered_user',true,'trajkovicka.9909@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,2);
-insert into users (type, active, email, first_name, last_name, password, verified, image_id)
-values ('registered_user',true,'user2@gmail.com', 'Ivana','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,3);
+insert into users (type, active, email, first_name, last_name, password, verified)
+values ('admin', true,'admin@gmail.com', 'Marko','Markovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true);
+insert into users (type, active, email, first_name, last_name, password, verified)
+values ('admin', true,'admin1@gmail.com', 'Jova','Jovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true);
+insert into users (type, active, email, first_name, last_name, password, verified)
+values ('registered_user',true,'trajkovicka.9909@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true);
+insert into users (type, active, email, first_name, last_name, password, verified)
+values ('registered_user',true,'user2@gmail.com', 'Ivana','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true);
 
 insert into users_authority (user_id, authority_id) values (1,2);
 insert into users_authority (user_id, authority_id) values (2,1);
