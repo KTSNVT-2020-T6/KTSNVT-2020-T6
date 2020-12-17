@@ -87,6 +87,7 @@ public class AdminService implements ServiceInterface<Admin>{
 			a.setImage(entity.getImage());
 		}
 		
+		
 		return repository.save(a);
 	}
 
@@ -105,7 +106,7 @@ public class AdminService implements ServiceInterface<Admin>{
 	public void delete(Long id) throws Exception {
 		Admin a = repository.findById(id).orElse(null);
 		if(a == null)
-			throw new Exception("Admin doesn't exist.");
+			throw new Exception("Admin doesn't exist");
 		a.setActive(false);
 		a = repository.save(a);
 	}

@@ -61,7 +61,7 @@ public class User implements UserDetails{
 	//@JoinColumn(name = "user_id", nullable = false)
 	protected Set<Authority> authority;
 
-	@Column(name = "last_password_reset_date")
+	@Column(name = "last_password_reset_date",nullable = true)
     private Timestamp lastPasswordResetDate;
 	
 	public User() {
@@ -205,5 +205,14 @@ public class User implements UserDetails{
 	public String getUsername() {
 		return this.email;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", active=" + active + ", verified=" + verified + ", image=" + image
+				+ ", authority=" + authority + ", lastPasswordResetDate=" + lastPasswordResetDate + "]";
+	}
+
+	
 
 }
