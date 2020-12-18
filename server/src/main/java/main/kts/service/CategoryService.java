@@ -2,6 +2,7 @@ package main.kts.service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,8 @@ public class CategoryService implements ServiceInterface<Category>{
 		c.setDescription(entity.getDescription());
 		c.setType(new HashSet<Type>());
 		c.setActive(true);
-		return categoryRepository.save(c);
+		c = categoryRepository.save(c);
+		return c;
 	}
 
 	@Override
@@ -57,17 +59,20 @@ public class CategoryService implements ServiceInterface<Category>{
 
 	@Override
 	public void delete(Long id) throws Exception {
-		Category existingCat = categoryRepository.findById(id).orElse(null);
-		if(existingCat == null) {
+		Optional<Category> optCat = categoryRepository.findById(id);
+		if(optCat == null) {
 			throw new Exception("Category with given id doesn't exist");
 		}
+		Category existingCat = optCat.orElse(null);
 		
 		for (Type type : existingCat.getType()) {
 			type.setActive(false);
 			typeRepository.save(type);
+			
 		}
 		existingCat.setActive(false);
 		categoryRepository.save(existingCat);
+		
 		
 	}
 

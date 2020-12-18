@@ -1,5 +1,8 @@
 package main.kts.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -30,6 +33,20 @@ public class Category {
 	
 	public Category(Long id, String name, String description, Set<Type> type) {
 		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.type = type;
+		this.active = true;
+	}
+	
+	public Category(String name, String description) {
+		this.name = name;
+		this.description = description;
+		this.type = new HashSet<Type>();
+		this.active = true;
+	}
+	
+	public Category(String name, String description, Set<Type> type) {
 		this.name = name;
 		this.description = description;
 		this.type = type;
@@ -78,6 +95,24 @@ public class Category {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Category c = (Category) o;
+        if (c.getId() == null || id == null) {
+            if(c.getName().equals(getName())){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, c.getId());
+    }
 
 	
 }
