@@ -8,11 +8,12 @@ import org.springframework.test.context.TestPropertySource;
 
 import main.kts.service.AdminServiceUnitTest;
 import main.kts.service.CulturalOfferServiceUnitTest;
+import main.kts.service.ImageServiceUnitTest;
 import main.kts.service.RateServiceUnitTest;
 import main.kts.service.RegisteredUserUnitTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({AdminServiceUnitTest.class, RegisteredUserUnitTest.class, RateServiceUnitTest.class, CulturalOfferServiceUnitTest.class})
+@SuiteClasses({AdminServiceUnitTest.class, RegisteredUserUnitTest.class, RateServiceUnitTest.class, CulturalOfferServiceUnitTest.class, ImageServiceUnitTest.class})
 @TestPropertySource("classpath:test.properties")
 public class SuiteAll {
 

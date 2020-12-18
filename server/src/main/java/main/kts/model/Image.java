@@ -1,5 +1,7 @@
 package main.kts.model;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +33,12 @@ public class Image {
 		this.name = name;
 		this.relativePath = relativePath;
 		this.active = true;
+	}
+	
+	public Image(String name, String relativePath) {
+		super();
+		this.name = name;
+		this.relativePath = relativePath;
 	}
 
 	public String getName() {
@@ -73,6 +81,23 @@ public class Image {
 		this.active = active;
 	}
 	
-	
+
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Image image = (Image) o;
+        if (image.getId() == null || id == null) {
+            if(image.relativePath == getRelativePath()){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, image.getId());
+    }
 
 }

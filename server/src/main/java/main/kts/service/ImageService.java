@@ -1,6 +1,7 @@
 package main.kts.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Image;
+import main.kts.model.Rate;
 import main.kts.repository.ImageRepository;
 
 @Service
@@ -50,10 +52,11 @@ public class ImageService implements ServiceInterface<Image>{
 
 	@Override
 	public void delete(Long id) throws Exception {
-		Image existingImage = imageRepository.findById(id).orElse(null);
-		if(existingImage == null) {
+		Optional<Image> optImage = imageRepository.findById(id);
+		if(optImage == null) {
 			throw new Exception("Image with given id doesn't exist");
 		}
+		Image existingImage = optImage.orElse(null);
 		existingImage.setActive(false);
 		imageRepository.save(existingImage);
 	}
