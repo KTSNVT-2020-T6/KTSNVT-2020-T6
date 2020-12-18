@@ -1,6 +1,8 @@
 package main.kts.model;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
@@ -76,6 +78,15 @@ public class Admin extends User {
 	}
 
 
+	public Admin(Long adminId, String adminEmail) {
+		this.email = adminEmail;
+		this.id = adminId;
+		this.active = true;
+		this.verified = true;
+		this.culturalOffer = new HashSet<CulturalOffer>();
+	}
+
+
 	public Set<CulturalOffer> getCulturalOffer() {
 		return culturalOffer;
 	}
@@ -102,7 +113,23 @@ public class Admin extends User {
 		return super.toString();
 	}
 
-
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Admin ru = (Admin) o;
+        if (ru.getId() == null || id == null) {
+            if(ru.getEmail().equals(getEmail())){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, ru.getId());
+    }
 	
 
 }
