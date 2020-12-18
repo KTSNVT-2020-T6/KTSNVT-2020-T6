@@ -3,7 +3,7 @@ package main.kts.service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import main.kts.model.Admin;
 import main.kts.model.Comment;
 import main.kts.model.CulturalOffer;
-import main.kts.model.Image;
 import main.kts.model.Post;
 import main.kts.model.Rate;
 import main.kts.model.RegisteredUser;
@@ -23,7 +22,6 @@ import main.kts.model.User;
 import main.kts.repository.AdminRepository;
 import main.kts.repository.CommentRepository;
 import main.kts.repository.CulturalOfferRepository;
-import main.kts.repository.ImageRepository;
 import main.kts.repository.PostRepository;
 import main.kts.repository.RateRepository;
 import main.kts.repository.RegisteredUserRepository;
@@ -45,8 +43,6 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 	private PostRepository postRepository;
 	@Autowired
 	private EmailService emailService;
-	@Autowired
-	private ImageRepository imageRepository;
 
 	@Override
 	public List<CulturalOffer> findAll() {
@@ -96,10 +92,11 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 
 	@Override
 	public CulturalOffer update(CulturalOffer entity, Long id) throws Exception {
-		CulturalOffer existingCO = culturalOfferRepository.findById(id).orElse(null);
-		if (existingCO == null) {
+		Optional<CulturalOffer> optCO = culturalOfferRepository.findById(id);
+		if (optCO == null) {
 			throw new Exception("Cultural offer with given id doesn't exist");
 		}
+		CulturalOffer existingCO = optCO.orElse(null);
 
 		/***
 		 * set everything except averageRate, posts and comments (it is changed only
@@ -112,8 +109,6 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		existingCO.setLon(entity.getLon());
 		existingCO.setType(entity.getType());
 		existingCO.setCity(entity.getCity());
-		Set<Image> oldImages = imageRepository.findAllByCulturalOfferId(id);
-		existingCO.setImage(oldImages);
 
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
@@ -124,10 +119,11 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 
 	@Override
 	public void delete(Long id) throws Exception {
-		CulturalOffer existingCO = culturalOfferRepository.findById(id).orElse(null);
-		if (existingCO == null) {
+		Optional<CulturalOffer> optCO = culturalOfferRepository.findById(id);
+		if (optCO == null) {
 			throw new Exception("Cultural offer with given id doesn't exist");
 		}
+		CulturalOffer existingCO = optCO.orElse(null);
 
 		// find and delete all rates, comments, posts and images connected to this offer
 		List<Rate> rates = rateRepository.findAllByCulturalOfferId(existingCO.getId());

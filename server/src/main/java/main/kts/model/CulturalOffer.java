@@ -2,6 +2,7 @@ package main.kts.model;
 
 import java.util.Set;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -104,6 +105,22 @@ public class CulturalOffer {
 		this.id = culturalOfferId;
 		this.active = true;
 		this.averageRate = 5;
+	}
+
+	public CulturalOffer(String name, String description, Date date, String city, double lat,
+			double lon, double averageRate) {
+		this.averageRate = averageRate;
+		this.description = description;
+		this.name = name;
+		this.date = date;
+		this.lat = lat;
+		this.lon = lon;
+		this.city = city;
+		this.post = new HashSet<Post>();
+		this.type = new Type();
+		this.image = new HashSet<Image>();
+		this.comment = new HashSet<Comment>();
+		this.active = true;
 	}
 
 	public String getCity() {
