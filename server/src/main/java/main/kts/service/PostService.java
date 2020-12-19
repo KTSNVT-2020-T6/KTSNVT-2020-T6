@@ -2,6 +2,7 @@ package main.kts.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Post;
+import main.kts.model.Rate;
 import main.kts.model.RegisteredUser;
 import main.kts.repository.ImageRepository;
 import main.kts.repository.PostRepository;
@@ -35,8 +37,8 @@ public class PostService implements ServiceInterface<Post> {
 	@Override
 	public Post create(Post entity) throws Exception {
 		// if image doesn't exist
-		if (imageRepository.findById(entity.getImage().getId()).orElse(null) == null)
-			throw new Exception("Image doesn't exist");
+		//if (imageRepository.findById(entity.getImage().getId()).orElse(null) == null)
+			//throw new Exception("Image doesn't exist");
 
 		// make new post instance
 		Post p= new Post();
@@ -51,25 +53,27 @@ public class PostService implements ServiceInterface<Post> {
 
 	@Override
 	public Post update(Post entity, Long id) throws Exception {
-		Post existingPost = postRepository.findById(id).orElse(null);
-		if(existingPost == null) {
+		Optional<Post> optPost = postRepository.findById(id);
+		if(optPost == null) {
 			throw new Exception("Post with given id doesn't exist");
 		}
+		Post existingPost = optPost.orElse(null);
 		
 		existingPost.setImage(entity.getImage());
 		existingPost.setDate(entity.getDate());
 		existingPost.setText(entity.getText());
 		return postRepository.save(existingPost);
+	
 	}
-
 	@Override
 	public void delete(Long id) throws Exception {
-		Post existingPost = postRepository.findById(id).orElse(null);
-		if(existingPost == null) {
+		Optional<Post> optPost = postRepository.findById(id);
+		if(optPost == null) {
 			throw new Exception("Post with given id doesn't exist");
 		}
+		Post existingPost = optPost.orElse(null);
 		existingPost.setActive(false);
-		postRepository.save(existingPost);
+		postRepository.save(existingPost);	
 	}
 
 	public Page<Post> findAll(Pageable pageable) {
