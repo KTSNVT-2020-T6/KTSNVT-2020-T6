@@ -110,13 +110,9 @@ public class AdminService implements ServiceInterface<Admin>{
 		a.setActive(false);
 		a = repository.save(a);
 	}
-
-	public Admin findByEmail(String email) {
-		return repository.findByEmailAndActive(email, true);
-	}
-
-	public List<Admin> findAllAdmin() {
-		return repository.findAllAdmin();
+	
+	public Admin findOneChecker(Long id) {
+		return repository.findById(id).orElse(null);
 	}
 
 

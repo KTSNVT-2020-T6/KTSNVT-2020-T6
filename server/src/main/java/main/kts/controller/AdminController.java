@@ -37,7 +37,7 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.GET)
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<AdminDTO>> getAllAdmins(){
-		List<Admin> admins = service.findAllAdmin();
+		List<Admin> admins = service.findAll();
 		return new ResponseEntity<>(toDTOAdminsList(admins), HttpStatus.OK);
 	}
 	
