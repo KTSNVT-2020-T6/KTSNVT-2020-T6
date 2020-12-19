@@ -39,5 +39,8 @@ public class AdminConstants {
 	
 	public static final String NEW_ADMIN_EMAIL_DoesntExist = "doesntexist@gmail.com";
 	public static final int DB_ADMIN_SIZE = 2;
+	
+	public static final String ADMIN_EMAIL_LOGIN = "admin@gmail.com";
+	public static final String ADMIN_PASSWORD_LOGIN = "asdf";
 
 }
