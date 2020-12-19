@@ -1,6 +1,7 @@
 package main.kts.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Comment;
+import main.kts.model.CulturalOffer;
+import main.kts.model.RegisteredUser;
 import main.kts.repository.CommentRepository;
 import main.kts.repository.CulturalOfferRepository;
 import main.kts.repository.ImageRepository;
@@ -40,13 +43,15 @@ public class CommentService implements ServiceInterface<Comment> {
 
 	@Override
 	public Comment create(Comment entity) throws Exception {
-		// if user or offer or image don't exist 
-		if (registeredUserRepository.findById(entity.getRegistredUser().getId()).orElse(null) == null)
-			throw new Exception("User doesn't exist");
-		if (culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null) == null)
-			throw new Exception("Cultural offer doesn't exist");
-		if (imageRepository.findById(entity.getImage().getId()).orElse(null) == null)
-			throw new Exception("Image doesn't exist");
+		
+		Optional<RegisteredUser> ru = registeredUserRepository.findById(entity.getRegistredUser().getId());
+		if(ru == null) {
+			throw new Exception("User does not exist");	
+		}
+		Optional<CulturalOffer> offer = culturalOfferRepository.findById(entity.getCulturalOffer().getId());
+		if(offer == null)
+			throw new Exception("Cultural offer does not exist");
+
 		
 		// make new comment instance
 		Comment c = new Comment();
@@ -62,10 +67,11 @@ public class CommentService implements ServiceInterface<Comment> {
 
 	@Override
 	public Comment update(Comment entity, Long id) throws Exception {
-		Comment existingComment = commentRepository.findById(id).orElse(null);
-		if(existingComment == null) {
+		Optional<Comment> optComment = commentRepository.findById(id);
+		if(optComment == null) {
 			throw new Exception("Comment with given id doesn't exist");
 		}
+		Comment existingComment = optComment.orElse(null);
 		
 		existingComment.setText(entity.getText());
 		existingComment.setImage(entity.getImage());
@@ -75,12 +81,13 @@ public class CommentService implements ServiceInterface<Comment> {
 
 	@Override
 	public void delete(Long id) throws Exception {
-		Comment existingComment = commentRepository.findById(id).orElse(null);
-		if(existingComment == null) {
+		Optional<Comment> optComment = commentRepository.findById(id);
+		if(optComment == null) {
 			throw new Exception("Comment with given id doesn't exist");
 		}
+		Comment existingComment = optComment.orElse(null);
 		existingComment.setActive(false);
-		commentRepository.save(existingComment);	
+		commentRepository.save(existingComment);		
 	}
 
 	public Page<Comment> findAll(Pageable pageable) {
