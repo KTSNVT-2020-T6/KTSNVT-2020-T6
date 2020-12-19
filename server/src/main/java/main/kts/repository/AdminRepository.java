@@ -12,6 +12,7 @@ import main.kts.model.Admin;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
 
+	
 	Admin findByEmail(String email);
 
 	@Query(value = "SELECT * FROM USERS WHERE TYPE = 'admin' AND ACTIVE = TRUE", nativeQuery = true)
@@ -19,7 +20,6 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 
 	Optional<Admin> findByIdAndActive(Long id, boolean b);
 
-	Admin findByEmailAndActive(String email, boolean b);
 
-	
+	//Admin findByEmailAndActive(String email, boolean b);
 }
