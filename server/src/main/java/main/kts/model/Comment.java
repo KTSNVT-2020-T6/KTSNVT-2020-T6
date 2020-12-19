@@ -1,6 +1,7 @@
 package main.kts.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,6 +47,23 @@ public class Comment {
 		this.date = date;
 		this.registredUser = registredUser;
 		this.image = image;
+		this.culturalOffer = culturalOffer;
+		this.active = true;
+	}
+	
+	public Comment(Long id, String text, Date date, RegisteredUser registredUser, CulturalOffer culturalOffer) {
+		this.id = id;
+		this.text = text;
+		this.date = date;
+		this.registredUser = registredUser;
+		this.culturalOffer = culturalOffer;
+		this.active = true;
+	}
+	
+	public Comment(String text, Date date, RegisteredUser registredUser, CulturalOffer culturalOffer) {
+		this.text = text;
+		this.date = date;
+		this.registredUser = registredUser;
 		this.culturalOffer = culturalOffer;
 		this.active = true;
 	}
@@ -109,5 +127,22 @@ public class Comment {
 		this.active = active;
 	}
 	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Comment comment = (Comment) o;
+        if (comment.getId() == null || id == null) {
+            if(comment.getText().equals(getText())){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, comment.getId());
+    }
 
 }
