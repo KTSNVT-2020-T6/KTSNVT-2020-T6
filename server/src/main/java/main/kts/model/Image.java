@@ -40,6 +40,7 @@ public class Image {
 		this.name = name;
 		this.relativePath = relativePath;
 	}
+	
 
 	public String getName() {
 		return name;

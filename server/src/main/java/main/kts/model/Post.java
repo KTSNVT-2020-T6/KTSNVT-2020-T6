@@ -1,6 +1,7 @@
 package main.kts.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,6 +40,14 @@ public class Post {
 	public Post(Long id, String text, Date date, Image image) {
 		super();
 		this.id = id;
+		this.text = text;
+		this.date = date;
+		this.image = image;
+		this.active = true;
+	}
+	
+	public Post(String text, Date date, Image image) {
+		super();
 		this.text = text;
 		this.date = date;
 		this.image = image;
@@ -84,6 +93,22 @@ public class Post {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Post post = (Post) o;
+        if (post.getId() == null || id == null) {
+            if(post.getText().equals(getText())){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, post.getId());
+    }
 
 }
