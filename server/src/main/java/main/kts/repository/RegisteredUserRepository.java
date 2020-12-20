@@ -12,9 +12,9 @@ import main.kts.model.RegisteredUser;
 
 @Repository
 public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, Long>{
+	
 	RegisteredUser findByEmail(String email);
 	
-
 	@Query(value = "SELECT * FROM USERS WHERE TYPE = 'registered_user' AND ACTIVE = TRUE", nativeQuery = true)
 	List<RegisteredUser> findAllRegisteredUser();
 
@@ -25,12 +25,7 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 	@Query(value = "SELECT * FROM USERS WHERE id = ?1", nativeQuery = true)
 	RegisteredUser findByIdRU(Long l);
 
-
 	Optional<RegisteredUser> findByIdAndActive(Long id, boolean b);
-
-
-	List<RegisteredUser> findByActive(boolean b);
-
 
 	RegisteredUser findByEmailAndActive(String email, boolean b);
 }
