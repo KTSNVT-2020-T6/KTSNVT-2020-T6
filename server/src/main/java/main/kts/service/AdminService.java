@@ -41,7 +41,7 @@ public class AdminService implements ServiceInterface<Admin>{
 	public Admin create(Admin entity) throws Exception {
 		Admin admin = repository.findByEmail(entity.getEmail());
 		if (admin != null)
-			throw new Exception("Admin with given id already exist");
+			throw new Exception("Admin with given email already exist");
 		Admin a = new Admin();
 		a.setFirstName(entity.getFirstName());
 		a.setLastName(entity.getLastName());

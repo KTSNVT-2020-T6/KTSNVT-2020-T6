@@ -10,7 +10,6 @@ import static main.kts.constants.AdminConstants.DB_ADMIN_ID1;
 import static main.kts.constants.AdminConstants.DB_ADMIN_IMAGE;
 import static main.kts.constants.AdminConstants.DB_ADMIN_LAST_NAME;
 import static main.kts.constants.AdminConstants.DB_ADMIN_PASSWORD;
-import static main.kts.constants.AdminConstants.DB_ADMIN_SIZE;
 import static main.kts.constants.AdminConstants.NEW_ADMIN_EMAIL;
 import static main.kts.constants.AdminConstants.NEW_ADMIN_FIRST_NAME;
 import static main.kts.constants.AdminConstants.NEW_ADMIN_IMAGE;
@@ -20,29 +19,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import main.kts.Application;
-import main.kts.config.WebSecurityConfiguration;
 import main.kts.dto.AdminDTO;
 import main.kts.dto.UserLoginDTO;
 import main.kts.dto.UserTokenStateDTO;
