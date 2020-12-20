@@ -28,11 +28,11 @@ public class AdminServiceIntegrationTest {
 	@Autowired
 	private AdminService service;
 	
-//	@Test
-//	public void testFindAll() throws Exception {
-//		List<Admin> foundAdmins = service.findAll();
-//		assertEquals(DB_ADMIN_SIZE, foundAdmins.size()); 
-//    }
+	@Test
+	public void testFindAll() throws Exception {
+		List<Admin> foundAdmins = service.findAll();
+		assertEquals(DB_ADMIN_SIZE, foundAdmins.size()); 
+    }
 	
 	@Test
 	public void testFindOne() throws Exception {
