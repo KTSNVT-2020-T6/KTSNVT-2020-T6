@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import main.kts.model.Admin;
 import main.kts.model.Authority;
 import main.kts.model.CulturalOffer;
 import main.kts.model.RegisteredUser;
@@ -71,7 +72,6 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		ruser.setFavoriteCulturalOffers(new HashSet<CulturalOffer>());
         return repository.save(ruser);
 	}
-
 	
 
 	@Override
@@ -104,7 +104,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	public void delete(Long id) throws Exception {
 		RegisteredUser a = repository.findById(id).orElse(null);
 		if(a == null)
-			throw new Exception("Registered user doesn't exist.");
+			throw new Exception("Registered user doesn't exist");
 		a.setActive(false);
 		a = repository.save(a);
 	}
@@ -138,7 +138,10 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		return favoriteCO;
 	}
 
+	public RegisteredUser findByIdRU(Long l) {
+		return repository.findByIdRU(l);
+	}
 
-
+	
 
 }

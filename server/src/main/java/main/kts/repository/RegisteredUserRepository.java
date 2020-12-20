@@ -22,7 +22,7 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 			+ " FAVORITE_CULTURAL_OFFERS_ID = ?1 ", nativeQuery = true)
 	List<Long> findByIdCO(Long id);
 
-	@Query(value = "SELECT * FROM USERS WHERE id = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM USERS WHERE TYPE = 'registered_user' AND id = ?1", nativeQuery = true)
 	RegisteredUser findByIdRU(Long l);
 
 	Optional<RegisteredUser> findByIdAndActive(Long id, boolean b);

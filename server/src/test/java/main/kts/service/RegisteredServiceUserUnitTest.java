@@ -69,7 +69,7 @@ public class RegisteredServiceUserUnitTest {
         verify(repository, times(1)).findById(DB_REGISTERED_USER_ID);
         verify(repository, times(1)).findByEmail(NEW_REGISTERED_USER_EMAIL);
       
-        assertEquals(new Long(1L), updated.getId());
+        assertEquals(new Long(4L), updated.getId());
         assertEquals(NEW_REGISTERED_USER_FIRST_NAME, updated.getFirstName());
     }
 	@Test
@@ -101,6 +101,6 @@ public class RegisteredServiceUserUnitTest {
 	            	service.delete(NEW_REGISTERED_USER_ID1);
 	            }
 	    );
-	    assertEquals("Registered user doesn't exist.", exception.getMessage());
+	    assertEquals("Registered user doesn't exist", exception.getMessage());
     }
 }

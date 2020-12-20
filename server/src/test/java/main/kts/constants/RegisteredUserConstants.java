@@ -26,6 +26,13 @@ public class RegisteredUserConstants {
 	public static final boolean DB_REGISTERED_USER_VERIFIED1 = true;
 	
 	
+	public static final String NEW_REGISTERED_USER_FIRST_NAME1 = "Darko";
+	public static final String NEW_REGISTERED_USER_LAST_NAME1 = "Dakic";
+	public static final String NEW_REGISTERED_USER_EMAILL1 = "userdarko@gmail.com";
+	public static final String NEW_REGISTERED_USER_PASSWORD1 = "$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO";
+	public static final boolean NEW_REGISTERED_USER_ACTIVE1 = true;
+	public static final boolean NEW_REGISTERED_USER_VERIFIED1 = true;
+	
 	public static final Long NEW_REGISTERED_USER_ID1= 46L;
 	public static final String DB_REGISTERED_USER_EMAIL_DoesntExist = "doesntexistss@gmail.com";
 	public static final int DB_REGISTERED_USER_SIZE= 2;
