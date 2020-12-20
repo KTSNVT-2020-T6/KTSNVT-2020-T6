@@ -37,7 +37,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	
 	@Override
 	public List<RegisteredUser> findAll() {
-		return repository.findByActive(true);
+		return repository.findAllRegisteredUser();
 	}
 
 	@Override

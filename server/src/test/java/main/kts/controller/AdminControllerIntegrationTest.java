@@ -45,9 +45,7 @@ import main.kts.service.AdminService;
 import main.kts.service.ImageService;
 
 @RunWith(SpringRunner.class)
-//@ContextConfiguration(classes = { WebSecurityConfiguration.class})
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT,classes = {Application.class})
-//@Transactional
 @TestPropertySource("classpath:test.properties")
 
 public class AdminControllerIntegrationTest {

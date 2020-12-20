@@ -7,7 +7,7 @@ import org.springframework.test.context.TestPropertySource;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({	AdminRepositoryIntegrationTest.class})
+@SuiteClasses({	AdminRepositoryIntegrationTest.class, RegisteredUserRepositoryIntegrationTest.class})
 @TestPropertySource("classpath:test.properties")
 public class SuiteRepositories {
 

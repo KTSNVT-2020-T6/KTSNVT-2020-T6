@@ -17,9 +17,12 @@ values ('admin', true,'admin1@gmail.com', 'Jova','Jovic','$2a$10$RVzuprKddsjdq6P
 insert into users (type, active, email, first_name, last_name, password, verified,image_id)
 values ('admin', false,'admincheck@gmail.com', 'Maja','Majic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,4);
 insert into users (type, active, email, first_name, last_name, password, verified,image_id)
-values ('registered_user',true,'use1.9909@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,3);
-insert into users (type, active, email, first_name, last_name, password, verified,image_id)
 values ('registered_user',true,'user2@gmail.com', 'Ivana','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,5);
+insert into users (type, active, email, first_name, last_name, password, verified,image_id)
+values ('registered_user',true,'user1@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,3);
+insert into users (type, active, email, first_name, last_name, password, verified,image_id)
+values ('registered_user',false,'usercheck@gmail.com', 'Sava','Savic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,6);
+
 
 insert into users_authority (user_id, authority_id) values (1,2);
 insert into users_authority (user_id, authority_id) values (2,1);
