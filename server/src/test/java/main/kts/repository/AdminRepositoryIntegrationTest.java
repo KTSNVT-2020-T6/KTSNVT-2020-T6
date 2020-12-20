@@ -1,20 +1,24 @@
 package main.kts.repository;
 
+import static main.kts.constants.AdminConstants.DB_ADMIN_EMAIL;
+import static main.kts.constants.AdminConstants.DB_ADMIN_ID;
+import static main.kts.constants.AdminConstants.DB_ADMIN_SIZE;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
-import static main.kts.constants.AdminConstants.*;
 import main.kts.model.Admin;
 
 @RunWith(SpringRunner.class)
