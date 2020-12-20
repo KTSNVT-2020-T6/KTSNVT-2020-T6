@@ -28,7 +28,6 @@ public class AdminController {
 	
 	@Autowired 
 	private AdminService service;
-	
 	@Autowired 
 	private ImageService imageService;
 
@@ -37,6 +36,7 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.GET)
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<AdminDTO>> getAllAdmins(){
+		
 		List<Admin> admins = service.findAll();
 		return new ResponseEntity<>(toDTOAdminsList(admins), HttpStatus.OK);
 	}
