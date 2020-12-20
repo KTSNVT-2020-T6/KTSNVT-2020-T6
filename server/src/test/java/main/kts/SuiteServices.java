@@ -1,13 +1,10 @@
 package main.kts;
 
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.springframework.test.context.TestPropertySource;
 
-import main.kts.controller.AdminControllerIntegrationTest;
-import main.kts.repository.AdminRepositoryIntegrationTest;
 import main.kts.service.AdminServiceIntegrationTest;
 import main.kts.service.AdminServiceUnitTest;
 import main.kts.service.CategoryServiceUnitTest;
@@ -19,9 +16,10 @@ import main.kts.service.RateServiceUnitTest;
 import main.kts.service.RegisteredServiceUserUnitTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({SuiteRepositories.class,SuiteServices.class,SuiteControllers.class})
+@SuiteClasses({AdminServiceUnitTest.class, RegisteredServiceUserUnitTest.class, RateServiceUnitTest.class,
+	CulturalOfferServiceUnitTest.class, ImageServiceUnitTest.class, CategoryServiceUnitTest.class, 
+	PostServiceUnitTest.class, CommentServiceUnitTest.class, AdminServiceIntegrationTest.class})
 @TestPropertySource("classpath:test.properties")
-public class SuiteAll {
-
+public class SuiteServices {
 
 }

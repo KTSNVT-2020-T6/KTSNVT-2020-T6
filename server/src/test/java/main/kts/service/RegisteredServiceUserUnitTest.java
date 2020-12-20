@@ -26,7 +26,7 @@ import main.kts.repository.RegisteredUserRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
-public class RegisteredUserUnitTest {
+public class RegisteredServiceUserUnitTest {
 	@Autowired
 	private RegisteredUserService service;
 	@MockBean
