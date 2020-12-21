@@ -56,6 +56,11 @@ public class Category {
 	public Category() {
 	}
 
+	public Category(Long id) {
+		this.id = id;
+		this.active = true;
+	}
+
 	public String getName() {
 		return name;
 	}
