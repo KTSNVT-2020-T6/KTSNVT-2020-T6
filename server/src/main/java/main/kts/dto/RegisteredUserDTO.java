@@ -14,7 +14,6 @@ public class RegisteredUserDTO extends UserDTO{
 		this.email = email;
 		this.password = password;
 		this.idImageDTO = idImageDTO;
-	
 	}
 
 	public RegisteredUserDTO(Long id, String firstName, String lastName, String email, String password, Boolean active,
@@ -30,4 +29,5 @@ public class RegisteredUserDTO extends UserDTO{
 		this.idImageDTO = imageDTO;
 		
 	}
+	
 }

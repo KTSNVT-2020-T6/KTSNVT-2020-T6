@@ -38,10 +38,11 @@ public class AdminConstants {
 	public static final boolean NEW_ADMIN_VERIFIED1 = true;
 	
 	public static final String DB_ADMIN_EMAIL_DoesntExist = "doesntexist@gmail.com";
-	public static final int DB_ADMIN_SIZE = 2;
+	public static final int DB_ADMIN_SIZE = 3;
 	public static final Long  DB_ADMIN_ID_DoesntActive = 3L;
 	
 	public static final String ADMIN_EMAIL_LOGIN = "admin@gmail.com";
 	public static final String ADMIN_PASSWORD_LOGIN = "asdf";
+	public static final Long  DB_ADMIN_ID_LAST = 7L;
 
 }
