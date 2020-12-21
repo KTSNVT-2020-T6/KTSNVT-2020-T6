@@ -1,6 +1,7 @@
 package main.kts.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,10 +54,11 @@ public class TypeService implements ServiceInterface<Type>{
 
 	@Override
 	public void delete(Long id) throws Exception {
-		Type existingT = typeRepository.findById(id).orElse(null);
-		if(existingT == null) {
+		Optional<Type> optType = typeRepository.findById(id);
+		if(optType == null) {
 			throw new Exception("Type with given id doesn't exist");
 		}
+		Type existingT = optType.orElse(null);
 		existingT.setActive(false);
 		typeRepository.save(existingT);
 	}
