@@ -110,6 +110,13 @@ public class UserDTO {
 	public void setIdImageDTO(Long idImageDTO) {
 		this.idImageDTO = idImageDTO;
 	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", active=" + active + ", verified=" + verified + ", idImageDTO="
+				+ idImageDTO + "]";
+	}
 	
 	
 }

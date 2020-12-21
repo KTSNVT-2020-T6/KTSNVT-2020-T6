@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,6 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.GET)
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<AdminDTO>> getAllAdmins(){
-		
 		List<Admin> admins = service.findAll();
 		return new ResponseEntity<>(toDTOAdminsList(admins), HttpStatus.OK);
 	}
@@ -78,6 +78,7 @@ public class AdminController {
 
         return new ResponseEntity<>(mapper.toDto(admin), HttpStatus.OK);
     }
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteAdmin(@PathVariable Long id){

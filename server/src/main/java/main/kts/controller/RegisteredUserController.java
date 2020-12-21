@@ -68,6 +68,7 @@ public class RegisteredUserController {
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@RequestBody RegisteredUserDTO registeredUserDTO, @PathVariable Long id){
+        System.out.println("AAAAAAAAAAAAA JAAAAAAAAAAAA SAM ");
 		RegisteredUser registeredUser;
         Image image;
         if(!this.validate(registeredUserDTO))
@@ -85,7 +86,9 @@ public class RegisteredUserController {
     }
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
+	
     public ResponseEntity<Void> deleteRegisteredUser(@PathVariable Long id){
+       System.out.println("JEL USO");
         try {
             service.delete(id);
         } catch (Exception e) {
