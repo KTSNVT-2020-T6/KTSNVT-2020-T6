@@ -41,11 +41,11 @@ public class RateService implements ServiceInterface<Rate>{
 	public Rate create(Rate entity) throws Exception {	
 		// if user or offer don't exist
 		Optional<RegisteredUser> ru = registeredUserRepository.findById(entity.getRegistredUser().getId());
-		if(ru == null) {
+		if(!ru.isPresent()) {
 			throw new Exception("User does not exist");	
 		}
 		Optional<CulturalOffer> offer = culturalOfferRepository.findById(entity.getCulturalOffer().getId());
-		if(offer == null)
+		if(!offer.isPresent())
 			throw new Exception("Cultural offer does not exist");
 
 		// if rate with same user and same offer exists
@@ -56,8 +56,8 @@ public class RateService implements ServiceInterface<Rate>{
 		// make new rate instance
 		Rate r = new Rate();
 		r.setNumber(entity.getNumber());
-		r.setRegistredUser(entity.getRegistredUser());
-		r.setCulturalOffer(entity.getCulturalOffer());
+		r.setRegistredUser(ru.orElse(null));
+		r.setCulturalOffer(offer.orElse(null));
 		r.setActive(true);
 		// update average rate
 		CulturalOffer co = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
@@ -72,7 +72,7 @@ public class RateService implements ServiceInterface<Rate>{
 	@Override
 	public Rate update(Rate entity, Long id) throws Exception {
 		Optional<Rate> optRate = rateRepository.findById(id);
-		if(optRate == null) {
+		if(!optRate.isPresent()) {
 			throw new Exception("Rate with given id doesn't exist");
 		}
 		Rate existingRate = optRate.orElse(null);
@@ -92,7 +92,7 @@ public class RateService implements ServiceInterface<Rate>{
 	@Override
 	public void delete(Long id) throws Exception {
 		Optional<Rate> optRate = rateRepository.findById(id);
-		if(optRate == null) {
+		if(!optRate.isPresent()) {
 			throw new Exception("Rate with given id doesn't exist");
 		}
 		Rate existingRate = optRate.orElse(null);

@@ -82,7 +82,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		// set admin that created this cultural offer
 		Admin admin;
 		Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-		String username = ((User) currentUser.getPrincipal()).getEmail();
+		String username = currentUser.getName(); 
 		admin = adminRepository.findByEmail(username);
 		admin.getCulturalOffer().add(co);
 		adminRepository.save(admin);
@@ -93,7 +93,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 	@Override
 	public CulturalOffer update(CulturalOffer entity, Long id) throws Exception {
 		Optional<CulturalOffer> optCO = culturalOfferRepository.findById(id);
-		if (optCO == null) {
+		if (!optCO.isPresent()) {
 			throw new Exception("Cultural offer with given id doesn't exist");
 		}
 		CulturalOffer existingCO = optCO.orElse(null);
@@ -120,7 +120,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 	@Override
 	public void delete(Long id) throws Exception {
 		Optional<CulturalOffer> optCO = culturalOfferRepository.findById(id);
-		if (optCO == null) {
+		if (!optCO.isPresent()) {
 			throw new Exception("Cultural offer with given id doesn't exist");
 		}
 		CulturalOffer existingCO = optCO.orElse(null);

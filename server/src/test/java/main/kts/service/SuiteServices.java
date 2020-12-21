@@ -9,7 +9,7 @@ import org.springframework.test.context.TestPropertySource;
 @SuiteClasses({AdminServiceUnitTest.class, RegisteredServiceUserUnitTest.class, RateServiceUnitTest.class,
 	CulturalOfferServiceUnitTest.class, ImageServiceUnitTest.class, CategoryServiceUnitTest.class, 
 	PostServiceUnitTest.class, CommentServiceUnitTest.class, AdminServiceIntegrationTest.class
-	, RegisteredUserServiceIntegrationTest.class})
+	, RegisteredUserServiceIntegrationTest.class, RateServiceIntegrationTest.class, CulturalOfferServiceIntegrationTest.class})
 @TestPropertySource("classpath:test.properties")
 public class SuiteServices {
 
