@@ -100,15 +100,12 @@ public class CulturalOfferServiceUnitTest {
 		
 		Admin admin = new Admin(ADMIN_ID, ADMIN_EMAIL);
 		SecurityContextHolder.setContext(securityContext);
-		
-		
-		
 
 		given(culturalOfferRepository.save(culturalOffer)).willReturn(savedCO);
 		given(culturalOfferRepository.save(existingCulturalOffer)).willReturn(existingCulturalOffer);
 		given(culturalOfferRepository.findById(CO_ID)).willReturn(Optional.of(existingCulturalOffer));
-		given(culturalOfferRepository.findById(FALSE_ID)).willReturn(null);
-		given(authentication.getPrincipal()).willReturn(admin);
+		given(culturalOfferRepository.findById(FALSE_ID)).willReturn(Optional.empty());
+		given(authentication.getName()).willReturn(ADMIN_EMAIL);
 		given(securityContext.getAuthentication()).willReturn(authentication);
 		given(adminRepository.findByEmail(ADMIN_EMAIL)).willReturn(admin);
 		given(adminRepository.save(admin)).willReturn(admin);
@@ -128,7 +125,7 @@ public class CulturalOfferServiceUnitTest {
 		verify(adminRepository, times(1)).save(admin);
 		verify(adminRepository, times(1)).findByEmail(ADMIN_EMAIL);
 		verify(securityContext, times(1)).getAuthentication();
-		verify(authentication, times(1)).getPrincipal();
+		verify(authentication, times(1)).getName();
 
 		assertEquals(NEW_CO_NAME, created.getName());
 		assertEquals(NEW_CO_DESCRIPTION, created.getDescription());

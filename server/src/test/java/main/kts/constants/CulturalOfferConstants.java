@@ -22,8 +22,21 @@ public class CulturalOfferConstants {
 	
 	public static final Long ADMIN_ID = 1L;
 	public static final String ADMIN_EMAIL = "admin@gmail.com";
+	public static final String ADMIN_PASSWORD = "asdf";
 
     public static final Long CO_ID = 1L;
     public static final Long FALSE_ID = 2L;
+    
+    // for integration tests
+    public static final int DB_SIZE = 2;
+    public static final Integer PAGEABLE_PAGE = 0;
+    public static final Integer PAGEABLE_SIZE = 2;
+    public static final String DB_NAME = "obilazak muzeja";
+    public static final Long DB_FALSE_CO_ID= 4L;
+    public static final String DB_CITY = "BELGRADE";
+    public static final int DB_SIZE_BY_CITY = 2;
+    public static final String DB_CONTENT = "OBILAZAK";
+    public static final int DB_SIZE_BY_CONTENT = 1;
+    public static final int DB_ADMIN_CO_SIZE = 4;
 
 }

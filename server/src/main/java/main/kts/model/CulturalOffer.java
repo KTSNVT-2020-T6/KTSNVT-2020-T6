@@ -123,6 +123,22 @@ public class CulturalOffer {
 		this.active = true;
 	}
 
+	public CulturalOffer(String name, String description, Date date, String city, double lat,
+			double lon, double averageRate, Type t) {
+		this.averageRate = averageRate;
+		this.description = description;
+		this.name = name;
+		this.date = date;
+		this.lat = lat;
+		this.lon = lon;
+		this.city = city;
+		this.post = new HashSet<Post>();
+		this.type =t;
+		this.image = new HashSet<Image>();
+		this.comment = new HashSet<Comment>();
+		this.active = true;
+	}
+
 	public String getCity() {
 		return city;
 	}

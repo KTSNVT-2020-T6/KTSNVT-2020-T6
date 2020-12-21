@@ -27,8 +27,12 @@ insert into users (type, active, email, first_name, last_name, password, verifie
 values ('admin', true,'admin4@gmail.com', 'Jakov','Jakic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,7);
 
 insert into users_authority (user_id, authority_id) values (1,2);
-insert into users_authority (user_id, authority_id) values (2,1);
-insert into users_authority (user_id, authority_id) values (3,1);
+insert into users_authority (user_id, authority_id) values (2,2);
+insert into users_authority (user_id, authority_id) values (3,2);
+insert into users_authority (user_id, authority_id) values (4,1);
+insert into users_authority (user_id, authority_id) values (5,1);
+insert into users_authority (user_id, authority_id) values (6,1);
+insert into users_authority (user_id, authority_id) values (7,2);
 
 insert into category (name, description, active) values ('institution', 'institutions in serbia', true);
 insert into category (name, description, active) values ('manifestation', 'manifestations in serbia', true);
@@ -43,7 +47,7 @@ values (5.0, '2020-12-25 19:30:00', 'opisneki', 44.05, 45.02,'Belgrade', 'obilaz
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
 values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Novi sad', 'exit', 3, 1, false);
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
-values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Belgrade', 'djiasjasij', 3, 1, true);
+values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Belgrade', 'green love', 3, 1, true);
 
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)
 values (4, 1);
@@ -56,11 +60,11 @@ insert into post (date, text, image_id, cultural_offer_id, active)
 values('2020-10-24 19:30:00', 'promocija knjige', 1, 1, true);
 
 insert into comment (date, text, image_id, cultural_offer_id, registred_user_id, active)
-values ('2020-10-24 19:30:00', 'puno eksponata ima', 1, 1, 2, true);
+values ('2020-10-24 19:30:00', 'puno eksponata ima', 1, 1, 4, true);
 insert into comment (date, text, image_id, cultural_offer_id, registred_user_id, active)
-values ('2020-10-24 19:30:00', 'mnogo velika guzva', 4, 2, 3, true);
+values ('2020-10-24 19:30:00', 'mnogo velika guzva', 4, 2, 5, true);
 
-insert into rate (number, cultural_offer_id, registred_user_id, active) values (5, 1, 2, true);
-insert into rate (number, cultural_offer_id, registred_user_id, active) values (5, 2, 3, true);
+insert into rate (number, cultural_offer_id, registred_user_id, active) values (5, 1, 4, true);
+insert into rate (number, cultural_offer_id, registred_user_id, active) values (5, 2, 5, true);
 -- 
 

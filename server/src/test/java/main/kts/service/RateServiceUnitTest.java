@@ -74,11 +74,11 @@ public class RateServiceUnitTest {
 
 		Rate rateFound = new Rate(DB_RATE_ID, DB_RATE_NUMBER, existingRegisteredUser, existingCulturalOffer1);
 		given(registeredUserRepository.findById(DB_REGISTERED_USER_ID)).willReturn(Optional.of(existingRegisteredUser));
-		given(registeredUserRepository.findById(FALSE_USER_ID)).willReturn(null);
+		given(registeredUserRepository.findById(FALSE_USER_ID)).willReturn(Optional.empty());
 
 		given(culturalOfferRepository.findById(DB_CULTURAL_OFFER_ID2)).willReturn(Optional.of(existingCulturalOffer2));
 		given(culturalOfferRepository.findById(DB_CULTURAL_OFFER_ID)).willReturn(Optional.of(existingCulturalOffer1));
-		given(culturalOfferRepository.findById(FALSE_CULTURAL_OFFER_ID)).willReturn(null);
+		given(culturalOfferRepository.findById(FALSE_CULTURAL_OFFER_ID)).willReturn(Optional.empty());
 		given(culturalOfferRepository.save(existingCulturalOffer2)).willReturn(savedCO);
 
 		given(rateRepository.findOneByRegisteredUserIdAndCulturalOfferId(DB_REGISTERED_USER_ID, DB_CULTURAL_OFFER_ID))
@@ -90,7 +90,7 @@ public class RateServiceUnitTest {
 		given(rateRepository.save(rate)).willReturn(savedRate);
 		given(rateRepository.save(updateRate)).willReturn(updatedRate);
 		given(rateRepository.findById(RATE_ID)).willReturn(Optional.of(rate));
-		given(rateRepository.findById(FALSE_RATE_ID)).willReturn(null);
+		given(rateRepository.findById(FALSE_RATE_ID)).willReturn(Optional.empty());
 
 		doNothing().when(rateRepository).delete(savedRate);
 
