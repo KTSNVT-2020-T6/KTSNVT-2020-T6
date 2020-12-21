@@ -42,9 +42,11 @@ public class RegisteredUserConstants {
 	
 	
 	public static final int DB_REGISTERED_USER_CO_SIZE= 1;
+	public static final int DB_REGISTERED_USER_SUBS_CO= 1;
 	public static final Long  DB_REGISTERED_USER_ID_DoesntActive = 6L;
 	public static final String NEW_REGISTERED_USER_EMAIL1 = "user1@gmail.com";
 	public static final Long DB_REGISTERED_USER_CO = 1L;
+	public static final Long DB_REGISTERED_USER_CO1 = 2L;
 	
 	public static final String REGISTERED_USER_EMAIL_LOGIN = "user2@gmail.com";
 	public static final String REGISTERED_USER_PASSWORD_LOGIN = "asdf";

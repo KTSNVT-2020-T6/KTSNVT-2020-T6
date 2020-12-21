@@ -4,6 +4,7 @@ import static main.kts.constants.RegisteredUserConstants.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import main.kts.model.CulturalOffer;
 import main.kts.model.RegisteredUser;
 
 
@@ -149,6 +151,28 @@ public class RegisteredUserServiceIntegrationTest {
 	            }
 	    );
 	    assertEquals("Registered user doesn't exist", exception.getMessage());
+    }
+//	@Test
+//	public void testSubscribeUser() throws Exception {
+//		//treba autentikacija
+//		service.subscribeUser(DB_REGISTERED_USER_CO1);
+//		List<CulturalOffer> found = service.findAllSubscribedCO(DB_REGISTERED_USER_ID1);
+//		assertEquals(DB_REGISTERED_USER_CO_SIZE, found.size());
+//   }
+	@Test
+	public void testfindByIdCO() throws Exception {
+		List<Long> found = service.findByIdCO(DB_REGISTERED_USER_CO);
+		assertEquals(DB_REGISTERED_USER_CO_SIZE, found.size());
+    }
+	@Test
+	public void testfindAllSubscribedCO() throws Exception {
+		List<CulturalOffer> found = service.findAllSubscribedCO(DB_REGISTERED_USER_ID);
+		assertEquals(DB_REGISTERED_USER_SUBS_CO, found.size());
+    }
+	@Test
+	public void testfindByIdRU() throws Exception {
+		RegisteredUser found = service.findByIdRU(DB_REGISTERED_USER_ID_DoesntActive);
+		assertNotEquals(null, found); 
     }
 
 }
