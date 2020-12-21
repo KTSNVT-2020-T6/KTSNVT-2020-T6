@@ -81,7 +81,7 @@ public class AdminControllerIntegrationTest {
 	 }
 //	 
 //	 @Test
-//	
+//	 @Transactional
 //	 public void testGetAllAdmins() {
 //		HttpHeaders headers = new HttpHeaders();
 //		headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
@@ -143,7 +143,7 @@ public class AdminControllerIntegrationTest {
 	 public void testDeleteAdmin() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken); 	   
-		System.out.println("nije mi dor"+accessToken);
+		
 	    HttpEntity<Object> request = new HttpEntity<Object>("",headers);
 	    
 	    ResponseEntity<Void> responseEntity = restTemplate.exchange("/api/admin/7", 
