@@ -17,7 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class RegisteredUser extends User {
 
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
     private Set<CulturalOffer> favoriteCulturalOffers;
     
 	public RegisteredUser() {

@@ -46,9 +46,9 @@ insert into cultural_offer (average_rate, date, description, lat, lon, city, nam
 values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Belgrade', 'djiasjasij', 3, 1, true);
 
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)
-values (2, 1);
+values (4, 1);
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)
-values (2, 2);
+values (5, 2);
 
 insert into post (date, text, image_id, cultural_offer_id, active)
 values('2020-12-24 19:30:00', 'gosti iznenadjenja', 4, 2, true);
