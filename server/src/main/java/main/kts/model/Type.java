@@ -1,5 +1,7 @@
 package main.kts.model;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,6 +45,11 @@ public class Type {
 		this.active = true;
 	}
 
+	public Type(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -82,5 +89,25 @@ public class Type {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Type t = (Type) o;
+        if (t.getId() == null || id == null) {
+            if(t.getName().equals(getName())){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, t.getId());
+	}
+	
+	
 
 }
