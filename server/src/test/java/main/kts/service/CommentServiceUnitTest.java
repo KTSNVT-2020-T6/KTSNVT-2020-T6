@@ -67,11 +67,11 @@ public class CommentServiceUnitTest {
 
 		Comment commentFound = new Comment(DB_COMMENT_ID, DB_COMMENT_TEXT, DB_COMMENT_DATE, existingRegisteredUser, existingCulturalOffer1);
 		given(registeredUserRepository.findById(DB_REGISTERED_USER_ID)).willReturn(Optional.of(existingRegisteredUser));
-		given(registeredUserRepository.findById(FALSE_USER_ID)).willReturn(null);
+		given(registeredUserRepository.findById(FALSE_USER_ID)).willReturn(Optional.empty());
 
 		given(culturalOfferRepository.findById(DB_CULTURAL_OFFER_ID2)).willReturn(Optional.of(existingCulturalOffer2));
 		given(culturalOfferRepository.findById(DB_CULTURAL_OFFER_ID)).willReturn(Optional.of(existingCulturalOffer1));
-		given(culturalOfferRepository.findById(FALSE_CULTURAL_OFFER_ID)).willReturn(null);
+		given(culturalOfferRepository.findById(FALSE_CULTURAL_OFFER_ID)).willReturn(Optional.empty());
 		given(culturalOfferRepository.save(existingCulturalOffer2)).willReturn(savedCO);
 
 		//imalo bi smisla i ovo da se trazi preko korisnika i kulturne ponude?
@@ -80,7 +80,7 @@ public class CommentServiceUnitTest {
 		given(commentRepository.save(comment)).willReturn(savedComment);
 		given(commentRepository.save(updateComment)).willReturn(updatedComment);
 		given(commentRepository.findById(COMMENT_ID)).willReturn(Optional.of(comment));
-		given(commentRepository.findById(FALSE_COMMENT_ID)).willReturn(null);
+		given(commentRepository.findById(FALSE_COMMENT_ID)).willReturn(Optional.empty());
 
 		doNothing().when(commentRepository).delete(savedComment);
 
