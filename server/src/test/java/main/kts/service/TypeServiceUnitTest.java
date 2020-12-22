@@ -89,7 +89,7 @@ public class TypeServiceUnitTest {
 		given(typeRepository.save(updateType)).willReturn(updatedType);
 		
 		given(typeRepository.findById(DB_TYPE_ID)).willReturn(Optional.of(existingType));
-		given(typeRepository.findById(FALSE_TYPE_ID)).willReturn(null);
+		given(typeRepository.findById(FALSE_TYPE_ID)).willReturn(Optional.empty());
 		given(typeRepository.findTypesOfCategory(DB_CATEGORY_ID)).willReturn(types);
 		
 		doNothing().when(typeRepository).delete(existingType);
