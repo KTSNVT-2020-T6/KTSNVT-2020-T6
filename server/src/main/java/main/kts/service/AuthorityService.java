@@ -48,7 +48,7 @@ public class AuthorityService implements ServiceInterface<Authority>{
 	@Override
 	public void delete(Long id) throws Exception {
 		Optional<Authority> optA = authorityRepository.findById(id);
-		if(optA == null) {
+		if(!optA.isPresent()) {
 			throw new Exception("Authority with given id doesn't exist");
 		}
 		Authority existingA = optA.orElse(null);

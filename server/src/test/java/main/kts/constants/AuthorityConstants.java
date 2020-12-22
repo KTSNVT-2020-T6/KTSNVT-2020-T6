@@ -17,6 +17,11 @@ public class AuthorityConstants {
 	
 	public static final Long AUTHORITY_ID = 1L;
 	public static final Long FALSE_AUTHORITY_ID = 4L;
+	
+	// integration
+	public static final long DB_SIZE = 2;
+	public static final String DB_AUTHORITY_ROLE_EXISTING = "ROLE_REGISTERED_USER";
+	
 
 }
 
