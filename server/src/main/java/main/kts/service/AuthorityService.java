@@ -2,6 +2,7 @@ package main.kts.service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,11 @@ public class AuthorityService implements ServiceInterface<Authority>{
 
 	@Override
 	public void delete(Long id) throws Exception {
-		Authority existingA = authorityRepository.findById(id).orElse(null);
-		if(existingA == null) {
+		Optional<Authority> optA = authorityRepository.findById(id);
+		if(optA == null) {
 			throw new Exception("Authority with given id doesn't exist");
 		}
+		Authority existingA = optA.orElse(null);
 		authorityRepository.delete(existingA);
 	
 		
