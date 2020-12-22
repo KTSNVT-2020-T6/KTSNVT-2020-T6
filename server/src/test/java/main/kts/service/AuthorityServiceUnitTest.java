@@ -64,7 +64,7 @@ public class AuthorityServiceUnitTest {
 		given(authorityRepository.save(updateAuthority)).willReturn(updatedAuthority);
 		given(authorityRepository.findById(DB_AUTHORITY_ID2)).willReturn(Optional.of(authority2));
 		
-		given(authorityRepository.findById(FALSE_AUTHORITY_ID)).willReturn(null);
+		given(authorityRepository.findById(FALSE_AUTHORITY_ID)).willReturn(Optional.empty());
 		
 		doNothing().when(authorityRepository).delete(authority);
 		
