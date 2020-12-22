@@ -1,5 +1,7 @@
 package main.kts.model;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,5 +54,23 @@ public class Authority implements GrantedAuthority{
 	public String getAuthority() {
 		return role;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Authority a = (Authority) o;
+        if (a.getId() == null || id == null) {
+            if(a.getRole().equals(getRole())){
+                return true;
+            }
+            return false;
+        }
+        return Objects.equals(id, a.getId());
+    }
 
 }
