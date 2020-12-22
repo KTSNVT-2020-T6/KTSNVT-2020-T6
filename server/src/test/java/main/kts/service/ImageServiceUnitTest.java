@@ -77,7 +77,7 @@ public class ImageServiceUnitTest {
 		CulturalOffer savedCO = new CulturalOffer(DB_CULTURAL_OFFER_ID);
 		
 		given(culturalOfferRepository.findById(DB_CULTURAL_OFFER_ID)).willReturn(Optional.of(existingCulturalOffer));
-		given(culturalOfferRepository.findById(FALSE_CULTURAL_OFFER_ID)).willReturn(null);
+		given(culturalOfferRepository.findById(FALSE_CULTURAL_OFFER_ID)).willReturn(Optional.empty());
 		given(culturalOfferRepository.save(existingCulturalOffer)).willReturn(savedCO);
 		
 		given(imageRepository.findAllByCulturalOfferId(DB_CULTURAL_OFFER_ID)).willReturn(imagesList);
