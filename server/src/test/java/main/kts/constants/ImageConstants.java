@@ -23,6 +23,7 @@ public class ImageConstants {
     public static final Long FALSE_IMAGE_ID = 3L;
     
     //-------- INTEGRATION TEST
+    public static final int DB_PAGE_SIZE = 2;
     public static final int DB_SIZE = 8;
     public static final Long DB_FALSE_IMAGE_ID = 9L;
     public static final int DB_SIZE_BY_CO = 1;
