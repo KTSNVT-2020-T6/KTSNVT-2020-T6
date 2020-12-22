@@ -46,10 +46,12 @@ public class CategoryService implements ServiceInterface<Category>{
 
 	@Override
 	public Category update(Category entity, Long id) throws Exception {
-		Category existingCat = categoryRepository.findById(id).orElse(null);
-		if(existingCat == null) {
+		Optional<Category> optCat = categoryRepository.findById(id);
+		if(!optCat.isPresent()) {
 			throw new Exception("Category with given id doesn't exist");
 		}
+		
+		Category existingCat = optCat.orElse(null);
 		existingCat.setName(entity.getName());
 		existingCat.setDescription(entity.getDescription());
 		existingCat.setType(entity.getType());
@@ -60,7 +62,7 @@ public class CategoryService implements ServiceInterface<Category>{
 	@Override
 	public void delete(Long id) throws Exception {
 		Optional<Category> optCat = categoryRepository.findById(id);
-		if(optCat == null) {
+		if(!optCat.isPresent()) {
 			throw new Exception("Category with given id doesn't exist");
 		}
 		Category existingCat = optCat.orElse(null);

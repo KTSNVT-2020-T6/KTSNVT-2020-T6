@@ -15,6 +15,7 @@ public class CategoryConstants {
 	 public static final Long NEW_CATEGORY_ID = 3L;
 	 
 	 public static final String UPDATE_CATEGORY_NAME = "government institution";
+	 public static final String UPDATE_CATEGORY_DESCRIPTION = "government institution in serbia";
 	
 	 public static final long FIND_ALL_NUMBER_OF_ITEMS = 2;
 	
@@ -25,6 +26,10 @@ public class CategoryConstants {
 	 public static final Long CATEGORY_ID = 1L;
 	 
 	 public static final Long FALSE_CATEGORY_ID = 4L;
+	 
+	 //INTEGRATION TEST CONSTANST    
+	 public static final long DB_SIZE = 2;
+	
 	
 
 }
