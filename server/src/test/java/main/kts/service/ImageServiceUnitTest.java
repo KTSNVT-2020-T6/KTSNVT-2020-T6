@@ -1,6 +1,7 @@
 package main.kts.service;
 
 import static main.kts.constants.ImageConstants.*;
+import static main.kts.constants.RateConstants.FALSE_RATE_ID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.BDDMockito.given;
@@ -86,7 +87,7 @@ public class ImageServiceUnitTest {
 		given(imageRepository.save(image)).willReturn(savedImage);
 		given(imageRepository.save(updateImage)).willReturn(updatedImage);
 		given(imageRepository.findById(IMAGE_ID)).willReturn(Optional.of(image));
-		given(imageRepository.findById(FALSE_IMAGE_ID)).willReturn(null);
+		given(imageRepository.findById(FALSE_IMAGE_ID)).willReturn(Optional.empty());
 
 		doNothing().when(imageRepository).delete(savedImage);
 
@@ -117,8 +118,6 @@ public class ImageServiceUnitTest {
 
 		assertEquals(NEW_IMAGE_RELATIVE_PATH, created.getRelativePath());
 	}
-
-
 
 	@Test
 	public void testUpdate() throws Exception {

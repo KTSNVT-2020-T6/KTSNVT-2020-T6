@@ -53,7 +53,7 @@ public class ImageService implements ServiceInterface<Image>{
 	@Override
 	public void delete(Long id) throws Exception {
 		Optional<Image> optImage = imageRepository.findById(id);
-		if(optImage == null) {
+		if(!optImage.isPresent()) {
 			throw new Exception("Image with given id doesn't exist");
 		}
 		Image existingImage = optImage.orElse(null);
