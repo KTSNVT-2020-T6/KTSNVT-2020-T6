@@ -31,4 +31,7 @@ public class CommentConstants {
     public static final Long DB_FALSE_COMMENT_ID = 3L;
     public static final int DB_SIZE = 2;
     public static final int DB_SIZE_BY_CO = 1;
+    public static final Long DB_FALSE_USER_ID = 10L;
+    public static final Long DB_USER_ID = 4L;
+    public static final Long DB_FALSE_CULTURAL_OFFER_ID = 5L;
 }

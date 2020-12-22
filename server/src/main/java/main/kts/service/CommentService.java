@@ -45,20 +45,20 @@ public class CommentService implements ServiceInterface<Comment> {
 	public Comment create(Comment entity) throws Exception {
 		
 		Optional<RegisteredUser> ru = registeredUserRepository.findById(entity.getRegistredUser().getId());
-		if(ru == null) {
+		if(!ru.isPresent()) {
 			throw new Exception("User does not exist");	
 		}
 		Optional<CulturalOffer> offer = culturalOfferRepository.findById(entity.getCulturalOffer().getId());
-		if(offer == null)
+		if(!offer.isPresent())
 			throw new Exception("Cultural offer does not exist");
 
 		
 		// make new comment instance
 		Comment c = new Comment();
-		c.setCulturalOffer(entity.getCulturalOffer());
+		c.setCulturalOffer(offer.orElse(null));
 		c.setDate(entity.getDate());
 		c.setImage(entity.getImage());
-		c.setRegistredUser(entity.getRegistredUser());
+		c.setRegistredUser(ru.orElse(null));
 		c.setText(entity.getText());
 		c.setActive(true);
 		c = commentRepository.save(c);
@@ -68,7 +68,7 @@ public class CommentService implements ServiceInterface<Comment> {
 	@Override
 	public Comment update(Comment entity, Long id) throws Exception {
 		Optional<Comment> optComment = commentRepository.findById(id);
-		if(optComment == null) {
+		if(!optComment.isPresent()) {
 			throw new Exception("Comment with given id doesn't exist");
 		}
 		Comment existingComment = optComment.orElse(null);
@@ -82,7 +82,7 @@ public class CommentService implements ServiceInterface<Comment> {
 	@Override
 	public void delete(Long id) throws Exception {
 		Optional<Comment> optComment = commentRepository.findById(id);
-		if(optComment == null) {
+		if(!optComment.isPresent()) {
 			throw new Exception("Comment with given id doesn't exist");
 		}
 		Comment existingComment = optComment.orElse(null);
