@@ -12,8 +12,8 @@ public class TypeConstants {
 	public static final Long DB_TYPE_ID2 = 2L;
 	public static final Long DB_CATEGORY_ID2 = 1L;
 	
-	public static final String NEW_TYPE_NAME = "festival";
-	public static final String NEW_TYPE_DESCRIPTION = "festivals in Serbia";
+	public static final String NEW_TYPE_NAME = "music festival";
+	public static final String NEW_TYPE_DESCRIPTION = "music festivals in Serbia";
 	public static final Long NEW_TYPE_ID = 3L;
 	public static final Long NEW_CATEGORY_ID = 2L;
 	
@@ -27,7 +27,15 @@ public class TypeConstants {
     public static final Integer PAGEABLE_TOTAL_ELEMENTS = 1;
     
     public static final Long TYPE_ID = 1L;
-	 
-	public static final Long FALSE_TYPE_ID = 4L;
+	
+	public static final Long FALSE_TYPE_ID = 7L;
+	
+	//Integration test constants
+	public static final long DB_SIZE = 4;
+	public static final Long DB_FALSE_CATEGORY_ID = 5L;
+	public static final long DB_NUMBER_OF_TYPES = 2;
+	public static final int DB_PAGEABLE_SIZE = 4;
+	public static final int DB_PAGEABLE_TOTAL_ELEMENTS = 1;
+	public static final Long CATEGORY_ID = 1L;
 	
 }

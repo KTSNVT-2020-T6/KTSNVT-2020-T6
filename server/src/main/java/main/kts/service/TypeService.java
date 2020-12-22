@@ -8,7 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import main.kts.model.Category;
 import main.kts.model.Type;
+import main.kts.repository.CategoryRepository;
 import main.kts.repository.TypeRepository;
 
 @Service
@@ -16,6 +18,9 @@ public class TypeService implements ServiceInterface<Type>{
 	
 	@Autowired
 	private TypeRepository typeRepository;
+
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Override
 	public List<Type> findAll() {
@@ -29,11 +34,17 @@ public class TypeService implements ServiceInterface<Type>{
 
 	@Override
 	public Type create(Type entity) throws Exception {
+		Optional<Category> cat = categoryRepository.findById(entity.getCategory().getId());
+		if(!cat.isPresent())
+		{
+			throw new Exception("Category does not exist");	
+		}
+		Category category = cat.orElse(null);
 		Type t = new Type();
 		// name, descripton, category
 		t.setName(entity.getName());
 		t.setDescription(entity.getDescription());
-		t.setCategory(entity.getCategory());
+		t.setCategory(category);
 		t.setActive(true);
 		return typeRepository.save(t);
 	}
@@ -55,7 +66,7 @@ public class TypeService implements ServiceInterface<Type>{
 	@Override
 	public void delete(Long id) throws Exception {
 		Optional<Type> optType = typeRepository.findById(id);
-		if(optType == null) {
+		if(!optType.isPresent()) {
 			throw new Exception("Type with given id doesn't exist");
 		}
 		Type existingT = optType.orElse(null);

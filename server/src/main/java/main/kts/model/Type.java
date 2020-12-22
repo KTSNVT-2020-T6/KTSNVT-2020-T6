@@ -50,6 +50,14 @@ public class Type {
 		this.description = description;
 	}
 
+	public Type(String name, String description, Category category) {
+		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.description = description;
+		this.category = category;
+		this.active = true;
+	}
+
 	public Long getId() {
 		return id;
 	}
