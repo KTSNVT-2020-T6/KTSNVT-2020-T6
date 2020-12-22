@@ -11,6 +11,7 @@ insert into image (name, relative_path, active) values ('slika5','path5.jpg', tr
 insert into image (name, relative_path, active) values ('slika6','path6.jpg', true);
 insert into image (name, relative_path, active) values ('slika7','path7.jpg', true);
 
+
 insert into users (type, active, email, first_name, last_name, password, verified,image_id)
 values ('admin', true,'admin@gmail.com', 'Marko','Markovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,1);
 insert into users (type, active, email, first_name, last_name, password, verified,image_id)
@@ -68,3 +69,4 @@ insert into rate (number, cultural_offer_id, registred_user_id, active) values (
 insert into rate (number, cultural_offer_id, registred_user_id, active) values (5, 2, 5, true);
 -- 
 
+insert into image (name, relative_path, active, cultural_offer_id) values ('slika8','path8.jpg', true, 1);
