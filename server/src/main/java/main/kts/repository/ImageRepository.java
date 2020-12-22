@@ -16,7 +16,7 @@ import main.kts.model.Image;
 public interface ImageRepository extends JpaRepository<Image, Long>{
 
 	@Query(value = "SELECT * FROM IMAGE WHERE CULTURAL_OFFER_ID = ?1", nativeQuery = true)
-	Set<Image> findAllByCulturalOfferId(Long id);
+	List<Image> findAllByCulturalOfferId(Long id);
 
 	List<Image> findByActive(boolean b);
 

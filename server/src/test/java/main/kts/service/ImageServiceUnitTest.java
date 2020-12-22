@@ -79,7 +79,7 @@ public class ImageServiceUnitTest {
 		given(culturalOfferRepository.findById(FALSE_CULTURAL_OFFER_ID)).willReturn(null);
 		given(culturalOfferRepository.save(existingCulturalOffer)).willReturn(savedCO);
 		
-		given(imageRepository.findAllByCulturalOfferId(DB_CULTURAL_OFFER_ID)).willReturn(images);
+		given(imageRepository.findAllByCulturalOfferId(DB_CULTURAL_OFFER_ID)).willReturn(imagesList);
 		
 		//given(imageRepository.findAllByCulturalOfferId(DB_CULTURAL_OFFER_ID)).willReturn(new ArrayList<Image>());
 		

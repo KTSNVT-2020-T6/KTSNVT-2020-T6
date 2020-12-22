@@ -21,5 +21,10 @@ public class ImageConstants {
     public static final Long IMAGE_ID = 1L;
     public static final Long FALSE_CULTURAL_OFFER_ID = 3L;
     public static final Long FALSE_IMAGE_ID = 3L;
+    
+    //-------- INTEGRATION TEST
+    public static final int DB_SIZE = 8;
+    public static final Long DB_FALSE_IMAGE_ID = 9L;
+    public static final int DB_SIZE_BY_CO = 1;
 	
 }
