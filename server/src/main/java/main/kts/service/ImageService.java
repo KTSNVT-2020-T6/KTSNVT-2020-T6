@@ -41,10 +41,11 @@ public class ImageService implements ServiceInterface<Image>{
 
 	@Override
 	public Image update(Image entity, Long id) throws Exception {
-		Image existingImage = imageRepository.findById(id).orElse(null);
-		if(existingImage == null) {
+		Optional<Image> optImage = imageRepository.findById(id);
+		if(!optImage.isPresent()) {
 			throw new Exception("Image with given id doesn't exist");
 		}
+		Image existingImage = optImage.orElse(null);
 		existingImage.setName(entity.getName());
 		existingImage.setRelativePath(entity.getRelativePath());
 		return imageRepository.save(existingImage);

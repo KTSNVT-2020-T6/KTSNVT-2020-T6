@@ -36,4 +36,5 @@ public class PostConstants {
     //------INTEGRATION TEST
     public static final int DB_SIZE = 2;
     public static final Long DB_FALSE_POST_ID = 3L;
+    public static final Long IMAGE_ID = 9L;
 }

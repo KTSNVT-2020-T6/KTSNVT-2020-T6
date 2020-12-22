@@ -73,7 +73,7 @@ public class PostServiceUnitTest {
 		given(postRepository.save(post)).willReturn(savedPost);
 		given(postRepository.save(updatePost)).willReturn(updatedPost);
 		given(postRepository.findById(POST_ID)).willReturn(Optional.of(post));
-		given(postRepository.findById(FALSE_POST_ID)).willReturn(null);
+		given(postRepository.findById(FALSE_POST_ID)).willReturn(Optional.empty());
 
 		doNothing().when(postRepository).delete(savedPost);
 
@@ -94,9 +94,8 @@ public class PostServiceUnitTest {
 		Post post = new Post(NEW_POST_TEXT, NEW_POST_DATE, existingImage1);
 		Post created = postService.create(post);
 
-		//verify(postRepository, times(1)).findOneByImageId(DB_IMAGE_ID1);
 		verify(postRepository, times(1)).save(post);
-		//verify(imageRepository, times(1)).findById(DB_IMAGE_ID1);
+		
 
 		assertEquals(NEW_POST_TEXT, created.getText());
 	}

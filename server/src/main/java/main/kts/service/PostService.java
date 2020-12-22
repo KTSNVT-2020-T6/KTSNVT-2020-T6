@@ -54,7 +54,7 @@ public class PostService implements ServiceInterface<Post> {
 	@Override
 	public Post update(Post entity, Long id) throws Exception {
 		Optional<Post> optPost = postRepository.findById(id);
-		if(optPost == null) {
+		if(!optPost.isPresent()) {
 			throw new Exception("Post with given id doesn't exist");
 		}
 		Post existingPost = optPost.orElse(null);
@@ -68,7 +68,7 @@ public class PostService implements ServiceInterface<Post> {
 	@Override
 	public void delete(Long id) throws Exception {
 		Optional<Post> optPost = postRepository.findById(id);
-		if(optPost == null) {
+		if(!optPost.isPresent()) {
 			throw new Exception("Post with given id doesn't exist");
 		}
 		Post existingPost = optPost.orElse(null);
