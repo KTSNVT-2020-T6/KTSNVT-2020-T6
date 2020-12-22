@@ -77,7 +77,7 @@ public class CategoryServiceUnitTest {
 		updatedCategory.setId(DB_CATEGORY_ID);
 		given(categoryRepository.save(updateCategory)).willReturn(updatedCategory);
 		
-		given(categoryRepository.findById(FALSE_CATEGORY_ID)).willReturn(null);
+		given(categoryRepository.findById(FALSE_CATEGORY_ID)).willReturn(Optional.empty());
 		given(categoryRepository.findById(DB_CATEGORY_ID)).willReturn(Optional.of(existingCategory));
 	
 		doNothing().when(categoryRepository).delete(existingCategory);
