@@ -42,7 +42,6 @@ public class TypeRepositoryIntegrationTest {
         assertEquals(DB_PAGEABLE_SIZE, found.getSize());
 	}
 	
-	
 	@Test
     public void testFindByIdAndActive() {
 		Optional<Type> found = typeRepository.findByIdAndActive(DB_TYPE_ID, true);
@@ -55,7 +54,6 @@ public class TypeRepositoryIntegrationTest {
 		List<Type> found = typeRepository.findTypesOfCategory(CATEGORY_ID);
 		assertEquals(DB_NUMBER_OF_TYPES, found.size());;
 	}
-	
 	
 	@Test
     public void testFindByIdAndActive_GivenFalseId() {
