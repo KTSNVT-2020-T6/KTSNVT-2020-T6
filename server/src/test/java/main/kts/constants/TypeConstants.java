@@ -38,4 +38,8 @@ public class TypeConstants {
 	public static final int DB_PAGEABLE_TOTAL_ELEMENTS = 1;
 	public static final Long CATEGORY_ID = 1L;
 	
+	public static final Long ADMIN_ID = 1L;
+	public static final String ADMIN_EMAIL = "admin@gmail.com";
+	public static final String ADMIN_PASSWORD = "asdf";
+	
 }
