@@ -28,7 +28,13 @@ public class RateConstants {
     public static final Long DB_FALSE_RATE_ID= 3L;
     public static final int DB_SIZE_BY_CO = 1;
     public static final Long DB_USER_ID = 4L;
+    public static final Long DB_CULTURAL_OFFER_ID3 = 3L;
     public static final Long DB_FALSE_USER_ID = 10L;
     public static final Long DB_FALSE_CULTURAL_OFFER_ID = 5L;
+    public static final int DB_WRONG_NUMBER = 10;
+    
+    // login credentials
+    public static final String USER_EMAIL = "admin@gmail.com";
+    public static final String PASSWORD = "asdf";
     
 }

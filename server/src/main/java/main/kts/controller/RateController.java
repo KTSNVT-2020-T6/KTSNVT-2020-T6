@@ -46,7 +46,6 @@ public class RateController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<RateDTO>> getAllRates() {
 		List<Rate> rates = rateService.findAll();
 
@@ -54,7 +53,6 @@ public class RateController {
 	}
 	
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<RateDTO> getRate(@PathVariable Long id){
         Rate rate = rateService.findOne(id);
         if(rate == null){
@@ -65,7 +63,6 @@ public class RateController {
     }
     
     @RequestMapping(value="/",method=RequestMethod.GET)
-    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<RateDTO>> loadRatePage(Pageable pageable) {
     	Page<Rate> rates = rateService.findAll(pageable);
     	if(rates == null){
@@ -78,13 +75,13 @@ public class RateController {
 
 	@RequestMapping(method=RequestMethod.POST)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
-    public ResponseEntity<RateDTO> createRate(@RequestBody RateDTO rateDTO){
+    public ResponseEntity<Object> createRate(@RequestBody RateDTO rateDTO){
     	Rate rate;
     	RegisteredUser registeredUser;
     	CulturalOffer culturalOffer;
-    	if(!this.validateRateDTO(rateDTO))
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    	
+    	if(!this.validateRateDTO(rateDTO)) 
+    		return new ResponseEntity<>("Object not valid", HttpStatus.BAD_REQUEST);
+	
         try {
         	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserId());
         	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferId());
@@ -93,7 +90,7 @@ public class RateController {
         	rate.setRegistredUser(registeredUser);
             rate = rateService.create(rate);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Cannot create rate: id not found", HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(rateMapper.toDto(rate), HttpStatus.OK);
@@ -101,10 +98,13 @@ public class RateController {
     
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
-    public ResponseEntity<RateDTO> updateRate(@RequestBody RateDTO rateDTO, @PathVariable Long id){
+    public ResponseEntity<Object> updateRate(@RequestBody RateDTO rateDTO, @PathVariable Long id){
         Rate rate;
         RegisteredUser registeredUser;
     	CulturalOffer culturalOffer;
+    	if(!this.validateRateDTO(rateDTO)) 
+    		return new ResponseEntity<>("Object not valid", HttpStatus.BAD_REQUEST);
+
         try {
         	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserId());
         	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferId());

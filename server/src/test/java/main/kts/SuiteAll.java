@@ -22,7 +22,7 @@ import main.kts.service.RegisteredServiceUserUnitTest;
 import main.kts.service.SuiteServices;
 
 @RunWith(Suite.class)
-@SuiteClasses({SuiteRepositories.class,SuiteServices.class,SuiteControllers.class})
+@SuiteClasses({SuiteRepositories.class,SuiteControllers.class,SuiteServices.class})
 @TestPropertySource("classpath:test.properties")
 public class SuiteAll {
 

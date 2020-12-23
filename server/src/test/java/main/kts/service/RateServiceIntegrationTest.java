@@ -56,7 +56,7 @@ public class RateServiceIntegrationTest {
 		RegisteredUser ru = new RegisteredUser();
 		ru.setId(DB_USER_ID); // 4
 		CulturalOffer co = new CulturalOffer();
-		co.setId(DB_CULTURAL_OFFER_ID2); // 2
+		co.setId(DB_CULTURAL_OFFER_ID3); // 3
 		Rate rate = new Rate(NEW_RATE_NUMBER, ru, co);
 		Rate created = rateService.create(rate);
 
