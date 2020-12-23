@@ -176,7 +176,6 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-
 		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
