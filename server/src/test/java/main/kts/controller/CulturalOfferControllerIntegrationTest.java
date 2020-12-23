@@ -1,15 +1,11 @@
 package main.kts.controller;
 
 import static main.kts.constants.CulturalOfferConstants.*;
-import static main.kts.constants.RateConstants.DB_CULTURAL_OFFER_ID3;
-import static main.kts.constants.RateConstants.DB_FALSE_RATE_ID;
-import static main.kts.constants.RateConstants.DB_RATE_ID;
-import static main.kts.constants.RateConstants.DB_RATE_NUMBER;
-import static main.kts.constants.RateConstants.DB_USER_ID;
-import static main.kts.constants.RateConstants.NEW_RATE_NUMBER;
-import static main.kts.constants.RateConstants.PAGEABLE_SIZE;
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,9 +25,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import main.kts.dto.CulturalOfferDTO;
-import main.kts.dto.RateDTO;
 import main.kts.dto.UserLoginDTO;
 import main.kts.dto.UserTokenStateDTO;
+import main.kts.model.CulturalOffer;
 import main.kts.service.CulturalOfferService;
 
 @RunWith(SpringRunner.class)
@@ -48,7 +44,7 @@ public class CulturalOfferControllerIntegrationTest {
 	private String accessToken;
 	
 	@Before
-	public void login() {
+	public void loginAdmin() {
 		ResponseEntity<UserTokenStateDTO> responseEntity = restTemplate.postForEntity("/auth/log-in",
 				new UserLoginDTO(ADMIN_EMAIL, ADMIN_PASSWORD), UserTokenStateDTO.class);
 		accessToken = "Bearer " + responseEntity.getBody().getAccessToken();
@@ -97,7 +93,7 @@ public class CulturalOfferControllerIntegrationTest {
 		CulturalOfferDTO culturalOffer = responseEntity.getBody();
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_RATE_ID, culturalOffer.getId());
+		assertEquals(DB_CO_ID, culturalOffer.getId());
 		assertEquals(DB_NAME, culturalOffer.getName());
 	}
 	
@@ -115,27 +111,437 @@ public class CulturalOfferControllerIntegrationTest {
 
 	}
 	
-//	@Test
-//	@Transactional
-//	@Rollback(true)
-//	public void testCreate() throws Exception {
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		JSONObject jsonObject = new JSONObject();
-//		jsonObject.put("name", NEW_CO_NAME);
-//		jsonObject.put("description", NEW_CO_DESCRIPTION);
-//		jsonObject.put("city", NEW_CO_CITY);
-//		jsonObject.put("date", NEW_CO_DATE);
-//		jsonObject.put("lat", NEW_CO_LAT);
-//		jsonObject.put("lon", NEW_CO_LON);
-//		
-//		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-//
-//		ResponseEntity<RateDTO> responseEntity = restTemplate.postForEntity("/api/rate", request, RateDTO.class);
-//
-//		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-//		assertEquals(NEW_RATE_NUMBER, responseEntity.getBody().getNumber());
-//
-//	}
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testCreate() throws Exception {
+		int size = culturalOfferService.findAll().size();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", NEW_CO_NAME);
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", NEW_DATE_FORMAT);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(NEW_CO_NAME, responseEntity.getBody().getName());
+		
+		List<CulturalOffer> coDTO = culturalOfferService.findAll();
+        assertEquals(size + 1, coDTO.size());
+
+     // uklanjamo dodatu kategoriju
+        culturalOfferService.delete(responseEntity.getBody().getId());
+
+	}
+	
+	
+	@Test
+	public void testCreate_GivenEmptyType() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", NEW_CO_NAME);
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", NEW_DATE_FORMAT);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		jsonObject.put("typeDTO", typeObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+	}
+	
+	@Test
+	public void testCreate_GivenFalseTypeId() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", NEW_CO_NAME);
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", NEW_DATE_FORMAT);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_FALSE_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+	}
+	
+	@Test
+	public void testCreate_GivenWrongDateFormat() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", NEW_CO_NAME);
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", DB_CO_DATE);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+	}
+	
+	@Test
+	public void testCreate_GivenLatitudeOutOfBounds() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", NEW_CO_NAME);
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", DB_CO_DATE);
+		jsonObject.put("lat", WRONG_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+	}
+	
+	@Test
+	public void testCreate_GivenLongitudeOutOfBounds() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", NEW_CO_NAME);
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", DB_CO_DATE);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", WRONG_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testUpdate() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", DB_CO_NAME); // unique
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", NEW_DATE_FORMAT);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_UPDATE_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(DB_CO_NAME, responseEntity.getBody().getName());
+		assertEquals(DB_TYPE_ID, responseEntity.getBody().getTypeDTO().getId());
+
+	}
+	
+	@Test
+	public void testUpdate_GivenFalseId() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", DB_CO_NAME); // unique
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", NEW_DATE_FORMAT);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_FALSE_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+	
+	}
+	
+	@Test
+	public void testUpdate_GivenEmptyType() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", DB_CO_NAME); // unique
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", NEW_DATE_FORMAT);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+	
+	}
+	
+	@Test
+	public void testUpdate_GivenWrongLatitude() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", DB_CO_NAME); // unique
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", NEW_DATE_FORMAT);
+		jsonObject.put("lat", WRONG_LAT);
+		jsonObject.put("lon", NEW_CO_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+	
+	}
+	@Test
+	public void testUpdate_GivenWrongLongitude() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("name", DB_CO_NAME); // unique
+		jsonObject.put("description", NEW_CO_DESCRIPTION);
+		jsonObject.put("city", NEW_CO_CITY);
+		jsonObject.put("date", NEW_DATE_FORMAT);
+		jsonObject.put("lat", NEW_CO_LAT);
+		jsonObject.put("lon", WRONG_LON);
+		JSONObject typeObject = new JSONObject();
+		typeObject.put("id", DB_TYPE_ID);
+		typeObject.put("name", DB_TYPE_NAME);
+		typeObject.put("description", DB_TYPE_DESC);
+		jsonObject.put("typeDTO", typeObject);
+		JSONObject categoryObject = new JSONObject();
+		categoryObject.put("id", 1L);
+		categoryObject.put("name", DB_CAT_NAME);
+		categoryObject.put("description", DB_CAT_DESC);
+		typeObject.put("categoryDTO", categoryObject);
+		JSONArray imagesObject = new JSONArray();
+		jsonObject.put("imageDTO", imagesObject);
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+	
+	}
+	
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void testDelete() throws Exception {
+        int size = culturalOfferService.findAll().size();
+        
+        HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		HttpEntity<Object> request = new HttpEntity<Object>(headers);
+		
+        ResponseEntity<Void> responseEntity =
+                restTemplate.exchange("/api/culturaloffer/" + DB_UPDATE_ID,
+                        HttpMethod.DELETE, request, Void.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(size - 1, culturalOfferService.findAll().size());
+    }
+    
+    @Test
+    public void testDelete_GivenFalseId() throws Exception {
+        int size = culturalOfferService.findAll().size();
+        
+        HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		HttpEntity<Object> request = new HttpEntity<Object>(headers);
+		
+        ResponseEntity<Void> responseEntity =
+                restTemplate.exchange("/api/culturaloffer/" + DB_FALSE_CO_ID,
+                        HttpMethod.DELETE, request, Void.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals(size, culturalOfferService.findAll().size());
+    }
+    
+	@Test
+	public void testGetFromCity() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		HttpEntity<Object> request = new HttpEntity<Object>(headers);
+
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/culturaloffer/from_city/"+DB_CITY, HttpMethod.GET, request,
+				CulturalOfferDTO[].class);
+		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(DB_SIZE_BY_CITY, culturalOffers.length);
+		assertEquals(DB_CITY, culturalOffers[0].getCity().toUpperCase());
+		
+	}
+	
+	@Test
+	public void testGetByContent() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		HttpEntity<Object> request = new HttpEntity<Object>(headers);
+
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/culturaloffer/content/"+DB_CONTENT, HttpMethod.GET, request,
+				CulturalOfferDTO[].class);
+		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(DB_SIZE_BY_CONTENT, culturalOffers.length);
+		
+	}
+	
 }
