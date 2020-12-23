@@ -1,6 +1,15 @@
 package main.kts.repository;
 
-import static main.kts.constants.CulturalOfferConstants.*;
+import static main.kts.constants.CulturalOfferConstants.DB_CITY;
+import static main.kts.constants.CulturalOfferConstants.DB_CONTENT;
+import static main.kts.constants.CulturalOfferConstants.DB_CO_ID;
+import static main.kts.constants.CulturalOfferConstants.DB_FALSE_CO_ID;
+import static main.kts.constants.CulturalOfferConstants.DB_NAME;
+import static main.kts.constants.CulturalOfferConstants.DB_SIZE;
+import static main.kts.constants.CulturalOfferConstants.DB_SIZE_BY_CITY;
+import static main.kts.constants.CulturalOfferConstants.DB_SIZE_BY_CONTENT;
+import static main.kts.constants.CulturalOfferConstants.PAGEABLE_PAGE;
+import static main.kts.constants.CulturalOfferConstants.PAGEABLE_SIZE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -10,8 +19,7 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +27,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import main.kts.model.CulturalOffer;
-import main.kts.model.Rate;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@DataJpaTest
 @TestPropertySource("classpath:test.properties")
 public class CulturalOfferRepositoryIntegrationTest {
 

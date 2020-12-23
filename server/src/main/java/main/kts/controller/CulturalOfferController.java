@@ -90,7 +90,7 @@ public class CulturalOfferController {
 	}
     
     @RequestMapping(value="/subscriptions", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('REGISTERED_USER')")
+	@PreAuthorize("hasRole('REGISTERED_USER')") 
 	public ResponseEntity<List<CulturalOfferDTO>> getSubscribedCulturalOffer(){
     	RegisteredUser registeredUser;
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
