@@ -16,8 +16,15 @@ public class TypeConstants {
 	public static final String NEW_TYPE_DESCRIPTION = "music festivals in Serbia";
 	public static final Long NEW_TYPE_ID = 3L;
 	public static final Long NEW_CATEGORY_ID = 2L;
+	public static final String DB_CATEGORY_NAME2 = "manifestation";
+	public static final String DB_CATEGORY_DESCIPTION2 = "manifestations in serbia";
+	
+	
 	
 	public static final String UPDATE_TYPE_NAME = "natural museum";
+	 public static final String DB_CATEGORY_NAME1 = "institution";
+	 public static final String DB_CATEGORY_DESCIPTION1 = "institutions in serbia";
+	 public static final Long DB_CATEGORY_ID1 = 1L;
 	
 	public static final long FIND_ALL_NUMBER_OF_ITEMS = 2;
 	public static final long FIND_ALL_NUMBER_OF_TYPES = 2;
@@ -41,5 +48,7 @@ public class TypeConstants {
 	public static final Long ADMIN_ID = 1L;
 	public static final String ADMIN_EMAIL = "admin@gmail.com";
 	public static final String ADMIN_PASSWORD = "asdf";
+	public static final Integer DB_PAGEABLE_SIZE4 = 4;
 	
+	public static final String EXISTING_TYPE_NAME = "opera";
 }
