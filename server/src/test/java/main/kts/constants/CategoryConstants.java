@@ -29,7 +29,12 @@ public class CategoryConstants {
 	 
 	 //INTEGRATION TEST CONSTANST    
 	 public static final long DB_SIZE = 2;
-	
+	 
+	 public static final Long ADMIN_ID = 1L;
+	 public static final String ADMIN_EMAIL = "admin@gmail.com";
+	 public static final String ADMIN_PASSWORD = "asdf";
+	 
+	 public static final String EXISTING_CATEGORY_NAME = "manifestation";
 	
 
 }

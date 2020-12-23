@@ -57,7 +57,7 @@ public class CategoryController {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
-    public ResponseEntity<CategoryDTO> getType(@PathVariable Long id){
+    public ResponseEntity<CategoryDTO> getCategory(@PathVariable Long id){
 		Category category = categoryService.findOne(id);
 		if(category == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
