@@ -1,6 +1,15 @@
 package main.kts.repository;
 
-import static main.kts.constants.RateConstants.*;
+import static main.kts.constants.RateConstants.DB_CULTURAL_OFFER_ID;
+import static main.kts.constants.RateConstants.DB_FALSE_RATE_ID;
+import static main.kts.constants.RateConstants.DB_RATE_ID;
+import static main.kts.constants.RateConstants.DB_RATE_NUMBER;
+import static main.kts.constants.RateConstants.DB_REGISTERED_USER_ID;
+import static main.kts.constants.RateConstants.DB_SIZE;
+import static main.kts.constants.RateConstants.DB_SIZE_BY_CO;
+import static main.kts.constants.RateConstants.DB_USER_ID;
+import static main.kts.constants.RateConstants.PAGEABLE_PAGE;
+import static main.kts.constants.RateConstants.PAGEABLE_SIZE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -10,7 +19,7 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +31,7 @@ import main.kts.model.Rate;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@DataJpaTest
 @TestPropertySource("classpath:test.properties")
 public class RateRepositoryIntegrationTest {
 

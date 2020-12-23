@@ -61,7 +61,6 @@ public class CulturalOfferController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<CulturalOfferDTO>> getAllCulturalOffers() {
 		List<CulturalOffer> culturalOffers = culturalOfferService.findAll();
 
@@ -69,7 +68,6 @@ public class CulturalOfferController {
 	}
 	
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<CulturalOfferDTO> getCulturalOffer(@PathVariable Long id){
         CulturalOffer culturalOffer = culturalOfferService.findOne(id);
         if(culturalOffer == null){
@@ -103,7 +101,6 @@ public class CulturalOfferController {
 	}
     
     @RequestMapping(value="/",method=RequestMethod.GET)
-    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<CulturalOfferDTO>> loadCulturalOfferPage(Pageable pageable) {
     	Page<CulturalOffer> culturalOffers = culturalOfferService.findAll(pageable);
     	if(culturalOffers == null){
