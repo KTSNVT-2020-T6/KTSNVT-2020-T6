@@ -152,9 +152,7 @@ public class TypeControllerIntegrationTest {
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
 		ResponseEntity<TypeDTO> responseEntity = restTemplate.postForEntity("/api/type", request,TypeDTO.class);
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-	
 	}
-	
 
 	@Test
 	@Transactional
