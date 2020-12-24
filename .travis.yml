@@ -19,7 +19,7 @@ addons:
     
 script:
    - cd server 
-   - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+   - ./mvnw clean package -DskipTests=true
    - ./mvnw clean install 
    - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6 
   
