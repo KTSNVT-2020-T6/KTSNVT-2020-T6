@@ -1,5 +1,8 @@
 dist: trusty
-sudo: required
+sudo: false
+ cache:
+   directories:
+     - crypto-pwa/node_modules
 language: java
 jdk: openjdk11
 
@@ -16,10 +19,23 @@ addons:
   sonarcloud:
     organization: ktsnvt-2020-t6
     token: 5505c51e689b73abc7924b1a44fa947266e29338
-
-script:
-  - cd server 
-  - ./mvnw clean install 
-  - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6 
+    
+before_install:
+   - jdk_switcher use openjdk11
+   - java 8
+   - export CHROME_BIN=/usr/bin/google-chrome
+   - export DISPLAY=:99.0
+   - sh -e /etc/init.d/xvfb start
+   - npm install -g ionic@3.20.0
+ script:
+   - chmod +x holdings-api/mvnw
+   - cd holdings-api && ./mvnw -q clean verify
+   - cd ../crypto-pwa && npm i && npm test
+   - cd ../holdings-api && mvnw -q spring-boot:run
+   - cd server 
+   - ./mvnw clean install 
+   - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6 
   
 
+
+ 
