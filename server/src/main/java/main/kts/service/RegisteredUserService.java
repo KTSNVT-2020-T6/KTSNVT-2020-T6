@@ -62,7 +62,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		ruser.setActive(true);
 		ruser.setVerified(false);
 		Set<Authority> set = new HashSet<Authority>();
-		set.add(authorityRepository.findByRole("REGISTERED_USER"));
+		set.add(authorityRepository.findByRole("ROLE_REGISTERED_USER"));
 		ruser.setAuthority(set);
 		if(entity.getImage() != null) {
 			ruser.setImage(entity.getImage());
@@ -92,7 +92,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 			u.setEmail(oldEmail);
 		}
 		u.setFirstName(entity.getFirstName());
-		u.setLastName(entity.getLastName());
+		u.setLastName(entity.getLastName());	
 		u.setPassword(passwordEncoder.encode(entity.getPassword()));
 		if(entity.getImage() != null) {
 			u.setImage(entity.getImage());
@@ -109,9 +109,6 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		a = repository.save(a);
 	}
 	
-	public List<RegisteredUser> findAllRegisteredUser() {
-		return repository.findAllRegisteredUser();
-	}
 	public RegisteredUser findByEmail(String email) {
 		return repository.findByEmailAndActive(email, true);
 	}
@@ -120,16 +117,12 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		RegisteredUser registeredUser;
 		CulturalOffer culturalOffer = culturalOfferRepository.getOne(id);
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((User) currentUser.getPrincipal()).getEmail();
-        registeredUser = this.findByEmail(username);
+        String username = currentUser.getName();       
+        
+        registeredUser = repository.findByEmail(username);
         registeredUser.getFavoriteCulturalOffers().add(culturalOffer);
         repository.save(registeredUser);
 	}
-
-	public List<Long> findByIdCO(Long id) {
-		return repository.findByIdCO(id);
-	}
-
 	public List<CulturalOffer> findAllSubscribedCO(Long id) {
 		RegisteredUser user = repository.findById(id).orElse(null);
 		List<CulturalOffer> favoriteCO = new ArrayList<CulturalOffer>();
@@ -141,6 +134,10 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 	public RegisteredUser findByIdRU(Long l) {
 		return repository.findByIdRU(l);
 	}
+	public List<Long> findByIdCO(Long id) {
+		return repository.findByIdCO(id);
+	}
+
 
 	
 
