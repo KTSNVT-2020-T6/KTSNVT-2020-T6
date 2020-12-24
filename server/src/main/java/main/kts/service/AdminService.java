@@ -50,7 +50,7 @@ public class AdminService implements ServiceInterface<Admin>{
 		a.setActive(true);
 		a.setVerified(false);
 		Set<Authority> set = new HashSet<Authority>();
-		set.add(authorityRepository.findByRole("ADMIN"));
+		set.add(authorityRepository.findByRole("ROLE_ADMIN"));
 		a.setAuthority(set);
 		if(entity.getImage() != null) {
 			a.setImage(entity.getImage());
@@ -92,13 +92,13 @@ public class AdminService implements ServiceInterface<Admin>{
 	}
 
 	private void validateAttributes(Admin a) throws Exception {
-		if(a.getFirstName() == null)
+		if(a.getFirstName() == null || a.getFirstName().isEmpty())
 			throw new Exception("Admin's first name is empty.");
-		if(a.getLastName() == null)
+		if(a.getLastName() == null || a.getLastName().isEmpty())
 			throw new Exception("Admin's last name is empty.");
-		if(a.getEmail() == null)
+		if(a.getEmail() == null || a.getEmail().isEmpty())
 			throw new Exception("Admin's email is empty.");
-		if(a.getPassword() == null)
+		if(a.getPassword() == null || a.getPassword().isEmpty())
 			throw new Exception("Admin's password is empty.");
 	}
 

@@ -44,5 +44,9 @@ public class AdminConstants {
 	public static final String ADMIN_EMAIL_LOGIN = "admin@gmail.com";
 	public static final String ADMIN_PASSWORD_LOGIN = "asdf";
 	public static final Long  DB_ADMIN_ID_LAST = 7L;
-
+	
+	public static final String NEW_ADMIN_EMPTY = "";
+	public static final String NEW_ADMIN_NULL= null;
+    public static final String NEW_ADMIN_EMAIL123321 = "email%notValid nemam ideje @gmail.com";
+    public static final Long NEW_ADMIN_IMAGE43 = 42L;
 }
