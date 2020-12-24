@@ -53,15 +53,19 @@ public class UserController {
 	public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
 		User u = service.findOne(id);
 		if (u == null) {
+			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(userMapper.toDto(u), HttpStatus.OK);
 	}
-	@RequestMapping(value = "/{email}", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/{email:.+}", method = RequestMethod.GET,produces=MediaType.ALL_VALUE, consumes=MediaType.ALL_VALUE)
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
-		User u = service.findByEmail(email);
+		
+		User u = service.findByEmail(email.toString());
 		if (u == null) {
+	
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(userMapper.toDto(u), HttpStatus.OK);

@@ -43,49 +43,30 @@ public class UserService implements ServiceInterface<User> {
 
 	@Override
 	public User create(User entity) throws Exception {
-		if (repository.findByEmail(entity.getEmail()) != null) {
-			throw new Exception("User with given email address already exists");
-		}
-		RegisteredUser u = new RegisteredUser();
-		// u.setUsername(entity.getUsername());
-		// pre nego sto postavimo lozinku u atribut hesiramo je
-		u.setPassword(passwordEncoder.encode(entity.getPassword()));
-		u.setFirstName(entity.getFirstName());
-		u.setLastName(entity.getLastName());
-		u.setEmail(entity.getEmail());
-		u.setActive(true);
-		u.setVerified(false);
-
-		Set<Authority> auth = authService.findByName("ROLE_REGISTERED_USER");
-		// u primeru se registruju samo obicni korisnici i u skladu sa tim im se i
-		// dodeljuje samo rola USER
-		u.setAuthority(auth);
-
-		u = this.repository.save(u);
-		return u;
+		//Ovo se ne radi ovde
+//		if (repository.findByEmail(entity.getEmail()) != null) {
+//			throw new Exception("User with given email address already exists");
+//		}
+//		RegisteredUser u = new RegisteredUser();
+//		// u.setUsername(entity.getUsername());
+//		// pre nego sto postavimo lozinku u atribut hesiramo je
+//		u.setPassword(passwordEncoder.encode(entity.getPassword()));
+//		u.setFirstName(entity.getFirstName());
+//		u.setLastName(entity.getLastName());
+//		u.setEmail(entity.getEmail());
+//		u.setActive(true);
+//		u.setVerified(false);
+//
+//		Set<Authority> auth = authService.findByName("ROLE_REGISTERED_USER");
+//		// u primeru se registruju samo obicni korisnici i u skladu sa tim im se i
+//		// dodeljuje samo rola USER
+//		u.setAuthority(auth);
+//
+//		u = this.repository.save(u);
+		return null;
 	}
 
-	public User createAdmin(User entity) throws Exception {
-		if (repository.findByEmail(entity.getEmail()) != null) {
-			throw new Exception("User with given email address already exists");
-		}
-		Admin u = new Admin();
-		// u.setUsername(entity.getUsername());
-		// pre nego sto postavimo lozinku u atribut hesiramo je
-		u.setPassword(passwordEncoder.encode(entity.getPassword()));
-		u.setFirstName(entity.getFirstName());
-		u.setLastName(entity.getLastName());
-		u.setEmail(entity.getEmail());
-		u.setActive(true);
-		u.setVerified(false);
-
-		Set<Authority> auth = authService.findByName("ROLE_ADMIN");
-
-		u.setAuthority(auth);
-
-		u = this.repository.save(u);
-		return u;
-	}
+	
 
 	@Override
 	public User update(User entity, Long id) throws Exception {
@@ -102,9 +83,9 @@ public class UserService implements ServiceInterface<User> {
 		return repository.findByActive(pageable, true);
 	}
 
-	public void save(User user) {
-		// TODO Auto-generated method stub
-		
-	}
+//	public void save(User user) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }
