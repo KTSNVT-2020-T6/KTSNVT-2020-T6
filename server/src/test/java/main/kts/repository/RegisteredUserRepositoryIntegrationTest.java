@@ -1,6 +1,5 @@
 package main.kts.repository;
 
-import static main.kts.constants.AdminConstants.DB_ADMIN_ID;
 import static main.kts.constants.RegisteredUserConstants.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,11 +12,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import main.kts.model.Admin;
 import main.kts.model.RegisteredUser;
 
 @RunWith(SpringRunner.class)
@@ -68,9 +65,7 @@ public class RegisteredUserRepositoryIntegrationTest {
 		List<RegisteredUser> foundRegisteredUsers = repository.findAllRegisteredUser();
 	    assertEquals(DB_REGISTERED_USER_SIZE, foundRegisteredUsers.size());
 	}
-		
-
-	
+			
 	@Test
 	public void testFindByIdAndActive_IdDoesntExist() {
 		Optional<RegisteredUser> foundRegisteredUser = repository.findByIdAndActive(NEW_REGISTERED_USER_ID1, true);
