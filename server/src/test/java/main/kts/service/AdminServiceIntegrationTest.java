@@ -55,8 +55,7 @@ public class AdminServiceIntegrationTest {
 		assertEquals(NEW_ADMIN_LAST_NAME, createdAdmin.getLastName());
 		assertEquals(NEW_ADMIN_EMAIL, createdAdmin.getEmail());
 	    assertEquals(NEW_ADMIN_VERIFIED, createdAdmin.getActive());
-	    
-	    //cleanup, za fizicko pokretanje nema potrebe, podaci za testiranje su razliciti  
+	      
     }
 	
 	@Test
@@ -79,6 +78,8 @@ public class AdminServiceIntegrationTest {
 	
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testUpdate() throws Exception {
 		Admin updateAdmin = new Admin(NEW_ADMIN_FIRST_NAME1, 
 				NEW_ADMIN_LAST_NAME1,
@@ -87,15 +88,12 @@ public class AdminServiceIntegrationTest {
 				NEW_ADMIN_ACTIVE1,
 				NEW_ADMIN_VERIFIED1);
 		
-		Admin saveForCleanUp = service.findOne(DB_ADMIN_ID1);
 		Admin updatedAdmin = service.update(updateAdmin, DB_ADMIN_ID1);
 		assertEquals(DB_ADMIN_ID1, updatedAdmin.getId());
 		assertEquals(NEW_ADMIN_FIRST_NAME1, updatedAdmin.getFirstName());
 		assertEquals(NEW_ADMIN_LAST_NAME1, updatedAdmin.getLastName());
 		assertEquals(NEW_ADMIN_EMAILL1, updatedAdmin.getEmail());      
 		
-		//cleanup
-		saveForCleanUp = service.update(saveForCleanUp, DB_ADMIN_ID1);
     }
 	@Test
 	public void testUpdate_ExistingGmail() throws Exception {
@@ -133,13 +131,13 @@ public class AdminServiceIntegrationTest {
     }
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testDelete() throws Exception {
 		service.delete(DB_ADMIN_ID);
         Admin checkAdmin = service.findOneChecker(DB_ADMIN_ID);
         assertFalse(checkAdmin.getActive());    
-        //cleanup 
-        checkAdmin.setActive(true);
-        checkAdmin = service.update(checkAdmin, DB_ADMIN_ID);
+
     }
 	
 	@Test

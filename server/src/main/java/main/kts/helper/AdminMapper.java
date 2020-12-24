@@ -11,9 +11,6 @@ public class AdminMapper implements MapperInterface<Admin, AdminDTO>{
 	public AdminMapper() {
 		super();
 	}
-
-	
-
 	@Override
 	public AdminDTO toDto(Admin entity) {
 		return new AdminDTO(entity.getId(),entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified()
@@ -21,8 +18,9 @@ public class AdminMapper implements MapperInterface<Admin, AdminDTO>{
 	}
 	@Override
 	public Admin toEntity(AdminDTO dto) {
-		//for creating new Admin we dont need id :)
-		return new Admin(dto.getFirstName(), dto.getLastName(),dto.getEmail(), dto.getPassword());
+		Admin a = new Admin(dto.getFirstName(), dto.getLastName(),dto.getEmail(), dto.getPassword());
+		System.out.println(a);
+		return a;
 	}
 
 }
