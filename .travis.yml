@@ -25,8 +25,7 @@ install:
   
 script:
   - cd server 
-  - ./mvnw clean install
-  -  mvn clean install -q
+  - ./mvnw clean install -q
   - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6 
   
 
