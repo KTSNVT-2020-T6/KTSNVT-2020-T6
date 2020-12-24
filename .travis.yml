@@ -18,6 +18,7 @@ addons:
     token: 5505c51e689b73abc7924b1a44fa947266e29338
 
 script: 
+  - echo "skipping tests"
   - cd server 
   - ./mvnw clean install
   - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6 
