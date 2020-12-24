@@ -22,4 +22,8 @@ script:
   - ./mvnw clean install
   - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6 
   
-  
+install:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - tar -xjf /tmp/firefox-43.0.tar.bz2 --directory /tmp
+  - export PATH="/tmp/firefox:$PATH" 
