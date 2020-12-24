@@ -8,7 +8,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @RunWith(Suite.class)
 @SuiteClasses({RateControllerIntegrationTest.class,CulturalOfferControllerIntegrationTest.class, TypeControllerIntegrationTest.class,CategoryControllerIntegrationTest.class,
-	AdminControllerIntegrationTest.class})
+	AdminControllerIntegrationTest.class, RegisteredUserControllerIntegrationTest.class, })
 @TestPropertySource("classpath:test.properties")
 public class SuiteControllers {
 
