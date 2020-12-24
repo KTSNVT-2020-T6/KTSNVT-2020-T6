@@ -1,8 +1,39 @@
 package main.kts.controller;
 
-import static main.kts.constants.CulturalOfferConstants.*;
+import static main.kts.constants.CulturalOfferConstants.ADMIN_EMAIL;
+import static main.kts.constants.CulturalOfferConstants.ADMIN_PASSWORD;
+import static main.kts.constants.CulturalOfferConstants.CO_ID;
+import static main.kts.constants.CulturalOfferConstants.DB_CAT_DESC;
+import static main.kts.constants.CulturalOfferConstants.DB_CAT_NAME;
+import static main.kts.constants.CulturalOfferConstants.DB_CITY;
+import static main.kts.constants.CulturalOfferConstants.DB_CONTENT;
+import static main.kts.constants.CulturalOfferConstants.DB_CO_DATE;
+import static main.kts.constants.CulturalOfferConstants.DB_CO_ID;
+import static main.kts.constants.CulturalOfferConstants.DB_CO_NAME;
+import static main.kts.constants.CulturalOfferConstants.DB_FALSE_CO_ID;
+import static main.kts.constants.CulturalOfferConstants.DB_FALSE_TYPE_ID;
+import static main.kts.constants.CulturalOfferConstants.DB_NAME;
+import static main.kts.constants.CulturalOfferConstants.DB_SIZE;
+import static main.kts.constants.CulturalOfferConstants.DB_SIZE_BY_CITY;
+import static main.kts.constants.CulturalOfferConstants.DB_SIZE_BY_CONTENT;
+import static main.kts.constants.CulturalOfferConstants.DB_TYPE_DESC;
+import static main.kts.constants.CulturalOfferConstants.DB_TYPE_ID;
+import static main.kts.constants.CulturalOfferConstants.DB_TYPE_NAME;
+import static main.kts.constants.CulturalOfferConstants.DB_UPDATE_ID;
+import static main.kts.constants.CulturalOfferConstants.FALSE_ID;
+import static main.kts.constants.CulturalOfferConstants.NEW_CO_CITY;
+import static main.kts.constants.CulturalOfferConstants.NEW_CO_DESCRIPTION;
+import static main.kts.constants.CulturalOfferConstants.NEW_CO_LAT;
+import static main.kts.constants.CulturalOfferConstants.NEW_CO_LON;
+import static main.kts.constants.CulturalOfferConstants.NEW_CO_NAME;
+import static main.kts.constants.CulturalOfferConstants.NEW_DATE_FORMAT;
+import static main.kts.constants.CulturalOfferConstants.PAGEABLE_SIZE;
+import static main.kts.constants.CulturalOfferConstants.WRONG_LAT;
+import static main.kts.constants.CulturalOfferConstants.WRONG_LON;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -24,7 +55,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import main.kts.dto.CategoryDTO;
 import main.kts.dto.CulturalOfferDTO;
+import main.kts.dto.ImageDTO;
+import main.kts.dto.TypeDTO;
 import main.kts.dto.UserLoginDTO;
 import main.kts.dto.UserTokenStateDTO;
 import main.kts.model.CulturalOffer;
@@ -120,28 +154,32 @@ public class CulturalOfferControllerIntegrationTest {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("name", NEW_CO_NAME);
-		jsonObject.put("description", NEW_CO_DESCRIPTION);
-		jsonObject.put("city", NEW_CO_CITY);
-		jsonObject.put("date", NEW_DATE_FORMAT);
-		jsonObject.put("lat", NEW_CO_LAT);
-		jsonObject.put("lon", NEW_CO_LON);
-		JSONObject typeObject = new JSONObject();
-		typeObject.put("id", DB_TYPE_ID);
-		typeObject.put("name", DB_TYPE_NAME);
-		typeObject.put("description", DB_TYPE_DESC);
-		jsonObject.put("typeDTO", typeObject);
-		JSONObject categoryObject = new JSONObject();
-		categoryObject.put("id", 1L);
-		categoryObject.put("name", DB_CAT_NAME);
-		categoryObject.put("description", DB_CAT_DESC);
-		typeObject.put("categoryDTO", categoryObject);
-		JSONArray imagesObject = new JSONArray();
-		jsonObject.put("imageDTO", imagesObject);
+//		JSONObject jsonObject = new JSONObject();
+//		jsonObject.put("name", NEW_CO_NAME);
+//		jsonObject.put("description", NEW_CO_DESCRIPTION);
+//		jsonObject.put("city", NEW_CO_CITY);
+//		jsonObject.put("date", NEW_DATE_FORMAT);
+//		jsonObject.put("lat", NEW_CO_LAT);
+//		jsonObject.put("lon", NEW_CO_LON);
+//		JSONObject typeObject = new JSONObject();
+//		typeObject.put("id", DB_TYPE_ID);
+//		typeObject.put("name", DB_TYPE_NAME);
+//		typeObject.put("description", DB_TYPE_DESC);
+//		jsonObject.put("typeDTO", typeObject);
+//		JSONObject categoryObject = new JSONObject();
+//		categoryObject.put("id", 1L);
+//		categoryObject.put("name", DB_CAT_NAME);
+//		categoryObject.put("description", DB_CAT_DESC);
+//		typeObject.put("categoryDTO", categoryObject);
+//		JSONArray imagesObject = new JSONArray();
+//		jsonObject.put("imageDTO", imagesObject);
+		
+		CategoryDTO cat = new CategoryDTO(1L, DB_CAT_NAME, DB_CAT_DESC);
+		TypeDTO type = new TypeDTO(DB_TYPE_ID, DB_TYPE_NAME, DB_TYPE_DESC, cat);
+		CulturalOfferDTO co = new CulturalOfferDTO(NEW_CO_NAME, NEW_CO_DESCRIPTION, NEW_CO_CITY, new Date(), NEW_CO_LAT, NEW_CO_LON, type, new HashSet<ImageDTO>());
 		
 		
-		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+		HttpEntity<Object> request = new HttpEntity<Object>(co, headers);
 
 		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
 
@@ -325,27 +363,32 @@ public class CulturalOfferControllerIntegrationTest {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("name", DB_CO_NAME); // unique
-		jsonObject.put("description", NEW_CO_DESCRIPTION);
-		jsonObject.put("city", NEW_CO_CITY);
-		jsonObject.put("date", NEW_DATE_FORMAT);
-		jsonObject.put("lat", NEW_CO_LAT);
-		jsonObject.put("lon", NEW_CO_LON);
-		JSONObject typeObject = new JSONObject();
-		typeObject.put("id", DB_TYPE_ID);
-		typeObject.put("name", DB_TYPE_NAME);
-		typeObject.put("description", DB_TYPE_DESC);
-		jsonObject.put("typeDTO", typeObject);
-		JSONObject categoryObject = new JSONObject();
-		categoryObject.put("id", 1L);
-		categoryObject.put("name", DB_CAT_NAME);
-		categoryObject.put("description", DB_CAT_DESC);
-		typeObject.put("categoryDTO", categoryObject);
-		JSONArray imagesObject = new JSONArray();
-		jsonObject.put("imageDTO", imagesObject);
+//		JSONObject jsonObject = new JSONObject();
+//		jsonObject.put("name", DB_CO_NAME); // unique
+//		jsonObject.put("description", NEW_CO_DESCRIPTION);
+//		jsonObject.put("city", NEW_CO_CITY);
+//		jsonObject.put("date", NEW_DATE_FORMAT);
+//		jsonObject.put("lat", NEW_CO_LAT);
+//		jsonObject.put("lon", NEW_CO_LON);
+//		JSONObject typeObject = new JSONObject();
+//		typeObject.put("id", DB_TYPE_ID);
+//		typeObject.put("name", DB_TYPE_NAME);
+//		typeObject.put("description", DB_TYPE_DESC);
+//		jsonObject.put("typeDTO", typeObject);
+//		JSONObject categoryObject = new JSONObject();
+//		categoryObject.put("id", 1L);
+//		categoryObject.put("name", DB_CAT_NAME);
+//		categoryObject.put("description", DB_CAT_DESC);
+//		typeObject.put("categoryDTO", categoryObject);
+//		JSONArray imagesObject = new JSONArray();
+//		jsonObject.put("imageDTO", imagesObject);
 		
-		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
+		CategoryDTO cat = new CategoryDTO(1L, DB_CAT_NAME, DB_CAT_DESC);
+		TypeDTO type = new TypeDTO(DB_TYPE_ID, DB_TYPE_NAME, DB_TYPE_DESC, cat);
+		CulturalOfferDTO co = new CulturalOfferDTO(DB_CO_NAME, NEW_CO_DESCRIPTION, NEW_CO_CITY, new Date(), NEW_CO_LAT, NEW_CO_LON, type, new HashSet<ImageDTO>());
+		
+		
+		HttpEntity<Object> request = new HttpEntity<Object>(co, headers);
 		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_UPDATE_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

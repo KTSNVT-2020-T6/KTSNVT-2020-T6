@@ -2,6 +2,7 @@ package main.kts.dto;
 
 import java.util.Set;
 import java.util.Date;
+import java.util.HashSet;
 
 public class CulturalOfferDTO {
 
@@ -41,6 +42,18 @@ public class CulturalOfferDTO {
 		super();
 		this.id = id;
 		this.averageRate = averageRate;
+		this.description = description;
+		this.name = name;
+		this.city = city;
+		this.date = date;
+		this.lat = lat;
+		this.lon = lon;
+		this.typeDTO = typeDTO;
+		this.imageDTO = imageDTO;
+	}
+
+	public CulturalOfferDTO(String name, String description, String city, Date date, double lat,
+			double lon, TypeDTO typeDTO, HashSet<ImageDTO> imageDTO) {
 		this.description = description;
 		this.name = name;
 		this.city = city;
