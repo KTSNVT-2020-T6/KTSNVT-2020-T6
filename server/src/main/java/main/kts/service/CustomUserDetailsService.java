@@ -40,12 +40,16 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     // Funkcija pomocu koje korisnik menja svoju lozinku
-    public void changePassword(String oldPassword, String newPassword) {
+    public void changePassword(String oldPassword, String newPassword) throws Exception {
 
         // Ocitavamo trenutno ulogovanog korisnika
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = ((User) currentUser.getPrincipal()).getEmail();
-
+        String checkPassword = ((User) currentUser.getPrincipal()).getPassword();
+        
+        if (passwordEncoder.matches(checkPassword, oldPassword)) {
+        	throw new Exception("Old password incorrect.");
+        }
         if (authenticationManager != null) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
         } else {
