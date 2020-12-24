@@ -8,7 +8,7 @@ import org.springframework.test.context.TestPropertySource;
 @RunWith(Suite.class)
 @SuiteClasses({AdminServiceUnitTest.class, RegisteredUserServiceUnitTest.class, RateServiceUnitTest.class,
 	CulturalOfferServiceUnitTest.class, ImageServiceUnitTest.class, CategoryServiceUnitTest.class, 
-	PostServiceUnitTest.class, CommentServiceUnitTest.class, AdminServiceIntegrationTest.class
+	PostServiceUnitTest.class, CommentServiceUnitTest.class,UserServiceIntegrationTest.class, AdminServiceIntegrationTest.class
 	, RegisteredUserServiceIntegrationTest.class, RateServiceIntegrationTest.class, CulturalOfferServiceIntegrationTest.class, ImageServiceIntegrationTest.class, PostServiceIntegrationTest.class, CommentServiceIntegrationTest.class })
 @TestPropertySource("classpath:test.properties")
 public class SuiteServices {
