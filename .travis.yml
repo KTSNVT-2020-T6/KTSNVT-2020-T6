@@ -17,8 +17,11 @@ addons:
     organization: ktsnvt-2020-t6
     token: 5505c51e689b73abc7924b1a44fa947266e29338
     
+install: true
+
 script:
    - cd server 
+   - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
    - ./mvnw clean package -DskipTests=true
    - ./mvnw clean install 
    - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=KTSNVT-2020-T6 
