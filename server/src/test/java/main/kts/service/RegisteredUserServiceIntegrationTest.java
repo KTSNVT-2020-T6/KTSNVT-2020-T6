@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,7 +30,7 @@ public class RegisteredUserServiceIntegrationTest {
 
 	@Autowired
 	private RegisteredUserService service;
-	
+
 	@Test
 	public void testFindAll() throws Exception {
 		List<RegisteredUser> foundRegUsers = service.findAll();
@@ -152,13 +153,17 @@ public class RegisteredUserServiceIntegrationTest {
 	    );
 	    assertEquals("Registered user doesn't exist", exception.getMessage());
     }
-//	@Test
-//	public void testSubscribeUser() throws Exception {
-//		//treba autentikacija
-//		service.subscribeUser(DB_REGISTERED_USER_CO1);
-//		List<CulturalOffer> found = service.findAllSubscribedCO(DB_REGISTERED_USER_ID1);
-//		assertEquals(DB_REGISTERED_USER_CO_SIZE, found.size());
-//   }
+	@Test
+	@Rollback(true)
+	@Transactional
+	@WithMockUser(username = REGISTERED_USER_EMAIL_LOGIN, password = REGISTERED_USER_PASSWORD_LOGIN,
+	roles = "REGISTERED_USER")
+	public void testSubscribeUser() throws Exception {
+
+		service.subscribeUser(DB_REGISTERED_USER_CO1);
+		List<CulturalOffer> found = service.findAllSubscribedCO(DB_REGISTERED_USER_ID1);
+		assertEquals(DB_REGISTERED_USER_CO_SIZE, found.size());
+    }
 	@Test
 	public void testfindByIdCO() throws Exception {
 		List<Long> found = service.findByIdCO(DB_REGISTERED_USER_CO);
