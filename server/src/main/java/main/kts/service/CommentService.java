@@ -43,16 +43,15 @@ public class CommentService implements ServiceInterface<Comment> {
 
 	@Override
 	public Comment create(Comment entity) throws Exception {
-		
 		Optional<RegisteredUser> ru = registeredUserRepository.findById(entity.getRegistredUser().getId());
 		if(!ru.isPresent()) {
 			throw new Exception("User does not exist");	
 		}
 		Optional<CulturalOffer> offer = culturalOfferRepository.findById(entity.getCulturalOffer().getId());
-		if(!offer.isPresent())
+		if(!offer.isPresent()) {
 			throw new Exception("Cultural offer does not exist");
+		}
 
-		
 		// make new comment instance
 		Comment c = new Comment();
 		c.setCulturalOffer(offer.orElse(null));
@@ -70,6 +69,11 @@ public class CommentService implements ServiceInterface<Comment> {
 		Optional<Comment> optComment = commentRepository.findById(id);
 		if(!optComment.isPresent()) {
 			throw new Exception("Comment with given id doesn't exist");
+		}
+		
+		Optional<CulturalOffer> offer = culturalOfferRepository.findById(entity.getCulturalOffer().getId());
+		if(!offer.isPresent()) {
+			throw new Exception("Cultural offer does not exist");
 		}
 		Comment existingComment = optComment.orElse(null);
 		
