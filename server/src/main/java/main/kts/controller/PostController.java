@@ -47,7 +47,6 @@ public class PostController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<PostDTO>> getAllPosts() {
 		List<Post> posts = postService.findAll();
 
@@ -55,7 +54,6 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<PostDTO> getPost(@PathVariable Long id) {
 		Post post = postService.findOne(id);
 		if (post == null) {
@@ -66,7 +64,6 @@ public class PostController {
 	}
 
     @RequestMapping(value="/",method=RequestMethod.GET)
-    @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Page<PostDTO>> loadPostPage(Pageable pageable) {
     	Page<Post> posts = postService.findAll(pageable);
     	if(posts == null){
@@ -83,18 +80,18 @@ public class PostController {
 		Image image;
 		CulturalOffer culturalOffer;
 		
-		if (!this.validatePostDTO(postDTO))
+		if (!this.validatePostDTO(postDTO)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		
+		}
 		try {
 			culturalOffer = culturalOfferService.findOne(postDTO.getCulturalOfferId());
 			image = imageService.findOne(postDTO.getImageDTO().getId());
 			post = postMapper.toEntity(postDTO);
 			post.setImage(image);
-			
 			post = postService.create(post);
 			culturalOffer.getPost().add(post);
 			culturalOfferService.saveAndSendMail(culturalOffer);
+			
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -108,6 +105,10 @@ public class PostController {
 	public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO, @PathVariable Long id) {
 		Post post;
 		Image image;
+		if (!this.validatePostDTO(postDTO)) {
+			System.out.println("EVOMENE");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			image = imageService.findOne(postDTO.getImageDTO().getId());
 			post = postMapper.toEntity(postDTO);
@@ -156,10 +157,12 @@ public class PostController {
 			return false;
 		if(postDTO.getText() == null) 
 			return false;
-		if(postDTO.getDate().before(new Date()))
+		if(postDTO.getDate().before(new Date())) 
 			return false;
-		if(postDTO.getCulturalOfferId() == null)
+		if(postDTO.getCulturalOfferId() == null) 
 			return false;
+		
+
 		return true;
 		
 	}
