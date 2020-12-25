@@ -1,6 +1,13 @@
 package main.kts.repository;
 
-import static main.kts.constants.CommentConstants.*;
+import static main.kts.constants.CommentConstants.DB_COMMENT_ID;
+import static main.kts.constants.CommentConstants.DB_COMMENT_TEXT;
+import static main.kts.constants.CommentConstants.DB_CULTURAL_OFFER_ID;
+import static main.kts.constants.CommentConstants.DB_FALSE_COMMENT_ID;
+import static main.kts.constants.CommentConstants.DB_SIZE;
+import static main.kts.constants.CommentConstants.DB_SIZE_BY_CO;
+import static main.kts.constants.CommentConstants.PAGEABLE_PAGE;
+import static main.kts.constants.CommentConstants.PAGEABLE_SIZE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -10,8 +17,7 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +25,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import main.kts.model.Comment;
-import main.kts.model.Rate;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@DataJpaTest
 @TestPropertySource("classpath:test.properties")
 public class CommentRepositoryIntegrationTest {
 

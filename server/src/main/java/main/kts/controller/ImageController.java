@@ -52,7 +52,6 @@ public class ImageController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<List<ImageDTO>> getAllImages() {
 		List<Image> images = imageService.findAll();
 
@@ -60,7 +59,6 @@ public class ImageController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<ImageDTO> getImage(@PathVariable Long id) {
 		Image image = imageService.findOne(id);
 		if (image == null) {
@@ -71,7 +69,6 @@ public class ImageController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<Page<ImageDTO>> loadImagePage(Pageable pageable) {
 		Page<Image> images = imageService.findAll(pageable);
 		if (images == null) {
@@ -81,11 +78,12 @@ public class ImageController {
 		return new ResponseEntity<>(imagesDTO, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data"})
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.ALL_VALUE)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<String> createImage(@RequestBody MultipartFile file) {
 		Image image;
 		String message = "";
+		
 		ImageDTO imageDTO = new ImageDTO(file.getOriginalFilename(), "src/main/resources/static/images/"+file.getOriginalFilename());
 		if (!this.validateImageDTO(imageDTO))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
