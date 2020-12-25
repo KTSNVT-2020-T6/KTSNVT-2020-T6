@@ -70,3 +70,5 @@ insert into rate (number, cultural_offer_id, registred_user_id, active) values (
 -- 
 
 insert into image (name, relative_path, active, cultural_offer_id) values ('slika8','path8.jpg', true, 1);
+
+insert into verification_token (created_date, end_date, token, user_id) values ('2020-07-11', '2021-07-11', '926b2ee9-e220-4960-b17c-a49593e59d28', 6)
