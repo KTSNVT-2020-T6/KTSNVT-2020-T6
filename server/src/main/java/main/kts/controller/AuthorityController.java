@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,7 @@ public class AuthorityController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<AuthorityDTO>> getAllAuthorities() {
 		List<Authority> authories = authorityService.findAll();
 
@@ -41,7 +43,8 @@ public class AuthorityController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ResponseEntity<AuthorityDTO> getType(@PathVariable Long id){
+	@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<AuthorityDTO> getById(@PathVariable Long id){
 		Authority authority = authorityService.findOne(id);
 		if(authority == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,6 +53,7 @@ public class AuthorityController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<AuthorityDTO> createAuthority(@RequestBody AuthorityDTO authorityDTO){
 		Authority authority;
 		if(!this.validateAuthorityDTO(authorityDTO))
@@ -64,6 +68,7 @@ public class AuthorityController {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<AuthorityDTO> updateAuthority(@RequestBody AuthorityDTO authorityDTO,  @PathVariable Long id){
 		Authority authority;
 		if(!this.validateAuthorityDTO(authorityDTO))
@@ -78,6 +83,7 @@ public class AuthorityController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> deleteAuthority(@PathVariable Long id){
 		try {
 			authorityService.delete(id);

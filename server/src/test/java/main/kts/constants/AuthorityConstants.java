@@ -21,6 +21,11 @@ public class AuthorityConstants {
 	// integration
 	public static final long DB_SIZE = 2;
 	public static final String DB_AUTHORITY_ROLE_EXISTING = "ROLE_REGISTERED_USER";
+	public static final String DB_AUTHORITY_ROLE_EXISTING2 = "ROLE_ADMIN";
+
+	public static final Long ADMIN_ID = 1L;
+	public static final String ADMIN_EMAIL = "admin@gmail.com";
+	public static final String ADMIN_PASSWORD = "asdf";
 	
 
 }

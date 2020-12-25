@@ -1,9 +1,17 @@
 package main.kts.service;
 
-import static main.kts.constants.AuthorityConstants.*;
+import static main.kts.constants.AuthorityConstants.DB_AUTHORITY_ID;
+import static main.kts.constants.AuthorityConstants.DB_AUTHORITY_ID2;
+import static main.kts.constants.AuthorityConstants.DB_AUTHORITY_ROLE;
+import static main.kts.constants.AuthorityConstants.DB_AUTHORITY_ROLE_EXISTING;
+import static main.kts.constants.AuthorityConstants.DB_SIZE;
+import static main.kts.constants.AuthorityConstants.FALSE_AUTHORITY_ID;
+import static main.kts.constants.AuthorityConstants.NEW_AUTHORITY_ROLE;
+import static main.kts.constants.AuthorityConstants.UPDATE_AUTHORITY_ROLE;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertNull;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
@@ -65,7 +73,9 @@ public class AuthorityServiceIntegrationTest {
 	@Transactional
 	public void testDelete() throws Exception {
 		Authority authority = new Authority(DB_AUTHORITY_ROLE);
-		authorityService.delete(DB_AUTHORITY_ID);		
+		authorityService.delete(DB_AUTHORITY_ID);
+		Authority auth = authorityService.findOne(DB_AUTHORITY_ID);
+		assertNull(auth);
 	}
 	
 	@Test

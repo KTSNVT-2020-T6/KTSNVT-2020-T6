@@ -1,7 +1,16 @@
 package main.kts.controller;
 
-
-import static main.kts.constants.TypeConstants.*;
+import static main.kts.constants.AuthorityConstants.ADMIN_EMAIL;
+import static main.kts.constants.AuthorityConstants.ADMIN_PASSWORD;
+import static main.kts.constants.AuthorityConstants.AUTHORITY_ID;
+import static main.kts.constants.AuthorityConstants.DB_AUTHORITY_ID;
+import static main.kts.constants.AuthorityConstants.DB_AUTHORITY_ROLE_EXISTING;
+import static main.kts.constants.AuthorityConstants.DB_AUTHORITY_ROLE_EXISTING2;
+import static main.kts.constants.AuthorityConstants.DB_SIZE;
+import static main.kts.constants.AuthorityConstants.FALSE_AUTHORITY_ID;
+import static main.kts.constants.AuthorityConstants.NEW_AUTHORITY_ID;
+import static main.kts.constants.AuthorityConstants.NEW_AUTHORITY_ROLE;
+import static main.kts.constants.AuthorityConstants.UPDATE_AUTHORITY_ROLE;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -24,22 +33,23 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import main.kts.dto.TypeDTO;
+import main.kts.dto.AuthorityDTO;
 import main.kts.dto.UserLoginDTO;
 import main.kts.dto.UserTokenStateDTO;
-import main.kts.model.Type;
-import main.kts.service.TypeService;
+import main.kts.model.Authority;
+import main.kts.service.AuthorityService;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
-public class TypeControllerIntegrationTest {
-
+public class AuthorityControllerIntegrationTest {
+	
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
 	@Autowired
-	private TypeService typeService;
+	private AuthorityService authorityService;
 	
 	private String accessToken;
 	
@@ -56,42 +66,14 @@ public class TypeControllerIntegrationTest {
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 		
-		ResponseEntity<TypeDTO[]> responseEntity = restTemplate.exchange("/api/type", HttpMethod.GET, request,
-				TypeDTO[].class);
-		TypeDTO[] types = responseEntity.getBody();
+		ResponseEntity<AuthorityDTO[]> responseEntity = restTemplate.exchange("/api/authority", HttpMethod.GET, request,
+				AuthorityDTO[].class);
+		AuthorityDTO[] authorities = responseEntity.getBody();
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_SIZE, types.length);
+		assertEquals(DB_SIZE, authorities.length);
 
 	}
 	
-	@Test
-	public void testGetTypesOfCategory() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		HttpEntity<Object> request = new HttpEntity<Object>(headers);
-		
-		ResponseEntity<TypeDTO[]> responseEntity = restTemplate.exchange("/api/type/category/" + CATEGORY_ID, HttpMethod.GET, request,
-				TypeDTO[].class);
-		TypeDTO[] types = responseEntity.getBody();
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_NUMBER_OF_TYPES, types.length);
-
-	}
-	@Test
-	public void testGetPage() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
-		HttpEntity<Object> request = new HttpEntity<Object>(headers);
-		
-		ResponseEntity<TypeDTO[]> responseEntity = restTemplate.exchange("/api/type?page=0&size=4", HttpMethod.GET, request,
-				TypeDTO[].class);
-		TypeDTO[] types = responseEntity.getBody();
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_PAGEABLE_SIZE4, new Integer(types.length));
-		assertEquals(DB_TYPE_NAME, types[0].getName());
-	}
 	
 	@Test
 	public void testGetById() {
@@ -100,12 +82,12 @@ public class TypeControllerIntegrationTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 		
-		ResponseEntity<TypeDTO> responseEntity = restTemplate.exchange("/api/type/"+TYPE_ID, HttpMethod.GET, request,
-				TypeDTO.class);
-		TypeDTO type = responseEntity.getBody();
+		ResponseEntity<AuthorityDTO> responseEntity = restTemplate.exchange("/api/authority/"+AUTHORITY_ID, HttpMethod.GET, request,
+				AuthorityDTO.class);
+		AuthorityDTO authority = responseEntity.getBody();
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_TYPE_ID, type.getId());
-		assertEquals(DB_TYPE_NAME, type.getName());
+		assertEquals(DB_AUTHORITY_ID, authority.getId());
+		assertEquals(DB_AUTHORITY_ROLE_EXISTING, authority.getRole());
 	}
 	
 	@Test
@@ -115,59 +97,46 @@ public class TypeControllerIntegrationTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 		
-		ResponseEntity<TypeDTO> responseEntity = restTemplate.exchange("/api/type/"+FALSE_TYPE_ID, HttpMethod.GET, request,
-				TypeDTO.class);
-
+		ResponseEntity<AuthorityDTO> responseEntity = restTemplate.exchange("/api/authority/"+FALSE_AUTHORITY_ID, HttpMethod.GET, request,
+				AuthorityDTO.class);
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-		
 	}
+		
 	
 	@Test
 	@Transactional
 	@Rollback(true)
 	public void testCreate() throws Exception {
-		int size = typeService.findAll().size();
+		int size = authorityService.findAll().size();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("name", NEW_TYPE_NAME);
-		jsonObject.put("description", NEW_TYPE_DESCRIPTION);
-		JSONObject categoryObject = new JSONObject();
-		categoryObject.put("id", NEW_CATEGORY_ID);
-		categoryObject.put("name", DB_CATEGORY_NAME2);
-		categoryObject.put("description", DB_CATEGORY_DESCIPTION2);
-		jsonObject.put("categoryDTO", categoryObject);
+		jsonObject.put("role", NEW_AUTHORITY_ROLE);
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<TypeDTO> responseEntity = restTemplate.postForEntity("/api/type", request,TypeDTO.class);
+		ResponseEntity<AuthorityDTO> responseEntity = restTemplate.postForEntity("/api/authority", request,AuthorityDTO.class);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(NEW_TYPE_NAME, responseEntity.getBody().getName());
+		assertEquals(NEW_AUTHORITY_ROLE, responseEntity.getBody().getRole());
 		
-		List<Type> types = typeService.findAll();
-		assertEquals(size+1, types.size());
+		List<Authority> authorities = authorityService.findAll();
+		assertEquals(size+1, authorities.size());
 		
-		typeService.delete(responseEntity.getBody().getId());
+		//authorityService.delete(responseEntity.getBody().getId());
 	
 	}
 	
 	@Test
-	public void testCreate_GivenExistingName() throws Exception {
+	public void testCreate_GivenExistingRole() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("name", EXISTING_TYPE_NAME);
-		jsonObject.put("description", NEW_TYPE_DESCRIPTION);
-		JSONObject categoryObject = new JSONObject();
-		categoryObject.put("id", NEW_CATEGORY_ID);
-		categoryObject.put("name", DB_CATEGORY_NAME2);
-		categoryObject.put("description", DB_CATEGORY_DESCIPTION2);
-		jsonObject.put("categoryDTO", categoryObject);
+		jsonObject.put("role", DB_AUTHORITY_ROLE_EXISTING2);
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<TypeDTO> responseEntity = restTemplate.postForEntity("/api/type", request,TypeDTO.class);
+		ResponseEntity<AuthorityDTO> responseEntity = restTemplate.postForEntity("/api/authority", request,AuthorityDTO.class);
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	}
-
+/*
 	@Test
 	@Transactional
 	@Rollback(true)
@@ -176,34 +145,24 @@ public class TypeControllerIntegrationTest {
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("name", UPDATE_TYPE_NAME);
-		jsonObject.put("description", DB_TYPE_DESCRIPTION);
-		JSONObject categoryObject = new JSONObject();
-		categoryObject.put("id", DB_CATEGORY_ID1);
-		categoryObject.put("name", DB_CATEGORY_NAME1);
-		categoryObject.put("description", DB_CATEGORY_DESCIPTION1);
-		jsonObject.put("categoryDTO", categoryObject);
+		jsonObject.put("role", UPDATE_AUTHORITY_ROLE);
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<TypeDTO> responseEntity = restTemplate.exchange("/api/type/"+TYPE_ID, HttpMethod.PUT, request,TypeDTO.class);
+		ResponseEntity<AuthorityDTO> responseEntity = restTemplate.exchange("/api/authority/"+DB_AUTHORITY_ID,HttpMethod.PUT, request,AuthorityDTO.class);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(UPDATE_TYPE_NAME, responseEntity.getBody().getName());
+		assertEquals(UPDATE_AUTHORITY_ROLE, responseEntity.getBody().getRole());
+		
+		authorityService.update(new Authority("ROLE_REGISTERED_USER"), DB_AUTHORITY_ID);
 	}
-	
+	*/
 	@Test
 	public void testUpdate_GivenFalseId() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("name", UPDATE_TYPE_NAME);
-		jsonObject.put("description", DB_TYPE_DESCRIPTION);
-		JSONObject categoryObject = new JSONObject();
-		categoryObject.put("id", DB_CATEGORY_ID1);
-		categoryObject.put("name", DB_CATEGORY_NAME1);
-		categoryObject.put("description", DB_CATEGORY_DESCIPTION1);
-		jsonObject.put("categoryDTO", categoryObject);
+		jsonObject.put("role", UPDATE_AUTHORITY_ROLE);
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<TypeDTO> responseEntity = restTemplate.exchange("/api/type/"+FALSE_TYPE_ID, HttpMethod.PUT, request,TypeDTO.class);
+		ResponseEntity<AuthorityDTO> responseEntity = restTemplate.exchange("/api/authority/"+FALSE_AUTHORITY_ID,HttpMethod.PUT, request,AuthorityDTO.class);
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	}
 	
@@ -214,15 +173,9 @@ public class TypeControllerIntegrationTest {
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("name", EXISTING_TYPE_NAME);
-		jsonObject.put("description", DB_TYPE_DESCRIPTION);
-		JSONObject categoryObject = new JSONObject();
-		categoryObject.put("id", DB_CATEGORY_ID1);
-		categoryObject.put("name", DB_CATEGORY_NAME1);
-		categoryObject.put("description", DB_CATEGORY_DESCIPTION1);
-		jsonObject.put("categoryDTO", categoryObject);
+		jsonObject.put("role", DB_AUTHORITY_ROLE_EXISTING2);
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<TypeDTO> responseEntity = restTemplate.exchange("/api/type/"+TYPE_ID, HttpMethod.PUT, request,TypeDTO.class);
+		ResponseEntity<AuthorityDTO> responseEntity = restTemplate.exchange("/api/authority/"+DB_AUTHORITY_ID,HttpMethod.PUT, request,AuthorityDTO.class);
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	}
 	
@@ -230,17 +183,17 @@ public class TypeControllerIntegrationTest {
     @Transactional
     @Rollback(true)
     public void testDelete() throws Exception {
-		int size = typeService.findAll().size();
+		int size = authorityService.findAll().size();
 		HttpHeaders headers = new HttpHeaders();
 			headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 			HttpEntity<Object> request = new HttpEntity<Object>(headers);
 			
 	        ResponseEntity<Void> responseEntity =
-	                restTemplate.exchange("/api/type/" + TYPE_ID,
+	                restTemplate.exchange("/api/authority/" + NEW_AUTHORITY_ID,
 	                        HttpMethod.DELETE, request, Void.class);
 
 	        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	        assertEquals(size - 1, typeService.findAll().size());
+	        assertEquals(size - 1, authorityService.findAll().size());
 	}
 	
 	
@@ -251,11 +204,10 @@ public class TypeControllerIntegrationTest {
 			HttpEntity<Object> request = new HttpEntity<Object>(headers);
 			
 	        ResponseEntity<Void> responseEntity =
-	                restTemplate.exchange("/api/type/" + FALSE_TYPE_ID,
+	                restTemplate.exchange("/api/authority/" + FALSE_AUTHORITY_ID,
 	                        HttpMethod.DELETE, request, Void.class);
 
 	        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+	 }
 	 
-	}
-
 }

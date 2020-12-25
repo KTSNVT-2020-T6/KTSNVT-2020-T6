@@ -51,9 +51,8 @@ public class AuthorityService implements ServiceInterface<Authority>{
 		if(!optA.isPresent()) {
 			throw new Exception("Authority with given id doesn't exist");
 		}
-		Authority existingA = optA.orElse(null);
-		authorityRepository.delete(existingA);
-	
+		Authority existingA = optA.orElse(null);		
+		authorityRepository.delete(existingA);		
 		
 	}
 	public Authority findByRole(String role) throws Exception {
