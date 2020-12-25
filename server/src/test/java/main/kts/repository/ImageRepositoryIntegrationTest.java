@@ -1,6 +1,14 @@
 package main.kts.repository;
 
-import static main.kts.constants.ImageConstants.*;
+import static main.kts.constants.ImageConstants.DB_CULTURAL_OFFER_ID;
+import static main.kts.constants.ImageConstants.DB_FALSE_IMAGE_ID;
+import static main.kts.constants.ImageConstants.DB_IMAGE_ID;
+import static main.kts.constants.ImageConstants.DB_IMAGE_RELATIVE_PATH;
+import static main.kts.constants.ImageConstants.DB_PAGE_SIZE;
+import static main.kts.constants.ImageConstants.DB_SIZE;
+import static main.kts.constants.ImageConstants.DB_SIZE_BY_CO;
+import static main.kts.constants.ImageConstants.PAGEABLE_PAGE;
+import static main.kts.constants.ImageConstants.PAGEABLE_SIZE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -10,19 +18,18 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
 import main.kts.model.Image;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DataJpaTest
 @TestPropertySource("classpath:test.properties")
 public class ImageRepositoryIntegrationTest {
 

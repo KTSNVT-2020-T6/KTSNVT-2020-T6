@@ -1,6 +1,12 @@
 package main.kts.repository;
 
-import static main.kts.constants.PostConstants.*;
+import static main.kts.constants.PostConstants.DB_FALSE_POST_ID;
+import static main.kts.constants.PostConstants.DB_IMAGE_ID;
+import static main.kts.constants.PostConstants.DB_POST_ID;
+import static main.kts.constants.PostConstants.DB_POST_TEXT;
+import static main.kts.constants.PostConstants.DB_SIZE;
+import static main.kts.constants.PostConstants.PAGEABLE_PAGE;
+import static main.kts.constants.PostConstants.PAGEABLE_SIZE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -10,8 +16,7 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import main.kts.model.Post;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@DataJpaTest
 @TestPropertySource("classpath:test.properties")
 public class PostRepositoryIntegrationTest {
 

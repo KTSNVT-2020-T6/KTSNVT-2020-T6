@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Image;
-import main.kts.model.Rate;
 import main.kts.repository.ImageRepository;
 
 @Service
@@ -27,6 +26,7 @@ public class ImageService implements ServiceInterface<Image>{
 	public Image findOne(Long id) {
 		return imageRepository.findByIdAndActive(id, true).orElse(null);
 	}
+	
 
 	@Override
 	public Image create(Image entity) throws Exception {
@@ -50,6 +50,8 @@ public class ImageService implements ServiceInterface<Image>{
 		existingImage.setRelativePath(entity.getRelativePath());
 		return imageRepository.save(existingImage);
 	}
+	
+	
 
 	@Override
 	public void delete(Long id) throws Exception {
@@ -57,6 +59,7 @@ public class ImageService implements ServiceInterface<Image>{
 		if(!optImage.isPresent()) {
 			throw new Exception("Image with given id doesn't exist");
 		}
+		
 		Image existingImage = optImage.orElse(null);
 		existingImage.setActive(false);
 		imageRepository.save(existingImage);
