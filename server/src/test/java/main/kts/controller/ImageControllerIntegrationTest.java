@@ -127,7 +127,7 @@ public class ImageControllerIntegrationTest {
     	HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
-		parameters.add("file", new FileSystemResource("C:\\Users\\Public\\Pictures\\Sample Pictures\\untitled.jpg")); // load file into parameter
+		parameters.add("file", new FileSystemResource("C:\\Users\\Korisnik\\Pictures\\Saved Pictures\\untitled.jpg")); // load file into parameter
 		headers.set("Content-Type", "multipart/form-data"); // we are sending a form
 		headers.set("Accept", "text/plain"); // looks like you want a string back
 

@@ -23,14 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.CulturalOfferDTO;
 import main.kts.dto.ImageDTO;
-import main.kts.dto.RegisteredUserDTO;
 import main.kts.helper.CulturalOfferMapper;
 import main.kts.model.CulturalOffer;
 import main.kts.model.Image;
 import main.kts.model.RegisteredUser;
 import main.kts.model.Type;
 import main.kts.model.User;
-import main.kts.repository.CulturalOfferRepository;
 import main.kts.service.CulturalOfferService;
 import main.kts.service.ImageService;
 import main.kts.service.RegisteredUserService;
