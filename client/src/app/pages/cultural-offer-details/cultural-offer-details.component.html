@@ -1,4 +1,33 @@
-<div class="row">
-    <p>Stranica za kulturnu ponudu</p>
-</div>
+<mat-grid-list cols="2" gutterSize="30px" >
+    <mat-grid-tile>
+        <div>
+            <!-- fali kontejner za slike i next i previous -->
+            <img class="image" mat-card-image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVoAAACBCAMAAAC2AYIcAAAAM1BMVEXtHCT////yVVv7x8n2jpL+8vLuKjL81dfwR03vOD/94+TzY2n1gIT3nKD5ubv4qq30cXbYRNJrAAAEA0lEQVR4nO2c25aiMBBFGfEutv7/187S9gKhzqGYdmYNsPerhFS23TFVCVQVAAAAAAAAAAAAAAAAAAAAAAAAzJTVrx+zrnb6w81W933RzXY2tFvj9Q8iLln/v2oPG/3p1x91vUftI7CT+fikuj7qNo0PbUlq3f/2UUwJxk09ENqi1G7NdHsOOz7oBpsDaluB7c0Fq6jjWl9/GgptWWqrRl+wC/q96ssvg6EtTG31NSb0rV5TvOZm1D4DM7bua6kO58S1qH0FZm5V53tdJy5anFo32qbbq15P1JnQlqfWGHuspwa/g/Z1qG0FZhLedr5rLjulQlugWpfwtqTpJe0lF9oS1ZqE910C0/67OfFs1W7qLNfW7UzC+8x3t7oss8+FNnW15XopiUl4H/muXtIWI0RtgU54v//dtfsyH0ZtiU547yOQM0Z3feZCu6s9rBSyWaNalD1/hs+rNQnv3v1RX8sbebUa2SyswP09Pq/WKNmZJW1/owe1ffQPVSNni2AvArUBej4dM2zUBrgd3pjoNxq1EWYPISTah0BtjNnhDeitu3xoy1ZrstmA3rrLhzZ1tckaQmzF7/CWiAM2s1WbROaIZoe3QJ0BQa3CHDTIjRi1CrfD2yY+XGND80OSzWajNnnrcN010N4PSTabj1p32ODFpndEIRGaH5JsNiO17kjzk0a3Rq1hOOHVB5tRa9XuB9W60aJW4w7dPlBrWh+aH5JsNiO1mULCRTdHrcQ94PBGZcqo1WqTRdu46uVD80OSzWajNrHyuiNzBtQKMvnCNyrTna3andznT23hj/nKxJNls1X7w1L4mN0x8bApakPSFUXTF2ojxh7ICmds1AaM2b3Ro0Ztn3F7jneihBe1fczDeZKgBIbaHmbD0awb+oVb1JaYSuLRfNbfbkBtgaskruxD0uV0i9oCU0m8ZbRmwVvWF1HbxVQS76sAVw8rEl7UdnDmvkfmfuS6BQnUdjAT7TPjMlNCt744W7X5R/Lqd1XQVBJf2lzl5pwKbepqR1BnbvZeW7mNnVUqND+k1M3/AZ9U6/4e2wUYk62164uofavNzqLuK0i/akIjm01XrakkFqmWmxKaRGh+SLLZZNW6SmJZIHAFnORrfTSy2VTVukpibyHnpoTky6g0stlU1brfpv7epOv2a/AaPyTZbKJq3aML0UFPt5d+HQrND0k2m6ZadyYxzOvc/PH40UPtzZ2rJI7eCn/WF1F7U+vOJKpXA7sp4exD80OSzaao1q1T5blvuzl5sqH5IclmE1R7NBOteQ27WwjfFhWo9cg3hVf+IMgOtQOYQ9+VPye6Rq3FPapQDZyyMa8+8kPSd/ygNwAAAAAAAAAAAAAAAAAAAAAAAPi/+Q3RcDx3e63/pgAAAABJRU5ErkJggg==" alt="photo">
+            <mat-card-title  fxLayoutAlign="center">{{culturalOffer.name}}</mat-card-title>
+            <br>
+            <mat-card-actions>
+                <p class="first">
+                    <button mat-button>Subscribe</button>
+                    123456 subscribers</p>
+            </mat-card-actions>   
 
+            <mat-card-content fxLayoutAlign="center">
+                <p class="first">
+                    {{culturalOffer.description}}
+                </p>
+            </mat-card-content>                         
+        </div>           
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div>
+            <p>Rating 8.9</p>
+            <app-star-rating></app-star-rating>
+            <textarea rows="2" cols="60" placeholder="Comment"></textarea>
+            <button mat-button>Send</button>
+            <div>
+                <p>Ovde ce biti komentari</p>
+            </div>
+        </div>       
+    </mat-grid-tile>
+</mat-grid-list>
+   

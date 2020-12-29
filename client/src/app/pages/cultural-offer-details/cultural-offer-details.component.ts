@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
+import { CulturalOffer } from '../model/CulturalOffer';
+import { CulturalOfferDetailsService } from '../services/cultural-offer-details/cultural-offer-details.service';
 
 @Component({
   selector: 'app-cultural-offer-details',
@@ -8,10 +10,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./cultural-offer-details.component.scss']
 })
 export class CulturalOfferDetailsComponent implements OnInit {
+  culturalOffer: CulturalOffer = { _id: 0, averageRate: 0, 
+                                          description:'', name:'',city:'',
+                                          date:new Date(),lat:0, lon:0, typeId :0, images : []};
+  id: any = '';
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private coService: CulturalOfferDetailsService,
+    private route : ActivatedRoute) {
   }
+
+  ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.coService.getOne(this.id).subscribe(
+      res => {
+				this.culturalOffer = res as CulturalOffer;
+			}
+    );
+  }
+  
 
 }
