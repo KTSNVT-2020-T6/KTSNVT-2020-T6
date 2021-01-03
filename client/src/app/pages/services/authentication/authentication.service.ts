@@ -13,7 +13,8 @@ export class AuthenticationService {
 	) { }
 
 	login(auth: any): Observable<any> {
-		return this.http.post('auth/log-in', {username: auth.username, password: auth.password}, {headers: this.headers, responseType: 'json'});
+		console.log(auth);
+		return this.http.post('http://localhost:8080/auth/log-in', {username: auth.username, password: auth.password}, {headers: this.headers, responseType: 'json'});
 	}
 
 	isLoggedIn(): boolean {

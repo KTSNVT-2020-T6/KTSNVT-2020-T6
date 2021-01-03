@@ -25,6 +25,7 @@ import { FlexLayoutModule} from "@angular/flex-layout";
 import { Interceptor } from './interceptors/intercept.service';
 import { HomePageComponent } from './pages/home-page/home-page/home-page.component';
 import { ToastrModule } from 'ngx-toastr';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,8 @@ import { ToastrModule } from 'ngx-toastr';
     CulturalOfferDetailsComponent,
     NavbarComponent,
     StarRatingComponent,
-    HomePageComponent
+    HomePageComponent,
+    LoginPageComponent
    
   ],
   imports: [

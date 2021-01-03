@@ -7,10 +7,11 @@ export class Interceptor implements HttpInterceptor {
     //da li je dobar intercepter
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-		const item = localStorage.getItem('user') || "{}";
-		const decodedItem = JSON.parse(item);
+		const item = localStorage.getItem('user');// || "{}";
+		
 
 		if (item) {
+			const decodedItem = JSON.parse(item);
 			const cloned = req.clone({
 				headers: req.headers.set('Authentication', decodedItem.token)
 			});
