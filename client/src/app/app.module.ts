@@ -26,6 +26,9 @@ import { Interceptor } from './interceptors/intercept.service';
 import { HomePageComponent } from './pages/home-page/home-page/home-page.component';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { AddCulturalOfferComponent } from './pages/add-cultural-offer/add-cultural-offer.component';
+import { AddCategoryComponent } from './pages/add-category/add-category.component';
+import { AddTypeComponent } from './pages/add-type/add-type.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +37,10 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     NavbarComponent,
     StarRatingComponent,
     HomePageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    AddCulturalOfferComponent,
+    AddCategoryComponent,
+    AddTypeComponent
    
   ],
   imports: [
