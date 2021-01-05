@@ -44,12 +44,19 @@ public class TypeDTO {
 		this.description = description;
 	}
 
+
 	public CategoryDTO getCategoryDTO() {
 		return categoryDTO;
 	}
 
 	public void setCategoryDTO(CategoryDTO categoryDTO) {
 		this.categoryDTO = categoryDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "TypeDTO [id=" + id + ", name=" + name + ", description=" + description + ", categoryDTO=" + categoryDTO
+				+ "]";
 	}
 
 	

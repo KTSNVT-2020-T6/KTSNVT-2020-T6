@@ -10,9 +10,7 @@ import { CulturalOfferDetailsService } from '../services/cultural-offer-details/
   styleUrls: ['./cultural-offer-details.component.scss']
 })
 export class CulturalOfferDetailsComponent implements OnInit {
-  culturalOffer: CulturalOffer = { _id: 0, averageRate: 0, 
-                                          description:'', name:'',city:'',
-                                          date:new Date(),lat:0, lon:0, typeId :0, images : []};
+  culturalOffer!: CulturalOffer;
   id: any = '';
   
   constructor(

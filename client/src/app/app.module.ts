@@ -29,6 +29,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AddCulturalOfferComponent } from './pages/add-cultural-offer/add-cultural-offer.component';
 import { AddCategoryComponent } from './pages/add-category/add-category.component';
 import { AddTypeComponent } from './pages/add-type/add-type.component';
+import { MaterialModule } from './pages/material-module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,8 @@ import { AddTypeComponent } from './pages/add-type/add-type.component';
     MatCardModule,
     MatFormFieldModule,
     FlexLayoutModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MaterialModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
   bootstrap: [AppComponent]
