@@ -7,7 +7,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 	providedIn: 'root'
 })
 export class RoleGuard implements CanActivate {
-    //role da li se pise tako
 	constructor(
 		public auth: AuthenticationService,
 		public router: Router
@@ -15,18 +14,18 @@ export class RoleGuard implements CanActivate {
 
 	canActivate(route: ActivatedRouteSnapshot): boolean {
 		const expectedRoles: string = route.data.expectedRoles;
-		const token = localStorage.getItem('user');
+	
+		const token = localStorage.getItem('user') || '';
 		const jwt: JwtHelperService = new JwtHelperService();
-
+		let accessToken = JSON.parse(token);
 		if (!token) {
 			this.router.navigate(['/login']);
 			return false;
 		}
-
-		const info = jwt.decodeToken(token);
 		const roles: string[] = expectedRoles.split('|', 2);
+		const info = jwt.decodeToken(token);
 
-		if (roles.indexOf(info.role[0].authority) === -1) {
+		if (roles.indexOf(info.role) === -1) {
 			this.router.navigate(['/home']);
 			return false;
 		}

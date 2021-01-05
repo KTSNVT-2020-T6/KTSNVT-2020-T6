@@ -11,13 +11,13 @@ export const routes :Routes = [
 		path: 'home',
 		component: HomePageComponent,
 		canActivate: [RoleGuard],
-		data: {expectedRoles: 'ADMIN'}
+		data: {expectedRoles: 'ROLE_ADMIN|ROLE_REGISTERED_USER'}
 	},
 	{
 		path: 'culturaloffer/:id',
 		component: CulturalOfferDetailsComponent,
 		canActivate: [RoleGuard],
-		data: {expectedRoles: 'ADMIN'}
+		data: {expectedRoles: 'ROLE_ADMIN|ROLE_REGISTERED_USER'}
 	},
 	{
 		path: 'login',

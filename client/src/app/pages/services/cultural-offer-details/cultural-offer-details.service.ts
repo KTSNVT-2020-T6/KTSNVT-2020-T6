@@ -14,14 +14,14 @@ export class CulturalOfferDetailsService {
 		private http: HttpClient
 	) {}
 
-	getOne(id: any): Observable<CulturalOffer> {
+	getOne(id: any): Observable<any> {
 		let queryParams = {};
 		queryParams = {
 			headers: this.headers,
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get<CulturalOffer>('api/culturaloffer/'+ id, queryParams);
+		return this.http.get('http://localhost:8080/api/culturaloffer/1', queryParams).pipe(map(res => res));
 		//return this.http.get<CulturalOffer>('api/culturaloffer/'+ id, queryParams).pipe(map(res => res));
 	}
 }

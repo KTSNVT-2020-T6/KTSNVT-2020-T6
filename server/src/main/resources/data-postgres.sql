@@ -13,7 +13,7 @@ insert into image (name, relative_path, active) values ('slika6','path6.jpg', tr
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
 values ('admin', true,'admin@gmail.com', 'Marko','Markovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,1);
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
-values ('registered_user',true,'trajkovicka.9909@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,2);
+values ('registered_user',true,'at@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,2);
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
 values ('registered_user',true,'user2@gmail.com', 'Ivana','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,3);
 

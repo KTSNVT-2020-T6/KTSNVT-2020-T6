@@ -67,6 +67,7 @@ public class CulturalOfferController {
 	
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<CulturalOfferDTO> getCulturalOffer(@PathVariable Long id){
+
         CulturalOffer culturalOffer = culturalOfferService.findOne(id);
         if(culturalOffer == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

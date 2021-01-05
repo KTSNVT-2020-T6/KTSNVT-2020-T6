@@ -14,7 +14,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
                                           description:'', name:'',city:'',
                                           date:new Date(),lat:0, lon:0, typeId :0, images : []};
   id: any = '';
-
+  
   constructor(
     private coService: CulturalOfferDetailsService,
     private route : ActivatedRoute) {
@@ -24,9 +24,11 @@ export class CulturalOfferDetailsComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.coService.getOne(this.id).subscribe(
       res => {
-				this.culturalOffer = res as CulturalOffer;
+        this.culturalOffer = res.body as CulturalOffer;
 			}
     );
+
+
   }
   
 
