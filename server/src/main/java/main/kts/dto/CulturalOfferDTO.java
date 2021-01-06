@@ -19,7 +19,16 @@ public class CulturalOfferDTO {
 	public CulturalOfferDTO() {
 		super();
 	}
-
+	public CulturalOfferDTO(String description, String name, Date date, double lat,
+			double lon, TypeDTO typeDTO) {
+		super();
+		this.description = description;
+		this.name = name;
+		this.date = date;
+		this.lat = lat;
+		this.lon = lon;
+		this.typeDTO = typeDTO;
+	}
 	public CulturalOfferDTO(Long id, double averageRate, String description, String name, Date date, double lat,
 			double lon, TypeDTO typeDTO, Set<ImageDTO> imageDTO) {
 		super();
