@@ -3,6 +3,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddTypeComponent} from '../../add-type/add-type.component';
 import {AddCulturalOfferComponent} from '../../add-cultural-offer/add-cultural-offer.component';
 import {AddCategoryComponent} from '../../add-category/add-category.component';
+import {EditTypeComponent} from '../../edit-type/edit-type/edit-type.component';
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -28,5 +30,10 @@ export class HomePageComponent implements OnInit {
     });
     
   }
-  
+  editType(){
+    const dialogRef = this.dialog.open(EditTypeComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }

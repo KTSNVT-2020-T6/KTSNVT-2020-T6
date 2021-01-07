@@ -32,6 +32,7 @@ import { AddTypeComponent } from './pages/add-type/add-type.component';
 import { MaterialModule } from './pages/material-module';
 import { NavbarNonAuthComponent } from './core/navbar-non-auth/navbar-non-auth/navbar-non-auth.component';
 import { NavbarAdminComponent } from './core/navbar-admin/navbar-admin/navbar-admin.component';
+import { EditTypeComponent } from './pages/edit-type/edit-type/edit-type.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { NavbarAdminComponent } from './core/navbar-admin/navbar-admin/navbar-ad
     AddCategoryComponent,
     AddTypeComponent,
     NavbarNonAuthComponent,
-    NavbarAdminComponent
+    NavbarAdminComponent,
+    EditTypeComponent
    
   ],
   imports: [

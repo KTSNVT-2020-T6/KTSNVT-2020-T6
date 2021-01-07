@@ -1,7 +1,9 @@
 ///html
 <button mat-button (click)="newType()">new type</button>
 <button mat-button (click)="newCategory()">new category</button>
-<button mat-button (click)="newCulturalOffer()">new cultural offer</button>
+<button mat-menu-item (click)="editType()">
+    <mat-icon class="material-icons" >edit</mat-icon>
+</button>
 
 ///ts
 import { Component, OnInit } from '@angular/core';
@@ -34,8 +36,8 @@ export class HomePageComponent implements OnInit {
     });
     
   }
-  newCulturalOffer(){
-    const dialogRef = this.dialog.open(AddCulturalOfferComponent);
+  editType(){
+    const dialogRef = this.dialog.open(EditTypeComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

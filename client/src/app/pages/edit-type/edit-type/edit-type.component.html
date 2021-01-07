@@ -1,0 +1,27 @@
+<form class="reactiveForm" [formGroup]="typeForm" (ngSubmit)="editType()">
+    <div class="example-container">
+    <h2 mat-dialog-title>Edit type</h2>
+    <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select (valueChange)="onSelection($event)">
+            <mat-option *ngFor="let cat of categories" [value]="cat">
+                {{cat.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button>Cancel</button>
+        <button type="submit" mat-raised-button color="success">Save</button>
+    </mat-dialog-actions>
+    </div>
+</form>
