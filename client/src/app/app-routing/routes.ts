@@ -9,9 +9,7 @@ import { LoginPageComponent } from '../pages/login-page/login-page.component';
 export const routes :Routes = [
 	{
 		path: 'home',
-		component: HomePageComponent,
-		canActivate: [RoleGuard],
-		data: {expectedRoles: 'ROLE_ADMIN|ROLE_REGISTERED_USER'}
+		component: HomePageComponent
 	},
 	{
 		path: 'culturaloffer/:id',

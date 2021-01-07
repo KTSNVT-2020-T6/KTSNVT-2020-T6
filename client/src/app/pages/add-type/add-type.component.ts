@@ -5,6 +5,7 @@ import {TypeService} from '../services/type/type.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CategoryService } from '../services/category/category.service';
 
 @Component({
   selector: 'app-add-type',
@@ -22,13 +23,14 @@ export class AddTypeComponent implements OnInit {
 		private fb: FormBuilder,
 		private router: Router,
 		private typeService: TypeService,
+		private categoryService: CategoryService,
 		private route: ActivatedRoute,
 		private toastr: ToastrService
 	) {
 	this.createForm();
   }
   ngOnInit() {
-    this.typeService.getAll().subscribe(
+    this.categoryService.getAll().subscribe(
 		res => {
 			this.categories = res.body as Category[];
 		}

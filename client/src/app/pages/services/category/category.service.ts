@@ -13,7 +13,15 @@ export class CategoryService {
 	constructor(
 		private http: HttpClient
 	) {}
-
+	getAll(): Observable<any> {
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+		};
+		return this.http.get('http://localhost:8080/api/category', queryParams);
+	}
     add(newCategory: Category): Observable<any> {
 		return this.http.post('http://localhost:8080/api/category', newCategory, {headers: this.headers, responseType: 'text'});
 	}

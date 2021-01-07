@@ -9,6 +9,6 @@ export interface CulturalOffer {
 	date: Date;
 	lat: number;
 	lon: number;
-	typeDTO: Type;
+	typeDTO?: Type;
 	imageDTO?: Image[];
 }

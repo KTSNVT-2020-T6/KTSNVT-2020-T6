@@ -1,10 +1,16 @@
+///html
+<button mat-button (click)="newType()">new type</button>
+<button mat-button (click)="newCategory()">new category</button>
+<button mat-menu-item (click)="editType()">
+    <mat-icon class="material-icons" >edit</mat-icon>
+</button>
+
+///ts
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddTypeComponent} from '../../add-type/add-type.component';
 import {AddCulturalOfferComponent} from '../../add-cultural-offer/add-cultural-offer.component';
 import {AddCategoryComponent} from '../../add-category/add-category.component';
-import {EditTypeComponent} from '../../edit-type/edit-type/edit-type.component';
-
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',

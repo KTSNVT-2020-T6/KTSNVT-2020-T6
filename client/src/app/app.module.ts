@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
-import { NavbarComponent } from './core/navbar/navbar/navbar.component';
+import { NavbarComponent } from './core/navbar-user/navbar/navbar.component';
 import { CulturalOfferDetailsComponent } from './pages/cultural-offer-details/cultural-offer-details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -30,6 +30,9 @@ import { AddCulturalOfferComponent } from './pages/add-cultural-offer/add-cultur
 import { AddCategoryComponent } from './pages/add-category/add-category.component';
 import { AddTypeComponent } from './pages/add-type/add-type.component';
 import { MaterialModule } from './pages/material-module';
+import { NavbarNonAuthComponent } from './core/navbar-non-auth/navbar-non-auth/navbar-non-auth.component';
+import { NavbarAdminComponent } from './core/navbar-admin/navbar-admin/navbar-admin.component';
+import { EditTypeComponent } from './pages/edit-type/edit-type/edit-type.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +44,10 @@ import { MaterialModule } from './pages/material-module';
     LoginPageComponent,
     AddCulturalOfferComponent,
     AddCategoryComponent,
-    AddTypeComponent
+    AddTypeComponent,
+    NavbarNonAuthComponent,
+    NavbarAdminComponent,
+    EditTypeComponent
    
   ],
   imports: [

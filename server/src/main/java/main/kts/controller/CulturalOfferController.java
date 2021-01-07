@@ -114,14 +114,19 @@ public class CulturalOfferController {
     public ResponseEntity<CulturalOfferDTO> createCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO){
     	CulturalOffer culturalOffer = null;
     	Type type;
+    
     	Set<Image> images = new HashSet<Image>();
-    	if(!this.validateCulturalOfferDTO(culturalOfferDTO))
+    	if(!this.validateCulturalOfferDTO(culturalOfferDTO)) {
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    	
+    	}
+    		
         try {
-        	for (ImageDTO i : culturalOfferDTO.getImageDTO()) {
-        		images.add(imageService.findOne(i.getId()));
-        	}
+    
+        	if(culturalOfferDTO.getImageDTO() != null) {
+        		for (ImageDTO i : culturalOfferDTO.getImageDTO()) {
+            		images.add(imageService.findOne(i.getId()));
+            	}
+        	}       
         	type = typeService.findOne(culturalOfferDTO.getTypeDTO().getId());
         	culturalOffer = culturalOfferMapper.toEntity(culturalOfferDTO);
         	culturalOffer.setType(type);
@@ -130,7 +135,7 @@ public class CulturalOfferController {
         } catch (Exception e) {
             return new ResponseEntity<>(new CulturalOfferDTO(),HttpStatus.BAD_REQUEST);
         }
-
+       
         return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
     }
  

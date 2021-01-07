@@ -22,6 +22,9 @@ export class CulturalOfferDetailsService {
 			params: new HttpParams()
 		};
 		return this.http.get('http://localhost:8080/api/culturaloffer/1', queryParams).pipe(map(res => res));
-		//return this.http.get<CulturalOffer>('api/culturaloffer/'+ id, queryParams).pipe(map(res => res));
+		
+	}
+	add(newCulturalOffer: CulturalOffer): Observable<any> {
+		return this.http.post('http://localhost:8080/api/culturaloffer', newCulturalOffer, {headers: this.headers, responseType: 'text'});
 	}
 }

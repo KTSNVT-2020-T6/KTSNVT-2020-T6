@@ -13,17 +13,21 @@ export class TypeService {
 	constructor(
 		private http: HttpClient
 	) {}
-
-	getAll(): Observable<any> {
+    getTypesOfCategory(id:number):Observable<any>{
 		let queryParams = {};
 		queryParams = {
 			headers: this.headers,
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/category', queryParams);
+		return this.http.get('http://localhost:8080/api/type/category/'+ id, queryParams).pipe(map(res => res));
+		
 	}
 	add(newType: Type): Observable<any> {
 		return this.http.post('http://localhost:8080/api/type', newType, {headers: this.headers, responseType: 'text'});
 	}
+	update(editType: Type): Observable<any> {
+		return this.http.put('http://localhost:8080/api/type/'+ editType.id, editType, {headers: this.headers, responseType: 'text'});
+	}
+
 }
