@@ -1,3 +1,9 @@
+///html
+<button mat-button (click)="newType()">new type</button>
+<button mat-button (click)="newCategory()">new category</button>
+<button mat-button (click)="newCulturalOffer()">new cultural offer</button>
+
+///ts
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddTypeComponent} from '../../add-type/add-type.component';
@@ -28,5 +34,10 @@ export class HomePageComponent implements OnInit {
     });
     
   }
-  
+  newCulturalOffer(){
+    const dialogRef = this.dialog.open(AddCulturalOfferComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }

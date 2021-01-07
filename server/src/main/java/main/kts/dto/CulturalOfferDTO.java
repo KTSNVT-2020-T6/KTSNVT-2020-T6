@@ -19,11 +19,22 @@ public class CulturalOfferDTO {
 	public CulturalOfferDTO() {
 		super();
 	}
-	public CulturalOfferDTO(String description, String name, Date date, double lat,
+	public CulturalOfferDTO(String description, String name,Date date, double lat,
 			double lon, TypeDTO typeDTO) {
 		super();
 		this.description = description;
 		this.name = name;
+		this.date = date;
+		this.lat = lat;
+		this.lon = lon;
+		this.typeDTO = typeDTO;
+	}
+	public CulturalOfferDTO(String description, String name,String city, Date date, double lat,
+			double lon, TypeDTO typeDTO) {
+		super();
+		this.description = description;
+		this.name = name;
+		this.city = city;
 		this.date = date;
 		this.lat = lat;
 		this.lon = lon;
@@ -138,6 +149,12 @@ public class CulturalOfferDTO {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+	@Override
+	public String toString() {
+		return "CulturalOfferDTO [id=" + id + ", averageRate=" + averageRate + ", description=" + description
+				+ ", name=" + name + ", city=" + city + ", date=" + date + ", lat=" + lat + ", lon=" + lon
+				+ ", typeDTO=" + typeDTO + ", imageDTO=" + imageDTO + "]";
 	}
 	
 	

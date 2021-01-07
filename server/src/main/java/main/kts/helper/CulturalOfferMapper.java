@@ -24,9 +24,11 @@ public class CulturalOfferMapper implements MapperInterface<CulturalOffer, Cultu
 		Set<Post> posts = new HashSet<Post>();
 		Set<Image> images = new HashSet<Image>();
 		Set<Comment> comments = new HashSet<Comment>();
+		if(dto.getImageDTO() != null) {
+			for(ImageDTO imageDTO : dto.getImageDTO()) 
+				images.add(imageMapper.toEntity(imageDTO));
+		}
 		
-		for(ImageDTO imageDTO : dto.getImageDTO()) 
-			images.add(imageMapper.toEntity(imageDTO));
 	
 		Type type = typeMapper.toEntity(dto.getTypeDTO());
 		return new CulturalOffer(dto.getId(),dto.getAverageRate(), dto.getDescription(), dto.getName(), dto.getDate(), dto.getLat(), dto.getLon(), dto.getCity(), posts, type, images, comments);

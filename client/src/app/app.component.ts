@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  public role!: string| undefined;
+
+  constructor(private router: Router) {}
+
+  checkRole() {
+	const item = localStorage.getItem('user');
+
+	if (!item) {
+		this.role = undefined;
+		return;
+	}
+
+	const jwt: JwtHelperService = new JwtHelperService();
+	this.role = jwt.decodeToken(item).role;
+  }
 }
