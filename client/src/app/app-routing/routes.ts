@@ -6,6 +6,7 @@ import { HomePageComponent } from '../pages/home-page/home-page/home-page.compon
 import { RoleGuard } from '../guards/role/role.service';
 import { LoginGuard } from '../guards/login/login.service';
 import { LoginPageComponent } from '../pages/login-page/login-page.component';
+import { ProfileDetailsComponent } from '../pages/profile-details/profile-details.component';
 export const routes :Routes = [
 	{
 		path: 'home',
@@ -21,5 +22,9 @@ export const routes :Routes = [
 		path: 'login',
 		component: LoginPageComponent,
 		canActivate: [LoginGuard]
+	},
+	{
+		path: 'profileDetails',
+		component: ProfileDetailsComponent,
 	}
 ];

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.UserDTO;
 import main.kts.helper.UserMapper;
+import main.kts.model.Image;
 import main.kts.model.User;
+import main.kts.service.ImageService;
 import main.kts.service.UserService;
 
 @RestController
@@ -27,8 +31,11 @@ public class UserController {
 	
 	@Autowired 
 	private UserService service;
+	@Autowired
+	private ImageService imageService;
 	
 	private UserMapper userMapper = new UserMapper();
+	
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@PreAuthorize("hasRole('ADMIN')")
@@ -58,7 +65,16 @@ public class UserController {
 		}
 		return new ResponseEntity<>(userMapper.toDto(u), HttpStatus.OK);
 	}
-
+	
+	@RequestMapping(value="/currentUser", method=RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
+    public ResponseEntity<UserDTO> getCurrentUser(){
+		 Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+		 String username = ((User) currentUser.getPrincipal()).getUsername();
+		 User user = service.findByEmail(username);
+		 return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/{email:.+}", method = RequestMethod.GET,produces=MediaType.ALL_VALUE, consumes=MediaType.ALL_VALUE)
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
