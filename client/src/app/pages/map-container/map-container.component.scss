@@ -1,13 +1,9 @@
 .map-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 30px;
+    flex-grow: 1;
+    padding: 16px;
+    margin-left : 16px;
   }
 
-  
   #map {
     height: 500px;
     width: 500px;
