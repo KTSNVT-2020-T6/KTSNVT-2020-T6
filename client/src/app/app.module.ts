@@ -51,7 +51,6 @@ import { MapContainerComponent } from './pages/map-container/map-container.compo
     NavbarAdminComponent,
     EditTypeComponent,
     MapContainerComponent
-   
   ],
   imports: [
     BrowserModule,
