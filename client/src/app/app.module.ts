@@ -33,6 +33,7 @@ import { MaterialModule } from './pages/material-module';
 import { NavbarNonAuthComponent } from './core/navbar-non-auth/navbar-non-auth/navbar-non-auth.component';
 import { NavbarAdminComponent } from './core/navbar-admin/navbar-admin/navbar-admin.component';
 import { EditTypeComponent } from './pages/edit-type/edit-type/edit-type.component';
+import { MapContainerComponent } from './pages/map-container/map-container.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { EditTypeComponent } from './pages/edit-type/edit-type/edit-type.compone
     AddTypeComponent,
     NavbarNonAuthComponent,
     NavbarAdminComponent,
-    EditTypeComponent
+    EditTypeComponent,
+    MapContainerComponent
    
   ],
   imports: [

@@ -29,7 +29,9 @@
             ],
             "styles": [
               "src/custom-theme.scss",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/mapbox-gl/dist/mapbox-gl.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           },
