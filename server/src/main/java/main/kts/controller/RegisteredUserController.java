@@ -98,7 +98,7 @@ public class RegisteredUserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 	@RequestMapping(value="/interested/{id}",method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
+	//@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
 	public ResponseEntity<Integer> getAllInterestedUsers(@PathVariable Long id) {
     	CulturalOffer co = culturalOfferService.findOne(id);
     	if(co == null)

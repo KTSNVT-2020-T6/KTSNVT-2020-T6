@@ -66,7 +66,7 @@ export class AddCulturalOfferComponent implements OnInit {
 	this.type = event;
   }
   
-  addCulturalOffer():void{
+  addCulturalOffer(){
 	
 	this.culturalOffer = this.coForm.value;
     this.culturalOffer.typeDTO = this.type;
