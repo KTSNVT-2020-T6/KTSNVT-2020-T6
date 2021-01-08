@@ -32,9 +32,9 @@ insert into type (name, description, category_id, active) values ('opera', 'oper
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
 values (5.0, '2020-12-25 19:30:00', 'opisneki', 44.05, 45.02,'Belgrade', 'obilazak muzeja', 1, 1, true);
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
-values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Novi sad', 'exit', 3, 1, false);
+values (8.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Novi sad', 'exit', 3, 1, false);
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
-values (5.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Belgrade', 'djiasjasij', 3, 1, true);
+values (9.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Belgrade', 'djiasjasij', 3, 1, true);
 
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)
 values (2, 1);

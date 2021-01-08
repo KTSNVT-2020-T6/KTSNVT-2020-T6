@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,7 +73,7 @@ public class CulturalOfferController {
         if(culturalOffer == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
+        System.out.println(culturalOffer.toString());
         return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
     }
     
@@ -176,9 +177,9 @@ public class CulturalOfferController {
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    @CrossOrigin(origins = "http://localhost:8080")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteCulturalOffer(@PathVariable Long id){
-
         try {
             culturalOfferService.delete(id);
         } catch (Exception e) {

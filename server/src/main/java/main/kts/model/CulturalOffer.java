@@ -261,4 +261,11 @@ public class CulturalOffer {
         return Objects.equals(id, co.getId());
     }
 
+	@Override
+	public String toString() {
+		return "CulturalOffer [id=" + id + ", averageRate=" + averageRate + ", description=" + description + ", name="
+				+ name + ", date=" + date + ", lat=" + lat + ", lon=" + lon + ", city=" + city + ", post=" + post
+				+ ", type=" + type + ", image=" + image + ", comment=" + comment + ", active=" + active + "]";
+	}
+
 }
