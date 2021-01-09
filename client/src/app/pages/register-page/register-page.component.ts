@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../pages/services/authentication/authentication.service';
-import { Image } from '../model/Image';
+import { Img } from '../model/Image';
 import { User } from '../model/User';
 import { ImageService } from '../services/image/image.service';
 import { validatePasswordRepeat } from '../validators/password-validator';
@@ -17,7 +17,7 @@ export class RegisterPageComponent implements OnInit {
 
   user!: User;
   form!: FormGroup;
-  image!: Image;
+  image!: Img;
   imageId!: number;
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
   hide = true;

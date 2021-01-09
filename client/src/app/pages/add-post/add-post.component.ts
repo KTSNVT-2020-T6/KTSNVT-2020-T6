@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CulturalOffer } from '../model/CulturalOffer';
 import { Post } from '../model/Post';
-import { Image } from '../model/Image';
+import { Img } from '../model/Image';
 import { CulturalOfferDetailsService } from '../services/cultural-offer-details/cultural-offer-details.service';
 import { ImageService } from '../services/image/image.service';
 import { PostService } from '../services/post/post.service';
@@ -59,7 +59,7 @@ export class AddPostComponent implements OnInit {
     this.post.culturalOfferId = this.co.id;
     this.imageService.getImage(1).subscribe(
       res => {
-        this.post.imageDTO = res.body as Image;
+        this.post.imageDTO = res.body as Img;
         console.log(this.post.imageDTO.id);
     }
   );

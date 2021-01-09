@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Category} from '../model/Category';
 import { Type } from '../model/Type';
-import { Image } from '../model/Image';
+import { Img } from '../model/Image';
 import { CulturalOffer } from '../model/CulturalOffer';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,7 +19,7 @@ export class AddCulturalOfferComponent implements OnInit {
 
   categories: Category[] = [];
   types: Type[] = [];
-  images: Image[] = [];
+  images: Img[] = [];
   culturalOffer!: CulturalOffer;
   coForm!: FormGroup;
   type!: Type;

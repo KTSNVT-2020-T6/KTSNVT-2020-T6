@@ -1,4 +1,4 @@
-import { Image } from "./Image";
+import { Img } from "./Image";
 import { Type } from "./Type";
 export interface CulturalOffer {
 	id?: number;
@@ -10,5 +10,6 @@ export interface CulturalOffer {
 	lat: number;
 	lon: number;
 	typeDTO?: Type;
-	imageDTO?: Image[];
+	imageDTO?: Img[];
+	base64image?: string;
 }
