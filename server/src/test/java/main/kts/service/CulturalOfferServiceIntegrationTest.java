@@ -1,20 +1,6 @@
 package main.kts.service;
 
-import static main.kts.constants.CulturalOfferConstants.ADMIN_EMAIL;
-import static main.kts.constants.CulturalOfferConstants.ADMIN_PASSWORD;
-import static main.kts.constants.CulturalOfferConstants.CO_ID;
-import static main.kts.constants.CulturalOfferConstants.DB_ADMIN_CO_SIZE;
-import static main.kts.constants.CulturalOfferConstants.DB_FALSE_CO_ID;
-import static main.kts.constants.CulturalOfferConstants.DB_SIZE;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_AVERAGE_RATE;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_CITY;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_DATE;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_DESCRIPTION;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_LAT;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_LON;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_NAME;
-import static main.kts.constants.CulturalOfferConstants.PAGEABLE_PAGE;
-import static main.kts.constants.CulturalOfferConstants.PAGEABLE_SIZE;
+import static main.kts.constants.CulturalOfferConstants.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
@@ -73,6 +59,12 @@ public class CulturalOfferServiceIntegrationTest {
 	public void testFindAll() {
 		List<CulturalOffer> found = culturalOfferService.findAll();
 		assertEquals(DB_SIZE, found.size());
+	}
+	
+	@Test
+	public void testCombinedSearch() {
+		List<CulturalOffer> found = culturalOfferService.findByCombinedSearch(DB_CONTENT, DB_CITY);
+		assertEquals(DB_SIZE_BY_COMBINED_SEARCH, found.size());
 	}
 
 	@Test

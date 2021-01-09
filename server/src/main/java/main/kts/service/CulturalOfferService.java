@@ -178,4 +178,9 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		return culturalOfferRepository.findByContent(content);
 	}
 
+	public List<CulturalOffer> findByCombinedSearch(String upperCase, String upperCase2) {
+		// TODO Auto-generated method stub
+		return culturalOfferRepository.findByCombinedSearch(upperCase, upperCase2);
+	}
+
 }

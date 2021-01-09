@@ -1,24 +1,6 @@
 package main.kts.service;
 
-import static main.kts.constants.CulturalOfferConstants.ADMIN_EMAIL;
-import static main.kts.constants.CulturalOfferConstants.ADMIN_ID;
-import static main.kts.constants.CulturalOfferConstants.CO_ID;
-import static main.kts.constants.CulturalOfferConstants.DB_CO_AVERAGE_RATE;
-import static main.kts.constants.CulturalOfferConstants.DB_CO_CITY;
-import static main.kts.constants.CulturalOfferConstants.DB_CO_DATE;
-import static main.kts.constants.CulturalOfferConstants.DB_CO_DESCRIPTION;
-import static main.kts.constants.CulturalOfferConstants.DB_CO_ID;
-import static main.kts.constants.CulturalOfferConstants.DB_CO_LAT;
-import static main.kts.constants.CulturalOfferConstants.DB_CO_LON;
-import static main.kts.constants.CulturalOfferConstants.DB_CO_NAME;
-import static main.kts.constants.CulturalOfferConstants.FALSE_ID;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_AVERAGE_RATE;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_CITY;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_DATE;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_DESCRIPTION;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_LAT;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_LON;
-import static main.kts.constants.CulturalOfferConstants.NEW_CO_NAME;
+import static main.kts.constants.CulturalOfferConstants.*;
 import static main.kts.constants.RateConstants.DB_CULTURAL_OFFER_ID;
 import static main.kts.constants.RateConstants.DB_REGISTERED_USER_ID;
 import static main.kts.constants.RateConstants.FALSE_RATE_ID;
@@ -31,6 +13,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -97,6 +80,9 @@ public class CulturalOfferServiceUnitTest {
 		savedCO.setId(CO_ID);
 		ArrayList<Long> subs = new ArrayList<Long>();
 		ArrayList<Rate> rates = new ArrayList<Rate>();
+		ArrayList<CulturalOffer> coByCombinedSearch = new ArrayList<CulturalOffer>();
+		coByCombinedSearch.add(existingCulturalOffer);
+		
 		
 		Admin admin = new Admin(ADMIN_ID, ADMIN_EMAIL);
 		SecurityContextHolder.setContext(securityContext);
@@ -105,6 +91,7 @@ public class CulturalOfferServiceUnitTest {
 		given(culturalOfferRepository.save(existingCulturalOffer)).willReturn(existingCulturalOffer);
 		given(culturalOfferRepository.findById(CO_ID)).willReturn(Optional.of(existingCulturalOffer));
 		given(culturalOfferRepository.findById(FALSE_ID)).willReturn(Optional.empty());
+		given(culturalOfferRepository.findByCombinedSearch(DB_CO_NAME, DB_CO_CITY)).willReturn(coByCombinedSearch);
 		given(authentication.getName()).willReturn(ADMIN_EMAIL);
 		given(securityContext.getAuthentication()).willReturn(authentication);
 		given(adminRepository.findByEmail(ADMIN_EMAIL)).willReturn(admin);
@@ -113,6 +100,13 @@ public class CulturalOfferServiceUnitTest {
 		given(rateRepository.findAllByCulturalOfferId(DB_CO_ID)).willReturn(rates);
 	}
 
+	@Test
+	public void testCombinedSearch() {
+		List<CulturalOffer> result = culturalOfferService.findByCombinedSearch(DB_CO_NAME, DB_CO_CITY);
+		verify(culturalOfferRepository, times(1)).findByCombinedSearch(DB_CO_NAME, DB_CO_CITY);
+		assertEquals(DB_SIZE_BY_COMBINED_SEARCH, result.size());
+	}
+	
 	@Test
 	public void testCreate() throws Exception {
 		CulturalOffer culturalOffer = new CulturalOffer(NEW_CO_NAME, NEW_CO_DESCRIPTION, NEW_CO_DATE, NEW_CO_CITY,

@@ -43,6 +43,12 @@ public class CulturalOfferRepositoryIntegrationTest {
     }
 	
 	@Test
+    public void testFindByCombinedSearch() {
+        List<CulturalOffer> found = culturalOfferRepository.findByCombinedSearch(DB_CONTENT, DB_CITY);
+        assertEquals(DB_SIZE_BY_CONTENT, found.size());
+    }
+	
+	@Test
     public void testFindByActivePage() {
 		Pageable pageable = PageRequest.of(PAGEABLE_PAGE,PAGEABLE_SIZE);
         Page<CulturalOffer> found = culturalOfferRepository.findByActive(pageable, true);
