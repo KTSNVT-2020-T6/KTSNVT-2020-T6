@@ -53,7 +53,7 @@ public class EmailService {
 			mail.setFrom(env.getProperty("spring.mail.username"));
 			mail.setTo(recipient);
 			mail.setSubject(subject);
-			mail.setText("http://localhost:8080/#" + url);
+			mail.setText("http://localhost:4200/verification" + url);
 			javaMailSender.send(mail);
 			System.out.println("Email sent!");
 

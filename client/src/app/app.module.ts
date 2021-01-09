@@ -37,6 +37,7 @@ import { MapContainerComponent } from './pages/map-container/map-container.compo
 import { ProfileDetailsComponent } from './pages/profile-details/profile-details.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { VerificationPageComponent } from './pages/verification-page/verification-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +55,7 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
     EditTypeComponent,
     MapContainerComponent,
     ProfileDetailsComponent,
-	AddPostComponent,	RegisterPageComponent  ],
+	AddPostComponent,	RegisterPageComponent, VerificationPageComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -8,6 +8,7 @@ import { LoginGuard } from '../guards/login/login.service';
 import { LoginPageComponent } from '../pages/login-page/login-page.component';
 import { ProfileDetailsComponent } from '../pages/profile-details/profile-details.component';
 import { RegisterPageComponent } from '../pages/register-page/register-page.component';
+import { VerificationPageComponent } from '../pages/verification-page/verification-page.component';
 export const routes :Routes = [
 	{
 		path: 'home',
@@ -31,6 +32,11 @@ export const routes :Routes = [
 	{
 		path: 'register',
 		component: RegisterPageComponent,
+		canActivate: [LoginGuard]
+	},
+	{
+		path: 'verification/:token',
+		component: VerificationPageComponent,
 		canActivate: [LoginGuard]
 	},
 ];
