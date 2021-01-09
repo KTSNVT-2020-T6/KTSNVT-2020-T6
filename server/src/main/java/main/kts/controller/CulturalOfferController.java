@@ -89,6 +89,12 @@ public class CulturalOfferController {
 		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
 	}
     
+    @RequestMapping(value="/combined/{content}/{city}", method = RequestMethod.GET)
+   	public ResponseEntity<List<CulturalOfferDTO>> getCOByCombinedSearch(@PathVariable String content, @PathVariable String city) {
+   		List<CulturalOffer> culturalOffers = culturalOfferService.findByCombinedSearch(content.toUpperCase(), city.toUpperCase());
+   		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
+   	}
+    
     @RequestMapping(value="/subscriptions", method = RequestMethod.GET)
 	@PreAuthorize("hasRole('REGISTERED_USER')") 
 	public ResponseEntity<List<CulturalOfferDTO>> getSubscribedCulturalOffer(){

@@ -38,6 +38,7 @@ public class CulturalOfferConstants {
     public static final int DB_SIZE_BY_CITY = 2;
     public static final String DB_CONTENT = "OBILAZAK";
     public static final int DB_SIZE_BY_CONTENT = 1;
+    public static final int DB_SIZE_BY_COMBINED_SEARCH = 1;
     public static final int DB_ADMIN_CO_SIZE = 4;
     
     public static final String NEW_DATE_FORMAT = "2021-07-11T17:30:00.000+00:00";

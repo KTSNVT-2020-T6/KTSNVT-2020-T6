@@ -70,6 +70,21 @@ public class UserControllerIntegrationTest {
 	 }
 	 
 	 @Test
+	 public void testGetCurrentUser() {
+		 login(); // admin login
+		 HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken); 	   
+			
+		    HttpEntity<Object> request = new HttpEntity<Object>("",headers);
+		    
+		    ResponseEntity<UserDTO> responseEntity = restTemplate.exchange("/api/user/currentUser", 
+		    		HttpMethod.GET, request, new ParameterizedTypeReference<UserDTO>() {});
+		    UserDTO currentUser =   responseEntity.getBody();
+		    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		    assertEquals(ADMIN_EMAIL_LOGIN, currentUser.getEmail());
+	 }
+	 
+	 @Test
 	 public void testGetAllUsers() throws Exception {
 		login();
 		HttpHeaders headers = new HttpHeaders();
