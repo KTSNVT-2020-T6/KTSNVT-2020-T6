@@ -29,5 +29,16 @@ public class RegisteredUserDTO extends UserDTO{
 		this.idImageDTO = imageDTO;
 		
 	}
+	public RegisteredUserDTO(Long id, String firstName, String lastName, String email, String password, Boolean active,
+			Boolean verified) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.active = active;
+		this.verified = verified;
+		this.idImageDTO = null;
+	}
 	
 }

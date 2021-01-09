@@ -11,9 +11,13 @@ public class RegisteredUserMapper implements MapperInterface<RegisteredUser, Reg
 
 	@Override
 	public RegisteredUserDTO toDto(RegisteredUser entity) {
-
-		RegisteredUserDTO rudto = new RegisteredUserDTO(entity.getId(),entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified()
+		RegisteredUserDTO rudto;
+		if(entity.getImage() != null)
+			 rudto = new RegisteredUserDTO(entity.getId(),entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified()
 				, entity.getImage().getId());
+		else {
+			rudto = new RegisteredUserDTO(entity.getId(),entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified());
+		}
 		return rudto;
 	}
 	@Override

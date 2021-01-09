@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../../model/User';
 
 @Injectable({
 	providedIn: 'root'
@@ -22,6 +23,11 @@ export class AuthenticationService {
 				return false;
 		}
 		return true;
+	}
+
+	register(user: User): Observable<any> {
+		console.log(user);
+		return this.http.post('http://localhost:8080/auth/sign-up', user, {headers: this.headers, responseType: 'json'});
 	}
 
 

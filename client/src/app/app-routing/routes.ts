@@ -7,6 +7,7 @@ import { RoleGuard } from '../guards/role/role.service';
 import { LoginGuard } from '../guards/login/login.service';
 import { LoginPageComponent } from '../pages/login-page/login-page.component';
 import { ProfileDetailsComponent } from '../pages/profile-details/profile-details.component';
+import { RegisterPageComponent } from '../pages/register-page/register-page.component';
 export const routes :Routes = [
 	{
 		path: 'home',
@@ -26,5 +27,10 @@ export const routes :Routes = [
 	{
 		path: 'profileDetails',
 		component: ProfileDetailsComponent,
-	}
+	},
+	{
+		path: 'register',
+		component: RegisterPageComponent,
+		canActivate: [LoginGuard]
+	},
 ];

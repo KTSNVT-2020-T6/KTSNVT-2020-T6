@@ -36,7 +36,7 @@ import { EditTypeComponent } from './pages/edit-type/edit-type/edit-type.compone
 import { MapContainerComponent } from './pages/map-container/map-container.component';
 import { ProfileDetailsComponent } from './pages/profile-details/profile-details.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
-
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,8 +54,7 @@ import { AddPostComponent } from './pages/add-post/add-post.component';
     EditTypeComponent,
     MapContainerComponent,
     ProfileDetailsComponent,
-    AddPostComponent
-  ],
+	AddPostComponent,	RegisterPageComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
