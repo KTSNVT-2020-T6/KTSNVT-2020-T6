@@ -6,6 +6,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { CulturalOfferDetailsService } from '../services/cultural-offer-details/cultural-offer-details.service';
 import { RegisteredUserService } from '../services/registered-user/registered-user.service';
 import { ToastrService } from 'ngx-toastr';
+import { AddPostComponent } from '../add-post/add-post.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cultural-offer-details',
@@ -20,6 +22,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
   subscribed!: number;
   
   constructor(
+    public dialog: MatDialog,
     private coService: CulturalOfferDetailsService,
     private regUserService: RegisteredUserService,
     private route : ActivatedRoute,
@@ -51,7 +54,13 @@ export class CulturalOfferDetailsComponent implements OnInit {
     const jwt: JwtHelperService = new JwtHelperService();
     this.role = jwt.decodeToken(item).role;
   }
-
+  addPost(){
+    const dialogRef = this.dialog.open(AddPostComponent);
+    dialogRef.componentInstance.culturalOfferId = this.route.snapshot.paramMap.get('id');
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   deleteType(){
     this.coService.delete(this.id).subscribe(
       result => {

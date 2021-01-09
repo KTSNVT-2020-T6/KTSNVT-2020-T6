@@ -21,7 +21,7 @@
     <mat-grid-tile>
         <div>
             <mat-card-actions *ngIf="role === 'ROLE_ADMIN'">
-                <button mat-button color="success">New post</button>
+                <button mat-button color="success" (click)="addPost()">New post</button>
                 <button mat-button>Edit</button>
                 <button mat-button color="warn" (click)="deleteType()">Delete</button>
             </mat-card-actions>   
