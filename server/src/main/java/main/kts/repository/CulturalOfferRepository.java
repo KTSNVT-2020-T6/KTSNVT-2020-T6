@@ -26,4 +26,7 @@ public interface CulturalOfferRepository extends JpaRepository<CulturalOffer, Lo
 	@Query(value ="SELECT * FROM CULTURAL_OFFER WHERE upper(NAME) LIKE %?1% OR upper(DESCRIPTION) LIKE %?1% OR upper(CITY) LIKE %?1%", nativeQuery = true)
 	List<CulturalOffer> findByContent(String content);
 
+	@Query(value ="SELECT * FROM CULTURAL_OFFER WHERE (upper(NAME) LIKE %?1% OR upper(DESCRIPTION) LIKE %?1%) AND (upper(CITY) like %?2%)", nativeQuery = true)
+	List<CulturalOffer> findByCombinedSearch(String upperCase, String upperCase2);
+
 }

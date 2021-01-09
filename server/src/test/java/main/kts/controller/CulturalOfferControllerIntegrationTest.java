@@ -539,8 +539,21 @@ public class CulturalOfferControllerIntegrationTest {
 		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_SIZE_BY_CONTENT, culturalOffers.length);
-		
+		assertEquals(DB_SIZE_BY_CONTENT, culturalOffers.length);	
+	}
+	
+	@Test
+	public void testGetByCombineSearch() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		HttpEntity<Object> request = new HttpEntity<Object>(headers);
+
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/culturaloffer/combined/"+DB_CONTENT+"/"+DB_CITY, HttpMethod.GET, request,
+				CulturalOfferDTO[].class);
+		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(DB_SIZE_BY_COMBINED_SEARCH, culturalOffers.length);
 	}
 	
 }
