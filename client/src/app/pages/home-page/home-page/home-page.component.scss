@@ -1,12 +1,9 @@
 .container{
     display: flex;
+    height:90vh;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
-.content {
-    padding: 16px;
-    width: 200px;
-}
 
-.content > mat-card {
-    width: 200px;
-}
+    

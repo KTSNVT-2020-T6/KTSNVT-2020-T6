@@ -10,6 +10,8 @@ insert into image (name, relative_path, active) values ('slika4', 'path4.jpg', t
 insert into image (name, relative_path, active) values ('slika5','path5.jpg', true);
 insert into image (name, relative_path, active) values ('slika6','path6.jpg', true);
 
+
+
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
 values ('admin', true,'admin@gmail.com', 'Marko','Markovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,1);
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
@@ -36,6 +38,8 @@ values (8.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Novi sad', 'exit'
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
 values (9.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Belgrade', 'djiasjasij', 3, 1, true);
 
+insert into image (name, relative_path, active, cultural_offer_id) values ('file7','src/main/resources/static/images/file7.jpg', true, 1);
+insert into image (name, relative_path, active, cultural_offer_id) values ('file7','src/main/resources/static/images/file7.jpg', true, 3);
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)
 values (2, 1);
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id)

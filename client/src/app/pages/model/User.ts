@@ -1,4 +1,4 @@
-import { Image } from "./Image";
+import { Img } from "./Image";
 export interface User{
     id?: number;
     firstName: string;

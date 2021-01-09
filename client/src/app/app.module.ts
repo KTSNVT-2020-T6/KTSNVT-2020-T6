@@ -38,6 +38,7 @@ import { ProfileDetailsComponent } from './pages/profile-details/profile-details
 import { AddPostComponent } from './pages/add-post/add-post.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { VerificationPageComponent } from './pages/verification-page/verification-page.component';
+import { CulturalOfferListComponent } from './pages/cultural-offer-list/cultural-offer-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,7 @@ import { VerificationPageComponent } from './pages/verification-page/verificatio
     EditTypeComponent,
     MapContainerComponent,
     ProfileDetailsComponent,
-	AddPostComponent,	RegisterPageComponent, VerificationPageComponent  ],
+	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

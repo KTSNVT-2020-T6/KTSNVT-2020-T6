@@ -31,4 +31,17 @@ export class CulturalOfferDetailsService {
 		
 		return this.http.delete('http://localhost:8080/api/culturaloffer/'+id, {headers: this.headers, responseType: 'text'});
 	}
+
+	getPage(page: number, size: number): Observable<any> {
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+				.set('page', String(page))
+				.append('size', String(size)),
+		};
+		return this.http.get('http://localhost:8080/api/culturaloffer/', queryParams).pipe(map(res => res));
+		
+	}
 }

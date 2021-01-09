@@ -1,4 +1,4 @@
-import { Image } from "./Image";
+import { Img } from "./Image";
 
 export interface Post{
     /*
@@ -12,6 +12,6 @@ export interface Post{
     id?: number;
     text: string;
     date?: Date;
-    imageDTO: Image;
+    imageDTO: Img;
     culturalOfferId?: number;
 }

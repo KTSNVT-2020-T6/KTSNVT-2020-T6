@@ -5,7 +5,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../model/User';
-import { Image } from '../model/Image';
+import { Img } from '../model/Image';
 import { ImageService } from '../services/image/image.service';
 
 
@@ -16,7 +16,7 @@ import { ImageService } from '../services/image/image.service';
 })
 export class ProfileDetailsComponent implements OnInit {
   user!: User;
-  image!: Image;
+  image!: Img;
 
   constructor(
     private userService: UserService,
@@ -32,7 +32,7 @@ export class ProfileDetailsComponent implements OnInit {
         this.user = res.body as User;
         this.imageService.getImage(this.user.idImageDTO).subscribe(
           res => {
-            this.image = res.body as Image;
+            this.image = res.body as Img;
         }
       );
       }
