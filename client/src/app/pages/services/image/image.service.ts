@@ -23,5 +23,10 @@ export class ImageService {
 			params: new HttpParams()
 		};
         return this.http.get('http://localhost:8080/api/image/'+ id, queryParams).pipe(map(res => res));
-    }
+	}
+	
+	add(image: Image): Observable<any> {
+		const headersPost = new HttpHeaders({'Content-Type': 'multipart/form-data'});
+		return this.http.post('http://localhost:8080/api/image', image, {headers: this.headers}).pipe(map(res => res));
+	}
 }

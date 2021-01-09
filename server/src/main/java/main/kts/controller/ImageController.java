@@ -94,7 +94,7 @@ public class ImageController {
 			storageService.save(file, image.getId());
 			message = "Uploaded the file successfully: " + file.getOriginalFilename();
 			
-			return new ResponseEntity<>(message, HttpStatus.OK);
+			return new ResponseEntity<>(id.toString(), HttpStatus.OK);
 		} catch (Exception e) {
 			message = "Could not upload the file: " + file.getOriginalFilename() + "!";
 			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);

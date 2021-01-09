@@ -35,6 +35,7 @@ import { NavbarAdminComponent } from './core/navbar-admin/navbar-admin/navbar-ad
 import { EditTypeComponent } from './pages/edit-type/edit-type/edit-type.component';
 import { MapContainerComponent } from './pages/map-container/map-container.component';
 import { ProfileDetailsComponent } from './pages/profile-details/profile-details.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ProfileDetailsComponent } from './pages/profile-details/profile-details
     NavbarAdminComponent,
     EditTypeComponent,
     MapContainerComponent,
-    ProfileDetailsComponent
+    ProfileDetailsComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,
