@@ -104,5 +104,13 @@ public class RateService implements ServiceInterface<Rate>{
 		return rateRepository.findByActive(pageable, true);
 	}
 
+	public Rate check(Rate entity) {
+		Rate existingRate = rateRepository.findOneByRegisteredUserIdAndCulturalOfferId(entity.getRegistredUser().getId(), entity.getCulturalOffer().getId());
+		if (existingRate != null)
+			return existingRate;
+		return null;
+
+	}
+
 }
 

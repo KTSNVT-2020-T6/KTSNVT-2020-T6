@@ -1,1 +1,12 @@
-<p>comment-list works!</p>
+<div>
+    <ul>
+      <li *ngFor="let c of comments">
+        <header>
+          <h1 >{{c?.nameSurname}}</h1>
+          <img class="image" mat-card-image [src]="c.srcUser" alt="photo">
+        </header>
+        <img class="image" *ngIf="c.srcComment !== null" mat-card-image [src]="c.srcComment" alt="photo">
+        <p>{{c?.text}}</p>
+      </li>
+    </ul>
+</div>

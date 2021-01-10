@@ -4,7 +4,7 @@ package main.kts.dto;
 public class RateDTO {
 	
 	private Long id;
-	private int number;   
+	private Integer number;   
 	public Long registredUserId;
 	public Long culturalOfferId;
 	
@@ -32,7 +32,7 @@ public class RateDTO {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 

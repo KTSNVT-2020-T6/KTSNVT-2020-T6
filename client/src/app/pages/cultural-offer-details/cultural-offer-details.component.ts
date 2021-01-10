@@ -5,9 +5,12 @@ import { CulturalOffer } from '../model/CulturalOffer';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CulturalOfferDetailsService } from '../services/cultural-offer-details/cultural-offer-details.service';
 import { RegisteredUserService } from '../services/registered-user/registered-user.service';
+import { RateService } from '../services/rate/rate.service';
 import { ToastrService } from 'ngx-toastr';
 import { AddPostComponent } from '../add-post/add-post.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Img} from '../../pages/model/Image';
+import { Rate } from '../model/Rate';
 
 @Component({
   selector: 'app-cultural-offer-details',
@@ -15,16 +18,19 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./cultural-offer-details.component.scss']
 })
 export class CulturalOfferDetailsComponent implements OnInit {
-
+  
   role!: string|undefined;
   culturalOffer!: CulturalOffer;
   id: any = '';
   subscribed!: number;
+  images!: Img[];
+  rate: Rate = {};
   
   constructor(
     public dialog: MatDialog,
     private coService: CulturalOfferDetailsService,
     private regUserService: RegisteredUserService,
+    private rateService: RateService,
     private route : ActivatedRoute,
     private router: Router,
 		private toastr: ToastrService) {
@@ -37,6 +43,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
     this.coService.getOne(this.id).subscribe(
       res => {
         this.culturalOffer = res.body as CulturalOffer;
+        this.images =  this.culturalOffer.imageDTO as Img[];
       }
     );
     this.regUserService.getNumberOfSubscribed(this.id).subscribe(
@@ -44,6 +51,44 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.subscribed = res.body;
       }
     );
+  }
+  rateClicked(rated:any){
+    this.rate.number = rated.rating as number;
+    this.rate.culturalOfferId = this.culturalOffer.id;
+    this.rate.registredUserId = 1;
+    console.log(this.rate);
+    this.rateService.createOrEditRate(this.rate).subscribe(
+      result => {
+        if(result.body === null){
+          this.rateService.createRate(this.rate).subscribe(
+            res => {
+              this.coService.getOne(this.id).subscribe(
+                res => {
+                  this.culturalOffer = res.body as CulturalOffer;
+                  this.images =  this.culturalOffer.imageDTO as Img[];
+                }
+              );
+            }
+          );
+        }
+        else{
+          this.rate = result.body as Rate;
+          this.rate.number = rated.rating as number;
+          this.rateService.editRate(result.body).subscribe(
+            res => {
+              this.coService.getOne(this.id).subscribe(
+                res => {
+                  this.culturalOffer = res.body as CulturalOffer;
+                  this.images =  this.culturalOffer.imageDTO as Img[];
+                }
+              );
+            }
+          );
+        }
+       
+      }
+    );
+
   }
   getRole() {
     const item = localStorage.getItem('user');
@@ -69,6 +114,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
       }
     );
   }
+  addNewComment(){}
 
 
 }
