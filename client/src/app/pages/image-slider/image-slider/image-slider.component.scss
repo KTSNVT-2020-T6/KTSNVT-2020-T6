@@ -1,0 +1,11 @@
+.text-align {
+    position: absolute;
+    text-align: left;
+}
+img{
+    filter: brightness(50%);
+}
+img:hover{
+    filter: brightness(100%);
+    transition: .5s ease;
+}
