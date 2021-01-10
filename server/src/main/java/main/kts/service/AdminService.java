@@ -48,7 +48,7 @@ public class AdminService implements ServiceInterface<Admin>{
 		a.setEmail(entity.getEmail());
 		a.setPassword(passwordEncoder.encode(entity.getPassword()));
 		a.setActive(true);
-		a.setVerified(false);
+		a.setVerified(true);
 		Set<Authority> set = new HashSet<Authority>();
 		set.add(authorityRepository.findByRole("ROLE_ADMIN"));
 		a.setAuthority(set);

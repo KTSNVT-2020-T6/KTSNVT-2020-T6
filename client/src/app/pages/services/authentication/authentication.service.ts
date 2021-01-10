@@ -14,7 +14,6 @@ export class AuthenticationService {
 	) { }
 
 	login(auth: any): Observable<any> {
-		console.log(auth);
 		return this.http.post('http://localhost:8080/auth/log-in', {username: auth.username, password: auth.password}, {headers: this.headers, responseType: 'json'});
 	}
 
@@ -26,8 +25,17 @@ export class AuthenticationService {
 	}
 
 	register(user: User): Observable<any> {
-		console.log(user);
 		return this.http.post('http://localhost:8080/auth/sign-up', user, {headers: this.headers, responseType: 'json'});
+	}
+
+	registerAdmin(user: User): Observable<any> {
+		console.log(user);
+		return this.http.post('http://localhost:8080/auth/sign-up-admin', user, {headers: this.headers, responseType: 'json'});
+	}
+
+	signOut(): Observable<any> {
+		return this.http.get('http://localhost:8080/auth/sign-out', {headers: this.headers});
+	
 	}
 
 

@@ -73,14 +73,15 @@ export class RegisterPageComponent implements OnInit {
           console.log(result);
           this.toastr.success('Check your email to confirm registration!');
           this.router.navigate(['home']);
+          this.form.reset();
         },
         error => {
           console.log(error);
-          this.toastr.error(error.error);
+          this.toastr.error("Email already exists!");
         }
       );
       
-      this.form.reset();
+      
       }
 
       // onFileSelect(event: any) {
