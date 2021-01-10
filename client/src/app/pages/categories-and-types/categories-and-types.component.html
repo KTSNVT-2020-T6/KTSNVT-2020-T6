@@ -1,0 +1,34 @@
+<table class="styled-table">
+    <div style="float: left;">
+        <tr><th>Categories:</th></tr>
+        <tr><th>Types:</th></tr>
+    </div>
+    <div style="float: right;"  *ngFor="let cat of categories" >
+        <tr>
+            <th>{{cat.name}} <a href="">
+                <mat-icon class="material-icons"  inline="true" (click)="editCategory(cat.id)">edit</mat-icon>
+            </a>  <a [routerLink]="['/home']">
+                <mat-icon class="material-icons"  inline="true" (click)="deleteCategory(cat.id)">delete</mat-icon>
+            </a></th>
+        </tr>
+        <tr  *ngFor="let type of res[cat.id]">
+            <td >{{type.name}}  <a [routerLink]="['/home']"><mat-icon class="material-icons"  inline="true" (click)="editType(type.id)">edit</mat-icon></a>
+                
+        
+            <a [routerLink]="['/home']">
+                <mat-icon class="material-icons"  inline="true" (click)="deleteType(type.id)">delete</mat-icon>
+            </a></td>
+        </tr>
+    </div>
+
+</table>
+<!--
+<table mat-table [dataSource]="categories-and-types" class="mat-elevation-z8">
+
+    <ng-container *ngFor="let cat of categories">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+</table> 
+-->
+ 
