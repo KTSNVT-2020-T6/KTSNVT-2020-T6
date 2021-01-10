@@ -10,7 +10,7 @@
 		<a [routerLink]="['/home']">
 			<mat-icon class="material-icons"  inline="true">person</mat-icon>
 		</a>
-		<a mat-button [routerLink]="['/home']" > Sign out </a>
+		<a mat-button (click)="signOut()"> Sign out </a>
 	</span>
 	
 </mat-toolbar>
