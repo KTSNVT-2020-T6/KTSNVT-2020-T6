@@ -172,6 +172,12 @@ public class AuthenticationController {
     	}
     	return ResponseEntity.accepted().body(result);
     }
+    
+    @RequestMapping(value = "/sign-out", method = RequestMethod.GET)
+    public ResponseEntity<?> signOut() throws Exception {   	 
+    	SecurityContextHolder.getContext().setAuthentication(null);
+        return new ResponseEntity<>(HttpStatus.OK); 
+    }
 
     static class PasswordChanger {
         public String oldPassword;

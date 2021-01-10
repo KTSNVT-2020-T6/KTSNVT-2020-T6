@@ -13,6 +13,10 @@ public class AdminMapper implements MapperInterface<Admin, AdminDTO>{
 	}
 	@Override
 	public AdminDTO toDto(Admin entity) {
+		if(entity.getImage() == null) {
+			return new AdminDTO(entity.getId(),entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified()
+					);
+		}
 		return new AdminDTO(entity.getId(),entity.getFirstName(),entity.getLastName(), entity.getEmail(), entity.getPassword(), entity.getActive(), entity.getVerified()
 				, entity.getImage().getId());
 	}

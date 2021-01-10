@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/pages/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-navbar-user',
@@ -9,12 +10,19 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   constructor(
-		private router: Router) { }
+    private router: Router,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
   }
-  logout() {
-	
-	}
+
+  signOut(){
+    this.authenticationService.signOut().subscribe(      
+			result => {
+				localStorage.removeItem('user');
+				this.router.navigate(['/login']);
+			}
+		);
+  }
 
 }
