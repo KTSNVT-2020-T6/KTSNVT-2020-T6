@@ -61,7 +61,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-  deleteType(){
+  deleteCulturalOffer(){
     this.coService.delete(this.id).subscribe(
       result => {
         this.router.navigate(['home']);

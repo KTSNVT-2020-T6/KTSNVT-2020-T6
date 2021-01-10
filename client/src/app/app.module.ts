@@ -39,6 +39,8 @@ import { AddPostComponent } from './pages/add-post/add-post.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { VerificationPageComponent } from './pages/verification-page/verification-page.component';
 import { CulturalOfferListComponent } from './pages/cultural-offer-list/cultural-offer-list.component';
+import { ImageSliderComponent } from './pages/image-slider/image-slider/image-slider.component';
+import { CommentListComponent } from './pages/comment-list/comment-list/comment-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,7 @@ import { CulturalOfferListComponent } from './pages/cultural-offer-list/cultural
     EditTypeComponent,
     MapContainerComponent,
     ProfileDetailsComponent,
-	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent  ],
+	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent, ImageSliderComponent, CommentListComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
