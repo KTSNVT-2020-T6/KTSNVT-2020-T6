@@ -1,18 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input, OnChanges,SimpleChanges } from '@angular/core';
+import { CulturalOffer } from '../../model/CulturalOffer';
+import { Img } from '../../model/Image';
+import { ImageService } from '../../services/image/image.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.scss']
 })
-export class ImageSliderComponent implements OnInit {
-  slides:any;
- 
-  constructor() {
-    this.slides = [{'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'},{'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}];
-   }
-
-  ngOnInit(): void {
+export class ImageSliderComponent implements OnInit, OnChanges {
+  @Input() culturalOffer!:CulturalOffer;
+  @Input() imageDTO!: Img[];
+  images!: any[];
+  slides:any[] = [];
+  
+  constructor(private imageService:ImageService, private sanitizer: DomSanitizer) {
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    this.slides = [];
+    this.images = changes.imageDTO.currentValue;
+    console.log(this.images);
+    if(this.images !== undefined){
+      this.images.forEach(element => {
+        this.imageService.getImage(element.id).subscribe(
+          res => {
+            let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
+            let objectURL = 'data:image/jpg;base64,' + base64String;           
+            this.slides.push(this.sanitizer.bypassSecurityTrustUrl(objectURL));
+    
+          }, error => {
+            console.log(error.error);
+            
+          });
+      });
+    }
+    
+    
+  }
+  ngOnInit() { 
+    
   }
 
 }
