@@ -67,7 +67,7 @@ public class CommentController {
 	}
 
     @RequestMapping(value="/",method=RequestMethod.GET)
-    public ResponseEntity<Page<CommentDTO>> loadRatePage(Pageable pageable) {
+    public ResponseEntity<Page<CommentDTO>> loadCommentPage(Pageable pageable) {
     	Page<Comment> comments = commentService.findAll(pageable);
     	if(comments == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -182,4 +182,18 @@ public class CommentController {
 			return false;
 		return true;
 	}
+	@RequestMapping(value="/page/{id}",method=RequestMethod.GET)
+    public ResponseEntity<Page<CommentDTO>> loadCommentPageByCOId(Pageable pageable, @PathVariable Long id) {
+		CulturalOffer co = culturalOfferService.findOne(id);
+		if(co == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+			
+    	Page<Comment> comments = commentService.findAllByCulturalOfferId(id, pageable);
+    	if(comments == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	Page<CommentDTO> commentDTO = toCommentDTOPage(comments);
+    	return new ResponseEntity<>(commentDTO, HttpStatus.OK);
+    }
 }

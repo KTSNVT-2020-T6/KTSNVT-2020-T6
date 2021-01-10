@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,7 @@ import main.kts.helper.RateMapper;
 import main.kts.model.CulturalOffer;
 import main.kts.model.Rate;
 import main.kts.model.RegisteredUser;
+import main.kts.model.User;
 import main.kts.service.CulturalOfferService;
 import main.kts.service.RateService;
 import main.kts.service.RegisteredUserService;
@@ -76,14 +80,16 @@ public class RateController {
 	@RequestMapping(method=RequestMethod.POST)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Object> createRate(@RequestBody RateDTO rateDTO){
-    	Rate rate;
-    	RegisteredUser registeredUser;
+		RegisteredUser registeredUser;
+        Rate rate;
     	CulturalOffer culturalOffer;
     	if(!this.validateRateDTO(rateDTO)) 
     		return new ResponseEntity<>("Object not valid", HttpStatus.BAD_REQUEST);
 	
         try {
-        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserId());
+        	Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+            String username = ((User) currentUser.getPrincipal()).getEmail();
+        	registeredUser = registeredUserService.findByEmail(username);
         	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferId());
         	rate = rateMapper.toEntity(rateDTO);
         	rate.setCulturalOffer(culturalOffer);
@@ -95,10 +101,14 @@ public class RateController {
 
         return new ResponseEntity<>(rateMapper.toDto(rate), HttpStatus.OK);
     }
+	
+	
     
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "http://localhost:8080")
     @PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
     public ResponseEntity<Object> updateRate(@RequestBody RateDTO rateDTO, @PathVariable Long id){
+
         Rate rate;
         RegisteredUser registeredUser;
     	CulturalOffer culturalOffer;
@@ -106,13 +116,15 @@ public class RateController {
     		return new ResponseEntity<>("Object not valid", HttpStatus.BAD_REQUEST);
 
         try {
-        	registeredUser = registeredUserService.findOne(rateDTO.getRegistredUserId());
+        	Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+            String username = ((User) currentUser.getPrincipal()).getEmail();
+        	registeredUser = registeredUserService.findByEmail(username);
         	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferId());
         	rate = rateMapper.toEntity(rateDTO);
         	rate.setCulturalOffer(culturalOffer);
         	rate.setRegistredUser(registeredUser);
             rate = rateService.update(rate, id);
-            
+          
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -155,10 +167,37 @@ public class RateController {
 	private boolean validateRateDTO(RateDTO rateDTO) {
 		if(rateDTO.getNumber() <= 0 || rateDTO.getNumber() > 5)
 			return false;
-		if(rateDTO.getRegistredUserId() == null) 
-			return false;
 		if(rateDTO.getCulturalOfferId() == null) 
 			return false;
 		return true;
 	}
+	
+	@RequestMapping(value="/check",method=RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
+    public ResponseEntity<Object> check(@RequestBody RateDTO rateDTO){
+		RegisteredUser registeredUser;
+        Rate rate;
+    	CulturalOffer culturalOffer;
+    	Rate check;
+    	//
+  
+        try {
+        	Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+            String username = ((User) currentUser.getPrincipal()).getEmail();
+        	registeredUser = registeredUserService.findByEmail(username);
+        	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferId());
+        	rate = rateMapper.toEntity(rateDTO);
+        	rate.setCulturalOffer(culturalOffer);
+        	rate.setRegistredUser(registeredUser);
+            check = rateService.check(rate);
+            System.out.println(check);
+            if(check != null)
+            	return new ResponseEntity<>(rateMapper.toDto(check), HttpStatus.OK);
+            else
+                return new ResponseEntity<>(null, HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>("Cannot create rate: id not found", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

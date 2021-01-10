@@ -1,5 +1,5 @@
 <div >
-    <app-image-slider></app-image-slider>
+    <app-image-slider [culturalOffer]="culturalOffer" [imageDTO]="images"></app-image-slider>
     <br>
     <div class="center">
         <span>
@@ -9,16 +9,24 @@
         </span> 
         <div class="edit">
             <p>Rating: {{culturalOffer?.averageRate}}</p>
-            <app-star-rating *ngIf="role === 'ROLE_REGISTERED_USER'" ></app-star-rating>
+            <app-star-rating *ngIf="role === 'ROLE_REGISTERED_USER'" (ratingClick)="rateClicked($event)"></app-star-rating>
         </div>
         <br>
         <br>
         <span *ngIf="role === 'ROLE_REGISTERED_USER'">
             <mat-form-field class="example-full-width">
                 <mat-label>Leave a comment</mat-label>
-                <textarea matInput></textarea>
+                <textarea matInput inline="true"></textarea>
+                <button mat-button matTooltip="Upload photo" style="color:#576869" inline="true" matSuffix>
+                    <mat-icon>insert_photo</mat-icon>
+                </button>
             </mat-form-field>
-            <button mdbBtn type="button" style="background-color:#addae0"  mdbWavesEffect>Send</button>
+            <mat-card-actions>    
+                <button mat-button matTooltip="Send" style="color:#576869" inline="true">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </mat-card-actions> 
+            
         </span>
         <mat-card-actions *ngIf="role === 'ROLE_ADMIN'">
             <button mat-button color="success" (click)="addPost()">New post</button>
@@ -26,7 +34,7 @@
             <button mat-button color="warn" (click)="deleteCulturalOffer()">Delete</button>
         </mat-card-actions>   
         <div>
-           <app-comment-list></app-comment-list>
+           <app-comment-list [culturalOfferId]="id"></app-comment-list>
         </div>
     </div>
     
