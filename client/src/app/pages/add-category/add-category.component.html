@@ -5,11 +5,17 @@
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name">
+        <mat-error *ngIf="categoryForm.controls.name.touched && categoryForm.controls.name.invalid">
+            <span *ngIf="categoryForm.controls.name.errors?.required">This field is mandatory.</span>
+        </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
+        <mat-error *ngIf="categoryForm.controls.description.touched && categoryForm.controls.description.invalid">
+            <span *ngIf="categoryForm.controls.description.errors?.required">This field is mandatory.</span>
+        </mat-error>
     </mat-form-field>
     <mat-dialog-actions align="end">
         <button mat-raised-button>Cancel</button>

@@ -82,7 +82,7 @@ public class AdminService implements ServiceInterface<Admin>{
 		}
 		a.setFirstName(entity.getFirstName());
 		a.setLastName(entity.getLastName());
-		a.setPassword(passwordEncoder.encode(entity.getPassword()));
+		//a.setPassword(passwordEncoder.encode(entity.getPassword()));
 		if(entity.getImage() != null) {	
 			a.setImage(entity.getImage());
 		}

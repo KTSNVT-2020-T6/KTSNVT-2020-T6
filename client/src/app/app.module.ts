@@ -44,7 +44,7 @@ import { CommentListComponent } from './pages/comment-list/comment-list/comment-
 import { AddAdminComponent } from './pages/add-admin/add-admin.component';
 import { CategoriesAndTypesComponent } from './pages/categories-and-types/categories-and-types.component';
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
-@NgModule({
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';@NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
@@ -61,8 +61,7 @@ import { EditCategoryComponent } from './pages/edit-category/edit-category.compo
     EditTypeComponent,
     MapContainerComponent,
     ProfileDetailsComponent,
-	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent, ImageSliderComponent, CommentListComponent, AddAdminComponent, CategoriesAndTypesComponent, EditCategoryComponent  ],
-  imports: [
+	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent, ImageSliderComponent, CommentListComponent, AddAdminComponent, CategoriesAndTypesComponent, EditCategoryComponent, EditProfileComponent   ],  imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,

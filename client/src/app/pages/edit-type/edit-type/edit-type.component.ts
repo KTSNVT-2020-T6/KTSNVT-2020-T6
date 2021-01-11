@@ -67,8 +67,11 @@ export class EditTypeComponent implements OnInit {
     this.type.categoryDTO = this.category;
     this.typeService.update(this.type as Type, this.typeId).subscribe(
       result => {
-        this.toastr.success("Successful!");
-       // this.router.navigate(['home']);
+        this.toastr.success(result);
+        this.router.navigate(['home']);
+      },
+      error => {
+        this.toastr.error(error.console.error);
       }
     );
     this.typeForm.reset();

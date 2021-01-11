@@ -44,10 +44,10 @@ export class AddCulturalOfferComponent implements OnInit {
   }
   createForm() {
 	this.coForm = this.fb.group({
-		'name': [''],
-		'description': [''],
-		'city': [''],
-		'date':[''],
+		'name': ['',Validators.required],
+		'description': ['',Validators.required],
+		'city': ['',Validators.required],
+		'date':['',Validators.required],
 		'lon': [''],
 		'lat': ['']
    });
@@ -58,7 +58,11 @@ export class AddCulturalOfferComponent implements OnInit {
 	this.typeService.getTypesOfCategory(id).subscribe(
 		res => {
 			this.types = res.body as Type[];
+		},
+		error => {
+		  this.toastr.error("Name of cultural offer already exists!");
 		}
+		
 	);
   }
   

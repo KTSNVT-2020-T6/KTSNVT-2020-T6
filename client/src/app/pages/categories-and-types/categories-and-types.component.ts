@@ -8,13 +8,14 @@ import { Category } from '../model/Category';
 import { Type } from '../model/Type';
 import { CategoryService } from '../services/category/category.service';
 import { TypeService } from '../services/type/type.service';
-
+import {AddTypeComponent} from '../add-type/add-type.component';
+import {AddCategoryComponent} from '../add-category/add-category.component';
 
 
 @Component({
   selector: 'app-categories-and-types',
   templateUrl: './categories-and-types.component.html',
-  styleUrls: ['./categories-and-types.component.css']
+  styleUrls: ['./categories-and-types.component.scss']
 })
 export class CategoriesAndTypesComponent implements OnInit {
 
@@ -70,6 +71,21 @@ export class CategoriesAndTypesComponent implements OnInit {
   }
 
   deleteCategory(catId: number){
+    
+  }
+
+  newType() {
+
+    const dialogRef = this.dialog.open(AddTypeComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  newCategory() {
+    const dialogRef = this.dialog.open(AddCategoryComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
     
   }
 }

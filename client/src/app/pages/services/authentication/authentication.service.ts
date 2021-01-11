@@ -38,5 +38,15 @@ export class AuthenticationService {
 	
 	}
 
+	editAdmin(user: User): Observable<any> {
+		console.log(user);
+		return this.http.put('http://localhost:8080/api/admin/'+user.id, user, {headers: this.headers, responseType: 'json'});
+	}
+
+	editUser(user: User): Observable<any> {
+		console.log(user);
+		return this.http.put('http://localhost:8080/api/registered_user/'+user.id, user, {headers: this.headers, responseType: 'json'});
+	}
+
 
 }

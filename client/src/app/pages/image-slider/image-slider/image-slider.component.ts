@@ -20,7 +20,6 @@ export class ImageSliderComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.slides = [];
     this.images = changes.imageDTO.currentValue;
-    console.log(this.images);
     if(this.images !== undefined){
       this.images.forEach(element => {
         this.imageService.getImage(element.id).subscribe(
