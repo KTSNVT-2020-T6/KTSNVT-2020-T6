@@ -93,7 +93,7 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser>{
 		}
 		u.setFirstName(entity.getFirstName());
 		u.setLastName(entity.getLastName());	
-		u.setPassword(passwordEncoder.encode(entity.getPassword()));
+		//u.setPassword(passwordEncoder.encode(entity.getPassword()));
 		if(entity.getImage() != null) {
 			u.setImage(entity.getImage());
 		}
