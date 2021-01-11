@@ -1,14 +1,6 @@
-<form class="reactiveForm" [formGroup]="typeForm" (ngSubmit)="editType()">
+<form class="reactiveForm" [formGroup]="categoryForm" (ngSubmit)="editCategory()">
     <div class="example-container">
-    <h2 mat-dialog-title>Edit type</h2>
-    <mat-form-field appearance="fill">
-        <mat-label>Category</mat-label>
-        <mat-select [(value)]="selected" (valueChange)="onSelection($event)">
-            <mat-option *ngFor="let cat of categories" [value]="cat">
-                {{cat.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <h2 mat-dialog-title>Edit category</h2>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
