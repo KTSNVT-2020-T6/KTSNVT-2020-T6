@@ -15,6 +15,7 @@ import { User } from '../model/User';
 import { UserService } from '../services/user/user.service';
 import { Comment } from '../model/Comment';
 import { ImageService } from '../services/image/image.service';
+import { CommentService } from '../services/comment/comment.service';
 
 @Component({
   selector: 'app-cultural-offer-details',
@@ -33,25 +34,20 @@ export class CulturalOfferDetailsComponent implements OnInit {
   subscribed!: number;
   images!: Img[];
   rate: Rate = {};
-  form!: FormGroup;
   
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
     private coService: CulturalOfferDetailsService,
     private regUserService: RegisteredUserService,
+    private commentService: CommentService,
     private userService: UserService,
     private rateService: RateService,
     private imageService: ImageService,
     private route : ActivatedRoute,
     private router: Router,
 		private toastr: ToastrService) {
-      this.createForm();
-  }
-  createForm(){
-    this.form = this.fb.group({
-      'image': []
-    });
+    
   }
   ngOnInit() {
     
@@ -62,16 +58,11 @@ export class CulturalOfferDetailsComponent implements OnInit {
       res => {
         this.culturalOffer = res.body as CulturalOffer;
         this.images =  this.culturalOffer.imageDTO as Img[];
-      },error => {
-        this.toastr.error(error.console.error);
       }
     );
     this.regUserService.getNumberOfSubscribed(this.id).subscribe(
       res => {
         this.subscribed = res.body;
-      },
-      error => {
-        this.toastr.error(error.console.error);
       }
     );
   }
@@ -79,7 +70,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
     this.rate.number = rated.rating as number;
     this.rate.culturalOfferId = this.culturalOffer.id;
     this.rate.registredUserId = 1;
-
+    console.log(this.rate);
     this.rateService.createOrEditRate(this.rate).subscribe(
       result => {
         if(result.body === null){
@@ -89,14 +80,8 @@ export class CulturalOfferDetailsComponent implements OnInit {
                 res => {
                   this.culturalOffer = res.body as CulturalOffer;
                   this.images =  this.culturalOffer.imageDTO as Img[];
-                },
-                  error => {
-                    this.toastr.error(error.console.error);
-                  }
+                }
               );
-            },
-            error => {
-              this.toastr.error(error.console.error);
             }
           );
         }
@@ -109,21 +94,12 @@ export class CulturalOfferDetailsComponent implements OnInit {
                 res => {
                   this.culturalOffer = res.body as CulturalOffer;
                   this.images =  this.culturalOffer.imageDTO as Img[];
-                },
-                error => {
-                  this.toastr.error(error.console.error);
                 }
               );
-            },
-            error => {
-              this.toastr.error(error.console.error);
             }
           );
         }
        
-      },
-      error => {
-        this.toastr.error(error.console.error);
       }
     );
 
@@ -149,8 +125,6 @@ export class CulturalOfferDetailsComponent implements OnInit {
       result => {
         this.router.navigate(['home']);
         this.toastr.success(result);
-      },error => {
-        this.toastr.error(error.console.error);
       }
     );
   }
@@ -186,19 +160,17 @@ export class CulturalOfferDetailsComponent implements OnInit {
         console.log(this.imageAdded);
         const formData = new FormData();
         formData.append('file', this.imageAdded);
-       // this.imageService.add(formData).subscribe(
-        //  res => {
-       //     this.toastr.success('Saved!');
-        //    this.comment.imageDTO = res.body();
-         // }
-       // )
-        
-        console.log(" bice");
-      }
-    );
-    
-   
-
+        this.imageService.add(formData).subscribe(
+          res => {
+            this.toastr.success('Saved!');
+            this.comment.imageDTO = {'id': res};
+            this.commentService.save(this.comment).subscribe(
+            res => {
+               this.toastr.success("Comment send!");
+              })
+            });
+          }
+        );
   }
 
 

@@ -84,12 +84,16 @@ public class CommentController {
 		CulturalOffer culturalOffer;
 		RegisteredUser registeredUser;
 		if (!this.validateCommentDTO(commentDTO)) {
+			System.out.println("validate fail");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			image = imageService.findOne(commentDTO.getImageDTO().getId());
+			System.out.println("image found "+ image.getId());
 			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferId());
+			System.out.println("CO found");
 			registeredUser = registeredUserService.findOne(commentDTO.getUserId());
+			System.out.println("User found");
 			comment = commentMapper.toEntity(commentDTO);
 			comment.setImage(image);
 			comment.setCulturalOffer(culturalOffer);
@@ -178,8 +182,8 @@ public class CommentController {
 			return false;
 		if(commentDTO.getText() == null) 
 			return false;
-		if(commentDTO.getDate().before(new Date()))
-			return false;
+		//if(commentDTO.getDate().before(new Date()))
+		//	return false;
 		return true;
 	}
 	@RequestMapping(value="/page/{id}",method=RequestMethod.GET)
