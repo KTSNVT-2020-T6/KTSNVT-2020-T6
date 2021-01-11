@@ -29,8 +29,8 @@ export class AddCategoryComponent implements OnInit {
   }
   createForm() {
     this.categoryForm = this.fb.group({
-      'name': [''],
-      'description': ['']
+      'name': ['',Validators.required],
+      'description': ['',Validators.required]
        });
   }
   

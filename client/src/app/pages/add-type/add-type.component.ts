@@ -39,8 +39,8 @@ export class AddTypeComponent implements OnInit {
 
   createForm() {
 	this.typeForm = this.fb.group({
-		'name': [''],
-		'description': ['']
+		'name': ['',Validators.required],
+		'description': ['',Validators.required]
      });
 	}
   onSelection(event:any) {

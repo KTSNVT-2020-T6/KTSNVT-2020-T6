@@ -44,10 +44,10 @@ export class AddCulturalOfferComponent implements OnInit {
   }
   createForm() {
 	this.coForm = this.fb.group({
-		'name': [''],
-		'description': [''],
-		'city': [''],
-		'date':[''],
+		'name': ['',Validators.required],
+		'description': ['',Validators.required],
+		'city': ['',Validators.required],
+		'date':['',Validators.required],
 		'lon': [''],
 		'lat': ['']
    });
