@@ -98,7 +98,7 @@ export class CommentListComponent implements OnInit {
         
   
         }, error => {
-          console.log(error.console.error);
+          console.log(error.error);
           
         }
       );

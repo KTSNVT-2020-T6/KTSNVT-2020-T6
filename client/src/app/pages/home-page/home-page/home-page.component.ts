@@ -29,7 +29,7 @@ export class HomePageComponent implements OnInit {
   constructor(private culturalOfferDetailsService: CulturalOfferDetailsService,
     private imageService: ImageService, private sanitizer: DomSanitizer) {
     this.pageSize = 2;
-		this.currentPage = 0;
+		this.currentPage = 1;
 		this.totalSize = 2;
   }
 
@@ -68,7 +68,7 @@ export class HomePageComponent implements OnInit {
       
 
 			}, error => {
-        console.log(error.console.error);
+        console.log(error.error);
         
       }
     );

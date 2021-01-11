@@ -23,5 +23,8 @@ export class RegisteredUserService {
 		return this.http.get('http://localhost:8080/api/registered_user/interested/'+ id, queryParams);
 
 	}
+	delete(id: any): Observable<any> {
+		return this.http.delete('http://localhost:8080/api/registered_user/'+id, {headers: this.headers, responseType: 'text'});
+	}
 
 }

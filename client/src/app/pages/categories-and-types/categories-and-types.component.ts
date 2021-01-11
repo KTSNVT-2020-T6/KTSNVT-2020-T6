@@ -71,7 +71,12 @@ export class CategoriesAndTypesComponent implements OnInit {
   }
 
   deleteCategory(catId: number){
-    
+    this.catService.delete(catId).subscribe(
+      result => {
+        this.toastr.success("Category successfully deleted.");
+        window.location.reload();
+      }
+    );
   }
 
   newType() {
