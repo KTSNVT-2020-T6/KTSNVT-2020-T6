@@ -39,8 +39,8 @@ export class AddTypeComponent implements OnInit {
 
   createForm() {
 	this.typeForm = this.fb.group({
-		'name': [''],
-		'description': ['']
+		'name': ['',Validators.required],
+		'description': ['',Validators.required]
      });
 	}
   onSelection(event:any) {
@@ -54,7 +54,10 @@ export class AddTypeComponent implements OnInit {
 		result => {
 			this.toastr.success(result);
 			this.router.navigate(['home']);
-		}
+		},
+		error => {
+			this.toastr.error("Name already exists!");
+      }
 	);
 	this.typeForm.reset();
   }

@@ -13,11 +13,17 @@
         <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
             <input matInput formControlName="name">
+            <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid">
+                <span *ngIf="form.controls.name.errors?.required">This field is mandatory.</span>
+            </mat-error>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
             <mat-label>Description</mat-label>
             <textarea matInput formControlName="description"></textarea>
+            <mat-error *ngIf="form.controls.description.touched && form.controls.description.invalid">
+                <span *ngIf="form.controls.description.errors?.required">This field is mandatory.</span>
+            </mat-error>
         </mat-form-field>
         <mat-dialog-actions align="end">
             <button mat-raised-button>Cancel</button>

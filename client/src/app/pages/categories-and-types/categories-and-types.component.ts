@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EditCategoryComponent } from '../edit-category/edit-category.component';
+import { EditTypeComponent } from '../edit-type/edit-type/edit-type.component';
 import { Category } from '../model/Category';
 import { Type } from '../model/Type';
 import { CategoryService } from '../services/category/category.service';
 import { TypeService } from '../services/type/type.service';
-
+import {AddTypeComponent} from '../add-type/add-type.component';
+import {AddCategoryComponent} from '../add-category/add-category.component';
 
 
 @Component({
   selector: 'app-categories-and-types',
   templateUrl: './categories-and-types.component.html',
-  styleUrls: ['./categories-and-types.component.css']
+  styleUrls: ['./categories-and-types.component.scss']
 })
 export class CategoriesAndTypesComponent implements OnInit {
 
@@ -20,6 +24,7 @@ export class CategoriesAndTypesComponent implements OnInit {
   res = [] as any;
 
   constructor(
+    public dialog: MatDialog,
     private catService: CategoryService,
     private typeService: TypeService,
     private route : ActivatedRoute,
@@ -47,17 +52,40 @@ export class CategoriesAndTypesComponent implements OnInit {
     )
   }
   editType(typeId: number){
-    console.log("editovacu type");
+    const dialogRef = this.dialog.open(EditTypeComponent);
+    dialogRef.componentInstance.typeId = typeId;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
   deleteType(typeId: number){
 
   }
 
   editCategory(catId: number){
-
+    const dialogRef2 = this.dialog.open(EditCategoryComponent);
+    dialogRef2.componentInstance.catId = catId;
+    dialogRef2.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   deleteCategory(catId: number){
+    
+  }
+
+  newType() {
+
+    const dialogRef = this.dialog.open(AddTypeComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  newCategory() {
+    const dialogRef = this.dialog.open(AddCategoryComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
     
   }
 }

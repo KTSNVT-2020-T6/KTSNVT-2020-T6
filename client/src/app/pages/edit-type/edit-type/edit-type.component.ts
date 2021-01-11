@@ -15,9 +15,11 @@ import { CategoryService } from '../../services/category/category.service';
 export class EditTypeComponent implements OnInit {
   //kad se namesti parent komponenta tek se tada moze istestirati 
  // @Input() type!:Type;
+  selected : any;
+  typeId: any;
   type!:Type;
   categories: Category[] = [];
-  category!: Category;
+  category!: Category | undefined;
   typeForm!: FormGroup;
 
   constructor(
@@ -31,7 +33,19 @@ export class EditTypeComponent implements OnInit {
     this.createForm();
   }
   ngOnInit(): void {
-    //this.type = ; 
+    this.typeService.getType(this.typeId).subscribe(
+      res => {
+        this.type = res.body as Type;
+        this.category = this.type.categoryDTO;
+        this.selected = this.category;
+        console.log(this.type.id);
+        this.typeForm = this.fb.group({
+          'name': [this.type.name],
+          'description': [this.type.description],
+           });
+          
+      }
+    ) 
     this.categoryService.getAll().subscribe(
       res => {
         this.categories = res.body as Category[];
@@ -51,13 +65,25 @@ export class EditTypeComponent implements OnInit {
     editType(){
     this.type = this.typeForm.value;
     this.type.categoryDTO = this.category;
-    this.typeService.update(this.type as Type).subscribe(
+    this.typeService.update(this.type as Type, this.typeId).subscribe(
       result => {
         this.toastr.success(result);
         this.router.navigate(['home']);
+      },
+      error => {
+        this.toastr.error(error.console.error);
       }
     );
     this.typeForm.reset();
+    }
+
+    cancelClicked(){
+      this.typeForm = this.fb.group({
+        'name': [this.type.name],
+        'description': [this.type.description],
+         });
+        this.category = this.type.categoryDTO;
+  
     }
 
 }

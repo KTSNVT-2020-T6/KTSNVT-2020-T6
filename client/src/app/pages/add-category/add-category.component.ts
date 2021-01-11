@@ -29,8 +29,8 @@ export class AddCategoryComponent implements OnInit {
   }
   createForm() {
     this.categoryForm = this.fb.group({
-      'name': [''],
-      'description': ['']
+      'name': ['',Validators.required],
+      'description': ['',Validators.required]
        });
   }
   
@@ -40,6 +40,9 @@ export class AddCategoryComponent implements OnInit {
       result => {
         this.toastr.success(result);
         this.router.navigate(['home']);
+      },
+      error => {
+        this.toastr.error("Name already exists!");
       }
     );
     this.categoryForm.reset();
