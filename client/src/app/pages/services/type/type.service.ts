@@ -26,8 +26,18 @@ export class TypeService {
 	add(newType: Type): Observable<any> {
 		return this.http.post('http://localhost:8080/api/type', newType, {headers: this.headers, responseType: 'text'});
 	}
-	update(editType: Type): Observable<any> {
-		return this.http.put('http://localhost:8080/api/type/'+ editType.id, editType, {headers: this.headers, responseType: 'text'});
+	update(editType: Type, id: number): Observable<any> {
+		return this.http.put('http://localhost:8080/api/type/'+ id, editType, {headers: this.headers, responseType: 'text'});
+	}
+
+	getType(id:number):Observable<any>{
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+		};
+		return this.http.get('http://localhost:8080/api/type/'+id, queryParams).pipe(map(res => res));
 	}
 
 }
