@@ -4,6 +4,11 @@ import { Comment } from '../../model/Comment';
 import {CommentService} from '../../services/comment/comment.service';
 import { ImageService } from '../../services/image/image.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormBuilder, NumberValueAccessor } from '@angular/forms';
+import { UserService } from '../../services/user/user.service';
+import { User } from '../../model/User';
+import { EditCommentComponent } from '../../edit-comment/edit-comment.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-comment-list',
@@ -19,9 +24,13 @@ export class CommentListComponent implements OnInit {
   totalSize: number;
   userImage!: Img;
   commentImage!:Img;
+  currentUser! : User ;
 
-  constructor(private commentService: CommentService,
+  constructor(private fb: FormBuilder,
+              public dialog: MatDialog,
+              private commentService: CommentService,
               private imageService: ImageService,
+              private userService : UserService,
               private sanitizer: DomSanitizer) {
     this.pageSize = 5;
 		this.currentPage = 1;
@@ -38,8 +47,24 @@ export class CommentListComponent implements OnInit {
       }
 		);
   }
+  editComment(comId: any){
+    console.log("editovace se");
+    const dialogRef = this.dialog.open(EditCommentComponent);
+    dialogRef.componentInstance.commentId = comId;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  deleteComment(comId: any){
+    console.log("obrisace e");
+  }
   
   ngOnInit(): void {
+    this.userService.getCurrentUser().subscribe(
+      res => {
+        this.currentUser = res.body as User;
+      }
+    )
     this.commentService.getPage(this.currentPage - 1, this.pageSize, this.culturalOfferId).subscribe(
 			res => {
         this.comments = res.body.content as Comment[];

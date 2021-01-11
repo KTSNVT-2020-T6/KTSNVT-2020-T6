@@ -45,7 +45,11 @@ import { AddAdminComponent } from './pages/add-admin/add-admin.component';
 import { CategoriesAndTypesComponent } from './pages/categories-and-types/categories-and-types.component';
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+<<<<<<< HEAD
 import { PaginationComponent } from './pages/pagination/pagination.component';@NgModule({
+=======
+import { EditCommentComponent } from './pages/edit-comment/edit-comment.component';@NgModule({
+>>>>>>> 5487632ae2e814ed8aab48bd4b8681a64b5357f4
   declarations: [
     AppComponent,
     MainPageComponent,
@@ -62,7 +66,11 @@ import { PaginationComponent } from './pages/pagination/pagination.component';@N
     EditTypeComponent,
     MapContainerComponent,
     ProfileDetailsComponent,
+<<<<<<< HEAD
 	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent, ImageSliderComponent, CommentListComponent, AddAdminComponent, CategoriesAndTypesComponent, EditCategoryComponent, EditProfileComponent, PaginationComponent   ],  imports: [
+=======
+	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent, ImageSliderComponent, CommentListComponent, AddAdminComponent, CategoriesAndTypesComponent, EditCategoryComponent, EditProfileComponent, EditCommentComponent   ],  imports: [
+>>>>>>> 5487632ae2e814ed8aab48bd4b8681a64b5357f4
     BrowserModule,
     AppRoutingModule,
     FormsModule,
