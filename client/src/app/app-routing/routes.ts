@@ -9,6 +9,7 @@ import { LoginPageComponent } from '../pages/login-page/login-page.component';
 import { ProfileDetailsComponent } from '../pages/profile-details/profile-details.component';
 import { RegisterPageComponent } from '../pages/register-page/register-page.component';
 import { VerificationPageComponent } from '../pages/verification-page/verification-page.component';
+import { CategoriesAndTypesComponent } from '../pages/categories-and-types/categories-and-types.component';
 export const routes :Routes = [
 	{
 		path: 'home',
@@ -40,5 +41,9 @@ export const routes :Routes = [
 		path: 'verification/:token',
 		component: VerificationPageComponent,
 		canActivate: [LoginGuard]
+	},
+	{
+		path: 'categoriesAndTypes',
+		component: CategoriesAndTypesComponent
 	},
 ];

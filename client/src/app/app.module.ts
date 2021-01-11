@@ -42,6 +42,7 @@ import { CulturalOfferListComponent } from './pages/cultural-offer-list/cultural
 import { ImageSliderComponent } from './pages/image-slider/image-slider/image-slider.component';
 import { CommentListComponent } from './pages/comment-list/comment-list/comment-list.component';
 import { AddAdminComponent } from './pages/add-admin/add-admin.component';
+import { CategoriesAndTypesComponent } from './pages/categories-and-types/categories-and-types.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,7 @@ import { AddAdminComponent } from './pages/add-admin/add-admin.component';
     EditTypeComponent,
     MapContainerComponent,
     ProfileDetailsComponent,
-	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent, ImageSliderComponent, CommentListComponent, AddAdminComponent  ],
+	AddPostComponent,	RegisterPageComponent, VerificationPageComponent, CulturalOfferListComponent, ImageSliderComponent, CommentListComponent, AddAdminComponent, CategoriesAndTypesComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
