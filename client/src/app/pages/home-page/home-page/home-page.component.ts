@@ -28,16 +28,16 @@ export class HomePageComponent implements OnInit {
 
   constructor(private culturalOfferDetailsService: CulturalOfferDetailsService,
     private imageService: ImageService, private sanitizer: DomSanitizer) {
-    this.pageSize = 5;
-		this.currentPage = 1;
-		this.totalSize = 1;
+    this.pageSize = 2;
+		this.currentPage = 0;
+		this.totalSize = 2;
   }
 
   changePage(newPage: number) {
 		this.culturalOfferDetailsService.getPage(newPage - 1, this.pageSize).subscribe(
 			res => {
 				this.culturalOfferList = res.body as CulturalOffer[];
-				this.totalSize = Number(res.headers.get('Total-pages'));
+        this.totalSize = Number(res.headers.get('Total-pages'));
 			}
 		);
 	}
@@ -47,7 +47,7 @@ export class HomePageComponent implements OnInit {
 			res => {
         this.culturalOfferList = res.body.content as CulturalOffer[];
         this.totalSize = Number(res.headers.get('Total-pages'));
-
+     
         this.culturalOfferList.forEach(element => {
         this.images = element.imageDTO as Img[];
         if(this.images.length == 0){

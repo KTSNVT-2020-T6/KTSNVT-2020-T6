@@ -71,7 +71,7 @@ public class CategoryController {
 	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
 		Category category;
 		if(!this.validateCategoryDTO(categoryDTO))
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
 		try {
 			category = categoryService.create(categoryMapper.toEntity(categoryDTO));
 		}
@@ -112,9 +112,9 @@ public class CategoryController {
 	
 	private boolean validateCategoryDTO(CategoryDTO categoryDTO) {
 		// category doesn't need to have type ? necessarily
-		if(categoryDTO.getName() == null)
+		if(categoryDTO.getName() == null || categoryDTO.getName().isEmpty())
 			return false;
-		if(categoryDTO.getDescription() == null)
+		if(categoryDTO.getDescription() == null || categoryDTO.getDescription().isEmpty())
 			return false;
 		return true;
 	}

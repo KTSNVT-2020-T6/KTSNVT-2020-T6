@@ -8,22 +8,20 @@
             <tr>
                 <th>{{cat.name}} <a href="">
                     <mat-icon class="material-icons"  inline="true" (click)="editCategory(cat.id)">edit</mat-icon>
-                </a>  <a [routerLink]="['/home']">
+                </a>  <a>
                     <mat-icon class="material-icons"  inline="true" (click)="deleteCategory(cat.id)">delete</mat-icon>
                 </a></th>
             </tr>
             <tr  *ngFor="let type of res[cat.id]">
-                <td >{{type.name}}  <a [routerLink]="['/home']"><mat-icon class="material-icons"  inline="true" (click)="editType(type.id)">edit</mat-icon></a>
-                    
-            
-                <a [routerLink]="['/home']">
+                <td >{{type.name}}  <a ><mat-icon class="material-icons"  inline="true" (click)="editType(type.id)">edit</mat-icon></a>
+                <a>
                     <mat-icon class="material-icons"  inline="true" (click)="deleteType(type.id)">delete</mat-icon>
                 </a></td>
             </tr>
         </div>
     
     </table>
-    <div>
+    <div class="float-right">
         <button mat-button (click)="newCategory()">new category</button>
         <button mat-button (click)="newType()">new type</button>
     </div>
