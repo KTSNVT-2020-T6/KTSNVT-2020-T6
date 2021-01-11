@@ -1,0 +1,13 @@
+<form class="reactiveForm" [formGroup]="editForm" (ngSubmit)="editComment()">
+<mat-form-field class="example-full-width" >
+    <mat-label>Edit comment</mat-label>
+    <textarea matInput inline="true" formControlName="text"></textarea>
+    <mat-form-field>
+            <ngx-mat-file-input placeholder="Upload image" (change)="onFileSelect($event)"></ngx-mat-file-input>
+            <mat-icon matSuffix>photo</mat-icon>
+        </mat-form-field>
+</mat-form-field>
+<mat-card-actions>    
+    <button type="submit"  inline="true">save</button>
+</mat-card-actions>
+</form>

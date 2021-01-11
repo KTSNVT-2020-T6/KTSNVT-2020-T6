@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable } from 'rxjs';
 import { CulturalOffer } from '../../model/CulturalOffer';
 import { map } from 'rxjs/operators';
+import { Comment } from '../../model/Comment';
 
 @Injectable({
 	providedIn: 'root'
@@ -24,5 +25,8 @@ export class CommentService {
 		};
 		return this.http.get('http://localhost:8080/api/comment/page/'+culturalOfferId, queryParams);
 		
+	}
+	save(comment: Comment):Observable<any> {
+		return this.http.post('http://localhost:8080/api/comment', comment, {headers: this.headers, responseType: 'text'});
 	}
 }
