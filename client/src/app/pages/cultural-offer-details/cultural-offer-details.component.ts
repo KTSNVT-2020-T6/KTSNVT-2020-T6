@@ -11,6 +11,10 @@ import { AddPostComponent } from '../add-post/add-post.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Img} from '../../pages/model/Image';
 import { Rate } from '../model/Rate';
+import { User } from '../model/User';
+import { UserService } from '../services/user/user.service';
+import { Comment } from '../model/Comment';
+import { ImageService } from '../services/image/image.service';
 
 @Component({
   selector: 'app-cultural-offer-details',
@@ -19,24 +23,38 @@ import { Rate } from '../model/Rate';
 })
 export class CulturalOfferDetailsComponent implements OnInit {
   
+  imageAdded: any;
+  comment: Comment = {'nameSurname' : '', "text": '', 'date' : new Date(), 'userId' : 1};
+  currentUser!: User;
+  commentText!: string;
   role!: string|undefined;
   culturalOffer!: CulturalOffer;
-  id: any = '';
+  id: any = ''; // cultural offer id
   subscribed!: number;
   images!: Img[];
   rate: Rate = {};
+  form!: FormGroup;
   
   constructor(
+    private fb: FormBuilder,
     public dialog: MatDialog,
     private coService: CulturalOfferDetailsService,
     private regUserService: RegisteredUserService,
+    private userService: UserService,
     private rateService: RateService,
+    private imageService: ImageService,
     private route : ActivatedRoute,
     private router: Router,
 		private toastr: ToastrService) {
+      this.createForm();
   }
-
+  createForm(){
+    this.form = this.fb.group({
+      'image': []
+    });
+  }
   ngOnInit() {
+    
     this.getRole();
     //fill data
     this.id = this.route.snapshot.paramMap.get('id');
@@ -136,7 +154,52 @@ export class CulturalOfferDetailsComponent implements OnInit {
       }
     );
   }
-  addNewComment(){}
+   onFileSelect(event: any) {
+       if (event.target.files.length > 0) {
+          const file = event.target.files[0];
+           this.imageAdded = file;
+        }
+      }
+
+   // addImage(){
+    //   this.image.relativePath = this.form.value['image'];
+    //   this.image.description = 'new_image';
+    //   this.imageService.add(this.image as Image).subscribe(
+    //     result => {
+    //       console.log(result);
+    //       this.imageId = result.body;
+    //     }
+    //   );
+    //   }
+
+  addNewComment(){
+    this.userService.getCurrentUser().subscribe(
+      res => {
+        this.currentUser = res.body as User;
+        this.comment.nameSurname = this.currentUser.firstName + ' ' + this.currentUser.lastName;
+        this.comment.text = this.commentText;
+        this.comment.culturalOfferId = this.id;
+        this.comment.userId = this.currentUser.id;
+        this.comment.date = new Date();
+         // uploadoati sliku
+        this.comment.imageDTO = {'id' : 1}
+        console.log(this.imageAdded);
+        const formData = new FormData();
+        formData.append('file', this.imageAdded);
+       // this.imageService.add(formData).subscribe(
+        //  res => {
+       //     this.toastr.success('Saved!');
+        //    this.comment.imageDTO = res.body();
+         // }
+       // )
+        
+        console.log(" bice");
+      }
+    );
+    
+   
+
+  }
 
 
 }
