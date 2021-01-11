@@ -17,13 +17,13 @@
             <mat-form-field class="example-full-width" >
                 <mat-label>Leave a comment</mat-label>
                 <textarea matInput inline="true" [(ngModel)]="commentText"></textarea>
-                <mat-form-field>
-                        <ngx-mat-file-input placeholder="Upload image" (change)="onFileSelect($event)"></ngx-mat-file-input>
-                        <mat-icon matSuffix>photo</mat-icon>
-                    </mat-form-field>
-            </mat-form-field>
+                <button matSuffix mat-button (click)="uploader.click()" matTooltip="Upload image" style="color:#576869" inline="true">
+                    <mat-icon matSuffix>photo</mat-icon>
+                </button>
+             </mat-form-field> 
+             <input hidden type="file" #uploader (change)="onFileSelect($event)">
             <mat-card-actions>    
-                <button type="button" (click)="addNewComment()" matTooltip="Send" style="color:#576869" inline="true">
+                <button mat-button (click)="addNewComment()" matTooltip="Send" style="color:#576869" inline="true">
                     <mat-icon>send</mat-icon>
                 </button>
             </mat-card-actions> 

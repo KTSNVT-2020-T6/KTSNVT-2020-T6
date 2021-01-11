@@ -126,12 +126,13 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.toastr.success(result);
       }
     );
-  }	onFileSelect(event: any) {
-       if (event.target.files.length > 0) {
-          const file = event.target.files[0];
-           this.imageAdded = file;
-        }
-      }
+  }
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+        this.imageAdded = file;
+    }
+  }
 	edit(){
     const dialogRef = this.dialog.open(EditCulturalOfferComponent , {
       data: this.culturalOffer});
