@@ -14,15 +14,16 @@
         <br>
         <br>
         <span *ngIf="role === 'ROLE_REGISTERED_USER'">
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="example-full-width" >
                 <mat-label>Leave a comment</mat-label>
-                <textarea matInput inline="true"></textarea>
-                <button mat-button matTooltip="Upload photo" style="color:#576869" inline="true" matSuffix>
-                    <mat-icon>insert_photo</mat-icon>
-                </button>
+                <textarea matInput inline="true" [(ngModel)]="commentText"></textarea>
+                <mat-form-field>
+                        <ngx-mat-file-input placeholder="Upload image" (change)="onFileSelect($event)"></ngx-mat-file-input>
+                        <mat-icon matSuffix>photo</mat-icon>
+                    </mat-form-field>
             </mat-form-field>
             <mat-card-actions>    
-                <button mat-button matTooltip="Send" style="color:#576869" inline="true">
+                <button type="button" (click)="addNewComment()" matTooltip="Send" style="color:#576869" inline="true">
                     <mat-icon>send</mat-icon>
                 </button>
             </mat-card-actions> 
@@ -32,10 +33,13 @@
             <button mat-button color="success" (click)="addPost()">New post</button>
             <button mat-button (click)="edit()">Edit</button>
             <button mat-button color="warn" (click)="deleteCulturalOffer()">Delete</button>
-        </mat-card-actions>   
+        </mat-card-actions> 
+        <br>
+        <br>  
         <div>
            <app-comment-list [culturalOfferId]="id"></app-comment-list>
         </div>
+
     </div>
     
 </div>       

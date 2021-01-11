@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../services/category/category.service';
+import { MatDialog ,MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-type',
@@ -16,7 +17,6 @@ export class AddTypeComponent implements OnInit {
  
   categories: Category[] = [];
   type!: Type;
-  category!: Category;
   typeForm!: FormGroup;
 
   constructor(
@@ -25,7 +25,8 @@ export class AddTypeComponent implements OnInit {
 		private typeService: TypeService,
 		private categoryService: CategoryService,
 		private route: ActivatedRoute,
-		private toastr: ToastrService
+		private toastr: ToastrService,
+		public dialogRef: MatDialogRef<AddTypeComponent>
 	) {
 	this.createForm();
   }
@@ -40,25 +41,36 @@ export class AddTypeComponent implements OnInit {
   createForm() {
 	this.typeForm = this.fb.group({
 		'name': ['',Validators.required],
-		'description': ['',Validators.required]
+		'description': ['',Validators.required],
+		'categoryDTO': ['', Validators.required]
      });
-	}
-  onSelection(event:any) {
-	this.category = event;
   }
-  
+
   addType(){
 	this.type = this.typeForm.value;
-	this.type.categoryDTO = this.category;
-	this.typeService.add(this.type as Type).subscribe(
-		result => {
-			this.toastr.success(result);
-			this.router.navigate(['home']);
-		},
-		error => {
-			this.toastr.error("Name already exists!");
-      }
-	);
-	this.typeForm.reset();
+	//this.type.categoryDTO = this.category
+	if(this.type.name === '' || this.type.name === null )
+    {
+      return;
+    }
+    else if(this.type.description === '' || this.type.description === null ){
+      return;
+	}
+	else if(this.type.categoryDTO === null || JSON.stringify(this.type.categoryDTO) === JSON.stringify("")){
+		return;
+	  }
+    else{
+		this.typeService.add(this.type as Type).subscribe(
+			result => {
+				this.dialogRef.close();
+				this.toastr.success("Type successfully added");
+				window.location.reload();
+			},
+			error => {
+				this.toastr.error("Name already exists!");
+		}
+		);
+		this.typeForm.reset();
+	}
   }
 }

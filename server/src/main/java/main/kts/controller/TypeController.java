@@ -85,14 +85,15 @@ public class TypeController {
 	public ResponseEntity<TypeDTO> createType(@RequestBody TypeDTO typeDTO){
 		Type type;
 		Category category;
-		if(!this.validateTypeDTO(typeDTO))
+		if(!this.validateTypeDTO(typeDTO)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
+			
 			category = categoryService.findOne(typeDTO.getCategoryDTO().getId());
 			type = typeMapper.toEntity(typeDTO);
 			type.setCategory(category);
-			type = typeService.create(type);	
-			
+			type = typeService.create(type);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -145,11 +146,12 @@ public class TypeController {
 	
 	
 	private boolean validateTypeDTO(TypeDTO typeDTO) {
-		if(typeDTO.getCategoryDTO() == null)
+		System.out.println(typeDTO.toString());
+		if(typeDTO.getCategoryDTO() == null )
 			return false;
-		if(typeDTO.getName() == null)
+		if(typeDTO.getName() == null || typeDTO.getName().isEmpty())
 			return false;
-		if(typeDTO.getDescription() == null)
+		if(typeDTO.getDescription() == null  || typeDTO.getDescription().isEmpty())
 			return false;
 		return true;
 	}

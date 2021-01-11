@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService} from '../services/category/category.service';
+import { MatDialog ,MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-category',
@@ -20,7 +21,8 @@ export class AddCategoryComponent implements OnInit {
 		private router: Router,
 		private categoryService: CategoryService,
 		private route: ActivatedRoute,
-		private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialogRef: MatDialogRef<AddCategoryComponent>    
   ) {
     this.createForm();
   }
@@ -36,15 +38,27 @@ export class AddCategoryComponent implements OnInit {
   
   addCategory() {
     this.category = this.categoryForm.value;
-    this.categoryService.add(this.category as Category).subscribe(
-      result => {
-        this.toastr.success(result);
-        this.router.navigate(['home']);
-      },
-      error => {
-        this.toastr.error("Name already exists!");
-      }
-    );
-    this.categoryForm.reset();
+    if(this.category.name === '' || this.category.name === null )
+    {
+      return;
+    }
+    else if(this.category.description === '' || this.category.description === null ){
+      return;
+    }
+    else{
+      this.categoryService.add(this.category as Category).subscribe(
+        result => {
+          this.dialogRef.close();
+          this.toastr.success("Category successfully added");
+          window.location.reload();
+        },
+        error => {
+          this.toastr.error("Name already exists!");
+        }
+      );
+      this.categoryForm.reset();
+    }
+   
   }
+ 
 }

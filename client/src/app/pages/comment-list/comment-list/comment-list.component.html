@@ -4,6 +4,10 @@
         <header>
           <h1 >{{c?.nameSurname}}</h1>
           <img class="image" mat-card-image [src]="c.srcUser" alt="photo">
+          <div>
+            <button *ngIf="currentUser?.id === c.userId" (click)="editComment(c.id)" ng-class="edit"></button>
+            <button *ngIf="currentUser?.id === c.userId" (click)="deleteComment(c.id)"></button>
+          </div>
         </header>
         <img class="image" *ngIf="c.srcComment !== null" mat-card-image [src]="c.srcComment" alt="photo">
         <p>{{c?.text}}</p>
