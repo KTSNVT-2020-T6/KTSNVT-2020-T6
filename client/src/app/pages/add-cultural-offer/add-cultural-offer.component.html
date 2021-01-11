@@ -22,24 +22,24 @@
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name">
-        <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid">
-            <span *ngIf="form.controls.name.errors?.required">This field is mandatory.</span>
+        <mat-error *ngIf="coForm.controls.name.touched && coForm.controls.name.invalid">
+            <span *ngIf="coForm.controls.name.errors?.required">This field is mandatory.</span>
         </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
-        <mat-error *ngIf="form.controls.description.touched && form.controls.description.invalid">
-            <span *ngIf="form.controls.description.errors?.required">This field is mandatory.</span>
+        <mat-error *ngIf="coForm.controls.description.touched && coForm.controls.description.invalid">
+            <span *ngIf="coForm.controls.description.errors?.required">This field is mandatory.</span>
         </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>city</mat-label>
         <textarea matInput formControlName="city"></textarea>
-        <mat-error *ngIf="form.controls.city.touched && form.controls.city.invalid">
-            <span *ngIf="form.controls.city.errors?.required">This field is mandatory.</span>
+        <mat-error *ngIf="coForm.controls.city.touched && coForm.controls.city.invalid">
+            <span *ngIf="coForm.controls.city.errors?.required">This field is mandatory.</span>
         </mat-error>
     </mat-form-field>
     <br>
@@ -48,8 +48,8 @@
         <input matInput [matDatepicker]="picker" formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="form.controls.date.touched && form.controls.date.invalid">
-            <span *ngIf="form.controls.date.errors?.required">This field is mandatory.</span>
+        <mat-error *ngIf="coForm.controls.date.touched && coForm.controls.date.invalid">
+            <span *ngIf="coForm.controls.date.errors?.required">This field is mandatory.</span>
         </mat-error>
       </mat-form-field>
     <br>
