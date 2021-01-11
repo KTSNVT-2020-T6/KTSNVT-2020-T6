@@ -88,7 +88,7 @@ public class RegisteredUserController {
     }
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	@PreAuthorize("hasAnyRole('ADMIN', 'REGISTERED_USER')")
-	
+	@CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<Void> deleteRegisteredUser(@PathVariable Long id){
      
         try {

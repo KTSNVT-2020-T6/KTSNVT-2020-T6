@@ -83,6 +83,7 @@ public class AdminController {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ADMIN')")
+	@CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<Void> deleteAdmin(@PathVariable Long id){
         try {
             service.delete(id);

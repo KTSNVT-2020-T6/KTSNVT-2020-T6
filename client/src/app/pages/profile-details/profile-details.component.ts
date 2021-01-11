@@ -11,7 +11,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { EditPasswordComponent } from '../edit-password/edit-password.component';
-
+import { AdminService } from '../services/admin/admin.service';
+import { AuthenticationService } from 'src/app/pages/services/authentication/authentication.service';
+import { RegisteredUserService } from '../services/registered-user/registered-user.service';
 
 @Component({
   selector: 'app-profile-details',
@@ -21,18 +23,23 @@ import { EditPasswordComponent } from '../edit-password/edit-password.component'
 export class ProfileDetailsComponent implements OnInit {
   user!: User;
   image!: Img;
+  role!: string|undefined;
 
   constructor(
     private userService: UserService,
+    private adminService: AdminService,
+    private regUserService: RegisteredUserService,
     private imageService: ImageService,
     private route : ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {
+    this.getRole();
     this.userService.getCurrentUser().subscribe(
       res => {
         this.user = res.body as User;
@@ -88,6 +95,44 @@ export class ProfileDetailsComponent implements OnInit {
       //   }
       // );
     });
+  }
+  deleteProfile(){
+    if(this.role === "ROLE_ADMIN"){
+      this.adminService.delete(this.user.id).subscribe(
+        result => {
+          this.authenticationService.signOut().subscribe(      
+            result => {
+              this.toastr.warning("Profile successfully deactivated.");
+              localStorage.removeItem('user');
+              this.router.navigate(['/login']);
+            }
+          );
+        }
+      );
+    }
+    else{
+      this.regUserService.delete(this.user.id).subscribe(
+        result => {
+          this.authenticationService.signOut().subscribe(      
+            result => {
+              this.toastr.warning("Profile successfully deactivated.");
+              localStorage.removeItem('user');
+              this.router.navigate(['/login']);
+            }
+          );
+        }
+      );
+    }
+
+  }
+  getRole() {
+    const item = localStorage.getItem('user');
+    if (!item) {
+      this.role = undefined;
+      return;
+    }
+    const jwt: JwtHelperService = new JwtHelperService();
+    this.role = jwt.decodeToken(item).role;
   }
 
 }
