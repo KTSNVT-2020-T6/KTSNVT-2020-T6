@@ -27,6 +27,6 @@ export class ImageService {
 	}
 	
 	add(image: FormData): Observable<any> {
-		return this.http.post('http://localhost:8080/api/image', image, {headers: new HttpHeaders()}).pipe(map(res => res));
+		return this.http.post('http://localhost:8080/api/image', image, {headers: new HttpHeaders(), reportProgress: true}).pipe(map(res => res));
 	}
 }

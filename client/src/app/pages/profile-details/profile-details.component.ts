@@ -10,6 +10,7 @@ import { ImageService } from '../services/image/image.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+import { EditPasswordComponent } from '../edit-password/edit-password.component';
 
 
 @Component({
@@ -66,6 +67,26 @@ export class ProfileDetailsComponent implements OnInit {
         );
         }
       );
+    });
+  }
+
+  editPassword(){
+    const dialogRef = this.dialog.open(EditPasswordComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('ok');
+      // this.userService.getCurrentUser().subscribe(
+      //   res => {
+      //     this.user = res.body as User;
+      //     this.imageService.getImage(this.user.idImageDTO).subscribe(
+      //       res => {
+              
+      //         let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
+      //         let objectURL = 'data:image/jpg;base64,' + base64String;   
+      //         this.user.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      //     }
+      //   );
+      //   }
+      // );
     });
   }
 

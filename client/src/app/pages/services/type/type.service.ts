@@ -40,4 +40,14 @@ export class TypeService {
 		return this.http.get('http://localhost:8080/api/type/'+id, queryParams).pipe(map(res => res));
 	}
 
+	getAll():Observable<any>{
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+		};
+		return this.http.get('http://localhost:8080/api/type', queryParams);
+	}
+
 }

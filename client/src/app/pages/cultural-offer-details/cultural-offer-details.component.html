@@ -30,7 +30,7 @@
         </span>
         <mat-card-actions *ngIf="role === 'ROLE_ADMIN'">
             <button mat-button color="success" (click)="addPost()">New post</button>
-            <button mat-button>Edit</button>
+            <button mat-button (click)="edit()">Edit</button>
             <button mat-button color="warn" (click)="deleteCulturalOffer()">Delete</button>
         </mat-card-actions>   
         <div>

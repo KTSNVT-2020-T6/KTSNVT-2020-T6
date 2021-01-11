@@ -109,6 +109,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		existingCO.setLon(entity.getLon());
 		existingCO.setType(entity.getType());
 		existingCO.setCity(entity.getCity());
+		existingCO.setImage(entity.getImage());
 
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);

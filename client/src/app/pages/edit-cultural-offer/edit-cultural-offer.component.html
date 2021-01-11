@@ -1,0 +1,66 @@
+<form class="reactiveForm" [formGroup]="form"  class="form-inline my-2 my-lg-0">
+    <div class="example-container">
+    
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid">
+            <span *ngIf="form.controls.name.errors?.required">This field is mandatory.</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" required maxlength="100">
+        <mat-error *ngIf="form.controls.description.touched && form.controls.description.invalid">
+            <span *ngIf="form.controls.description.errors?.required">This field is mandatory.</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>City</mat-label>
+        <textarea matInput formControlName="city" required></textarea>
+        <mat-error *ngIf="form.controls.city.touched && form.controls.city.invalid">
+            <span *ngIf="form.controls.city.errors?.required">This field is mandatory.</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Type</mat-label>
+        <mat-select (valueChange)="onSelection($event)">
+            <mat-option *ngFor="let t of types" [value]="t">
+                {{t.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    
+      
+    <mat-form-field>
+        <ngx-mat-file-input [multiple]="true" placeholder="Add pictures" (change)="selectFiles($event)">
+        </ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+        
+    </mat-form-field>
+    <div *ngFor="let progressInfo of progressInfos">
+        <span>{{ progressInfo?.fileName }}</span>
+        <div class="progress">
+          <div
+            class="progress-bar  bg-info progress-bar-striped"
+            role="progressbar"
+            attr.aria-valuenow="100"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style="width: 100%"
+          >
+            100%
+          </div>
+        </div>
+      </div>
+    <br>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button (click)="cancel()">Cancel</button>
+        <button type="submit" mat-raised-button color="success" (click)="saveChanges()">Save</button>
+    </mat-dialog-actions>
+    </div>
+</form> 

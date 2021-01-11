@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../pages/services/authentication/authentication.service';
@@ -23,7 +24,8 @@ export class AddAdminComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    public dialogRef: MatDialogRef<AddAdminComponent>) {
       this.createForm();
      }
 
@@ -52,12 +54,14 @@ export class AddAdminComponent implements OnInit {
       result => {
         this.toastr.success('New admin added!');
         this.form.reset();
+        this.dialogRef.close();
       },
       error => {
         this.toastr.error("Email already exists!");
       }
     );
-    
-    
+    }
+    cancel(){
+      this.dialogRef.close();
     }
 }

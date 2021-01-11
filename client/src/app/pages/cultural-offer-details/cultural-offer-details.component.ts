@@ -11,6 +11,7 @@ import { AddPostComponent } from '../add-post/add-post.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Img} from '../../pages/model/Image';
 import { Rate } from '../model/Rate';
+import { EditCulturalOfferComponent } from '../edit-cultural-offer/edit-cultural-offer.component';
 
 @Component({
   selector: 'app-cultural-offer-details',
@@ -135,6 +136,15 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.toastr.error(error.console.error);
       }
     );
+  }
+
+  edit(){
+    const dialogRef = this.dialog.open(EditCulturalOfferComponent , {
+      data: this.culturalOffer});
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+
   }
   addNewComment(){}
 
