@@ -49,6 +49,7 @@ import { PaginationComponent } from './pages/pagination/pagination.component';
 import { EditPasswordComponent } from './pages/edit-password/edit-password.component';
 import { EditCulturalOfferComponent } from './pages/edit-cultural-offer/edit-cultural-offer.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { PostsPageComponent } from './pages/posts-page/posts-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +80,7 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
     EditCommentComponent,
     PaginationComponent,
 	EditPasswordComponent, 
-	EditCulturalOfferComponent
+	EditCulturalOfferComponent, PostsPageComponent
 
      ],
     imports: [

@@ -22,4 +22,7 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 	Optional<Post> findByIdAndActive(Long id, boolean b);
 
 	Page<Post> findByActive(Pageable pageable, boolean b);
+
+	@Query(value = "SELECT CULTURAL_OFFER_ID FROM POST WHERE ID = ?1", nativeQuery = true)
+	Long findCulturalOfferIdByPostId(Long id);
 }

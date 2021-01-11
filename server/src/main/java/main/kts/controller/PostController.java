@@ -145,7 +145,10 @@ public class PostController {
 		Page<PostDTO> dtoPage = posts.map(new Function<Post, PostDTO>() {
 		    @Override
 		    public PostDTO apply(Post entity) {
+		    	// dobaviti id kulturne ponude za dto objekat
+		    	Long coId = postService.findCulturalOfferIdByPostId(entity.getId());
 		    	PostDTO dto = postMapper.toDto(entity);
+		    	dto.setCulturalOfferId(coId);
 		        return dto;
 		    }
 		});

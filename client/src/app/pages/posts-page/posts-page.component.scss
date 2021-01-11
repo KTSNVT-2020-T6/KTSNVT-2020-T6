@@ -1,0 +1,48 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .example-card{
+      margin-top: 10px;
+      background-color: #faf6fae1;
+  }
+  
+  .example-header-image { 
+    background-size: cover;
+  }
+  
+  .title{
+      font-weight: bold;
+  }
+  
+  .action-buttons{
+      text-align: center;
+  }
+  
+  .example-container {
+      width: 60%;
+    //   height: auto;
+      position:absolute;
+      left: 20%
+    }
+  
+  .example-sidenav-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  .source-name {
+      margin-left:5px; 
+  }
+
+  img{
+    border-radius: 2%;
+    width: 200px;
+    height: 200px;
+}
+
+.card-content{
+    margin-left:25px;
+    margin-right: 25px;
+}
