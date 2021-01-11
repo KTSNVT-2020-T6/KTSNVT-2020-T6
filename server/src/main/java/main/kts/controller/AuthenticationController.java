@@ -159,7 +159,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)
     @PreAuthorize("hasAnyRole('REGISTERED_USER', 'ADMIN')")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
-    	System.out.println("ASD");
+    
     	Map<String, String> result = new HashMap<>();
     	try {
     		userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);

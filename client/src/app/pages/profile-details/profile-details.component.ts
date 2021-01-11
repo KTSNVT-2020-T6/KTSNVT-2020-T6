@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../model/User';
 import { Img } from '../model/Image';
 import { ImageService } from '../services/image/image.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class ProfileDetailsComponent implements OnInit {
     private imageService: ImageService,
     private route : ActivatedRoute,
     private router: Router,
-		private toastr: ToastrService
+    private toastr: ToastrService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -32,7 +34,10 @@ export class ProfileDetailsComponent implements OnInit {
         this.user = res.body as User;
         this.imageService.getImage(this.user.idImageDTO).subscribe(
           res => {
-            this.image = res.body as Img;
+            
+            let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
+            let objectURL = 'data:image/jpg;base64,' + base64String;   
+            this.user.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         }
       );
       }
