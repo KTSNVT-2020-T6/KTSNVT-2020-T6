@@ -46,7 +46,9 @@ import { CategoriesAndTypesComponent } from './pages/categories-and-types/catego
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 import { EditCommentComponent } from './pages/edit-comment/edit-comment.component';
 import { PaginationComponent } from './pages/pagination/pagination.component';
-import { EditPasswordComponent } from './pages/edit-password/edit-password.component';import { EditCulturalOfferComponent } from './pages/edit-cultural-offer/edit-cultural-offer.component';
+import { EditPasswordComponent } from './pages/edit-password/edit-password.component';
+import { EditCulturalOfferComponent } from './pages/edit-cultural-offer/edit-cultural-offer.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
