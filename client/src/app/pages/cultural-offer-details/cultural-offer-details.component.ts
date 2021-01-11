@@ -66,8 +66,14 @@ export class CulturalOfferDetailsComponent implements OnInit {
                 res => {
                   this.culturalOffer = res.body as CulturalOffer;
                   this.images =  this.culturalOffer.imageDTO as Img[];
-                }
+                },
+                  error => {
+                    this.toastr.error(error.console.error);
+                  }
               );
+            },
+            error => {
+              this.toastr.error(error.console.error);
             }
           );
         }
@@ -80,12 +86,21 @@ export class CulturalOfferDetailsComponent implements OnInit {
                 res => {
                   this.culturalOffer = res.body as CulturalOffer;
                   this.images =  this.culturalOffer.imageDTO as Img[];
+                },
+                error => {
+                  this.toastr.error(error.console.error);
                 }
               );
+            },
+            error => {
+              this.toastr.error(error.console.error);
             }
           );
         }
        
+      },
+      error => {
+        this.toastr.error(error.console.error);
       }
     );
 

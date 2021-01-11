@@ -58,7 +58,11 @@ export class AddCulturalOfferComponent implements OnInit {
 	this.typeService.getTypesOfCategory(id).subscribe(
 		res => {
 			this.types = res.body as Type[];
+		},
+		error => {
+		  this.toastr.error("Name of cultural offer already exists!");
 		}
+		
 	);
   }
   

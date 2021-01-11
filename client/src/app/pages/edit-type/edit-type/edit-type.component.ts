@@ -55,6 +55,9 @@ export class EditTypeComponent implements OnInit {
       result => {
         this.toastr.success(result);
         this.router.navigate(['home']);
+      },
+      error => {
+        this.toastr.error(error.console.error);
       }
     );
     this.typeForm.reset();
