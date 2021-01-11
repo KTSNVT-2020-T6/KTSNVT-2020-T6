@@ -44,11 +44,16 @@ export class CulturalOfferDetailsComponent implements OnInit {
       res => {
         this.culturalOffer = res.body as CulturalOffer;
         this.images =  this.culturalOffer.imageDTO as Img[];
+      },error => {
+        this.toastr.error(error.console.error);
       }
     );
     this.regUserService.getNumberOfSubscribed(this.id).subscribe(
       res => {
         this.subscribed = res.body;
+      },
+      error => {
+        this.toastr.error(error.console.error);
       }
     );
   }
@@ -56,7 +61,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
     this.rate.number = rated.rating as number;
     this.rate.culturalOfferId = this.culturalOffer.id;
     this.rate.registredUserId = 1;
-    console.log(this.rate);
+
     this.rateService.createOrEditRate(this.rate).subscribe(
       result => {
         if(result.body === null){
@@ -126,6 +131,8 @@ export class CulturalOfferDetailsComponent implements OnInit {
       result => {
         this.router.navigate(['home']);
         this.toastr.success(result);
+      },error => {
+        this.toastr.error(error.console.error);
       }
     );
   }

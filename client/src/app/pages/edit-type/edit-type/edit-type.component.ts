@@ -72,7 +72,6 @@ export class EditTypeComponent implements OnInit {
       },
       error => {
         this.toastr.error(error.console.error);
-        this.toastr.success("Successful!");
       }
     );
     this.typeForm.reset();

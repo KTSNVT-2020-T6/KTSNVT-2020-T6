@@ -33,7 +33,9 @@ export class CommentListComponent implements OnInit {
         this.comments = res.body.content as Comment[];
         console.log(this.comments);
 				this.totalSize = Number(res.headers.get('Total-pages'));
-			}
+			},error => {
+        console.log(error.error);
+      }
 		);
   }
   
