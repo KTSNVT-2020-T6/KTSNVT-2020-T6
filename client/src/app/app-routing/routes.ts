@@ -29,6 +29,8 @@ export const routes :Routes = [
 	{
 		path: 'profileDetails',
 		component: ProfileDetailsComponent,
+		canActivate: [RoleGuard],
+		data: {expectedRoles: 'ROLE_ADMIN|ROLE_REGISTERED_USER'}
 	},
 	{
 		path: 'register',
