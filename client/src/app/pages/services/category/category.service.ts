@@ -25,4 +25,17 @@ export class CategoryService {
     add(newCategory: Category): Observable<any> {
 		return this.http.post('http://localhost:8080/api/category', newCategory, {headers: this.headers, responseType: 'text'});
 	}
+	getCategory(id: number): Observable<any> {
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+	};
+	return this.http.get('http://localhost:8080/api/category/'+id, queryParams).pipe(map(res => res));
+	}
+	update(editCategory: Category, id: number): Observable<any> {
+		return this.http.put('http://localhost:8080/api/category/'+ id, editCategory, {headers: this.headers, responseType: 'text'});
+
+	}
 }

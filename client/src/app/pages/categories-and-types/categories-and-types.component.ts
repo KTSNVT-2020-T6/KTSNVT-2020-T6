@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EditCategoryComponent } from '../edit-category/edit-category.component';
+import { EditTypeComponent } from '../edit-type/edit-type/edit-type.component';
 import { Category } from '../model/Category';
 import { Type } from '../model/Type';
 import { CategoryService } from '../services/category/category.service';
@@ -20,6 +23,7 @@ export class CategoriesAndTypesComponent implements OnInit {
   res = [] as any;
 
   constructor(
+    public dialog: MatDialog,
     private catService: CategoryService,
     private typeService: TypeService,
     private route : ActivatedRoute,
@@ -47,14 +51,22 @@ export class CategoriesAndTypesComponent implements OnInit {
     )
   }
   editType(typeId: number){
-    console.log("editovacu type");
+    const dialogRef = this.dialog.open(EditTypeComponent);
+    dialogRef.componentInstance.typeId = typeId;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
   deleteType(typeId: number){
 
   }
 
   editCategory(catId: number){
-
+    const dialogRef2 = this.dialog.open(EditCategoryComponent);
+    dialogRef2.componentInstance.catId = catId;
+    dialogRef2.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   deleteCategory(catId: number){
