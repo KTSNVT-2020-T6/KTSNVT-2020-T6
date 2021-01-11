@@ -3,11 +3,14 @@
         <h2 mat-dialog-title>New type</h2>
         <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
-            <mat-select (valueChange)="onSelection($event)">
+            <mat-select formControlName="categoryDTO" required>
                 <mat-option *ngFor="let cat of categories" [value]="cat">
                     {{cat.name}}
                 </mat-option>
             </mat-select>
+            <mat-error *ngIf="typeForm.controls.categoryDTO.touched && typeForm.controls.categoryDTO.invalid">
+                <span *ngIf="typeForm.controls.categoryDTO.errors?.required">This field is mandatory.</span>
+            </mat-error>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
@@ -26,7 +29,7 @@
             </mat-error>
         </mat-form-field>
         <mat-dialog-actions align="end">
-            <button mat-raised-button>Cancel</button>
+            <button mat-raised-button mat-dialog-close>Cancel</button>
             <button type="submit" mat-raised-button color="success">Save</button>
         </mat-dialog-actions>
         </div>
