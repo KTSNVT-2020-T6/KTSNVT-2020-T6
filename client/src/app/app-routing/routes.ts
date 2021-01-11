@@ -44,6 +44,8 @@ export const routes :Routes = [
 	},
 	{
 		path: 'categoriesAndTypes',
-		component: CategoriesAndTypesComponent
+		component: CategoriesAndTypesComponent,
+		canActivate: [RoleGuard],
+		data: {expectedRoles: 'ROLE_ADMIN'}
 	},
 ];
