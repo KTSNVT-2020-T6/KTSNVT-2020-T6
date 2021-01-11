@@ -14,7 +14,6 @@ import { ImageService } from '../services/image/image.service';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-  //user!: User;
   form!: FormGroup;
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
   role!: string|undefined;
@@ -26,7 +25,6 @@ export class EditProfileComponent implements OnInit {
     private imageService: ImageService,public dialogRef: MatDialogRef<EditProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public user: User) {
       this.createForm();
-      console.log(this.user);
       this.form.patchValue(this.user);
      }
 
@@ -94,7 +92,6 @@ export class EditProfileComponent implements OnInit {
     }
 
     saveImage(){
-      console.log(this.form.value['image']+"asdkajfkfjf");
       const formData = new FormData();
       formData.append('file', this.form.value['image']);
 
@@ -107,6 +104,10 @@ export class EditProfileComponent implements OnInit {
         }
 
       );
+    }
+
+    cancel(){
+      this.dialogRef.close();
     }
 
 }

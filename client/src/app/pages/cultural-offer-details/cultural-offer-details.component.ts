@@ -15,8 +15,7 @@ import { User } from '../model/User';
 import { UserService } from '../services/user/user.service';
 import { Comment } from '../model/Comment';
 import { ImageService } from '../services/image/image.service';
-import { CommentService } from '../services/comment/comment.service';
-
+import { CommentService } from '../services/comment/comment.service';import { EditCulturalOfferComponent } from '../edit-cultural-offer/edit-cultural-offer.component';
 @Component({
   selector: 'app-cultural-offer-details',
   templateUrl: './cultural-offer-details.component.html',
@@ -127,14 +126,20 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.toastr.success(result);
       }
     );
-  }
-   onFileSelect(event: any) {
+  }	onFileSelect(event: any) {
        if (event.target.files.length > 0) {
           const file = event.target.files[0];
            this.imageAdded = file;
         }
       }
+	edit(){
+    const dialogRef = this.dialog.open(EditCulturalOfferComponent , {
+      data: this.culturalOffer});
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
 
+  }
    // addImage(){
     //   this.image.relativePath = this.form.value['image'];
     //   this.image.description = 'new_image';

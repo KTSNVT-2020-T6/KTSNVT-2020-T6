@@ -159,6 +159,7 @@ public class CulturalOfferController {
     
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('ADMIN')")
+    @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<CulturalOfferDTO> updateCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO, @PathVariable Long id){
         CulturalOffer culturalOffer;
         Type type;
