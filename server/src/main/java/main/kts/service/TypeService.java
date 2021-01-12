@@ -9,8 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import main.kts.model.Category;
+import main.kts.model.CulturalOffer;
 import main.kts.model.Type;
 import main.kts.repository.CategoryRepository;
+import main.kts.repository.CulturalOfferRepository;
 import main.kts.repository.TypeRepository;
 
 @Service
@@ -21,6 +23,9 @@ public class TypeService implements ServiceInterface<Type>{
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private CulturalOfferRepository culturalOfferRepository;
 
 	@Override
 	public List<Type> findAll() {
@@ -70,6 +75,11 @@ public class TypeService implements ServiceInterface<Type>{
 			throw new Exception("Type with given id doesn't exist");
 		}
 		Type existingT = optType.orElse(null);
+		
+		List<CulturalOffer> co = culturalOfferRepository.findByTypeId(existingT.getId());
+		if(co.size() > 0) {
+			throw new Exception("Cultural offers with this type exist.");
+		}
 		existingT.setActive(false);
 		typeRepository.save(existingT);
 	}

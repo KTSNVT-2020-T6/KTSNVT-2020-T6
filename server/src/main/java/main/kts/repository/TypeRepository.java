@@ -20,7 +20,7 @@ public interface TypeRepository extends JpaRepository<Type, Long>{
 
 	Page<Type> findByActive(Pageable pageable, boolean b);
 
-	@Query(value = "SELECT * FROM TYPE WHERE CATEGORY_ID = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM TYPE WHERE CATEGORY_ID = ?1 AND ACTIVE = TRUE", nativeQuery = true)
 	List<Type> findTypesOfCategory(Long id);
 
 }
