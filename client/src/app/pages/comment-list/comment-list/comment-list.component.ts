@@ -9,6 +9,7 @@ import { UserService } from '../../services/user/user.service';
 import { User } from '../../model/User';
 import { EditCommentComponent } from '../../edit-comment/edit-comment.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationComponent, ConfirmDialogModel } from '../../confirmation/confirmation.component';
 
 @Component({
   selector: 'app-comment-list',
@@ -25,6 +26,7 @@ export class CommentListComponent implements OnInit {
   userImage!: Img;
   commentImage!:Img;
   currentUser! : User ;
+  result:any;
 
   constructor(private fb: FormBuilder,
               public dialog: MatDialog,
@@ -32,7 +34,7 @@ export class CommentListComponent implements OnInit {
               private imageService: ImageService,
               private userService : UserService,
               private sanitizer: DomSanitizer) {
-    this.pageSize = 5;
+    this.pageSize = 3;
 		this.currentPage = 1;
 		this.totalSize = 1;
   }
@@ -40,12 +42,45 @@ export class CommentListComponent implements OnInit {
 		this.commentService.getPage(newPage - 1, this.pageSize, this.culturalOfferId).subscribe(
 			res => {
         this.comments = res.body.content as Comment[];
-        console.log(this.comments);
-				this.totalSize = Number(res.headers.get('Total-pages'));
-			},error => {
+				this.totalSize = Number(res.body.totalElements);
+		
+        this.comments.forEach(element => {
+          console.log(element.userImage +" ko si ti");
+          if(element.userImage?.id  !== undefined){
+            this.imageService.getImage(element.userImage?.id).subscribe(
+              res => {
+                let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
+                let objectURL = 'data:image/jpg;base64,' + base64String;   
+                element.srcUser = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    
+              }, error => {
+                console.log(error.error);
+                
+              });
+          }
+         
+          if(element.imageDTO?.id  !== undefined){
+            this.imageService.getImage(element.imageDTO?.id).subscribe(
+              res => {
+                let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
+                let objectURL = 'data:image/jpg;base64,' + base64String;   
+                element.srcComment = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
+              }, error => {
+                console.log(error.error);
+                
+              });
+            }
+       });
+
+      
+
+      }, error => {
         console.log(error.error);
+        
       }
-		);
+    );
+    
   }
   editComment(comId: any){
     console.log("editovace se");
@@ -57,17 +92,12 @@ export class CommentListComponent implements OnInit {
     });
   }
   deleteComment(comId: any){
-    // ne obrise se
-    // promeni dialog
-
-    if(confirm("Are you sure to delete your comment?")) {
       this.commentService.delete(comId).subscribe(
         res =>{
           console.log("deleted");
           location.reload();
         }
       )
-    }
   }
   
   ngOnInit(): void {
@@ -77,44 +107,56 @@ export class CommentListComponent implements OnInit {
       }
     )
     this.commentService.getPage(this.currentPage - 1, this.pageSize, this.culturalOfferId).subscribe(
-			res => {
+      res => {
         this.comments = res.body.content as Comment[];
-        console.log(this.comments);
-        this.totalSize = Number(res.headers.get('Total-pages'));
-       
+				this.totalSize = Number(res.body.totalElements);
+		
         this.comments.forEach(element => {
+          if(element.userImage?.id  !== undefined){
             this.imageService.getImage(element.userImage?.id).subscribe(
-            res => {
-              let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-              let objectURL = 'data:image/jpg;base64,' + base64String;   
-              element.srcUser = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-
-            }, error => {
-              console.log(error.error);
-              
-            });
-            //im
-            
+              res => {
+                let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
+                let objectURL = 'data:image/jpg;base64,' + base64String;   
+                element.srcUser = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    
+              }, error => {
+                console.log(error.error);
+                
+              });
+          }
+         
+          if(element.imageDTO?.id  !== undefined){
             this.imageService.getImage(element.imageDTO?.id).subscribe(
               res => {
                 let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
                 let objectURL = 'data:image/jpg;base64,' + base64String;   
                 element.srcComment = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-  
+
               }, error => {
                 console.log(error.error);
                 
               });
-         });
-
-        
-  
-        }, error => {
-          console.log(error.error);
-          
-        }
-      );
-      
+            }
+        });
+      }, error => {
+        console.log(error.error); 
+      }
+     )
+     
     }
-
+  confirmDialog(id:any) {
+      const message = `Are you sure you want to do this?`;
+      const dialogData = new ConfirmDialogModel("Confirm Action", message);
+      const dialogRef = this.dialog.open(ConfirmationComponent, {
+        maxWidth: "400px",
+        data: dialogData
+      });
+  
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        this.result = dialogResult;
+        if(this.result === true){
+          this.deleteComment(id);
+        }
+      });
+    }
 }

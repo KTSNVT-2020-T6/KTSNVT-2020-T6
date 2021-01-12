@@ -193,6 +193,7 @@ public class CulturalOfferController {
         try {
             culturalOfferService.delete(id);
         } catch (Exception e) {
+        	e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

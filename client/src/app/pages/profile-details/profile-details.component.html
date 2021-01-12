@@ -2,7 +2,8 @@
   <mat-card fxLayout="column" fxLayoutAlign="center" class="mat-elevation-z4" >
    
     <mat-card-header style="justify-content: center; align-items: center;">
-      <img mat-card-image [src]="user?.src" >
+      <img mat-card-image *ngIf="user?.src !== undefined" [src]="user?.src" >
+      <img class="image" *ngIf="user?.src === undefined" mat-card-image src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" alt="photo">
     </mat-card-header>
 
     <mat-card-header style="justify-content: center; align-items: center;">

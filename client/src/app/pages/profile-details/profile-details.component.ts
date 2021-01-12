@@ -43,9 +43,11 @@ export class ProfileDetailsComponent implements OnInit {
     this.userService.getCurrentUser().subscribe(
       res => {
         this.user = res.body as User;
+        if(this.user.idImageDTO === null){
+          return;
+        }
         this.imageService.getImage(this.user.idImageDTO).subscribe(
           res => {
-            
             let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
             let objectURL = 'data:image/jpg;base64,' + base64String;   
             this.user.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);

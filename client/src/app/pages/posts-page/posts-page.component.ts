@@ -23,22 +23,30 @@ export class PostsPageComponent implements OnInit {
     private culturalOfferService: CulturalOfferDetailsService,
     private imageService: ImageService,
     private sanitizer: DomSanitizer) {
-      this.pageSize = 5;
-		  this.currentPage = 0;
-		  this.totalSize = 2;
+      this.pageSize = 3;
+		  this.currentPage = 1;
+		  this.totalSize = 1;
   }
 
   ngOnInit(): void {
     this.postService.getPage(this.currentPage - 1, this.pageSize).subscribe(
 			res => {
         this.posts = res.body.content as Post[];
-        this.totalSize = Number(res.headers.get('Total-pages'));
+        this.totalSize = Number(res.body.totalElements);
      
         this.posts.forEach(element => {
           this.image = element.imageDTO as Img;
+      
+          this.culturalOfferService.getOne(element.culturalOfferId).subscribe(
+            res => {
+              const co = res.body as CulturalOffer;
+              element.culturalOfferName = co.name;
+            }, error => {
+              console.log(error.error);               
+            });
           if(this.image == null){
-            return;
-          }
+              return;
+            }
           this.imageService.getImage(this.image.id).subscribe(
             res => {
               let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
@@ -47,14 +55,6 @@ export class PostsPageComponent implements OnInit {
             }, error => {
               console.log(error.error);
             });
-
-            this.culturalOfferService.getOne(element.culturalOfferId).subscribe(
-              res => {
-                const co = res.body as CulturalOffer;
-                element.culturalOfferName = co.name;
-              }, error => {
-                console.log(error.error);               
-              });
        });
       
 
@@ -68,10 +68,38 @@ export class PostsPageComponent implements OnInit {
   changePage(newPage: number) {
 		this.postService.getPage(newPage - 1, this.pageSize).subscribe(
 			res => {
-				this.posts = res.body as Post[];
-        this.totalSize = Number(res.headers.get('Total-pages'));
-			}
-		);
+        this.posts = res.body.content as Post[];
+        this.totalSize = Number(res.body.totalElements);
+     
+        this.posts.forEach(element => {
+          this.image = element.imageDTO as Img;
+      
+          this.culturalOfferService.getOne(element.culturalOfferId).subscribe(
+            res => {
+              const co = res.body as CulturalOffer;
+              element.culturalOfferName = co.name;
+            }, error => {
+              console.log(error.error);               
+            });
+          if(this.image == null){
+              return;
+            }
+          this.imageService.getImage(this.image.id).subscribe(
+            res => {
+              let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
+              let objectURL = 'data:image/jpg;base64,' + base64String;           
+              element.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+            }, error => {
+              console.log(error.error);
+            });
+       });
+      
+
+			}, error => {
+        console.log(error.console.error);
+        
+      }
+    );
 	}
 
 }

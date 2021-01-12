@@ -5,6 +5,7 @@ import java.util.Set;
 
 import main.kts.dto.AuthorityDTO;
 import main.kts.dto.ImageDTO;
+import main.kts.dto.RegisteredUserDTO;
 import main.kts.dto.UserDTO;
 import main.kts.model.Authority;
 import main.kts.model.User;
@@ -25,10 +26,17 @@ public class UserMapper implements MapperInterface<User, UserDTO>{
 
     @Override
     public UserDTO toDto(User entity) {
-       return new UserDTO(entity.getId(), entity.getFirstName(), entity.getLastName(),
-    		   entity.getEmail(), entity.getPassword(), entity.getActive(),
-    		   entity.getVerified(), entity.getImage().getId());
-    	// return new UserDTO(entity.getId(), entity.getEmail(),entity.getPassword());
+       if(entity.getImage() != null)
+    	   return new UserDTO(entity.getId(), entity.getFirstName(), entity.getLastName(),
+        		   entity.getEmail(), entity.getPassword(), entity.getActive(),
+        		   entity.getVerified(), entity.getImage().getId());
+	   else {
+		   return new UserDTO(entity.getId(), entity.getFirstName(), entity.getLastName(),
+	    		   entity.getEmail(), entity.getPassword(), entity.getActive(),
+	    		   entity.getVerified(), null);
+		   }
+       
+      
     }
 
 }
