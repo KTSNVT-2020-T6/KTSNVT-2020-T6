@@ -53,10 +53,21 @@ export class CommentListComponent implements OnInit {
     dialogRef.componentInstance.commentId = comId;
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      location.reload();
     });
   }
   deleteComment(comId: any){
-    console.log("obrisace e");
+    // ne obrise se
+    // promeni dialog
+
+    if(confirm("Are you sure to delete your comment?")) {
+      this.commentService.delete(comId).subscribe(
+        res =>{
+          console.log("deleted");
+          location.reload();
+        }
+      )
+    }
   }
   
   ngOnInit(): void {
@@ -83,6 +94,7 @@ export class CommentListComponent implements OnInit {
               
             });
             //im
+            
             this.imageService.getImage(element.imageDTO?.id).subscribe(
               res => {
                 let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));

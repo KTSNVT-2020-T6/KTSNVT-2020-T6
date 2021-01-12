@@ -162,21 +162,30 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.comment.userId = this.currentUser.id;
         this.comment.date = new Date();
          // uploadoati sliku
-        this.comment.imageDTO = {'id' : 1}
+        this.comment.imageDTO = {'id' : 0}
         console.log(this.imageAdded);
-        const formData = new FormData();
-        formData.append('file', this.imageAdded);
-        this.imageService.add(formData).subscribe(
-          res => {
-            this.toastr.success('Saved!');
-            this.comment.imageDTO = {'id': res};
-            this.commentService.save(this.comment).subscribe(
+        if (this.imageAdded !== undefined)
+        { 
+          const formData = new FormData();
+          formData.append('file', this.imageAdded);
+          this.imageService.add(formData).subscribe(
             res => {
+              this.toastr.success('Saved!');
+              this.comment.imageDTO = {'id': res};
+              this.commentService.save(this.comment).subscribe(
+             res => {
                this.toastr.success("Comment send!");
               })
             });
+          }else
+          {
+            this.commentService.save(this.comment).subscribe(
+              res => {
+                this.toastr.success("Comment send!");
+               })
           }
-        );
+          
+      });
   }
 
 
