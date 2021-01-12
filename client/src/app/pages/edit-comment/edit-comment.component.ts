@@ -33,10 +33,9 @@ export class EditCommentComponent implements OnInit {
      });
   }
   ngOnInit(): void {
+    
     // dobaviti komentar
-    /*
      this.commentService.getComment(this.commentId).subscribe(
-      {
           res => {
             this.comment = res.body as Comment;
             this.editForm = this.fb.group({
@@ -44,11 +43,8 @@ export class EditCommentComponent implements OnInit {
             'image': [this.comment.imageDTO],
            });
           }
-      }
-      
-    )
-    */
-  }
+      );
+    }
 
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {
@@ -59,21 +55,35 @@ export class EditCommentComponent implements OnInit {
 
    editComment()
    {
+      console.log(this.comment.imageDTO?.id);
      //podesiti detalje komentara
-     
-     this.comment.text = this.editForm.value('text');
+     this.comment.text = this.editForm.value['text'];
      this.comment.date = new Date();
-     // za slanje slike 
-    const formData = new FormData();
-    formData.append('file', this.imageAdded);
-    this.imageService.add(formData).subscribe(
-      res => {
-        this.toastr.success('Saved!');
-        this.comment.imageDTO = {'id': res};
-        this.commentService.save(this.comment).subscribe(
+     if (this.imageAdded !== undefined)
+    {
+      const formData = new FormData();
+      formData.append('file', this.imageAdded);
+      this.imageService.add(formData).subscribe(
         res => {
-           this.toastr.success("Comment edited!");
+          this.toastr.success('Saved!');
+          this.comment.imageDTO = {'id': res};
+          this.commentService.update(this.comment, this.commentId).subscribe(
+          res => {
+             this.toastr.success("Comment edited!");
+            })
+          });
+        }
+      else
+      {
+        this.commentService.update(this.comment, this.commentId).subscribe(
+          res => {
+             this.toastr.success("Comment edited!");
           })
-        });
       }
-   }
+    }
+     
+    cancelClicked(){
+
+    }
+    
+}

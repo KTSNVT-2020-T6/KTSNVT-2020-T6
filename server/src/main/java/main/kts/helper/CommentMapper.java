@@ -26,7 +26,11 @@ public class CommentMapper implements MapperInterface<Comment, CommentDTO>{
 	public CommentDTO toDto(Comment entity) {
 		String nameSurname = entity.getRegistredUser().getFirstName()+" "+entity.getRegistredUser().getLastName();
 		Long userId = entity.getRegistredUser().getId();
-		ImageDTO imageDTO = imageMapper.toDto(entity.getImage());
+		ImageDTO imageDTO = null;
+		if(entity.getImage() != null) {
+			imageDTO = imageMapper.toDto(entity.getImage());
+		}
+		
 		ImageDTO userImage = imageMapper.toDto(entity.getRegistredUser().getImage());
 		Long culturalOfferId = entity.getCulturalOffer().getId();
 		return new CommentDTO(entity.getId(), entity.getText(), entity.getDate(), nameSurname, userId, userImage, imageDTO, culturalOfferId);

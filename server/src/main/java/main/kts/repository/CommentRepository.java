@@ -16,7 +16,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long>{
 
 	@Query(value = "SELECT * FROM COMMENT WHERE CULTURAL_OFFER_ID = ?1", nativeQuery = true)
 	List<Comment> findAllByCulturalOfferId(Long id);
-
+	
+	
+	
 	List<Comment> findByActive(boolean b);
 
 	Optional<Comment> findByIdAndActive(Long id, boolean b);
