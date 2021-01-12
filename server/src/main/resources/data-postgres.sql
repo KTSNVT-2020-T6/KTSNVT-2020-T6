@@ -34,9 +34,24 @@ insert into type (name, description, category_id, active) values ('opera', 'oper
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
 values (5.0, '2020-12-25 19:30:00', 'The Gallery was established on the 14th of October 1847.', 44.05, 45.02,'Novi Sad', 'Gallery of Matica Srpska', 1, 1, true);
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
-values (8.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Novi Sad', 'exit', 3, 1, false);
+values (3.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Novi Sad', 'exit', 3, 1, false);
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
-values (9.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Belgrade', 'djiasjasij', 3, 1, true);
+values (4.0, '2021-07-11 19:30:00', 'opisneki', 44.05, 45.02, 'Belgrade', 'djiasjasij', 3, 1, true);
+insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
+values (2.0, '2020-12-25 19:30:00', 'The Gallery was established on the 14th of October 1847.', 44.05, 45.02,'Novi Sad', 'Gallery of', 1, 1, true);
+insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
+values (5.0, '2020-12-25 19:30:00', 'The Gallery was established on the 14th of October 1847.', 44.05, 45.02,'Novi Sad', 'Gallery of Srpska', 1, 1, true);
+insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
+values (3.0, '2020-12-25 19:30:00', 'The Gallery was established on the 14th of October 1847.', 44.05, 45.02,'Novi Sad', 'Gallery Matica Srpska', 1, 1, true);
+insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
+values (4.0, '2020-12-25 19:30:00', 'The Gallery was established on the 14th of October 1847.', 44.05, 45.02,'Novi Sad', 'Gallery of srpska ', 1, 1, true);
+insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
+values (5.0, '2020-12-25 19:30:00', 'The Gallery was established on the 14th of October 1847.', 44.05, 45.02,'Novi Sad', 'Gallery Srpska', 1, 1, true);
+insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
+values (5.0, '2020-12-25 19:30:00', 'The Gallery was established on the 14th of October 1847.', 44.05, 45.02,'Novi Sad', 'of Matica Srpska', 1, 1, true);
+insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
+values (5.0, '2020-12-25 19:30:00', 'The Gallery was established on the 14th of October 1847.', 44.05, 45.02,'Novi Sad', 'Matica Srpska', 1, 1, true);
+
 
 insert into image (name, relative_path, active, cultural_offer_id) values ('file7','src/main/resources/static/images/file7.jpg', true, 3);
 insert into image (name, relative_path, active, cultural_offer_id) values ('file8','src/main/resources/static/images/file8.jpg', true, 1);

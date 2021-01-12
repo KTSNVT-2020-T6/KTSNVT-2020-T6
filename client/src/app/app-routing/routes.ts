@@ -11,6 +11,7 @@ import { RegisterPageComponent } from '../pages/register-page/register-page.comp
 import { VerificationPageComponent } from '../pages/verification-page/verification-page.component';
 import { CategoriesAndTypesComponent } from '../pages/categories-and-types/categories-and-types.component';
 import { PostsPageComponent } from '../pages/posts-page/posts-page.component';
+import { FavoriteComponent } from '../pages/favorite/favorite.component';
 export const routes :Routes = [
 	{
 		path: 'home',
@@ -54,5 +55,11 @@ export const routes :Routes = [
 		component: PostsPageComponent,
 		canActivate: [RoleGuard],
 		data: {expectedRoles: 'ROLE_ADMIN|ROLE_REGISTERED_USER'}
+	},
+	{
+		path: 'favorites',
+		component: FavoriteComponent,
+		canActivate: [RoleGuard],
+		data: {expectedRoles: 'ROLE_REGISTERED_USER'}
 	},
 ];
