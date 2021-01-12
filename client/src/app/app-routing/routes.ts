@@ -10,6 +10,7 @@ import { ProfileDetailsComponent } from '../pages/profile-details/profile-detail
 import { RegisterPageComponent } from '../pages/register-page/register-page.component';
 import { VerificationPageComponent } from '../pages/verification-page/verification-page.component';
 import { CategoriesAndTypesComponent } from '../pages/categories-and-types/categories-and-types.component';
+import { PostsPageComponent } from '../pages/posts-page/posts-page.component';
 export const routes :Routes = [
 	{
 		path: 'home',
@@ -47,5 +48,11 @@ export const routes :Routes = [
 		component: CategoriesAndTypesComponent,
 		canActivate: [RoleGuard],
 		data: {expectedRoles: 'ROLE_ADMIN'}
+	},
+	{
+		path: 'posts',
+		component: PostsPageComponent,
+		canActivate: [RoleGuard],
+		data: {expectedRoles: 'ROLE_ADMIN|ROLE_REGISTERED_USER'}
 	},
 ];

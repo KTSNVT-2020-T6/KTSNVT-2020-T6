@@ -48,7 +48,7 @@ insert into users_favorite_cultural_offers (registered_user_id, favorite_cultura
 values (2, 2);
 
 insert into post (date, text, image_id, cultural_offer_id, active)
-values('2020-12-24 19:30:00', 'gosti iznenadjenja', 4, 2, true);
+values('2020-12-24 19:30:00', 'Nova izlozba Djure Jaksica ce biti u galeriji od prekosutra. Ocekujemo veliki broj zainteresovanih, ne propustite!!', 2, 1, true);
 insert into post (date, text, image_id, cultural_offer_id, active)
 values('2020-10-24 19:30:00', 'promocija knjige', 1, 1, true);
 

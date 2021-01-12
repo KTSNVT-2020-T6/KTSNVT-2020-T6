@@ -80,4 +80,8 @@ public class PostService implements ServiceInterface<Post> {
 		return postRepository.findByActive(pageable, true);
 	}
 
+	public Long findCulturalOfferIdByPostId(Long id) {
+		return postRepository.findCulturalOfferIdByPostId(id);
+	}
+
 }
