@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 import { CulturalOffer } from '../model/CulturalOffer';
 import { Img } from '../model/Image';
 import { Post } from '../model/Post';
@@ -22,6 +23,7 @@ export class PostsPageComponent implements OnInit {
   constructor(private postService: PostService,
     private culturalOfferService: CulturalOfferDetailsService,
     private imageService: ImageService,
+    private toastr: ToastrService,
     private sanitizer: DomSanitizer) {
       this.pageSize = 3;
 		  this.currentPage = 1;
@@ -101,5 +103,18 @@ export class PostsPageComponent implements OnInit {
       }
     );
 	}
+  
+  deletePost(postId: number)
+  {
+    // nije testirano
+    this.postService.delete(postId).subscribe(
+      res => {
+        this.toastr.success("Post successfully deleted.");
+        window.location.reload();
+    },error =>{
+      this.toastr.error("Cannot delete this post!");
+      
+    });
+  }
 
 }

@@ -31,5 +31,8 @@ export class PostService {
 		return this.http.get('http://localhost:8080/api/post/', queryParams).pipe(map(res => res));
 		
 	}
+	delete(postId: number): Observable<any>{
+		return this.http.delete('http://localhost:8080/api/post/' + postId, {headers: this.headers, responseType: 'text'});
+	}
 
 }
