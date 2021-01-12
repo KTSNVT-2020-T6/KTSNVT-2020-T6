@@ -59,7 +59,15 @@ export class CategoriesAndTypesComponent implements OnInit {
     });
   }
   deleteType(typeId: number){
-
+    this.typeService.delete(typeId).subscribe(
+      result => {
+        this.toastr.success("Type successfully deleted.");
+        window.location.reload();
+      },error =>{
+        this.toastr.error("Cannot delete this type!");
+        
+      }
+    );
   }
 
   editCategory(catId: number){
@@ -75,6 +83,9 @@ export class CategoriesAndTypesComponent implements OnInit {
       result => {
         this.toastr.success("Category successfully deleted.");
         window.location.reload();
+      },error =>{
+        this.toastr.error("Cannot delete this category!");
+        
       }
     );
   }

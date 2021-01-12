@@ -30,6 +30,10 @@ export class TypeService {
 		return this.http.put('http://localhost:8080/api/type/'+ id, editType, {headers: this.headers, responseType: 'text'});
 	}
 
+	delete(id: number): Observable<any> {
+		return this.http.delete('http://localhost:8080/api/type/'+ id, {headers: this.headers, responseType: 'text'});
+	}
+
 	getType(id:number):Observable<any>{
 		let queryParams = {};
 		queryParams = {
