@@ -6,17 +6,16 @@
         </div>
         <div style="float: right;"  *ngFor="let cat of categories" >
             <tr>
-                <th alt="category" matTooltip="{{cat.description}}">{{cat.name}} <a href="">
+                <th alt="category" matTooltip="{{cat.description}}">{{cat.name}} 
                     <mat-icon class="material-icons"  inline="true" (click)="editCategory(cat.id)">edit</mat-icon>
-                </a>  <a>
-                    <mat-icon class="material-icons"  inline="true" (click)="deleteCategory(cat.id)">delete</mat-icon>
-                </a></th>
+                    <mat-icon class="material-icons"  inline="true" (click)="confirmDialog(cat.id)">delete</mat-icon>
+                </th>
             </tr>
             <tr  *ngFor="let type of res[cat.id]">
-                <td alt="type" matTooltip="{{type.description}}">{{type.name}}  <a ><mat-icon class="material-icons"  inline="true" (click)="editType(type.id)">edit</mat-icon></a>
-                <a>
-                    <mat-icon class="material-icons"  inline="true" (click)="deleteType(type.id)">delete</mat-icon>
-                </a></td>
+                <td alt="type" matTooltip="{{type.description}}">{{type.name}}  
+                    <mat-icon class="material-icons"  inline="true" (click)="editType(type.id)">edit</mat-icon>
+                    <mat-icon class="material-icons"  inline="true" (click)="confirmDialogT(type.id)">delete</mat-icon>
+                </td>
             </tr>
         </div>
     

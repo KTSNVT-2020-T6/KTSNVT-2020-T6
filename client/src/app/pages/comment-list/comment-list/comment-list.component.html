@@ -1,12 +1,20 @@
 <div>
+    <div class="container1">
+    <div class="col">
+      <app-pagination [totalItems]="totalSize" [pageSize]="pageSize"
+        (pageSelected)="changePage($event)">
+      </app-pagination>
+    </div>
+    </div> 
     <ul>
       <li *ngFor="let c of comments">
         <header>
           <h1 >{{c?.nameSurname}}</h1>
           <img class="image" mat-card-image [src]="c.srcUser" alt="photo">
+          <img class="image"*ngIf="c.srcUser === undefined" mat-card-image src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" alt="photo">
           <div>
             <button *ngIf="currentUser?.id === c.userId" (click)="editComment(c.id)" ng-class="edit"></button>
-            <button *ngIf="currentUser?.id === c.userId" (click)="deleteComment(c.id)"></button>
+            <button *ngIf="currentUser?.id === c.userId" (click)="confirmDialog(c.id)"></button>
           </div>
         </header>
         <img class="image" *ngIf="c.srcComment !== undefined" mat-card-image [src]="c.srcComment" alt="photo">

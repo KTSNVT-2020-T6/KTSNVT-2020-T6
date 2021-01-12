@@ -136,13 +136,22 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 			post.setActive(false);
 			postRepository.save(post);
 		}
+		
+		ArrayList<Comment> del = new ArrayList<Comment>();
 		for (Comment comment : existingCO.getComment()) {
+			del.add(comment);
+			
+		}
+		for (Comment comment : del) {
 			comment.setActive(false);
+			
 			commentRepository.save(comment);
 		}
-
+	
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
+	
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
+	
 		emailService.nofiticationForDeleteCulturalOffer(users, existingCO.getName());
 		existingCO.setActive(false);
 		culturalOfferRepository.save(existingCO);

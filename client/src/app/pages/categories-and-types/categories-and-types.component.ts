@@ -10,6 +10,7 @@ import { CategoryService } from '../services/category/category.service';
 import { TypeService } from '../services/type/type.service';
 import {AddTypeComponent} from '../add-type/add-type.component';
 import {AddCategoryComponent} from '../add-category/add-category.component';
+import { ConfirmationComponent, ConfirmDialogModel } from '../confirmation/confirmation.component';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class CategoriesAndTypesComponent implements OnInit {
   categories!: Array<Category>;
   types!: Array<Type>;
   res = [] as any;
+  result:any;
+  result1:any;
 
   constructor(
     public dialog: MatDialog,
@@ -101,6 +104,36 @@ export class CategoriesAndTypesComponent implements OnInit {
     const dialogRef = this.dialog.open(AddCategoryComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+  confirmDialog(catId:number) {
+    const message = `Are you sure you want to do this?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+      if(this.result === true){
+        this.deleteCategory(catId);
+      }
+    });
+  }
+  confirmDialogT(tId:number) {
+    const message = `Are you sure you want to do this?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+      if(this.result === true){
+        this.deleteType(tId);
+      }
     });
   }
 }

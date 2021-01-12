@@ -25,6 +25,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long>{
 
 	Page<Comment> findByActive(Pageable pageable, boolean b);
 
-	Page<Comment> findAllByCulturalOfferId(Pageable pageable,Long id);
+	Page<Comment> findAllByCulturalOfferIdAndActive(Pageable pageable,Long id, boolean b);
 
 }

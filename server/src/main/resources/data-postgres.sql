@@ -5,7 +5,7 @@ insert into authority (role) values ('ROLE_ADMIN');
 
 insert into image (name, relative_path, active) values ('file1','src/main/resources/static/images/file1.jpg', true);
 insert into image (name, relative_path, active) values ('file2', 'src/main/resources/static/images/file2.jpg', true);
-insert into image (name, relative_path, active) values ('slika3', 'path3.jpg', true);
+insert into image (name, relative_path, active) values ('file3', 'src/main/resources/static/images/file2.jpg', true);
 insert into image (name, relative_path, active) values ('slika4', 'path4.jpg', true);
 insert into image (name, relative_path, active) values ('slika5','path5.jpg', true);
 insert into image (name, relative_path, active) values ('slika6','path6.jpg', true);
@@ -17,7 +17,7 @@ values ('admin', true,'admin@gmail.com', 'Marko','Markovic','$2a$10$RVzuprKddsjd
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
 values ('registered_user',true,'at@gmail.com', 'Ivan','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,2);
 insert into users (type, active, email, first_name, last_name, password, verified, image_id)
-values ('registered_user',true,'user2@gmail.com', 'Ivana','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,3);
+values ('registered_user',true,'user2@gmail.com', 'Ivana','Ivanovic','$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO',true,null);
 
 insert into users_authority (user_id, authority_id) values (1,2);
 insert into users_authority (user_id, authority_id) values (2,1);
@@ -66,11 +66,25 @@ insert into post (date, text, image_id, cultural_offer_id, active)
 values('2020-12-24 19:30:00', 'Nova izlozba Djure Jaksica ce biti u galeriji od prekosutra. Ocekujemo veliki broj zainteresovanih, ne propustite!!', 2, 1, true);
 insert into post (date, text, image_id, cultural_offer_id, active)
 values('2020-10-24 19:30:00', 'promocija knjige', 1, 1, true);
+insert into post (date, text, image_id, cultural_offer_id, active)
+values('2020-10-24 19:30:00', 'promocija knjige', null, 1, true);
+insert into post (date, text, image_id, cultural_offer_id, active)
+values('2020-10-24 19:30:00', 'promocija knjige', null, 1, true);
+insert into post (date, text, image_id, cultural_offer_id, active)
+values('2020-10-24 19:30:00', 'promocija knjige', null, 1, false);
 
 insert into comment (date, text, image_id, cultural_offer_id, registred_user_id, active)
 values ('2020-10-24 19:30:00', 'Izlozba je bila vrh. Evo jedne slike od mene.', 1, 1, 2, true);
 insert into comment (date, text, image_id, cultural_offer_id, registred_user_id, active)
-values ('2020-10-24 19:30:00', 'mnogo velika guzva', 4, 2, 3, true);
+values ('2020-10-24 19:30:00', 'mnogo velika guzva', 1, 1, 3, true);
+insert into comment (date, text, image_id, cultural_offer_id, registred_user_id, active)
+values ('2020-10-24 19:30:00', 'Mnogo velika guzva', null , 1, 3, true);
+insert into comment (date, text, image_id, cultural_offer_id, registred_user_id, active)
+values ('2020-10-24 19:30:00', 'Bila je velika guzva', 1, 1, 3, true);
+insert into comment (date, text, image_id, cultural_offer_id, registred_user_id, active)
+values ('2020-10-24 19:30:00', 'Ljudi nisu marili za COVID19', 1, 1, 3, true);
+insert into comment (date, text, image_id, cultural_offer_id, registred_user_id, active)
+values ('2020-10-24 19:30:00', 'Mnogo velika guzva', null , 1, 3, false);
 
 insert into rate (number, cultural_offer_id, registred_user_id, active) values (5, 1, 2, true);
 insert into rate (number, cultural_offer_id, registred_user_id, active) values (5, 2, 3, true);

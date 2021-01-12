@@ -145,4 +145,10 @@ public class Comment {
         return Objects.equals(id, comment.getId());
     }
 
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", text=" + text + ", date=" + date + ", registredUser=" + registredUser
+				+ ", image=" + image + ", active=" + active + "]";
+	}
+
 }

@@ -16,6 +16,8 @@ import { UserService } from '../services/user/user.service';
 import { Comment } from '../model/Comment';
 import { ImageService } from '../services/image/image.service';
 import { CommentService } from '../services/comment/comment.service';import { EditCulturalOfferComponent } from '../edit-cultural-offer/edit-cultural-offer.component';
+import { ConfirmationComponent, ConfirmDialogModel } from '../confirmation/confirmation.component';
+
 @Component({
   selector: 'app-cultural-offer-details',
   templateUrl: './cultural-offer-details.component.html',
@@ -33,6 +35,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
   subscribed!: number;
   images!: Img[];
   rate: Rate = {};
+  result:any;
   
   constructor(
     private fb: FormBuilder,
@@ -123,7 +126,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
     this.coService.delete(this.id).subscribe(
       result => {
         this.router.navigate(['home']);
-        this.toastr.success(result);
+        this.toastr.success("Successfully deleted cultural offer");
       }
     );
   }
@@ -186,6 +189,23 @@ export class CulturalOfferDetailsComponent implements OnInit {
           }
           
       });
+  }
+  confirmDialog() {
+    const message = `Are you sure you want to do this?`;
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+      if(this.result === true){
+        this.deleteCulturalOffer();
+      }
+    });
   }
 
 

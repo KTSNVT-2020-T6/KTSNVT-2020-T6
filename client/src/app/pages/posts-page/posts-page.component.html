@@ -1,4 +1,11 @@
 <div>
+  <div class="container1">
+    <div class="col">
+      <app-pagination [totalItems]="totalSize" [pageSize]="pageSize"
+        (pageSelected)="changePage($event)">
+      </app-pagination>
+    </div>
+  </div> 
   <mat-sidenav-container class="example-container">
     <mat-card class="example-card" *ngFor="let post of posts" fxLayout="column"> 
       <mat-card-header>
@@ -14,7 +21,7 @@
             </span>
           </div>
           <div class="flex-item" fxFlex="25%" >
-            <img *ngIf="post.src != null" mat-card-image [src]="post.src" alt="">
+            <img *ngIf="post.src !== undefined" mat-card-image [src]="post.src" alt="">
           </div>
       </mat-card-content>
     </span>
