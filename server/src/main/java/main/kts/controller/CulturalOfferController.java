@@ -1,5 +1,6 @@
 package main.kts.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -99,6 +100,7 @@ public class CulturalOfferController {
 	@PreAuthorize("hasRole('REGISTERED_USER')") 
 	public ResponseEntity<List<CulturalOfferDTO>> getSubscribedCulturalOffer(){
     	RegisteredUser registeredUser;
+    	
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = ((User) currentUser.getPrincipal()).getEmail();
         registeredUser = registeredUserService.findByEmail(username);
@@ -115,6 +117,7 @@ public class CulturalOfferController {
     	Page<CulturalOfferDTO> culturalOffersDTO = toCulturalOfferDTOPage(culturalOffers);
     	return new ResponseEntity<>(culturalOffersDTO, HttpStatus.OK);
     }
+
     
     @RequestMapping(method=RequestMethod.POST)
     @PreAuthorize("hasRole('ADMIN')")

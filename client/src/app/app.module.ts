@@ -50,6 +50,7 @@ import { EditPasswordComponent } from './pages/edit-password/edit-password.compo
 import { EditCulturalOfferComponent } from './pages/edit-cultural-offer/edit-cultural-offer.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { PostsPageComponent } from './pages/posts-page/posts-page.component';
+import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { SearchDetailsComponent } from './pages/search-details/search-details.component';
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { SearchDetailsComponent } from './pages/search-details/search-details.co
     EditCommentComponent,
     PaginationComponent,
 	EditPasswordComponent, 
-	EditCulturalOfferComponent, PostsPageComponent, SearchDetailsComponent
+	EditCulturalOfferComponent, PostsPageComponent, FavoriteComponent, SearchDetailsComponent
+
 
      ],
     imports: [

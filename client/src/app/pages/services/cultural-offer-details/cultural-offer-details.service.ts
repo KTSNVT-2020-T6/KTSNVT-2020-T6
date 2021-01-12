@@ -44,6 +44,17 @@ export class CulturalOfferDetailsService {
 		return this.http.get('http://localhost:8080/api/culturaloffer/', queryParams).pipe(map(res => res));
 		
 	}
+	getFavorite(): Observable<any> {
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+		};
+		return this.http.get('http://localhost:8080/api/culturaloffer/subscriptions', queryParams).pipe(map(res => res));
+		
+	}
+
 
 	edit(newCulturalOffer: CulturalOffer): Observable<any> {
 		return this.http.put('http://localhost:8080/api/culturaloffer/'+newCulturalOffer.id, newCulturalOffer, {headers: this.headers, responseType: 'json'});
