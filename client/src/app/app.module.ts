@@ -51,6 +51,7 @@ import { EditCulturalOfferComponent } from './pages/edit-cultural-offer/edit-cul
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { PostsPageComponent } from './pages/posts-page/posts-page.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
+import { SearchDetailsComponent } from './pages/search-details/search-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +82,8 @@ import { FavoriteComponent } from './pages/favorite/favorite.component';
     EditCommentComponent,
     PaginationComponent,
 	EditPasswordComponent, 
-	EditCulturalOfferComponent, PostsPageComponent, FavoriteComponent
+	EditCulturalOfferComponent, PostsPageComponent, FavoriteComponent, SearchDetailsComponent
+
 
      ],
     imports: [
