@@ -48,4 +48,32 @@ export class CulturalOfferDetailsService {
 	edit(newCulturalOffer: CulturalOffer): Observable<any> {
 		return this.http.put('http://localhost:8080/api/culturaloffer/'+newCulturalOffer.id, newCulturalOffer, {headers: this.headers, responseType: 'json'});
 	}
+	searchContent(content: string): Observable<any> {
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+		};
+		return this.http.get('http://localhost:8080/api/culturaloffer/content/'+ content, queryParams).pipe(map(res => res));
+
+	}
+	searchCity(city: string): Observable<any> {
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+		};
+		return this.http.get('http://localhost:8080/api/culturaloffer/from_city/'+ city, queryParams).pipe(map(res => res));
+	}
+	searchCombined(content: string, city: string): Observable<any> {
+		let queryParams = {};
+		queryParams = {
+			headers: this.headers,
+			observe: 'response',
+			params: new HttpParams()
+		};
+		return this.http.get('http://localhost:8080/api/culturaloffer/combined/'+ content + '/' + city, queryParams).pipe(map(res => res));
+	}
 }

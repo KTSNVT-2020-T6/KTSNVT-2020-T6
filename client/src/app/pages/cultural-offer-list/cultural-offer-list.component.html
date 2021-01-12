@@ -7,6 +7,12 @@
           filter_alt
           </span>
         </button>
+        <button (click)="searchClicked()" mat-button> 
+          Search
+          <span class="material-icons black-colored-icon">
+          search
+          </span>
+        </button>
       </span>
       
       <div fxFlex="100%" *ngFor="let co of culturalOfferList" style="justify-content: center; align-items: center;">
