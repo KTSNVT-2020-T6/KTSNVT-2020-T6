@@ -1,16 +1,26 @@
 <div>
-  <div class="container1">
-    <div class="col">
-      <app-pagination [totalItems]="totalSize" [pageSize]="pageSize"
-        (pageSelected)="changePage($event)">
-      </app-pagination>
-    </div>
-  </div> 
+   
   <mat-sidenav-container class="example-container">
+    <h1 align="center" *ngIf="posts[0]==null">No posts yet.</h1>
+    <div class="container1">
+      <div class="col">
+        <app-pagination [totalItems]="totalSize" [pageSize]="pageSize"
+          (pageSelected)="changePage($event)">
+        </app-pagination>
+      </div>
+    </div>
     <mat-card class="example-card" *ngFor="let post of posts" fxLayout="column"> 
+      <div><button *ngIf="role === 'ROLE_ADMIN'" (click)="confirmDialog(post.id)" align="end" style="background-color:transparent;float:right" mat-button>
+        <span class="material-icons blue-colored-icon" >
+        delete
+        </span>
+      </button></div>
+      
       <mat-card-header>
+        
         <mat-card-title class="title">{{post.culturalOfferName}}</mat-card-title>
         <mat-card-subtitle>{{post.date | date}}</mat-card-subtitle>
+        
       </mat-card-header>
       <span>
       

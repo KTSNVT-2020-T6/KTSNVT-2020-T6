@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmationComponent, ConfirmDialogModel } from '../confirmation/confirmation.component';
 import { CulturalOffer } from '../model/CulturalOffer';
 import { Img } from '../model/Image';
 import { Post } from '../model/Post';
@@ -19,18 +22,23 @@ export class PostsPageComponent implements OnInit {
 	currentPage: number;
   totalSize: number;
   image: any;
+  role!: string|undefined;
+  result: any;
+
 
   constructor(private postService: PostService,
     private culturalOfferService: CulturalOfferDetailsService,
     private imageService: ImageService,
     private toastr: ToastrService,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    public dialog: MatDialog) {
       this.pageSize = 3;
 		  this.currentPage = 1;
 		  this.totalSize = 1;
   }
 
   ngOnInit(): void {
+    this.getRole();
     this.postService.getPage(this.currentPage - 1, this.pageSize).subscribe(
 			res => {
         this.posts = res.body.content as Post[];
@@ -65,6 +73,16 @@ export class PostsPageComponent implements OnInit {
         
       }
     );
+  }
+
+  getRole() {
+    const item = localStorage.getItem('user');
+    if (!item) {
+      this.role = undefined;
+      return;
+    }
+    const jwt: JwtHelperService = new JwtHelperService();
+    this.role = jwt.decodeToken(item).role;
   }
   
   changePage(newPage: number) {
@@ -104,7 +122,7 @@ export class PostsPageComponent implements OnInit {
     );
 	}
   
-  deletePost(postId: number)
+  deletePost(postId: any)
   {
     // nije testirano
     this.postService.delete(postId).subscribe(
@@ -114,6 +132,22 @@ export class PostsPageComponent implements OnInit {
     },error =>{
       this.toastr.error("Cannot delete this post!");
       
+    });
+  }
+
+  confirmDialog(id:any) {
+    const message = `Are you sure you want to do this?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      maxWidth: "400px", 
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+      if(this.result === true){
+        this.deletePost(id);
+      }
     });
   }
 
