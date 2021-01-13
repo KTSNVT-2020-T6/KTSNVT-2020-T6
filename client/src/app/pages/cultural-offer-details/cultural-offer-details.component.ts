@@ -72,36 +72,16 @@ export class CulturalOfferDetailsComponent implements OnInit {
     this.rate.number = rated.rating as number;
     this.rate.culturalOfferId = this.culturalOffer.id;
     this.rate.registredUserId = 1;
-    console.log(this.rate);
     this.rateService.createOrEditRate(this.rate).subscribe(
       result => {
-        if(result.body === null){
-          this.rateService.createRate(this.rate).subscribe(
-            res => {
-              this.coService.getOne(this.id).subscribe(
-                res => {
-                  this.culturalOffer = res.body as CulturalOffer;
-                  this.images =  this.culturalOffer.imageDTO as Img[];
-                }
-              );
-            }
-          );
-        }
-        else{
-          this.rate = result.body as Rate;
-          this.rate.number = rated.rating as number;
-          this.rateService.editRate(result.body).subscribe(
-            res => {
-              this.coService.getOne(this.id).subscribe(
-                res => {
-                  this.culturalOffer = res.body as CulturalOffer;
-                  this.images =  this.culturalOffer.imageDTO as Img[];
-                }
-              );
-            }
-          );
-        }
-       
+        this.coService.getOne(this.id).subscribe(
+          res => {
+            this.culturalOffer = res.body as CulturalOffer;
+            this.images =  this.culturalOffer.imageDTO as Img[];
+          }
+        );
+      },error =>{
+        console.log(error);
       }
     );
 
@@ -144,16 +124,6 @@ export class CulturalOfferDetailsComponent implements OnInit {
     });
 
   }
-   // addImage(){
-    //   this.image.relativePath = this.form.value['image'];
-    //   this.image.description = 'new_image';
-    //   this.imageService.add(this.image as Image).subscribe(
-    //     result => {
-    //       console.log(result);
-    //       this.imageId = result.body;
-    //     }
-    //   );
-    //   }
 
   addNewComment(){
     this.userService.getCurrentUser().subscribe(

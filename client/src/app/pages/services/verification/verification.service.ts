@@ -6,15 +6,14 @@ import { Observable } from 'rxjs';
 	providedIn: 'root'
 })
 export class VerificationService {
-	private headers = new HttpHeaders({'Content-Type': 'application/json','Access-Control-Allow-Origin': '*'});
+	private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
 	constructor(
 		private http: HttpClient
 	) { }
 
 	verify(token: string): Observable<any> {
-		console.log(token);
-		return this.http.get('http://localhost:8080/verification/'+token, {headers: this.headers, responseType: 'json'});
+		return this.http.get('http://localhost:8080/api/verification/'+token, {headers: this.headers, responseType: 'text'});
 	}
 
 

@@ -93,13 +93,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
         web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
-        web.ignoring().antMatchers(HttpMethod.GET, "/api/culturaloffer/{id}");
-        web.ignoring().antMatchers(HttpMethod.GET, "/api/culturaloffer/from_city/**");
-        web.ignoring().antMatchers(HttpMethod.GET, "/api/culturaloffer/content/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/verification/**");
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/cultural-offer/");
+        //web.ignoring().antMatchers(HttpMethod.GET, "/api/cultural-offer/**"); ovo ne vracati ! ! ! 
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/cultural-offer/{id}");
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/cultural-offer/from_city/**");
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/cultural-offer/content/**");       
         web.ignoring().antMatchers(HttpMethod.GET, "/api/registered_user/interested/{id}");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/comment/**");
-        web.ignoring().antMatchers(HttpMethod.GET, "/api/culturaloffer/**");
+        
+        
         web.ignoring().antMatchers(HttpMethod.GET, "/api/image/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/post/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/rate");

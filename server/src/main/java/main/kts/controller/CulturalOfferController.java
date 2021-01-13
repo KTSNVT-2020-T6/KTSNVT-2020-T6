@@ -38,7 +38,7 @@ import main.kts.service.TypeService;
 
 
 @RestController
-@RequestMapping(value = "/api/culturaloffer", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/cultural-offer", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CulturalOfferController {
 	
 	@Autowired
@@ -96,7 +96,7 @@ public class CulturalOfferController {
    		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
    	}
     
-    @RequestMapping(value="/subscriptions", method = RequestMethod.GET)
+    @RequestMapping(value="/find/subscriptions", method = RequestMethod.GET)
 	@PreAuthorize("hasRole('REGISTERED_USER')") 
 	public ResponseEntity<List<CulturalOfferDTO>> getSubscribedCulturalOffer(){
     	RegisteredUser registeredUser;
@@ -158,6 +158,17 @@ public class CulturalOfferController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Subscription done", HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="/unsubscribe/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('REGISTERED_USER')")
+    public ResponseEntity<Object> unsubscribeUserToCulturalOffer(@PathVariable Long id){
+        registeredUserService.unsubscribeUser(id);
+        try {
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)

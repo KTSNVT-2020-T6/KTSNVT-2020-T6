@@ -179,7 +179,6 @@ public class RateController {
         Rate rate;
     	CulturalOffer culturalOffer;
     	Rate check;
-    	//
   
         try {
         	Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
@@ -192,9 +191,10 @@ public class RateController {
             check = rateService.check(rate);
             System.out.println(check);
             if(check != null)
-            	return new ResponseEntity<>(rateMapper.toDto(check), HttpStatus.OK);
+            	this.updateRate(rateDTO, check.getId());
             else
-                return new ResponseEntity<>(null, HttpStatus.OK);
+            	this.createRate(rateDTO);
+            return new ResponseEntity<>("Rated successfully!", HttpStatus.OK);
             
         } catch (Exception e) {
             return new ResponseEntity<>("Cannot create rate: id not found", HttpStatus.BAD_REQUEST);

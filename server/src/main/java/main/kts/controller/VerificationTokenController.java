@@ -18,7 +18,7 @@ import main.kts.model.VerificationToken;
 import main.kts.service.VerificationTokenService;
 
 @RestController
-@RequestMapping(value="api/verification")
+@RequestMapping(value="/api/verification")
 public class VerificationTokenController {
 	
 	@Autowired

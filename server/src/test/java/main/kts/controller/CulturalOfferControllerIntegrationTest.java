@@ -56,7 +56,7 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/culturaloffer", HttpMethod.GET, request,
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer", HttpMethod.GET, request,
 				CulturalOfferDTO[].class);
 		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
 
@@ -72,7 +72,7 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/culturaloffer?page=0&size=2", HttpMethod.GET,
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer?page=0&size=2", HttpMethod.GET,
 				request, CulturalOfferDTO[].class);
 		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
 
@@ -88,7 +88,7 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/" + CO_ID, HttpMethod.GET,
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/cultural-offer/" + CO_ID, HttpMethod.GET,
 				request, CulturalOfferDTO.class);
 		CulturalOfferDTO culturalOffer = responseEntity.getBody();
 
@@ -104,7 +104,7 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/" + FALSE_ID, HttpMethod.GET,
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/cultural-offer/" + FALSE_ID, HttpMethod.GET,
 				request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
@@ -143,7 +143,7 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
 
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/cultural-offer", request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(NEW_CO_NAME, responseEntity.getBody().getName());
@@ -176,7 +176,7 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/cultural-offer", request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
@@ -210,7 +210,7 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
 
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/cultural-offer", request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
@@ -244,7 +244,7 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
 
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/cultural-offer", request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
@@ -278,7 +278,7 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
 
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/cultural-offer", request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
@@ -312,7 +312,7 @@ public class CulturalOfferControllerIntegrationTest {
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
 
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/culturaloffer", request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.postForEntity("/api/cultural-offer", request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
@@ -346,7 +346,7 @@ public class CulturalOfferControllerIntegrationTest {
 		jsonObject.put("imageDTO", imagesObject);
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_UPDATE_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/cultural-offer/"+DB_UPDATE_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(DB_CO_NAME, responseEntity.getBody().getName());
@@ -380,7 +380,7 @@ public class CulturalOfferControllerIntegrationTest {
 		jsonObject.put("imageDTO", imagesObject);
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_FALSE_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/cultural-offer/"+DB_FALSE_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	
@@ -409,7 +409,7 @@ public class CulturalOfferControllerIntegrationTest {
 		jsonObject.put("imageDTO", imagesObject);
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/cultural-offer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	
@@ -441,7 +441,7 @@ public class CulturalOfferControllerIntegrationTest {
 		jsonObject.put("imageDTO", imagesObject);
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/cultural-offer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	
@@ -472,7 +472,7 @@ public class CulturalOfferControllerIntegrationTest {
 		jsonObject.put("imageDTO", imagesObject);
 		
 		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/culturaloffer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
+		ResponseEntity<CulturalOfferDTO> responseEntity = restTemplate.exchange("/api/cultural-offer/"+DB_CO_ID, HttpMethod.PUT, request, CulturalOfferDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	
@@ -489,7 +489,7 @@ public class CulturalOfferControllerIntegrationTest {
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 		
         ResponseEntity<Void> responseEntity =
-                restTemplate.exchange("/api/culturaloffer/" + DB_UPDATE_ID,
+                restTemplate.exchange("/api/cultural-offer/" + DB_UPDATE_ID,
                         HttpMethod.DELETE, request, Void.class);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -505,7 +505,7 @@ public class CulturalOfferControllerIntegrationTest {
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 		
         ResponseEntity<Void> responseEntity =
-                restTemplate.exchange("/api/culturaloffer/" + DB_FALSE_CO_ID,
+                restTemplate.exchange("/api/cultural-offer/" + DB_FALSE_CO_ID,
                         HttpMethod.DELETE, request, Void.class);
 
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
@@ -518,7 +518,7 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/culturaloffer/from_city/"+DB_CITY, HttpMethod.GET, request,
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer/from_city/"+DB_CITY, HttpMethod.GET, request,
 				CulturalOfferDTO[].class);
 		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
 
@@ -534,7 +534,7 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/culturaloffer/content/"+DB_CONTENT, HttpMethod.GET, request,
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer/content/"+DB_CONTENT, HttpMethod.GET, request,
 				CulturalOfferDTO[].class);
 		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
 
@@ -548,7 +548,7 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/culturaloffer/combined/"+DB_CONTENT+"/"+DB_CITY, HttpMethod.GET, request,
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer/combined/"+DB_CONTENT+"/"+DB_CITY, HttpMethod.GET, request,
 				CulturalOfferDTO[].class);
 		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
 

@@ -20,25 +20,7 @@ export class RateService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.post('http://localhost:8080/api/rate/check', newRate, queryParams);
+		return this.http.post('http://localhost:8080/api/rate/check', newRate , {headers: this.headers, responseType: 'text'});
 	}
-	createRate(newRate : Rate):Observable<any>{
-        let queryParams = {};
-		queryParams = {
-			headers: this.headers,
-			observe: 'response',
-			params: new HttpParams()
-		};
-		return this.http.post('http://localhost:8080/api/rate', newRate, queryParams);
-	}
-	editRate(newRate : Rate):Observable<any>{
-        let queryParams = {};
-		queryParams = {
-			headers: this.headers,
-			observe: 'response',
-			params: new HttpParams()
-		};
-		return this.http.put('http://localhost:8080/api/rate/'+ newRate.id, newRate, queryParams);
-    }
 
 }

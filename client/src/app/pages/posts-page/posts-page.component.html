@@ -1,7 +1,7 @@
 <div>
    
   <mat-sidenav-container class="example-container">
-    <h1 align="center" *ngIf="posts[0]==null">No posts yet.</h1>
+    <h1 align="center" *ngIf="posts===undefined">No posts yet.</h1>
     <div class="container1">
       <div class="col">
         <app-pagination [totalItems]="totalSize" [pageSize]="pageSize"
@@ -18,7 +18,7 @@
       
       <mat-card-header>
         
-        <mat-card-title class="title">{{post.culturalOfferName}}</mat-card-title>
+        <mat-card-title class="title"><a href="culturaloffer/{{post.culturalOfferId}}">{{post.culturalOfferName}}</a></mat-card-title>
         <mat-card-subtitle>{{post.date | date}}</mat-card-subtitle>
         
       </mat-card-header>

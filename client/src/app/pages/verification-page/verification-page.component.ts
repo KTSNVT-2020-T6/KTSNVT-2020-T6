@@ -19,12 +19,14 @@ export class VerificationPageComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.verificationMessage = '';
     this.token = this.route.snapshot.paramMap.get('token');
     this.verificationService.verify(this.token).subscribe(
       res => {
         this.router.navigate(['login']);
         this.toastr.success('Successfully verified!');
       },error => {
+        console.log(error);
         this.verificationMessage = 'Token is not valid or expired!';
       }
       

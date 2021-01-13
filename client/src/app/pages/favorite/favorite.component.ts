@@ -4,6 +4,7 @@ import { Img } from '../model/Image';
 import { CulturalOfferDetailsService } from '../services/cultural-offer-details/cultural-offer-details.service';
 import { ImageService } from '../services/image/image.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-favorite',
@@ -17,14 +18,15 @@ export class FavoriteComponent implements OnInit {
   base64image: any;
   
   constructor(private culturalOfferDetailsService: CulturalOfferDetailsService,
-    private imageService: ImageService, private sanitizer: DomSanitizer) {
+    private imageService: ImageService, private sanitizer: DomSanitizer,
+    private toastr: ToastrService) {
    
   }
  
   ngOnInit() {
     this.culturalOfferDetailsService.getFavorite().subscribe(
 			res => {
-        this.culturalOffers = res.body.content as CulturalOffer[];
+        this.culturalOffers = res.body as CulturalOffer[];
         this.culturalOffers.forEach(element => {
         this.images = element.imageDTO as Img[];
         if(this.images.length == 0){
@@ -51,8 +53,18 @@ export class FavoriteComponent implements OnInit {
     );
     
   }
-  unsubscribe(id:any){
-
+  unsubscribe(co:CulturalOffer){
+    this.culturalOfferDetailsService.unsubscribe(co.id).subscribe(
+      res =>{
+        this.toastr.success("Unsubscribed from "+co.name);
+        const idx = this.culturalOffers.indexOf(co);
+        this.culturalOffers.splice(idx, 1);
+        
+      },error =>{
+        this.toastr.success("Something went wrong");
+        console.log(error);
+      }
+    )
   }
 
 }
