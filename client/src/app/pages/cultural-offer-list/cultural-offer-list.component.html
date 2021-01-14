@@ -1,16 +1,10 @@
 <div class="content scrollbar scrollbar-dusty-grass">  
     <div fxLayout="column wrap" fxLayoutGap="16px">
       <span>
-        <button mat-button> 
+        <button (click)="searchClicked()" mat-button> 
           Filter
           <span class="material-icons black-colored-icon">
           filter_alt
-          </span>
-        </button>
-        <button (click)="searchClicked()" mat-button> 
-          Search
-          <span class="material-icons black-colored-icon">
-          search
           </span>
         </button>
       </span>
