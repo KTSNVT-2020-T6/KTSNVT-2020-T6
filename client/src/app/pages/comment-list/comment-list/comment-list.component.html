@@ -13,15 +13,13 @@
           <img class="image" mat-card-image [src]="c.srcUser" alt="photo">
           <img class="image"*ngIf="c.srcUser === undefined" mat-card-image src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" alt="photo">
           <div>
-            <!-- <button *ngIf="currentUser?.id === c.userId" (click)="editComment(c.id)" ng-class="edit"></button> -->
             <button  mat-icon-button *ngIf="currentUser?.id === c.userId" (click)="editComment(c.id)">
-              <mat-icon>create</mat-icon>
+              <mat-icon class="first">create</mat-icon>
             </button>
             <button mat-icon-button *ngIf="currentUser?.id === c.userId" (click)="confirmDialog(c.id)">
-              <mat-icon>create</mat-icon>
+              <mat-icon class="second">create</mat-icon>
             </button>
-            <!-- <button *ngIf="currentUser?.id === c.userId" (click)="confirmDialog(c.id)"></button> -->
-          </div>
+           </div>
         </header>
         <img class="image" *ngIf="c.srcComment !== undefined" mat-card-image [src]="c.srcComment" alt="photo">
         <p>{{c?.text}}</p>

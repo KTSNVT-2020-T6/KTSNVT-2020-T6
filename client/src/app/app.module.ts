@@ -53,6 +53,7 @@ import { PostsPageComponent } from './pages/posts-page/posts-page.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { SearchDetailsComponent } from './pages/search-details/search-details.component';
+import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-autocomplete';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { SearchDetailsComponent } from './pages/search-details/search-details.co
     MatFormFieldModule,
     FlexLayoutModule,
     ToastrModule.forRoot(),
-    MaterialModule
+    MaterialModule,
+    GeoapifyGeocoderAutocompleteModule.withConfig('bac3b0a7331c49dd8a287ce77712b64e')
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
   bootstrap: [AppComponent]

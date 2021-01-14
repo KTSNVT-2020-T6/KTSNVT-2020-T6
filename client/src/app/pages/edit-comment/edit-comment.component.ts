@@ -9,7 +9,7 @@ import { ImageService } from '../services/image/image.service';
 @Component({
   selector: 'app-edit-comment',
   templateUrl: './edit-comment.component.html',
-  styleUrls: ['./edit-comment.component.css']
+  styleUrls: ['./edit-comment.component.scss']
 })
 export class EditCommentComponent implements OnInit {
   editForm!: FormGroup;

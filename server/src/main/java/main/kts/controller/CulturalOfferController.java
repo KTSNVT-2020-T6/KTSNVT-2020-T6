@@ -97,7 +97,6 @@ public class CulturalOfferController {
    	}
     
     @RequestMapping(value="/find/subscriptions", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('REGISTERED_USER')") 
 	public ResponseEntity<List<CulturalOfferDTO>> getSubscribedCulturalOffer(){
     	RegisteredUser registeredUser;
     	
@@ -151,13 +150,13 @@ public class CulturalOfferController {
  
     @RequestMapping(value="/subscribe/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('REGISTERED_USER')")
-    public ResponseEntity<String> subscribeUserToCulturalOffer(@PathVariable Long id){
+    public ResponseEntity<Object> subscribeUserToCulturalOffer(@PathVariable Long id){
         registeredUserService.subscribeUser(id);
         try {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Subscription done", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @RequestMapping(value="/unsubscribe/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -19,7 +19,11 @@ import { TypeService } from '../services/type/type.service';
 export class EditCulturalOfferComponent implements OnInit {
   form!: FormGroup;
   types: Type[] = [];
-  newType!: Type;
+  newType!: Type; 
+  placeLon: any;
+  placeLat: any;
+  city: any;
+  todayDate: any;
 
   selectedFiles!: FileList;
   progressInfos: any[] = [];
@@ -33,7 +37,9 @@ export class EditCulturalOfferComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public co: CulturalOffer) { 
       this.createForm();
       this.form.patchValue(this.co);
+      this.todayDate = new Date();
     }
+
 
   ngOnInit(): void {
     this.typeService.getAll().subscribe(
@@ -51,16 +57,28 @@ export class EditCulturalOfferComponent implements OnInit {
     this.form = this.fb.group({
       'name': ['', Validators.required],
       'description': ['', Validators.required],
-      'city':['',Validators.required],
       'typeDTO':['', Validators.required],
-      'image':['']  
+      'image':[''],
+      'date':['',Validators.required]
     })
   };
 
   saveChanges(){
+  
+    this.co.lat = this.placeLat;
+    this.co.lon = this.placeLon;
+    this.co.city = this.city;
+  
+    
+    if(this.placeLat === undefined || this.placeLon === undefined){
+      return;
+    }
+    if(this.city === undefined || this.city === null){
+      return;
+    }    
       this.co.name = this.form.value['name'];
       this.co.description = this.form.value['description'];
-      this.co.city = this.form.value['city'];
+      this.co.date = this.form.value['date'];
 
       this.culturalOfferService.edit(this.co).subscribe(
         result => {
@@ -103,6 +121,12 @@ export class EditCulturalOfferComponent implements OnInit {
         this.toastr.error("Error saving image! Choose different one!");
       });
   }
+
+  placeSelected(place: any){
+    this.placeLat = place.properties.lat;
+    this.placeLon = place.properties.lon;
+    this.city = place.properties.address_line1 + " " + place.properties.address_line2;
+    }
 }
 
 
