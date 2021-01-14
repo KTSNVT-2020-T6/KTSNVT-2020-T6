@@ -36,6 +36,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
   images!: Img[];
   rate: Rate = {};
   result:any;
+  checker!: boolean;
   
   constructor(
     private fb: FormBuilder,
@@ -54,6 +55,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
   ngOnInit() {
     
     this.getRole();
+    
     //fill data
     this.id = this.route.snapshot.paramMap.get('id');
     this.coService.getOne(this.id).subscribe(
@@ -62,12 +64,19 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.images =  this.culturalOffer.imageDTO as Img[];
       }
     );
+    this.checkSubscription();
+    this.getNumberOfSubscribed();
+
+  }
+
+  getNumberOfSubscribed(){
     this.regUserService.getNumberOfSubscribed(this.id).subscribe(
       res => {
         this.subscribed = res.body;
       }
     );
   }
+
   rateClicked(rated:any){
     this.rate.number = rated.rating as number;
     this.rate.culturalOfferId = this.culturalOffer.id;
@@ -177,6 +186,48 @@ export class CulturalOfferDetailsComponent implements OnInit {
       }
     });
   }
+checkSubscription() {
+  this.coService.getFavorite().subscribe(
+    res =>{
+      const favorites = res.body as CulturalOffer[];
+      favorites.forEach(element => {
+        if(element.id === this.culturalOffer.id){
+          this.checker = true;
+          return;
+        }else{
+          this.checker = false;
+        }
+      });
+      
+    },error =>{
+      console.log(error);
+    }
+  )
+} 
+subscribeUser() {
+  this.coService.subscribeUser(this.culturalOffer.id).subscribe(
+    res =>{
+      this.toastr.success("Subscribed to "+this.culturalOffer.name);
+      this.checker = true;
+      this.getNumberOfSubscribed();
+      
+    },error =>{
+      console.log(error);
+    }
+  )
+}
+unsubscribe() {
+  this.coService.unsubscribe(this.culturalOffer.id).subscribe(
+    res =>{
+      this.toastr.success("Unsubscribed from "+this.culturalOffer.name);
+      this.checker = false;
+      this.getNumberOfSubscribed();
 
+      
+    },error =>{
+      console.log(error);
+    }
+  )
+}
 
 }

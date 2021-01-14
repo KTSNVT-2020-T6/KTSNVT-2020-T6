@@ -104,11 +104,18 @@ ul li header div button {
  
   cursor: pointer;
 }
-ul li header div button mat-icon{
+ul li header div button .first{
   background: url(https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_mode_edit_48px-512.png);
-  background-size: 40px 40px;
-  width: 40px;
-  height: 40px;
+  background-size: 25px 25px;
+  width:  25px;
+  height: 25px;
+  cursor: pointer;
+}
+ul li header div button .second{
+  background: url(https://image.flaticon.com/icons/png/512/61/61848.png);
+  background-size: 25px 25px;
+  width:  25px;
+  height:  25px;
   cursor: pointer;
 }
 // ul li header div button:nth-child(1) {

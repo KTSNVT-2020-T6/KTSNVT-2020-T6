@@ -10,6 +10,7 @@ import { CulturalOfferDetailsService} from '../services/cultural-offer-details/c
 import { CategoryService } from '../services/category/category.service';
 import { TypeService } from '../services/type/type.service';
 import { MatDialog ,MatDialogRef} from '@angular/material/dialog';
+
 @Component({
   selector: 'app-add-cultural-offer',
   templateUrl: './add-cultural-offer.component.html',
@@ -25,6 +26,10 @@ export class AddCulturalOfferComponent implements OnInit {
   type!: Type;
   selectFormControl = new FormControl('', Validators.required);
   todayDate!: Date;
+  placeLon: any;
+  placeLat: any;
+  city: any;
+
   constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -49,10 +54,7 @@ export class AddCulturalOfferComponent implements OnInit {
 	this.coForm = this.fb.group({
 		'name': ['',Validators.required],
 		'description': ['',Validators.required],
-		'city': ['',Validators.required],
-		'date':['',Validators.required],
-		'lon': [''],
-		'lat': [''],
+		'date':[''],
 		'typeDTO': ['',Validators.required]
    });
   }
@@ -69,20 +71,28 @@ export class AddCulturalOfferComponent implements OnInit {
   }  
   addCulturalOffer(){
 	this.culturalOffer = this.coForm.value;
+	this.culturalOffer.lat = this.placeLat;
+	this.culturalOffer.lon = this.placeLon;
+	this.culturalOffer.city = this.city;
+
+	console.log(this.culturalOffer);
+	if(this.placeLat === undefined || this.placeLon === undefined){
+		return;
+	}
+	if(this.city === undefined || this.city === null){
+		return;
+	}
 	if(this.culturalOffer.name === '' || this.culturalOffer.name === null )
     {
       return;
     }
-	else if(this.culturalOffer.description === '' || this.culturalOffer.description === null ){
+	if(this.culturalOffer.description === '' || this.culturalOffer.description === null ){
       return;
 	}
-	else if(this.culturalOffer.typeDTO === null || JSON.stringify(this.culturalOffer.typeDTO) === JSON.stringify("")){
+	if(this.culturalOffer.typeDTO === null || JSON.stringify(this.culturalOffer.typeDTO) === JSON.stringify("")){
 		return;
-	  }
-	else if(this.culturalOffer.city === '' || this.culturalOffer.city === null ){
-	return;
 	}
-	else if(this.culturalOffer.date === null ){
+	if(this.culturalOffer.date === null ){
 	return;
 	}
     else{
@@ -96,7 +106,12 @@ export class AddCulturalOfferComponent implements OnInit {
 		this.coForm.reset();
 		}
 	
+  }
 
+  placeSelected(place: any){
+	this.placeLat = place.properties.lat;
+	this.placeLon = place.properties.lon;
+	this.city = place.properties.address_line1 + " " + place.properties.address_line2;
   }
 
 }
