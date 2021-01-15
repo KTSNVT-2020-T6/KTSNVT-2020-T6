@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../services/category/category.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-type',
@@ -28,7 +29,8 @@ export class EditTypeComponent implements OnInit {
 		private typeService: TypeService,
 		private categoryService: CategoryService,
 		private route: ActivatedRoute,
-		private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialogRef: MatDialogRef<EditTypeComponent>
 	) {
     this.createForm();
   }
@@ -67,23 +69,20 @@ export class EditTypeComponent implements OnInit {
     this.type.categoryDTO = this.category;
     this.typeService.update(this.type as Type, this.typeId).subscribe(
       result => {
-        this.toastr.success(result);
-        this.router.navigate(['home']);
+        this.toastr.success("Succesfully edited!");
+        this.dialogRef.close();
+        window.location.reload();
       },
       error => {
-        this.toastr.error(error.console.error);
+        this.toastr.error("Cannot edit type!");
       }
     );
     this.typeForm.reset();
     }
 
     cancelClicked(){
-      this.typeForm = this.fb.group({
-        'name': [this.type.name],
-        'description': [this.type.description],
-         });
-        this.category = this.type.categoryDTO;
-  
+      this.dialogRef.close();
+      
     }
 
 }

@@ -178,7 +178,7 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
 		emailService.nofiticationForAddingPost(users, culturalOffer.getName());
 	}
-
+/*
 	public List<CulturalOffer> findByCity(String city) {
 		return culturalOfferRepository.findByCity(city);
 	}
@@ -190,10 +190,11 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		
 		return culturalOfferRepository.findByContent(content);
 	}
+	*/
 
-	public List<CulturalOffer> findByCombinedSearch(String upperCase, String upperCase2) {
+	public Page<CulturalOffer> findByCombinedSearch(Pageable pageable, String upperCase, String upperCase2) {
 		// TODO Auto-generated method stub
-		return culturalOfferRepository.findByCombinedSearch(upperCase, upperCase2);
+		return culturalOfferRepository.findByCombinedSearch(pageable, upperCase, upperCase2);
 	}
 
 }

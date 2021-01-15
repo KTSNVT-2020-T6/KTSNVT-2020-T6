@@ -20,18 +20,19 @@ public interface CulturalOfferRepository extends JpaRepository<CulturalOffer, Lo
 
 	Optional<CulturalOffer> findByIdAndActive(Long id, boolean b);
 	
+	/*
 	@Query(value ="SELECT * FROM CULTURAL_OFFER WHERE upper(CITY) LIKE %?1%", nativeQuery = true)
 	List<CulturalOffer> findByCity(String city);
 
 	@Query(value ="SELECT * FROM CULTURAL_OFFER WHERE upper(NAME) LIKE %?1% OR upper(DESCRIPTION) LIKE %?1% OR upper(CITY) LIKE %?1%", nativeQuery = true)
 	List<CulturalOffer> findByContent(String content);
+	*/
 
 	@Query(value ="SELECT * FROM CULTURAL_OFFER WHERE (upper(NAME) LIKE %?1% OR upper(DESCRIPTION) LIKE %?1%) AND (upper(CITY) like %?2%)", nativeQuery = true)
-	List<CulturalOffer> findByCombinedSearch(String upperCase, String upperCase2);
+	Page<CulturalOffer> findByCombinedSearch(Pageable pageable, String upperCase, String upperCase2);
 
 	List<CulturalOffer> findByTypeId(Long id);
 	
-	@Query(value ="SELECT * FROM CULTURAL_OFFER WHERE upper(CITY) LIKE %?2%", nativeQuery = true)
-	Page<CulturalOffer> findByCity(Pageable pageable, String city);
+	
 
 }

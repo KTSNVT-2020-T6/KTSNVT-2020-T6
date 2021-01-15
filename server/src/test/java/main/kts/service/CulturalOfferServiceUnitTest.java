@@ -91,7 +91,7 @@ public class CulturalOfferServiceUnitTest {
 		given(culturalOfferRepository.save(existingCulturalOffer)).willReturn(existingCulturalOffer);
 		given(culturalOfferRepository.findById(CO_ID)).willReturn(Optional.of(existingCulturalOffer));
 		given(culturalOfferRepository.findById(FALSE_ID)).willReturn(Optional.empty());
-		given(culturalOfferRepository.findByCombinedSearch(DB_CO_NAME, DB_CO_CITY)).willReturn(coByCombinedSearch);
+		//given(culturalOfferRepository.findByCombinedSearch(DB_CO_NAME, DB_CO_CITY)).willReturn(coByCombinedSearch);
 		given(authentication.getName()).willReturn(ADMIN_EMAIL);
 		given(securityContext.getAuthentication()).willReturn(authentication);
 		given(adminRepository.findByEmail(ADMIN_EMAIL)).willReturn(admin);
@@ -99,14 +99,14 @@ public class CulturalOfferServiceUnitTest {
 		given(registeredUserRepository.findByIdCO(CO_ID)).willReturn(subs);
 		given(rateRepository.findAllByCulturalOfferId(DB_CO_ID)).willReturn(rates);
 	}
-
+/*
 	@Test
 	public void testCombinedSearch() {
 		List<CulturalOffer> result = culturalOfferService.findByCombinedSearch(DB_CO_NAME, DB_CO_CITY);
 		verify(culturalOfferRepository, times(1)).findByCombinedSearch(DB_CO_NAME, DB_CO_CITY);
 		assertEquals(DB_SIZE_BY_COMBINED_SEARCH, result.size());
 	}
-	
+	*/
 	@Test
 	public void testCreate() throws Exception {
 		CulturalOffer culturalOffer = new CulturalOffer(NEW_CO_NAME, NEW_CO_DESCRIPTION, NEW_CO_DATE, NEW_CO_CITY,

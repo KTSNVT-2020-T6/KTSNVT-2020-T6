@@ -1,28 +1,34 @@
-<div>
+
+<div  fxLayoutAlign="center" >
+    
+    <br>
     <table class="styled-table">
         <div style="float: left;">
-            <tr><th>Categories:</th></tr>
-            <tr><th>Types:</th></tr>
+            <tr><th style='width: 140px;'>Categories:</th><th><button mat-mini-fab color="primary"><mat-icon class="material-icons"  inline="true" (click)="newCategory()">add</mat-icon></button></th></tr>
+            <mat-divider></mat-divider>
+            <tr><th style='width: 140px;'>Types:</th>
+            <th><button mat-mini-fab color="primary"><mat-icon class="material-icons"  inline="true" (click)="newType()">add</mat-icon></button></th></tr>
         </div>
         <div style="float: right;"  *ngFor="let cat of categories" >
             <tr>
-                <th alt="category" matTooltip="{{cat.description}}">{{cat.name}} 
-                    <button mat-icon-button><mat-icon class="material-icons"  inline="true" (click)="editCategory(cat.id)">edit</mat-icon></button>
-                    <button mat-icon-button><mat-icon class="material-icons"  inline="true" (click)="confirmDialog(cat.id)">delete</mat-icon></button>
+                <th alt="category" matTooltip="{{cat.description}}">{{cat.name}}</th>
+                <th>
+                    <button mat-icon-button color="primary"><mat-icon class="material-icons"  inline="true" (click)="editCategory(cat.id)">edit</mat-icon></button>
+                    <button mat-icon-button color="warn"><mat-icon class="material-icons"  inline="true" (click)="confirmDialog(cat.id)">delete</mat-icon></button>
                 </th>
             </tr>
+            <mat-divider></mat-divider>
             <tr  *ngFor="let type of res[cat.id]">
-                <td alt="type" matTooltip="{{type.description}}">{{type.name}}  
-                    <button mat-icon-button><mat-icon class="material-icons"  inline="true" (click)="editType(type.id)">edit</mat-icon></button>
-                    <button mat-icon-button><mat-icon class="material-icons"  inline="true" (click)="confirmDialogT(type.id)">delete</mat-icon></button>
+                <td alt="type" matTooltip="{{type.description}}">{{type.name}}</td>
+                <td>
+                    <button mat-icon-button color="primary"><mat-icon class="material-icons"  inline="true" (click)="editType(type.id)">edit</mat-icon></button>
+                    <button mat-icon-button color="warn"><mat-icon class="material-icons"  inline="true" (click)="confirmDialogT(type.id)">delete</mat-icon></button>
+                
                 </td>
             </tr>
         </div>
     
     </table>
-    <div class="float-right">
-        <button mat-button (click)="newCategory()">new category</button>
-        <button mat-button (click)="newType()">new type</button>
-    </div>
+    
 </div>
 

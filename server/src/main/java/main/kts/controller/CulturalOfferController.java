@@ -76,7 +76,7 @@ public class CulturalOfferController {
         }
         return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
     }
-    
+    /*
     @RequestMapping(value="/from_city/{city}", method = RequestMethod.GET)
 	public ResponseEntity<List<CulturalOfferDTO>> getCulturalOffersFromCity(@PathVariable String city) {
 		List<CulturalOffer> culturalOffers = culturalOfferService.findByCity(city.toUpperCase());
@@ -95,7 +95,30 @@ public class CulturalOfferController {
    		List<CulturalOffer> culturalOffers = culturalOfferService.findByCombinedSearch(content.toUpperCase(), city.toUpperCase());
    		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
    	}
-    
+    */
+    @RequestMapping(value="/combined/{details}", method = RequestMethod.GET)
+   	public ResponseEntity<Page<CulturalOfferDTO>> getCOByCombinedSearch(@PathVariable String details, Pageable pageable) {
+    	String[] tokens = details.split("_");
+    	String content = "";
+    	String city = "";
+    	try {
+    		content = tokens[0];
+    	}
+    	catch(Exception e)
+    	{
+    		
+    	}
+    	try {
+    		city = tokens[1];
+    	}
+        catch(Exception e)
+    	{
+    	}
+        	
+        Page<CulturalOffer> culturalOffers = culturalOfferService.findByCombinedSearch(pageable, content.toUpperCase(), city.toUpperCase());
+       	return new ResponseEntity<>(toCulturalOfferDTOPage(culturalOffers), HttpStatus.OK);
+    	
+   	}
     @RequestMapping(value="/find/subscriptions", method = RequestMethod.GET)
     @PreAuthorize("hasRole('REGISTERED_USER')")
 	public ResponseEntity<List<CulturalOfferDTO>> getSubscribedCulturalOffer(){
@@ -119,16 +142,7 @@ public class CulturalOfferController {
     	Page<CulturalOfferDTO> culturalOffersDTO = toCulturalOfferDTOPage(culturalOffers);
     	return new ResponseEntity<>(culturalOffersDTO, HttpStatus.OK);
     }
-    @RequestMapping(value="/page/from_city/{city}", method = RequestMethod.GET)
-   	public ResponseEntity<Page<CulturalOfferDTO>> getCulturalOffersFromCityPage(Pageable pageable, @PathVariable String city) {
-    	Page<CulturalOffer> culturalOffers = culturalOfferService.findByCity(pageable,city.toUpperCase());
-    	if(culturalOffers == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    	Page<CulturalOfferDTO> culturalOffersDTO = toCulturalOfferDTOPage(culturalOffers);
-    	return new ResponseEntity<>(culturalOffersDTO, HttpStatus.OK);
-    	
-  	}
+   
     
     @RequestMapping(method=RequestMethod.POST)
     @PreAuthorize("hasRole('ADMIN')")

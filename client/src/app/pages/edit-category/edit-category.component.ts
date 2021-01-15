@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Route } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from '../model/Category';
@@ -8,7 +9,7 @@ import { CategoryService } from '../services/category/category.service';
 @Component({
   selector: 'app-edit-category',
   templateUrl: './edit-category.component.html',
-  styleUrls: ['./edit-category.component.css']
+  styleUrls: ['./edit-category.component.scss']
 })
 export class EditCategoryComponent implements OnInit {
   catId: any;
@@ -19,7 +20,8 @@ export class EditCategoryComponent implements OnInit {
     private fb: FormBuilder,
     private categoryService: CategoryService,
 		private route: ActivatedRoute,
-		private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialogRef: MatDialogRef<EditCategoryComponent>
   ) { 
     this.createForm();
 
@@ -47,15 +49,16 @@ export class EditCategoryComponent implements OnInit {
     this.categoryService.update(this.category as Category, this.catId).subscribe(
       result => {
         this.toastr.success("Successful!");
-       // this.router.navigate(['home']);
+        this.dialogRef.close();
+        window.location.reload();
+      }, error => {
+        this.toastr.error("Cannot edit category!");
       }
     );
     this.categoryForm.reset();
     }
   cancelClicked(){
-      this.categoryForm = this.fb.group({
-        'name': [this.category.name],
-        'description': [this.category.description],
-      });   
+    this.dialogRef.close();
   }
+    
 }

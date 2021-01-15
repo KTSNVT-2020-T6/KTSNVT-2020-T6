@@ -1,6 +1,6 @@
 <div>
   <div class="container1">
-    <div class="col" *ngIf="!filtered">
+    <div class="col">
       <app-pagination [totalItems]="totalSize" [pageSize]="pageSize"
         (pageSelected)="changePage($event)">
       </app-pagination>
