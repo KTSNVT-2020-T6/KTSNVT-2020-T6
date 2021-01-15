@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { MainPageComponent } from './pages/main-page/main-page.component';
 import { NavbarComponent } from './core/navbar-user/navbar/navbar.component';
 import { CulturalOfferDetailsComponent } from './pages/cultural-offer-details/cultural-offer-details.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -58,7 +57,6 @@ import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-a
 @NgModule({
   declarations: [
     AppComponent,
-    MainPageComponent,
     CulturalOfferDetailsComponent,
     NavbarComponent,
     StarRatingComponent,

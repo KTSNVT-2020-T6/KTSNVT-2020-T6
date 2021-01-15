@@ -10,12 +10,12 @@ import { SearchDetails } from '../model/SearchDetails';
 @Component({
   selector: 'app-search-details',
   templateUrl: './search-details.component.html',
-  styleUrls: ['./search-details.component.css']
+  styleUrls: ['./search-details.component.scss']
 })
 export class SearchDetailsComponent implements OnInit {
   
   searchDetails: SearchDetails = {'content': '', 'city': ''};
-
+  city: any;
   searchForm!: FormGroup;
 
   @Output() done = new EventEmitter<SearchDetails>();
@@ -41,10 +41,10 @@ export class SearchDetailsComponent implements OnInit {
     }
 
   search(){
-    this.searchDetails.city = this.searchForm.value['city'];
     this.searchDetails.content = this.searchForm.value['content'];
+    this.searchDetails.city = this.searchForm.value['city'];
     this.done.emit(this.searchDetails);
-    
-    //this.dialogRef.close(`${this.searchDetails}`);
+    this.dialogRef.close();
   }
+ 
 }

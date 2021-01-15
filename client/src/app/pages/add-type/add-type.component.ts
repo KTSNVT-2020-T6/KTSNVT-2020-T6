@@ -34,7 +34,9 @@ export class AddTypeComponent implements OnInit {
     this.categoryService.getAll().subscribe(
 		res => {
 			this.categories = res.body as Category[];
-		}
+		}, error => {
+			this.toastr.error("There's no categories on server!");
+		  }
     );
   }
 

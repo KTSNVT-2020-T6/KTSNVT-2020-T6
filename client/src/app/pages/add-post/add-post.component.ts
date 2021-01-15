@@ -1,7 +1,7 @@
 import { NONE_TYPE } from '@angular/compiler';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CulturalOffer } from '../model/CulturalOffer';
@@ -23,10 +23,11 @@ export class AddPostComponent implements OnInit {
 */
 // @Inject(MAT_DIALOG_DATA) public coId: any;
   culturalOfferId: any = '';
-  post: Post = {"text" : "",  "culturalOfferId": 1, "imageDTO": {"id" : 1}};
+  post: Post = {"text" : "",  "culturalOfferId": 0, "imageDTO": {"id" : 0}};
   postForm!: FormGroup;
   co!: CulturalOffer;
-
+  todayDate!: Date;
+  
   constructor(
     private fb: FormBuilder,
     private postService: PostService,
@@ -34,9 +35,11 @@ export class AddPostComponent implements OnInit {
     private imageService: ImageService,
     private route : ActivatedRoute,
     private router : Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialogRef: MatDialogRef<AddPostComponent>
   ) { 
     this.createForm();
+    this.todayDate = new Date();
   }
 
   ngOnInit(): void {
@@ -50,7 +53,8 @@ export class AddPostComponent implements OnInit {
   createForm() {
     this.postForm = this.fb.group({
       'text': [''],
-      'date':['']
+      'date':[''],
+      'image':['']
        });
   }
   addPost(){
@@ -60,17 +64,43 @@ export class AddPostComponent implements OnInit {
     this.imageService.getImage(1).subscribe(
       res => {
         this.post.imageDTO = res.body as Img;
-        console.log(this.post.imageDTO.id);
-    }
-  );
+      }, error => {
+        this.toastr.error("Cannot get image!");
+      }
+    );
     
     this.postService.addPost(this.post as Post).subscribe(
       result => {
-        this.toastr.success(result);
-        this.router.navigate(['home']);
+        this.dialogRef.close();
+        this.toastr.success("Successfully added post");
+      }, error => {
+        this.toastr.error("Cannot create post!");
       }
     );
     this.postForm.reset();
   }
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.postForm.value['image'] = file;
+    }
+    this.saveImage();
+  };
+  saveImage(){
+    const formData = new FormData();
+    formData.append('file', this.postForm.value['image']);
+
+    this.imageService.add(formData).subscribe(
+      result => {
+        const img: Img = {'id':result};
+        this.post.imageDTO = img;
+      },
+      error => {
+        this.toastr.error("Error saving image! Choose different one!");
+      }
+
+    );
+  }
+
 
 }

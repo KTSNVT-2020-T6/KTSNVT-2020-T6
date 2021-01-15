@@ -43,6 +43,9 @@ export class CategoriesAndTypesComponent implements OnInit {
           this.getTypes(element.id);
           
         });
+      },error =>{
+        this.toastr.error("Cannot load from server!");
+        
       }
     )
   }
@@ -51,6 +54,9 @@ export class CategoriesAndTypesComponent implements OnInit {
     this.typeService.getTypesOfCategory(catId).subscribe(
       res => {
         this.res[catId] = res.body ;
+      },error =>{
+        this.toastr.error("Cannot load from server!");
+        
       }
     )
   }

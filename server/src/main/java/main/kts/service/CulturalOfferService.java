@@ -182,6 +182,9 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 	public List<CulturalOffer> findByCity(String city) {
 		return culturalOfferRepository.findByCity(city);
 	}
+	public Page<CulturalOffer> findByCity(Pageable page,String city) {
+		return culturalOfferRepository.findByCity(page,city);
+	}
 
 	public List<CulturalOffer> findByContent(String content) {
 		

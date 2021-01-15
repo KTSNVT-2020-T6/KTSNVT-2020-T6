@@ -10,6 +10,7 @@ import { User } from '../../model/User';
 import { EditCommentComponent } from '../../edit-comment/edit-comment.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationComponent, ConfirmDialogModel } from '../../confirmation/confirmation.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-comment-list',
@@ -33,6 +34,7 @@ export class CommentListComponent implements OnInit {
               private commentService: CommentService,
               private imageService: ImageService,
               private userService : UserService,
+              private toastr: ToastrService,
               private sanitizer: DomSanitizer) {
     this.pageSize = 3;
 		this.currentPage = 1;
@@ -45,7 +47,6 @@ export class CommentListComponent implements OnInit {
 				this.totalSize = Number(res.body.totalElements);
 		
         this.comments.forEach(element => {
-          console.log(element.userImage +" ko si ti");
           if(element.userImage?.id  !== undefined){
             this.imageService.getImage(element.userImage?.id).subscribe(
               res => {
@@ -54,7 +55,7 @@ export class CommentListComponent implements OnInit {
                 element.srcUser = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     
               }, error => {
-                console.log(error.error);
+                this.toastr.error("Cannot load image!");
                 
               });
           }
@@ -67,8 +68,8 @@ export class CommentListComponent implements OnInit {
                 element.srcComment = this.sanitizer.bypassSecurityTrustUrl(objectURL);
 
               }, error => {
-                console.log(error.error);
-                
+                this.toastr.error("Cannot load image!");
+                 
               });
             }
        });
@@ -76,14 +77,13 @@ export class CommentListComponent implements OnInit {
       
 
       }, error => {
-        console.log(error.error);
-        
+        this.toastr.error("Cannot load from server!");
       }
     );
     
   }
   editComment(comId: any){
-    console.log("editovace se");
+
     const dialogRef = this.dialog.open(EditCommentComponent);
     dialogRef.componentInstance.commentId = comId;
     dialogRef.afterClosed().subscribe(result => {
@@ -94,17 +94,23 @@ export class CommentListComponent implements OnInit {
   deleteComment(comId: any){
       this.commentService.delete(comId).subscribe(
         res =>{
-          console.log("deleted");
           location.reload();
+        }, error => {
+          this.toastr.error("Cannot delete comment!");
+                  
         }
-      )
+      );
+      
   }
   
   ngOnInit(): void {
     this.userService.getCurrentUser().subscribe(
       res => {
         this.currentUser = res.body as User;
+      } , error => {
+        this.toastr.error("Cannot load user!");        
       }
+    
     )
     this.commentService.getPage(this.currentPage - 1, this.pageSize, this.culturalOfferId).subscribe(
       res => {
@@ -120,8 +126,8 @@ export class CommentListComponent implements OnInit {
                 element.srcUser = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     
               }, error => {
-                console.log(error.error);
-                
+                this.toastr.error("Cannot load image!");
+                                
               });
           }
          
@@ -133,13 +139,15 @@ export class CommentListComponent implements OnInit {
                 element.srcComment = this.sanitizer.bypassSecurityTrustUrl(objectURL);
 
               }, error => {
-                console.log(error.error);
+                this.toastr.error("Cannot load image!");
+                
                 
               });
             }
         });
-      }, error => {
-        console.log(error.error); 
+      },error =>{
+        this.toastr.error("Cannot load from server!");
+        
       }
      )
      

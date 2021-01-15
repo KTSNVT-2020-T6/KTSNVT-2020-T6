@@ -1,13 +1,30 @@
 <div>
   <div class="container1">
-    <div class="col">
+    <div class="col" *ngIf="!filtered">
       <app-pagination [totalItems]="totalSize" [pageSize]="pageSize"
         (pageSelected)="changePage($event)">
       </app-pagination>
     </div>
+    <span>
+      <button (click)="searchClicked()" mat-button> 
+        Filter
+        <span class="material-icons black-colored-icon">
+        filter_alt
+        </span>
+      </button>
+    </span>
+    <span *ngIf="filtered">
+      <button (click)="refreshClick()" mat-button> 
+        <span class="material-icons black-colored-icon">
+        refresh
+        </span>
+      </button>
+    </span>
   </div>
+  
   <div class="container" >  
-    <app-cultural-offer-list [culturalOfferList]="culturalOfferList"></app-cultural-offer-list>
+    <br>
+    <app-cultural-offer-list  [culturalOfferList]="culturalOfferList"></app-cultural-offer-list>
     <app-map-container [culturalOffers]="culturalOfferList"></app-map-container>
   </div>
 </div>

@@ -1,14 +1,5 @@
 <div class="content scrollbar scrollbar-dusty-grass">  
-    <div fxLayout="column wrap" fxLayoutGap="16px">
-      <span>
-        <button (click)="searchClicked()" mat-button> 
-          Filter
-          <span class="material-icons black-colored-icon">
-          filter_alt
-          </span>
-        </button>
-      </span>
-      
+    <div fxLayout="column wrap" fxLayoutGap="16px">      
       <div fxFlex="100%" *ngFor="let co of culturalOfferList" style="justify-content: center; align-items: center;">
         <mat-card fxFlex="100%" class="mat-elevation-z4" >
           <mat-card-header>

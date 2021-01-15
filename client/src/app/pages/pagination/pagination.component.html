@@ -7,8 +7,14 @@
           <span class="sr-only">Previous</span>
         </a>
       </li>
-      <li class="page-item" *ngFor="let i of pages" (click)="selected(i)" [ngClass]="{'active': i==activePage}">
-        <a style="background-color:white;color:black;" class="page-link">{{i}}</a>
+      <li class="page-item" (click)="selected(activePage-1)"  *ngIf="activePage > 1">
+        <a style="background-color:white;color:black;" class="page-link">{{activePage-1}}</a>
+      </li>
+      <li class="page-item" (click)="selected(activePage)">
+        <a style="background-color:white;color:black;" class="page-link">{{activePage}}</a>
+      </li>
+      <li class="page-item" (click)="selected(activePage+1)" *ngIf="activePage < pages.length">
+        <a style="background-color:white;color:black;" class="page-link">{{activePage+1}}</a>
       </li>
       <li class="page-item" (click)="selected(activePage+1)" *ngIf="activePage < pages.length">
         <a style="background-color:white;color:black" class="page-link" aria-label="Next">

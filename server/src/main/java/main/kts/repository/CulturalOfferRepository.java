@@ -30,5 +30,8 @@ public interface CulturalOfferRepository extends JpaRepository<CulturalOffer, Lo
 	List<CulturalOffer> findByCombinedSearch(String upperCase, String upperCase2);
 
 	List<CulturalOffer> findByTypeId(Long id);
+	
+	@Query(value ="SELECT * FROM CULTURAL_OFFER WHERE upper(CITY) LIKE %?2%", nativeQuery = true)
+	Page<CulturalOffer> findByCity(Pageable pageable, String city);
 
 }

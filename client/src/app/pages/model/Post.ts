@@ -2,9 +2,9 @@ import { Img } from "./Image";
 
 export interface Post{
     id?: number;
-    text: string;
+    text?: string;
     date?: Date;
-    imageDTO: Img;
+    imageDTO?: Img;
     culturalOfferId?: number;
     src?: any;
     culturalOfferName?: string;

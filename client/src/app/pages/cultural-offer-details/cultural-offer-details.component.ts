@@ -73,6 +73,8 @@ export class CulturalOfferDetailsComponent implements OnInit {
     this.regUserService.getNumberOfSubscribed(this.id).subscribe(
       res => {
         this.subscribed = res.body;
+      }, error => {
+        this.toastr.error("Cannot load from server!");
       }
     );
   }
@@ -89,9 +91,10 @@ export class CulturalOfferDetailsComponent implements OnInit {
             this.images =  this.culturalOffer.imageDTO as Img[];
           }
         );
-      },error =>{
-        console.log(error);
+      },error => {
+        this.toastr.error("Cannot load from server!");
       }
+      
     );
 
   }
@@ -116,6 +119,8 @@ export class CulturalOfferDetailsComponent implements OnInit {
       result => {
         this.router.navigate(['home']);
         this.toastr.success("Successfully deleted cultural offer");
+      }, error => {
+        this.toastr.error("Cannot delete from server!");
       }
     );
   }
@@ -145,7 +150,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.comment.date = new Date();
          // uploadoati sliku
         this.comment.imageDTO = {'id' : 0}
-        console.log(this.imageAdded);
+      
         if (this.imageAdded !== undefined)
         { 
           const formData = new FormData();
@@ -199,8 +204,8 @@ checkSubscription() {
         }
       });
       
-    },error =>{
-      console.log(error);
+    }, error => {
+      this.toastr.error("Cannot load from server!");
     }
   )
 } 
@@ -211,8 +216,9 @@ subscribeUser() {
       this.checker = true;
       this.getNumberOfSubscribed();
       
-    },error =>{
-      console.log(error);
+    }, error => {
+      this.toastr.error("Cannot subscribe user!");
+    
     }
   )
 }
@@ -222,10 +228,9 @@ unsubscribe() {
       this.toastr.success("Unsubscribed from "+this.culturalOffer.name);
       this.checker = false;
       this.getNumberOfSubscribed();
-
       
-    },error =>{
-      console.log(error);
+    },error => {
+      this.toastr.error("Cannot unsubscribe user!");
     }
   )
 }

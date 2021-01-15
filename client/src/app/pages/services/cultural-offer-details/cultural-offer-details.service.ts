@@ -50,6 +50,7 @@ export class CulturalOfferDetailsService {
 			headers: this.headers,
 			observe: 'response',
 			params: new HttpParams()
+			
 		};
 		return this.http.get('http://localhost:8080/api/cultural-offer/find/subscriptions', queryParams).pipe(map(res => res));
 		
@@ -65,6 +66,7 @@ export class CulturalOfferDetailsService {
 			headers: this.headers,
 			observe: 'response',
 			params: new HttpParams()
+			
 		};
 		return this.http.get('http://localhost:8080/api/cultural-offer/content/'+ content, queryParams).pipe(map(res => res));
 

@@ -9,7 +9,7 @@
                     {{cat.name}}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="selectFormControl.hasError('required')">Please choose an category for type</mat-error>
+            <mat-error *ngIf="selectFormControl.hasError('required')">Please choose a category for type</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill" *ngIf="types.length > 0">
@@ -40,13 +40,10 @@
             </mat-error>
         </mat-form-field>
         <br>
-        
         <geoapify-geocoder-autocomplete 
-            (placeSelect)="placeSelected($event)">
-        </geoapify-geocoder-autocomplete>
-        
-
-
+        (placeSelect)="placeSelected($event)">
+       </geoapify-geocoder-autocomplete>
+      
         <br>
         <mat-form-field appearance="fill">
             <mat-label>Choose a date</mat-label>

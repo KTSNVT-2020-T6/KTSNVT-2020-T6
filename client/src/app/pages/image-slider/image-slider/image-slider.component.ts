@@ -3,6 +3,7 @@ import { CulturalOffer } from '../../model/CulturalOffer';
 import { Img } from '../../model/Image';
 import { ImageService } from '../../services/image/image.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-image-slider',
@@ -15,7 +16,9 @@ export class ImageSliderComponent implements OnInit, OnChanges {
   images!: any[];
   slides:any[] = [];
   
-  constructor(private imageService:ImageService, private sanitizer: DomSanitizer) {
+  constructor(private imageService:ImageService,
+     private sanitizer: DomSanitizer,
+     private toastr: ToastrService) {
   }
   ngOnChanges(changes: SimpleChanges) {
     this.slides = [];
@@ -29,8 +32,8 @@ export class ImageSliderComponent implements OnInit, OnChanges {
             this.slides.push(this.sanitizer.bypassSecurityTrustUrl(objectURL));
     
           }, error => {
-            console.log(error.error);
-            
+            this.toastr.error("Cannot subscribe user!");
+          
           });
       });
     }

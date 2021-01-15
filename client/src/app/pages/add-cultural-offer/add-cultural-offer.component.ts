@@ -75,8 +75,8 @@ export class AddCulturalOfferComponent implements OnInit {
 	this.culturalOffer.lon = this.placeLon;
 	this.culturalOffer.city = this.city;
 
-	console.log(this.culturalOffer);
 	if(this.placeLat === undefined || this.placeLon === undefined){
+		this.toastr.error("Location is required.");
 		return;
 	}
 	if(this.city === undefined || this.city === null){

@@ -3,8 +3,8 @@
     <br>
     <div class="center">
         <span>
-            <button *ngIf="!checker" mdbBtn type="button" style="background-color:#8dd4dd" mdbWavesEffect (click)="subscribeUser()">Subscribe</button>
-            <button *ngIf="checker" mdbBtn type="button" style="background-color:#B0BEC5" mdbWavesEffect (click)="unsubscribe()">Unsubscribe</button> 
+            <button *ngIf="!checker && role==='ROLE_REGISTERED_USER'" mdbBtn type="button" style="background-color:#8dd4dd" mdbWavesEffect (click)="subscribeUser()">Subscribe</button>
+            <button *ngIf="checker && role==='ROLE_REGISTERED_USER'" mdbBtn type="button" style="background-color:#B0BEC5" mdbWavesEffect (click)="unsubscribe()">Unsubscribe</button> 
             Subscribers: {{subscribed}}
         </span> 
         <div class="edit">
