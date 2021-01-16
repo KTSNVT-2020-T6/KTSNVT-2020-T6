@@ -205,7 +205,8 @@ checkSubscription() {
       });
       
     }, error => {
-      this.toastr.error("Cannot load from server!");
+      if(this.role === 'ROLE_REGISTERED_USER')
+        this.toastr.error("Cannot load from server!");
     }
   )
 } 

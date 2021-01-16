@@ -124,7 +124,6 @@ export class PostsPageComponent implements OnInit {
   
   deletePost(postId: any)
   {
-    // nije testirano
     this.postService.delete(postId).subscribe(
       res => {
         this.toastr.success("Post successfully deleted.");

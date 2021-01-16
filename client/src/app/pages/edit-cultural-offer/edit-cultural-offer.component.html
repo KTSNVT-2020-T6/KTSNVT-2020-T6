@@ -1,4 +1,5 @@
-<form class="reactiveForm" [formGroup]="form"  class="form-inline my-2 my-lg-0">
+<mat-spinner *ngIf="loading"></mat-spinner>
+<form class="reactiveForm" [formGroup]="form"  class="form-inline my-2 my-lg-0" *ngIf="!loading">
     <div class="example-container">
     
     <mat-form-field appearance="fill">
@@ -19,7 +20,7 @@
     <br>
     <mat-form-field hidden=true appearance="fill">
         <mat-label>City</mat-label>
-        <textarea matInput formControlName="city" required></textarea>
+        <textarea matInput formControlName="city" ></textarea>
 
     </mat-form-field>
     <br>
@@ -67,6 +68,7 @@
       </div>
     <br>
     <mat-dialog-actions align="end">
+        
         <button mat-raised-button (click)="cancel()">Cancel</button>
         <button type="submit" mat-raised-button color="success" (click)="saveChanges()">Save</button>
     </mat-dialog-actions>

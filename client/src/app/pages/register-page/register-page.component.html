@@ -12,7 +12,7 @@
                     
                     <mat-form-field appearance="fill">
                         <mat-label>First name</mat-label>
-                        <input matInput formControlName="firstName" required>
+                        <input matInput id="firstName" formControlName="firstName" required>
                         <mat-error *ngIf="form.controls.firstName.touched && form.controls.firstName.invalid">
                             <span *ngIf="form.controls.firstName.errors?.required">This field is mandatory.</span>
                         </mat-error>
@@ -20,7 +20,7 @@
                     <br>
                     <mat-form-field appearance="fill">
                         <mat-label>Last name</mat-label>
-                        <input matInput formControlName="lastName" required>
+                        <input matInput id="lastName" formControlName="lastName" required>
                         <mat-error *ngIf="form.controls.lastName.touched && form.controls.lastName.invalid">
                             <span *ngIf="form.controls.lastName.errors?.required">This field is mandatory.</span>
                         </mat-error>
@@ -28,7 +28,7 @@
                     <br>
                     <mat-form-field appearance="fill">
                         <mat-label>Email</mat-label>
-                        <textarea matInput formControlName="email" required></textarea>
+                        <input matInput id="email" formControlName="email" required/>
                         <mat-error *ngIf="form.controls.email.touched && form.controls.email.invalid">
                             <span *ngIf="form.controls.email.errors?.required">This field is mandatory.</span>
                             <span *ngIf="form.controls.email.errors?.pattern">This field is invalid.</span>
@@ -37,7 +37,7 @@
                     <br>
                     <mat-form-field appearance="fill">
                         <mat-label>Password</mat-label>
-                        <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                        <input matInput id="password" placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
                         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         <mat-error *ngIf="form.controls.password.touched && form.controls.password.invalid">
                             <span *ngIf="form.controls.password.errors?.required">This field is mandatory.</span>
@@ -46,7 +46,7 @@
                     <br>
                     <mat-form-field appearance="fill">
                         <mat-label>Repeat password</mat-label>
-                        <input matInput placeholder="RepeatPassword" [type]="hide ? 'password' : 'text'" formControlName="repeatPassword" required>
+                        <input matInput id="passwordRepeat" placeholder="RepeatPassword" [type]="hide ? 'password' : 'text'" formControlName="repeatPassword" required>
                         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         <mat-error *ngIf="(form.controls.repeatPassword.touched && form.controls.repeatPassword.invalid) || passwordError">
                             <span *ngIf="form.controls.repeatPassword.errors?.required">This field is mandatory.</span>
@@ -55,13 +55,8 @@
                         
                     </mat-form-field>
                     <br>
-                    <!-- <mat-form-field>
-                        <ngx-mat-file-input placeholder="Profile image" (valueChange)="onFileSelect($event)"></ngx-mat-file-input>
-                        <mat-icon matSuffix>folder</mat-icon>
-                    </mat-form-field>
-                    <br> -->
                     <mat-dialog-actions align="end">
-                        <button type="submit" mat-raised-button color="success">Sign up</button>
+                        <button type="submit" id="submit" mat-raised-button color="success" [disabled]="!form.valid">Sign up</button>
                     </mat-dialog-actions>
                     </div>
                 </form>  
