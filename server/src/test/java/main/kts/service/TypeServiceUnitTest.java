@@ -2,25 +2,7 @@ package main.kts.service;
 
 
 
-import static main.kts.constants.TypeConstants.DB_CATEGORY_ID;
-import static main.kts.constants.TypeConstants.DB_CATEGORY_ID2;
-import static main.kts.constants.TypeConstants.DB_TYPE_DESCRIPTION;
-import static main.kts.constants.TypeConstants.DB_TYPE_DESCRIPTION2;
-import static main.kts.constants.TypeConstants.DB_TYPE_ID;
-import static main.kts.constants.TypeConstants.DB_TYPE_ID2;
-import static main.kts.constants.TypeConstants.DB_TYPE_NAME;
-import static main.kts.constants.TypeConstants.DB_TYPE_NAME2;
-import static main.kts.constants.TypeConstants.FALSE_TYPE_ID;
-import static main.kts.constants.TypeConstants.FIND_ALL_NUMBER_OF_ITEMS;
-import static main.kts.constants.TypeConstants.NEW_CATEGORY_ID;
-import static main.kts.constants.TypeConstants.FIND_ALL_NUMBER_OF_TYPES;
-import static main.kts.constants.TypeConstants.NEW_TYPE_DESCRIPTION;
-import static main.kts.constants.TypeConstants.NEW_TYPE_ID;
-import static main.kts.constants.TypeConstants.NEW_TYPE_NAME;
-import static main.kts.constants.TypeConstants.PAGEABLE_PAGE;
-import static main.kts.constants.TypeConstants.PAGEABLE_SIZE;
-import static main.kts.constants.TypeConstants.PAGEABLE_TOTAL_ELEMENTS;
-import static main.kts.constants.TypeConstants.UPDATE_TYPE_NAME;
+import static main.kts.constants.TypeConstants.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
@@ -69,9 +51,13 @@ public class TypeServiceUnitTest {
 		
 		Category category2 = new Category(DB_CATEGORY_ID2);
 		Type existingType2 = new Type(DB_TYPE_ID2, DB_TYPE_NAME2, DB_TYPE_DESCRIPTION2, category2);
+		
+		Category category3 = new Category(DB_CATEGORY_ID_DELETE);
+		Type existingType3 = new Type(DB_TYPE_ID_DELETE, DB_TYPE_NAME_DELETE, DB_TYPE_DESCRIPTION_DELETE, category3);
 
 		types.add(existingType);
 		types.add(existingType2);
+		types.add(existingType3);
 		given(typeRepository.findByActive(true)).willReturn(types);
 		
 		Pageable pageable = PageRequest.of(PAGEABLE_PAGE, PAGEABLE_SIZE);
@@ -91,8 +77,8 @@ public class TypeServiceUnitTest {
 		given(typeRepository.findById(DB_TYPE_ID)).willReturn(Optional.of(existingType));
 		given(typeRepository.findById(FALSE_TYPE_ID)).willReturn(Optional.empty());
 		given(typeRepository.findTypesOfCategory(DB_CATEGORY_ID)).willReturn(types);
-		
-		doNothing().when(typeRepository).delete(existingType);
+		given(typeRepository.findById(DB_TYPE_ID2)).willReturn(Optional.of(existingType2));
+		doNothing().when(typeRepository).delete(existingType2);
 
 	}
 	
@@ -139,12 +125,12 @@ public class TypeServiceUnitTest {
 	
 	@Test
 	public void testDelete() throws Exception{
-		Type type = new Type(DB_TYPE_NAME, DB_TYPE_DESCRIPTION);
-		Category cat = new Category(DB_CATEGORY_ID);
+		Type type = new Type(DB_TYPE_NAME2, DB_TYPE_DESCRIPTION2);
+		Category cat = new Category(DB_CATEGORY_ID2);
 		type.setCategory(cat);
-		typeService.delete(DB_TYPE_ID);
+		typeService.delete(DB_TYPE_ID2);
 		
-		verify(typeRepository, times(1)).findById(DB_TYPE_ID);
+		verify(typeRepository, times(1)).findById(DB_TYPE_ID2);
 		verify(typeRepository, times(1)).save(type);
 	}
 	

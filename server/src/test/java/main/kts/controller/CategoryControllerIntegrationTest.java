@@ -200,7 +200,7 @@ public class CategoryControllerIntegrationTest {
 			HttpEntity<Object> request = new HttpEntity<Object>(headers);
 			
 	        ResponseEntity<Void> responseEntity =
-	                restTemplate.exchange("/api/category/" + CATEGORY_ID,
+	                restTemplate.exchange("/api/category/" + DELETE_CATEGORY_ID,
 	                        HttpMethod.DELETE, request, Void.class);
 
 	        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

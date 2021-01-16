@@ -80,8 +80,8 @@ public class CategoryServiceIntegrationTest {
 	@Rollback(true)
 	@Transactional
 	public void testDelete() throws Exception {
-		categoryService.delete(CATEGORY_ID);  // id 1
-		Category category = categoryService.findOne(CATEGORY_ID);
+		categoryService.delete(DELETE_CATEGORY_ID);  // id 3
+		Category category = categoryService.findOne(DELETE_CATEGORY_ID);
 		assertNull(category);
 	}
 	

@@ -512,48 +512,22 @@ public class CulturalOfferControllerIntegrationTest {
         assertEquals(size, culturalOfferService.findAll().size());
     }
     
-	@Test
-	public void testGetFromCity() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		HttpEntity<Object> request = new HttpEntity<Object>(headers);
-
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer/from_city/"+DB_CITY, HttpMethod.GET, request,
-				CulturalOfferDTO[].class);
-		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
-
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_SIZE_BY_CITY, culturalOffers.length);
-		assertEquals(DB_CITY, culturalOffers[0].getCity().toUpperCase());
-		
-	}
-	
-	@Test
-	public void testGetByContent() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		HttpEntity<Object> request = new HttpEntity<Object>(headers);
-
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer/content/"+DB_CONTENT, HttpMethod.GET, request,
-				CulturalOfferDTO[].class);
-		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
-
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_SIZE_BY_CONTENT, culturalOffers.length);	
-	}
+ 
 	
 	@Test
 	public void testGetByCombineSearch() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
-
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer/combined/"+DB_CONTENT+"/"+DB_CITY, HttpMethod.GET, request,
+		
+		// nije dobra putanja, nikad ne udje u tu metodu u controlleru
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer?page=0&size=1/combined/"+DB_CONTENT+"_"+DB_CITY, HttpMethod.GET, request,
 				CulturalOfferDTO[].class);
 		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
-
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_SIZE_BY_COMBINED_SEARCH, culturalOffers.length);
+		assertEquals(PAGEABLE_SIZE_SEARCH, new Integer(culturalOffers.length));
+		
 	}
 	
 }

@@ -37,11 +37,13 @@ insert into users_authority (user_id, authority_id) values (7,2);
 
 insert into category (name, description, active) values ('institution', 'institutions in serbia', true);
 insert into category (name, description, active) values ('manifestation', 'manifestations in serbia', true);
+insert into category (name, description, active) values ('delete me', 'delete', true);
 
 insert into type (name, description, category_id, active) values ('museum', 'museums in serbia', 1, true);
 insert into type (name, description, category_id, active) values ('gallery', 'galleries in serbia', 1, true);
 insert into type (name, description, category_id, active) values ('festival', 'festivals in serbia', 2, true);
 insert into type (name, description, category_id, active) values ('opera', 'operas in serbia', 2, true);
+insert into type (name, description, category_id, active) values ('delete me', 'delete', 3, true);
 
 insert into cultural_offer (average_rate, date, description, lat, lon, city, name, type_id, admin_id, active)
 values (5.0, '2020-12-25 19:30:00', 'opisneki', 44.05, 45.02,'Belgrade', 'obilazak muzeja', 1, 1, true);

@@ -90,6 +90,9 @@ public class ImageController {
 			image = imageService.create(imageMapper.toEntity(imageDTO));
 			Long id = image.getId();
 			image = imageService.update(new Image(id, "file"+id+".jpg", "src/main/resources/static/images/file"+id+".jpg"), image.getId());
+			
+			// id slike je 9, i save pokusava da napravi file sa imenom file9.jpg
+			// a u static folderu sa tim imenom vec postoji slika
 			storageService.save(file, image.getId());
 			message = "Uploaded the file successfully: " + file.getOriginalFilename();
 			

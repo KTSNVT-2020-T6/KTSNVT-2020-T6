@@ -185,8 +185,7 @@ public class CommentController {
 			return false;
 		if(commentDTO.getText() == null) 
 			return false;
-		//if(commentDTO.getDate().before(new Date()))
-		//	return false;
+	
 		return true;
 	}
 	@RequestMapping(value="/page/{id}",method=RequestMethod.GET)

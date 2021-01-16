@@ -76,26 +76,7 @@ public class CulturalOfferController {
         }
         return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
     }
-    /*
-    @RequestMapping(value="/from_city/{city}", method = RequestMethod.GET)
-	public ResponseEntity<List<CulturalOfferDTO>> getCulturalOffersFromCity(@PathVariable String city) {
-		List<CulturalOffer> culturalOffers = culturalOfferService.findByCity(city.toUpperCase());
-		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
-	}
-   
     
-    @RequestMapping(value="/content/{content}", method = RequestMethod.GET)
-	public ResponseEntity<List<CulturalOfferDTO>> getCulturalOffersByContent(@PathVariable String content) {
-		List<CulturalOffer> culturalOffers = culturalOfferService.findByContent(content.toUpperCase());
-		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
-	}
-    
-    @RequestMapping(value="/combined/{content}/{city}", method = RequestMethod.GET)
-   	public ResponseEntity<List<CulturalOfferDTO>> getCOByCombinedSearch(@PathVariable String content, @PathVariable String city) {
-   		List<CulturalOffer> culturalOffers = culturalOfferService.findByCombinedSearch(content.toUpperCase(), city.toUpperCase());
-   		return new ResponseEntity<>(toCulturalOfferDTOList(culturalOffers), HttpStatus.OK);
-   	}
-    */
     @RequestMapping(value="/combined/{details}", method = RequestMethod.GET)
    	public ResponseEntity<Page<CulturalOfferDTO>> getCOByCombinedSearch(@PathVariable String details, Pageable pageable) {
     	String[] tokens = details.split("_");

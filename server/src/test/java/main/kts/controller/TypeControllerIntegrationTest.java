@@ -236,7 +236,7 @@ public class TypeControllerIntegrationTest {
 			HttpEntity<Object> request = new HttpEntity<Object>(headers);
 			
 	        ResponseEntity<Void> responseEntity =
-	                restTemplate.exchange("/api/type/" + TYPE_ID,
+	                restTemplate.exchange("/api/type/" + DELETE_TYPE_ID,
 	                        HttpMethod.DELETE, request, Void.class);
 
 	        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

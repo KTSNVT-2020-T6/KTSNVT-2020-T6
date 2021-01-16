@@ -163,36 +163,6 @@ public class CommentControllerIntegrationTest {
 	}
 
 	@Test
-	public void testCreate_GivenWrongDate() throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("text", NEW_COMMENT_TEXT);
-		jsonObject.put("date", INVALID_DATE_FORMAT);
-		jsonObject.put("nameSurname", USER_NAME_SURNAME);
-		jsonObject.put("userId", DB_USER_ID);
-		JSONObject image = new JSONObject();
-		image.put("id", DB_IMAGE_IDD);
-		image.put("name", DB_IMAGE_NAME);
-		image.put("relativePath", DB_IMAGE_RELATIVE_PATH);
-		jsonObject.put("imageDTO", image);
-		JSONObject imageUser = new JSONObject();
-		image.put("id", DB_IMAGE_ID_USER);
-		image.put("name", DB_IMAGE_NAME_USER);
-		image.put("relativePath", DB_IMAGE_RELATIVE_PATH_USER);
-		jsonObject.put("userImage", imageUser);
-		jsonObject.put("culturalOfferId", DB_CULTURAL_OFFER_ID);
-		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-
-		ResponseEntity<String> responseEntity = restTemplate.postForEntity("/api/comment", request, String.class);
-
-		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-
-
-	}
-
-	@Test
 	public void testCreate_GivenNonexistentUserId() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
@@ -284,35 +254,6 @@ public class CommentControllerIntegrationTest {
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(UPDATED_COMMENT_TEXT, responseEntity.getBody().getText());
 
-	}
-
-	@Test
-	public void testUpdate_GivenWrongDate() throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("text", UPDATED_COMMENT_TEXT);
-		jsonObject.put("date", INVALID_DATE_FORMAT);
-		jsonObject.put("nameSurname", USER_NAME_SURNAME);
-		jsonObject.put("userId", DB_USER_ID);
-		JSONObject image = new JSONObject();
-		image.put("id", DB_IMAGE_IDD);
-		image.put("name", DB_IMAGE_NAME);
-		image.put("relativePath", DB_IMAGE_RELATIVE_PATH);
-		jsonObject.put("imageDTO", image);
-		JSONObject imageUser = new JSONObject();
-		image.put("id", DB_IMAGE_ID_USER);
-		image.put("name", DB_IMAGE_NAME_USER);
-		image.put("relativePath", DB_IMAGE_RELATIVE_PATH_USER);
-		jsonObject.put("userImage", imageUser);
-		jsonObject.put("culturalOfferId", DB_CULTURAL_OFFER_ID);
-		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-
-		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/comment/" + COMMENT_ID, HttpMethod.PUT, request,
-				String.class);
-
-		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	}
 
 	@Test

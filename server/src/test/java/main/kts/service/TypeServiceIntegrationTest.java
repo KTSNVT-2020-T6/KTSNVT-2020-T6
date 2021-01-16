@@ -105,8 +105,8 @@ public class TypeServiceIntegrationTest {
 	@Rollback(true)
 	@Transactional
 	public void testDelete() throws Exception {
-		typeService.delete(DB_TYPE_ID);
-		Type type = typeService.findOne(DB_TYPE_ID);
+		typeService.delete(DELETE_TYPE_ID);
+		Type type = typeService.findOne(DELETE_TYPE_ID);
 		assertNull(type);
 	}
 	
