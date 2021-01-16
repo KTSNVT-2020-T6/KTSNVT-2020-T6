@@ -24,6 +24,7 @@ export class EditCulturalOfferComponent implements OnInit {
   placeLat: any;
   city: any;
   todayDate: any;
+  loading: boolean = false;;
 
   selectedFiles!: FileList;
   progressInfos: any[] = [];
@@ -59,34 +60,31 @@ export class EditCulturalOfferComponent implements OnInit {
       'description': ['', Validators.required],
       'typeDTO':['', Validators.required],
       'image':[''],
-      'date':['',Validators.required]
+      'date':['']
     })
   };
 
   saveChanges(){
-  
-    this.co.lat = this.placeLat;
-    this.co.lon = this.placeLon;
-    this.co.city = this.city;
-  
-    
-    if(this.placeLat === undefined || this.placeLon === undefined){
-      return;
-    }
-    if(this.city === undefined || this.city === null){
-      return;
+    if(!(this.placeLat === undefined || this.placeLon === undefined)){
+      this.co.lat = this.placeLat;
+      this.co.lon = this.placeLon;
+      this.co.city = this.city;
     }    
       this.co.name = this.form.value['name'];
       this.co.description = this.form.value['description'];
       this.co.date = this.form.value['date'];
 
+      this.loading = true;
       this.culturalOfferService.edit(this.co).subscribe(
         result => {
+          this.loading = false;
           this.toastr.success('Cultural offer information saved!');
           this.form.reset();
           this.dialogRef.close();
+          
         },
         error => {
+          this.loading = false;
           this.toastr.error("Error saving data!");
         });
 

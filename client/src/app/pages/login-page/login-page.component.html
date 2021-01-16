@@ -28,14 +28,14 @@
                     <span class="btn-show-pass">
                         <i class="fa fa-eye"></i>
                     </span>
-                    <input class="input100" type="password" name="pass" formControlName = "password">
+                    <input class="input100" type="password" name="pass" id="password" formControlName = "password">
                     <span class="focus-input100"></span>
                 </div>
                    
                 <br>
 
                 <div class="container-login100-form-btn">
-                    <button type="submit" class="login100-form-btn" [disabled]="!form.valid">
+                    <button type="submit" id="submit" class="login100-form-btn" [disabled]="!form.valid">
                         Login
                     </button>
                 </div>

@@ -7,10 +7,10 @@
 	<span>
 		<a mat-button [routerLink]="['/posts']"> News </a>
 		<a mat-button [routerLink]="['/categoriesAndTypes']"> Categories and types </a>
-		<button mat-button [matMenuTriggerFor]="addNew">Add new</button>
+		<button id="addNewBtn" mat-button [matMenuTriggerFor]="addNew">Add new</button>
         <mat-menu #addNew="matMenu">
-            <button mat-menu-item (click)="newCulturalOffer()">Add new cultural offer</button>
-            <button mat-menu-item (click)="newAdmin()">Add new administrator</button>
+            <button id="addNewCOBtn" mat-menu-item (click)="newCulturalOffer()">Add new cultural offer</button>
+            <button id="addNewAdminBtn" mat-menu-item (click)="newAdmin()">Add new administrator</button>
         </mat-menu>
 		<a [routerLink]="['/profileDetails']">
 			<mat-icon class="material-icons"  inline="true">person</mat-icon>

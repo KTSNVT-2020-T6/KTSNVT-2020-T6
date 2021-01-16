@@ -14,7 +14,7 @@
         <a style="background-color:white;color:black;" class="page-link">{{activePage}}</a>
       </li>
       <li class="page-item" (click)="selected(activePage+1)" *ngIf="activePage < pages.length">
-        <a style="background-color:white;color:black;" class="page-link">{{activePage+1}}</a>
+        <a style="background-color:white;color:black;" id="page{{activePage}}" class="page-link">{{activePage+1}}</a>
       </li>
       <li class="page-item" (click)="selected(activePage+1)" *ngIf="activePage < pages.length">
         <a style="background-color:white;color:black" class="page-link" aria-label="Next">
