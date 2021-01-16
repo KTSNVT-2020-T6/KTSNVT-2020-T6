@@ -73,6 +73,30 @@ public class HomePage {
     @FindBy(id = "submitAdmin")
     private WebElement registerBtn;
     
+    //home page
+    @FindBy(id = "goToPage1")
+    private WebElement goToPage;
+    
+    @FindBy(id = "filter")
+    private WebElement filter;
+    
+    @FindBy(id = "page1")
+    private WebElement page2;
+    
+    @FindBy(id = "searchContent")
+    private WebElement searchContent;
+    
+    @FindBy(id = "searchCity")
+    private WebElement searchCity;
+    
+    @FindBy(id = "submitSearch")
+    private WebElement submitSearch;
+    
+    @FindBy(id = "refresh")
+    private WebElement refresh;
+    
+    
+    
     public HomePage() {
     }
 
@@ -80,6 +104,22 @@ public class HomePage {
         this.driver = driver;
     }
 
+    public void ensureIsDisplayedFilterBtn() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("filter")));
+    }
+    
+    public void ensureIsDisplayedGoToBtn() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("goToPage1")));
+    }
+    
+    public void ensureIsDisplayedPage3() {
+        (new WebDriverWait(driver, 100)).until(ExpectedConditions.presenceOfElementLocated(By.id("page2")));
+    }
+    
+    public void ensureIsDisplayedPage2() {
+        (new WebDriverWait(driver, 100)).until(ExpectedConditions.presenceOfElementLocated(By.id("page1")));
+    }
+    
     public void ensureIsDisplayedAddNewBtn() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("addNewBtn")));
     }
@@ -92,6 +132,10 @@ public class HomePage {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("coName")));
     }
     
+    public void ensureIsNotVisiblePage3() {
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("page2")));
+    }
+    
     public void ensureIsDisplayedEmail() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("email")));
     }
@@ -101,7 +145,7 @@ public class HomePage {
     }
     
     public String ensureIsDisplayedToast() {
-        return (new WebDriverWait(driver, 50)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
+        return (new WebDriverWait(driver, 100)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
     }
 
 	public WebElement getAddNewBtn() {
@@ -256,4 +300,64 @@ public class HomePage {
 		this.registerBtn = registerBtn;
 	}
 
+	public WebElement getGoToPage() {
+		return goToPage;
+	}
+
+	public void setGoToPage(WebElement goToPage) {
+		this.goToPage = goToPage;
+	}
+
+	public WebElement getFilter() {
+		return filter;
+	}
+
+	public void setFilter(WebElement filter) {
+		this.filter = filter;
+	}
+
+	public WebElement getPage2() {
+		return page2;
+	}
+
+	public void setPage2(WebElement page2) {
+		this.page2 = page2;
+	}
+
+	public WebElement getSearchContent() {
+		return searchContent;
+	}
+
+	public void setSearchContent(WebElement searchContent) {
+		this.searchContent = searchContent;
+	}
+
+	public WebElement getSearchCity() {
+		return searchCity;
+	}
+
+	public void setSearchCity(WebElement searchCity) {
+		this.searchCity = searchCity;
+	}
+
+	public WebElement getSubmitSearch() {
+		return submitSearch;
+	}
+
+	public void setSubmitSearch(WebElement submitSearch) {
+		this.submitSearch = submitSearch;
+	}
+
+	public WebElement getRefresh() {
+		return refresh;
+	}
+
+	public void setRefresh(WebElement refresh) {
+		this.refresh = refresh;
+	}
+
+
+    
+	
+	
 }

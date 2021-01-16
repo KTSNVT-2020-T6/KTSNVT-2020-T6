@@ -43,7 +43,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit {
     // add new markers
     this.culturalOffers.forEach(element => {
       this.markers.push(L.marker([element.lat, element.lon], {icon: this.icon}).addTo(this.map)
-      .bindPopup("<h3><a mat-button href=/culturaloffer/"+element.id+" matTooltip=Open to see details style=color:#576869>"+element.name+"</a></h3> "));
+      .bindPopup("<h3><a id=placemark" + element.id + " mat-button href=/culturaloffer/"+element.id+" matTooltip=Open to see details style=color:#576869>"+element.name+"</a></h3> "));
     });   
   }
 

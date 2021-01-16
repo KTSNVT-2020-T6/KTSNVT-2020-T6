@@ -17,10 +17,10 @@
             <div class="card-body">
               <h4 class="card-title">{{i.name}}</h4>
               <p class="card-text">{{i.description}}</p>
-              <button mat-button (click)="unsubscribe(i)" style="color:#1cc3cc" inline="true">
+              <button id="unsubscribe{{i.id}}" mat-button (click)="unsubscribe(i)" style="color:#1cc3cc" inline="true">
                 Unsubscribe
               </button>
-              <a mat-button href="/culturaloffer/{{i.id}}" matTooltip="Open to see details" style="color:#576869" inline="true">
+              <a id = "goToPage{{i.id}}" mat-button href="/culturaloffer/{{i.id}}" matTooltip="Open to see details" style="color:#576869" inline="true">
                 <mat-icon>open_in_new</mat-icon>
               </a>
             </div>
