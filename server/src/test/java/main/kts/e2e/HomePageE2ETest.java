@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -56,7 +55,7 @@ public class HomePageE2ETest {
         
         homePage.getCategorySelect().click();
         homePage.getCategoryOption().click();
-        justWait(500);
+        justWait(2000);
         homePage.getTypeSelect().click();
         homePage.getTypeOption().click();
         
@@ -72,6 +71,8 @@ public class HomePageE2ETest {
         homePage.getTodaysDate().click();
         justWait(500);
         homePage.getSubmitCO().click();
+        
+        justWait(1000);
         
         homePage.ensureIsNotVisibleName();        
         assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
@@ -92,7 +93,7 @@ public class HomePageE2ETest {
         
         homePage.getCategorySelect().click();
         homePage.getCategoryOption().click();
-        justWait(500);
+        justWait(1500);
         homePage.getTypeSelect().click();
         homePage.getTypeOption().click();
         
@@ -120,6 +121,7 @@ public class HomePageE2ETest {
         
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getAddNewBtn().click();
+        justWait(1000);
         homePage.getAddNewAdminBtn().click();
         homePage.ensureIsDisplayedEmail();
         
@@ -169,6 +171,72 @@ public class HomePageE2ETest {
         assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
 
     }
+    
+    @Test
+    public void OpenInNewTest() throws InterruptedException {
+    	
+    	driver.get("http://localhost:4200/home");
+
+        justWait(1000);
+        
+        homePage.ensureIsDisplayedGoToBtn();
+        homePage.getGoToPage().click();
+        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+    }
+    
+    @Test
+    public void ChangePageTestSuccess() throws InterruptedException {
+
+        driver.get("http://localhost:4200/home");
+
+        justWait(5000);
+        
+        homePage.ensureIsDisplayedGoToBtn();
+        homePage.getPage2().click();
+        justWait(1000);
+        homePage.ensureIsDisplayedPage3();
+                
+        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+
+    }
+    
+    @Test
+    public void FilterSuccess() throws InterruptedException {
+    	
+    	driver.get("http://localhost:4200/home");
+
+        justWait(1000);
+        
+        homePage.ensureIsDisplayedFilterBtn();
+        homePage.getFilter().click();
+        homePage.getSearchContent().click();
+        homePage.getSearchContent().sendKeys("meep");
+        justWait(500);
+        homePage.getSubmitSearch().click();
+        homePage.ensureIsDisplayedGoToBtn();
+        homePage.ensureIsNotVisiblePage3();
+        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+    }
+
+    @Test
+    public void FilterRefresh() throws InterruptedException {
+    	
+    	driver.get("http://localhost:4200/home");
+
+        justWait(1000);
+        
+        homePage.ensureIsDisplayedFilterBtn();
+        homePage.getFilter().click();
+        homePage.getSearchContent().click();
+        homePage.getSearchContent().sendKeys("meep");
+        justWait(500);
+        homePage.getSubmitSearch().click();
+        justWait(1000);
+        homePage.getRefresh().click();
+        homePage.ensureIsDisplayedPage2();
+        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+    }
+    
     
     private void justWait(int milliseconds) throws InterruptedException {
         synchronized (driver)

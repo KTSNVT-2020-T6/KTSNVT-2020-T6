@@ -5051,6 +5051,7 @@ insert into image (name, relative_path, active) values ('file2305', 'src/main/re
 
 ------------------------------------------------------------------------------------------
 -- FAVORITE CULTURAL OFFERS
+insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id) values (1, 22);
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id) values (224, 109);
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id) values (182, 490);
 insert into users_favorite_cultural_offers (registered_user_id, favorite_cultural_offers_id) values (535, 240);
