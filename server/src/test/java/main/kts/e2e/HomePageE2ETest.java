@@ -31,7 +31,7 @@ public class HomePageE2ETest {
         loginPage.getEmail().sendKeys("admin@gmail.com");;
         loginPage.getPassword().sendKeys("asdf");;
         loginPage.getLoginBtn().click();
-        justWait(5000);
+        justWait(2000);
            
         homePage = PageFactory.initElements(driver, HomePage.class);
     }
@@ -235,6 +235,20 @@ public class HomePageE2ETest {
         homePage.getRefresh().click();
         homePage.ensureIsDisplayedPage2();
         assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+    }
+    
+    @Test
+    public void LogoutUserTest() throws InterruptedException {
+
+    	driver.get("http://localhost:4200/home");
+    	justWait(1000);
+    	
+        homePage.ensureIsDisplayedAddNewBtn();
+        homePage.getSignOut().click();
+        justWait(1000);
+
+        assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+
     }
     
     
