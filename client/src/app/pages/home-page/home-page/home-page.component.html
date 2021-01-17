@@ -6,7 +6,7 @@
       </app-pagination>
     </div>
     <span>
-      <button (click)="searchClicked()" mat-button> 
+      <button id="filter" (click)="searchClicked()" mat-button> 
         Filter
         <span class="material-icons black-colored-icon">
         filter_alt
@@ -14,7 +14,7 @@
       </button>
     </span>
     <span *ngIf="filtered">
-      <button (click)="refreshClick()" mat-button> 
+      <button id="refresh" (click)="refreshClick()" mat-button> 
         <span class="material-icons black-colored-icon">
         refresh
         </span>
