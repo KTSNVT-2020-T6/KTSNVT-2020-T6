@@ -3,8 +3,8 @@
         <h2 mat-dialog-title>New type</h2>
         <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
-            <mat-select formControlName="categoryDTO" required>
-                <mat-option *ngFor="let cat of categories" [value]="cat">
+            <mat-select id="catSelect" formControlName="categoryDTO" required>
+                <mat-option  *ngFor="let cat of categories" id="cat{{cat.id}}" [value]="cat">
                     {{cat.name}}
                 </mat-option>
             </mat-select>
@@ -15,7 +15,7 @@
         <br>
         <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
-            <input matInput formControlName="name">
+            <input id="typeName" matInput formControlName="name">
             <mat-error *ngIf="typeForm.controls.name.touched && typeForm.controls.name.invalid">
                 <span *ngIf="typeForm.controls.name.errors?.required">This field is mandatory.</span>
             </mat-error>
@@ -23,14 +23,14 @@
         <br>
         <mat-form-field appearance="fill">
             <mat-label>Description</mat-label>
-            <textarea matInput formControlName="description"></textarea>
+            <textarea id="typeDescription" matInput formControlName="description"></textarea>
             <mat-error *ngIf="typeForm.controls.description.touched && typeForm.controls.description.invalid">
                 <span *ngIf="typeForm.controls.description.errors?.required">This field is mandatory.</span>
             </mat-error>
         </mat-form-field>
         <mat-dialog-actions align="end">
             <button mat-raised-button mat-dialog-close>Cancel</button>
-            <button type="submit" mat-raised-button color="success">Save</button>
+            <button id="typeSubmit" type="submit" mat-raised-button color="success">Save</button>
         </mat-dialog-actions>
         </div>
 </form>

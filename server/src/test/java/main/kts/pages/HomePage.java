@@ -25,6 +25,7 @@ public class HomePage {
     private WebElement signOut;
     
     // add new category modal dialog
+ // add new cultural offer modal dialog
     
     @FindBy(id="catSelect")
     private WebElement categorySelect;

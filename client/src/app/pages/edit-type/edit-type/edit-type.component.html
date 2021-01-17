@@ -3,8 +3,8 @@
     <h2 mat-dialog-title>Edit type</h2>
     <mat-form-field appearance="fill">
         <mat-label>Category</mat-label>
-        <mat-select [(value)]="selected" (valueChange)="onSelection($event)">
-            <mat-option *ngFor="let cat of categories" [value]="cat">
+        <mat-select id="catEdtiSelect" [(value)]="selected" (valueChange)="onSelection($event)">
+            <mat-option  *ngFor="let cat of categories" id="cat{{cat.id}}" [value]="cat">
                 {{cat.name}}
             </mat-option>
         </mat-select>
@@ -12,16 +12,16 @@
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
+        <input id="typeEditName" matInput formControlName="name">
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description"></textarea>
+        <textarea id="typeEditDescritpion" matInput formControlName="description"></textarea>
     </mat-form-field>
     <mat-dialog-actions align="end">
         <button type="button" mat-raised-button (click)="cancelClicked()" >Cancel</button>
-        <button type="submit" mat-raised-button color="success">Save</button>
+        <button id="typeEditSubmit" type="submit" mat-raised-button color="success">Save</button>
     </mat-dialog-actions>
     </div>
 </form>

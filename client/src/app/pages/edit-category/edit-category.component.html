@@ -4,16 +4,16 @@
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
+        <input id="catEditName" matInput formControlName="name">
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description"></textarea>
+        <textarea id="catEdtiDescription" matInput formControlName="description"></textarea>
     </mat-form-field>
     <mat-dialog-actions align="end">
         <button type="button" mat-raised-button (click)="cancelClicked()" >Cancel</button>
-        <button type="submit" mat-raised-button color="success">Save</button>
+        <button id="catEditSubmit" type="submit" mat-raised-button color="success">Save</button>
     </mat-dialog-actions>
     </div>
 </form>
