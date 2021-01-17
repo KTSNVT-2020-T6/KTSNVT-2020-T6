@@ -21,7 +21,7 @@ public class HomePage {
     @FindBy(id = "addNewAdminBtn")
     private WebElement addNewAdminBtn;
     
-    // add new category modal dialog
+    // add new cultural offer modal dialog
     
     @FindBy(id="catSelect")
     private WebElement categorySelect;

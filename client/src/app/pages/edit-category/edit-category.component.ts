@@ -52,6 +52,7 @@ export class EditCategoryComponent implements OnInit {
         this.dialogRef.close();
         window.location.reload();
       }, error => {
+        this.dialogRef.close()
         this.toastr.error("Cannot edit category!");
       }
     );

@@ -74,6 +74,7 @@ export class EditTypeComponent implements OnInit {
         window.location.reload();
       },
       error => {
+        this.dialogRef.close()
         this.toastr.error("Cannot edit type!");
       }
     );
