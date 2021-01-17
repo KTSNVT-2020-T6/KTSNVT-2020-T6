@@ -48,7 +48,7 @@
     <br>
     <mat-dialog-actions align="end">
         <button mat-raised-button (click)="cancel()">Cancel</button>
-        <button type="submit" mat-raised-button color="success" id="submitAdmin" (click)="addAdmin()">Sign up</button>
+        <button type="submit" mat-raised-button color="success" id="submitAdmin" [disabled]="form.invalid" (click)="addAdmin()">Sign up</button>
     </mat-dialog-actions>
     </div>
 </form>  

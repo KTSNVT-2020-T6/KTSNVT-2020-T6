@@ -21,7 +21,11 @@ public class HomePage {
     @FindBy(id = "addNewAdminBtn")
     private WebElement addNewAdminBtn;
     
-    // add new cultural offer modal dialog
+    @FindBy(id="signOut")
+    private WebElement signOut;
+    
+    // add new category modal dialog
+ // add new cultural offer modal dialog
     
     @FindBy(id="catSelect")
     private WebElement categorySelect;
@@ -150,6 +154,14 @@ public class HomePage {
 
 	public WebElement getAddNewBtn() {
 		return addNewBtn;
+	}
+
+	public WebElement getSignOut() {
+		return signOut;
+	}
+
+	public void setSignOut(WebElement signOut) {
+		this.signOut = signOut;
 	}
 
 	public void setAddNewBtn(WebElement addNewBtn) {

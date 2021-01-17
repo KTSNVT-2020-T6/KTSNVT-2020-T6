@@ -9,15 +9,6 @@
         </mat-error>
     </mat-form-field>
     <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker"  [min]="todayDate" formControlName="date" required>
-        <mat-datepicker-toggle id="datePickerToggleBtn"  matSuffix [for]="picker" ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="postForm.controls.date.touched && postForm.controls.date.invalid">
-            <span *ngIf="postForm.controls.date.errors?.required">This field is mandatory.</span>
-        </mat-error>
-      </mat-form-field>
     <br>
     <mat-form-field>
         <ngx-mat-file-input placeholder="Choose image" (change)="onFileSelect($event)"></ngx-mat-file-input>
@@ -26,7 +17,7 @@
 
     <mat-dialog-actions align="end">
         <button mat-raised-button mat-dialog-close>Cancel</button>
-        <button type="submit" id="submitAddingPost" mat-raised-button color="success">Save</button>
+        <button type="submit" id="submitAddingPost" mat-raised-button color="success" [disabled]="postForm.invalid">Save</button>
     </mat-dialog-actions>
     </div>
 </form>

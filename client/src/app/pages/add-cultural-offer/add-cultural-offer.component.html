@@ -58,7 +58,7 @@
         
         <mat-dialog-actions align="end">
             <button mat-raised-button mat-dialog-close>Cancel</button>
-            <button type="submit" id="submitCO" mat-raised-button color="success">Save</button>
+            <button type="submit" id="submitCO" mat-raised-button [disabled]="coForm.invalid" color="success">Save</button>
         </mat-dialog-actions>
         </div>
     </form>

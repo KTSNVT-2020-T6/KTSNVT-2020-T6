@@ -149,10 +149,10 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.comment.userId = this.currentUser.id;
         this.comment.date = new Date();
          // uploadoati sliku
-        this.comment.imageDTO = {'id' : 0}
-
+      
         if(this.imageAdded === undefined && this.commentText === undefined) {
            this.toastr.error('Comment cannot be empty!');
+           this.comment.imageDTO = undefined;
            return;
         }
         if (this.imageAdded !== undefined)

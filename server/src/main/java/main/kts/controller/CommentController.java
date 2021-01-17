@@ -81,7 +81,6 @@ public class CommentController {
 	@PreAuthorize("hasRole('REGISTERED_USER')")
 	public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) {
 		Comment comment;
-		Image image;
 		CulturalOffer culturalOffer;
 		RegisteredUser registeredUser;
 		if (!this.validateCommentDTO(commentDTO)) {
@@ -89,11 +88,10 @@ public class CommentController {
 		}
 		try {
 			
-			image = imageService.findOne(commentDTO.getImageDTO().getId());
 			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferId());
 			registeredUser = registeredUserService.findOne(commentDTO.getUserId());
 			comment = commentMapper.toEntity(commentDTO);
-			comment.setImage(image);
+
 			comment.setCulturalOffer(culturalOffer);
 			comment.setRegistredUser(registeredUser);
 			comment = commentService.create(comment);

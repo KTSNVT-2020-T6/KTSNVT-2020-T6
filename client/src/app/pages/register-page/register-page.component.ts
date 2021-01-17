@@ -6,7 +6,6 @@ import { AuthenticationService } from '../../pages/services/authentication/authe
 import { Img } from '../model/Image';
 import { User } from '../model/User';
 import { ImageService } from '../services/image/image.service';
-import { validatePasswordRepeat } from '../validators/password-validator';
 
 @Component({
   selector: 'app-register-page',

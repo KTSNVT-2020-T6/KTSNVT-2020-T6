@@ -85,6 +85,35 @@ public class CulturalOfferPage {
     @FindBy(className="mat-calendar-body-today")
     private WebElement todaysDate;
     
+    @FindBy(id="back")
+    private WebElement backPagination;
+    
+    //edit cult offer
+    @FindBy(className="geoapify-autocomplete-input")
+    private WebElement geocoder;
+    
+    @FindBy(id="datePicker")
+    private WebElement datePickerToggleEditCOButton;
+    
+    @FindBy(id="editNameCulturalOffer")
+    private WebElement editNameCulturalOffer;
+    
+    @FindBy(id="editDescriptionCulturalOffer")
+    private WebElement editDescriptionCulturalOffer;
+        
+    @FindBy(id="typeSelect")
+    private WebElement editTypeCulturalOffer;
+    
+    @FindBy(id="type1")
+    private WebElement selectType;
+    
+    @FindBy(xpath = "//*[@id=\"ngx-mat-file-input-0\"]/input")
+   	private WebElement editImageCulturalOfferButton; 
+    
+    
+    @FindBy(id="saveEditCulturalOffer")
+    private WebElement editCultOfferSaveButton;
+    
 	public CulturalOfferPage() {}
 	
 	public CulturalOfferPage(WebDriver driver) {
@@ -109,31 +138,37 @@ public class CulturalOfferPage {
     public String ensureIsDisplayedToast() {
         return (new WebDriverWait(driver, 30)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
     }
-    public String ensureIsDisplayedEditComment() {
-        return (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editComment1"))).getText();
+    public void ensureIsDisplayedEditComment() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editComment1")));
     }
-    public String ensureIsDisplayedDeleteComment() {
-        return (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteComment1"))).getText();
+    public void ensureIsDisplayedDeleteComment() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteComment1")));
     }
     public void ensureIsNotVisibleYesButton() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("yesBtn")));
     }
 
-    public void ensureIsDisplayedPage3() {
-        (new WebDriverWait(driver, 100)).until(ExpectedConditions.presenceOfElementLocated(By.id("page2")));
+    public void ensureIsDisplayedBackPaginationButton() {
+        (new WebDriverWait(driver, 100)).until(ExpectedConditions.presenceOfElementLocated(By.id("back")));
     }
-    public String ensureIsDisplayedDeleteCulturalOffer() {
-        return (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteCulturalOffer"))).getText();
+    public void ensureIsDisplayedDeleteCulturalOffer() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteCulturalOffer")));
     }
-    public String ensureIsNotDisplayedDeleteCulturalOffer() {
-        return (new WebDriverWait(driver, 1500)).until(ExpectedConditions.elementToBeClickable(By.id("deleteCulturalOffer"))).getText();
+    public void ensureIsNotDisplayedDeleteCulturalOffer() {
+        (new WebDriverWait(driver, 1500)).until(ExpectedConditions.elementToBeClickable(By.id("deleteCulturalOffer")));
     }
-    public String ensureIsDisplayedEditCulturalOffer() {
-        return (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editCulturalOffer"))).getText();
+    public void ensureIsDisplayedEditCulturalOffer() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editCulturalOffer")));
     }
-    public String ensureIsDisplayedAddPost() {
-        return (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("addPost"))).getText();
+    public void ensureIsDisplayedAddPost() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("addPost")));
     }
+    public void ensureIsDisplayedAddPostAndNotClickable() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementSelectionStateToBe(By.id("submitAddingPost"), false));
+    }
+   
+    
+    
 	public WebElement getAddPostButton() {
 		return addPostButton;
 	}
@@ -304,6 +339,78 @@ public class CulturalOfferPage {
 
 	public void setTodaysDate(WebElement todaysDate) {
 		this.todaysDate = todaysDate;
+	}
+
+	public WebElement getBackPagination() {
+		return backPagination;
+	}
+
+	public void setBackPagination(WebElement backPagination) {
+		this.backPagination = backPagination;
+	}
+
+	public WebElement getGeocoder() {
+		return geocoder;
+	}
+
+	public void setGeocoder(WebElement geocoder) {
+		this.geocoder = geocoder;
+	}
+
+	public WebElement getDatePickerToggleEditCOButton() {
+		return datePickerToggleEditCOButton;
+	}
+
+	public void setDatePickerToggleEditCOButton(WebElement datePickerToggleEditCOButton) {
+		this.datePickerToggleEditCOButton = datePickerToggleEditCOButton;
+	}
+
+	public WebElement getEditNameCulturalOffer() {
+		return editNameCulturalOffer;
+	}
+
+	public void setEditNameCulturalOffer(WebElement editNameCulturalOffer) {
+		this.editNameCulturalOffer = editNameCulturalOffer;
+	}
+
+	public WebElement getEditDescriptionCulturalOffer() {
+		return editDescriptionCulturalOffer;
+	}
+
+	public void setEditDescriptionCulturalOffer(WebElement editDescriptionCulturalOffer) {
+		this.editDescriptionCulturalOffer = editDescriptionCulturalOffer;
+	}
+
+	public WebElement getEditTypeCulturalOffer() {
+		return editTypeCulturalOffer;
+	}
+
+	public void setEditTypeCulturalOffer(WebElement editTypeCulturalOffer) {
+		this.editTypeCulturalOffer = editTypeCulturalOffer;
+	}
+
+	public WebElement getSelectType() {
+		return selectType;
+	}
+
+	public void setSelectType(WebElement selectType) {
+		this.selectType = selectType;
+	}
+
+	public WebElement getEditImageCulturalOfferButton() {
+		return editImageCulturalOfferButton;
+	}
+
+	public void setEditImageCulturalOfferButton(WebElement editImageCulturalOfferButton) {
+		this.editImageCulturalOfferButton = editImageCulturalOfferButton;
+	}
+
+	public WebElement getEditCultOfferSaveButton() {
+		return editCultOfferSaveButton;
+	}
+
+	public void setEditCultOfferSaveButton(WebElement editCultOfferSaveButton) {
+		this.editCultOfferSaveButton = editCultOfferSaveButton;
 	}
 
 

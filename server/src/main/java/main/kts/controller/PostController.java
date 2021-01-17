@@ -78,7 +78,6 @@ public class PostController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
 		Post post;
-		Image image;
 		CulturalOffer culturalOffer;
 		
 		if (!this.validatePostDTO(postDTO)) {
@@ -87,13 +86,8 @@ public class PostController {
 		try {
 			culturalOffer = culturalOfferService.findOne(postDTO.getCulturalOfferId());
 			post = postMapper.toEntity(postDTO);
-			if(postDTO.getImageDTO() == null) {
-				image = imageService.findOne(postDTO.getImageDTO().getId());
-				post.setImage(image);
-			}
 			post = postService.create(post);
 			culturalOffer.getPost().add(post);
-
 			culturalOfferService.saveAndSendMail(culturalOffer);
 			
 			
@@ -111,7 +105,7 @@ public class PostController {
 		Post post;
 		Image image;
 		if (!this.validatePostDTO(postDTO)) {
-		
+			System.out.println("USAO");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
@@ -165,8 +159,6 @@ public class PostController {
 		if(postDTO.getDate() == null) 
 			return false;
 		if(postDTO.getText() == null) 
-			return false;
-		if(postDTO.getDate().before(new Date())) 
 			return false;
 		if(postDTO.getCulturalOfferId() == null) 
 			return false;

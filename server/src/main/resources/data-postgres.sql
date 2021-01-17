@@ -1905,7 +1905,7 @@ insert into users (type, active, email, first_name, last_name, password, verifie
 insert into users (type, active, email, first_name, last_name, password, verified, image_id) values ('registered_user', true, 'ckollaschow@desdev.cn', 'Cherie', 'Kollasch', '$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO', true, 897);
 insert into users (type, active, email, first_name, last_name, password, verified, image_id) values ('registered_user', true, 'nbraidfordox@shareasale.com', 'Norbert', 'Braidford', '$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO', true, 898);
 insert into users (type, active, email, first_name, last_name, password, verified, image_id) values ('registered_user', true, 'corneblowoy@home.pl', 'Cally', 'Orneblow', '$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO', true, 899);
-insert into users (type, active, email, first_name, last_name, password, verified, image_id) values ('registered_user', true, 'ryerrilloz@studiopress.com', 'Rozanna', 'Yerrill', '$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO', true, 900);
+insert into users (type, active, email, first_name, last_name, password, verified, image_id) values ('registered_user', true, 'ryerrilloz@studiopress.com', 'Rozanna', 'Yerrill', '$2a$10$RVzuprKddsjdq6P8QWmqF.sCj2uYPIUlbFVB.b7tJ9RdFNOOBNoXO', false, 900);
 
 
 ------------------------------------------------------------------------------------------------
@@ -9065,6 +9065,7 @@ insert into rate (number, cultural_offer_id, active, registred_user_id) values (
 insert into rate (number, cultural_offer_id, active, registred_user_id) values (2, 285, true, 187);
 insert into rate (number, cultural_offer_id, active, registred_user_id) values (2, 12, true, 709);
 
+insert into verification_token (created_date, end_date, token, user_id) values ('2020-07-11', '2021-07-11', '926b2ee9-e220-4960-b17c-a49593e59d28', 900);
 
 
 
