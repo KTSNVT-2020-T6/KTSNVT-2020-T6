@@ -86,15 +86,19 @@ public class PostController {
 		}
 		try {
 			culturalOffer = culturalOfferService.findOne(postDTO.getCulturalOfferId());
-			image = imageService.findOne(postDTO.getImageDTO().getId());
 			post = postMapper.toEntity(postDTO);
-			post.setImage(image);
+			if(postDTO.getImageDTO() == null) {
+				image = imageService.findOne(postDTO.getImageDTO().getId());
+				post.setImage(image);
+			}
 			post = postService.create(post);
 			culturalOffer.getPost().add(post);
+
 			culturalOfferService.saveAndSendMail(culturalOffer);
 			
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
@@ -107,7 +111,7 @@ public class PostController {
 		Post post;
 		Image image;
 		if (!this.validatePostDTO(postDTO)) {
-			System.out.println("EVOMENE");
+		
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {

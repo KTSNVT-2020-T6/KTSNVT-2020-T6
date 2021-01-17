@@ -1,9 +1,9 @@
 <fieldset class="rating">
     <input type="radio"  value="5" [checked]="rating===5" />
-    <label title="Rocks!" (click)='onClick(5)'>5 stars</label>
+    <label title="Rocks!"  id="star5" (click)='onClick(5)'>5 stars</label>
   
-    <input type="radio" value="4" [checked]="rating===4" />
-    <label title="Pretty good" (click)='onClick(4)'>4 stars</label>
+    <input type="radio" value="4"  [checked]="rating===4" />
+    <label title="Pretty good" id="star4" (click)='onClick(4)'>4 stars</label>
   
     <input type="radio"  value="3" [checked]="rating===3" />
     <label title="Meh" (click)='onClick(3)'>3 stars</label>

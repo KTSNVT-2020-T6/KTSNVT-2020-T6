@@ -60,7 +60,7 @@ export class EditCommentComponent implements OnInit {
      this.comment.text = this.editForm.value['text'];
      this.comment.date = new Date();
      if (this.imageAdded !== undefined)
-    {
+      {
       const formData = new FormData();
       formData.append('file', this.imageAdded);
       this.imageService.add(formData).subscribe(
@@ -72,7 +72,7 @@ export class EditCommentComponent implements OnInit {
              this.toastr.success("Comment edited!");
             })
           });
-        }
+      }
       else
       {
         this.commentService.update(this.comment, this.commentId).subscribe(
