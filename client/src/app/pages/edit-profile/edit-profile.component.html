@@ -3,7 +3,7 @@
     
     <mat-form-field appearance="fill">
         <mat-label>First name</mat-label>
-        <input matInput formControlName="firstName" required>
+        <input id="firstName" matInput formControlName="firstName" required>
         <mat-error *ngIf="form.controls.firstName.touched && form.controls.firstName.invalid">
             <span *ngIf="form.controls.firstName.errors?.required">This field is mandatory.</span>
         </mat-error>
@@ -11,7 +11,7 @@
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Last name</mat-label>
-        <input matInput formControlName="lastName" required>
+        <input id="lastName" matInput formControlName="lastName" required>
         <mat-error *ngIf="form.controls.lastName.touched && form.controls.lastName.invalid">
             <span *ngIf="form.controls.lastName.errors?.required">This field is mandatory.</span>
         </mat-error>
@@ -19,7 +19,7 @@
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <textarea matInput formControlName="email" required></textarea>
+        <textarea id="email" matInput formControlName="email" required></textarea>
         <mat-error *ngIf="form.controls.email.touched && form.controls.email.invalid">
             <span *ngIf="form.controls.email.errors?.required">This field is mandatory.</span>
             <span *ngIf="form.controls.email.errors?.pattern">This field is invalid.</span>
@@ -27,14 +27,14 @@
     </mat-form-field>
     <br>
     <mat-form-field>
-        <ngx-mat-file-input placeholder="Profile image" (change)="onFileSelect($event)"></ngx-mat-file-input>
+        <ngx-mat-file-input id="uploadImage" placeholder="Profile image" (change)="onFileSelect($event)"></ngx-mat-file-input>
         <mat-icon matSuffix>folder</mat-icon>
     </mat-form-field>
 
     <br>
     <mat-dialog-actions align="end">
         <button mat-raised-button (click)="cancel()">Cancel</button>
-        <button type="submit" mat-raised-button color="success" (click)="saveChanges()">Save</button>
+        <button type="submit" id="submitBtn" mat-raised-button color="success" (click)="saveChanges()">Save</button>
     </mat-dialog-actions>
     </div>
 </form> 

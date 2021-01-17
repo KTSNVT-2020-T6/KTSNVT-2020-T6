@@ -14,6 +14,7 @@ import { EditPasswordComponent } from '../edit-password/edit-password.component'
 import { AdminService } from '../services/admin/admin.service';
 import { AuthenticationService } from 'src/app/pages/services/authentication/authentication.service';
 import { RegisteredUserService } from '../services/registered-user/registered-user.service';
+import { ConfirmationComponent, ConfirmDialogModel } from '../confirmation/confirmation.component';
 
 @Component({
   selector: 'app-profile-details',
@@ -24,6 +25,7 @@ export class ProfileDetailsComponent implements OnInit {
   user!: User;
   image!: Img;
   role!: string|undefined;
+  result!: any;
 
   constructor(
     private userService: UserService,
@@ -96,6 +98,22 @@ export class ProfileDetailsComponent implements OnInit {
       //   );
       //   }
       // );
+    });
+  }
+
+  confirmDialog() {
+    const message = `Are you sure you want to deactivate account`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+      if(this.result === true){
+        this.deleteProfile();
+      }
     });
   }
   deleteProfile(){
