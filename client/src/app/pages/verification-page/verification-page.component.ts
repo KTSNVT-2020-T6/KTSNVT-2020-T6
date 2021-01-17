@@ -23,10 +23,13 @@ export class VerificationPageComponent implements OnInit {
     this.token = this.route.snapshot.paramMap.get('token');
     this.verificationService.verify(this.token).subscribe(
       res => {
+        if(res == "redirect: access denied"){
+          this.verificationMessage = 'Token is not valid or expired!';
+          return;
+        }
         this.router.navigate(['login']);
         this.toastr.success('Successfully verified!');
       },error => {
-        console.log(error);
         this.verificationMessage = 'Token is not valid or expired!';
       }
       
