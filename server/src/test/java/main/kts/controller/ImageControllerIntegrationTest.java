@@ -93,17 +93,16 @@ public class ImageControllerIntegrationTest {
 	@Test
     public void testGetById() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);
+//		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
+//		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
-		ResponseEntity<ImageDTO> responseEntity =
+		ResponseEntity<byte[]> responseEntity =
                 restTemplate.exchange("/api/image/1",HttpMethod.GET,
-        				request, ImageDTO.class);
+        				request, byte[].class);
 
-        ImageDTO image = responseEntity.getBody();
+        byte[] image = responseEntity.getBody();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(image);
-        assertEquals(IMAGE_RELATIVE_PATH, image.getRelativePath());
     }
 	
 	@Test
@@ -127,7 +126,7 @@ public class ImageControllerIntegrationTest {
     	HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
-		parameters.add("file", new FileSystemResource("C:\\Users\\Tamara\\Pictures\\untitled.jpg")); // load file into parameter
+		parameters.add("file", new FileSystemResource("src/main/resources/static/images/path.jpg")); // load file into parameter
 		headers.set("Content-Type", "multipart/form-data"); // we are sending a form
 		headers.set("Accept", "text/plain"); // looks like you want a string back
 

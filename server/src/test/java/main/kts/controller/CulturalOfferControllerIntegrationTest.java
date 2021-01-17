@@ -521,9 +521,9 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 		
-		// nije dobra putanja, nikad ne udje u tu metodu u controlleru
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer?page=0&size=1/combined/"+DB_CONTENT+"_"+DB_CITY, HttpMethod.GET, request,
+		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer/combined/"+DB_CONTENT+"_"+DB_CITY+"?page=0&size=1", HttpMethod.GET, request,
 				CulturalOfferDTO[].class);
+
 		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(PAGEABLE_SIZE_SEARCH, new Integer(culturalOffers.length));

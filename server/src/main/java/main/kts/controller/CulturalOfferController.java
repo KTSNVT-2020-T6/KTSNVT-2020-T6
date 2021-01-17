@@ -85,18 +85,20 @@ public class CulturalOfferController {
     		content = tokens[0];
     	}
     	catch(Exception e)
-    	{
-    		
-    	}
+    	{}
     	try {
     		city = tokens[1];
     	}
         catch(Exception e)
-    	{
-    	}
+    	{}
         	
         Page<CulturalOffer> culturalOffers = culturalOfferService.findByCombinedSearch(pageable, content.toUpperCase(), city.toUpperCase());
-       	return new ResponseEntity<>(toCulturalOfferDTOPage(culturalOffers), HttpStatus.OK);
+       	System.out.println("tu smooo"+ culturalOffers.getSize());
+       	Page<CulturalOfferDTO> llala = toCulturalOfferDTOPage(culturalOffers);
+       	for (CulturalOfferDTO culturalOfferDTO : llala) {
+			System.out.println(culturalOfferDTO);
+		}
+        return new ResponseEntity<Page<CulturalOfferDTO>>(llala, HttpStatus.OK);
     	
    	}
     @RequestMapping(value="/find/subscriptions", method = RequestMethod.GET)

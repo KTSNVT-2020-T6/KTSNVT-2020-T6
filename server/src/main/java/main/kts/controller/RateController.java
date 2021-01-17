@@ -89,6 +89,7 @@ public class RateController {
         try {
         	Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
             String username = ((User) currentUser.getPrincipal()).getEmail();
+            
         	registeredUser = registeredUserService.findByEmail(username);
         	culturalOffer = culturalOfferService.findOne(rateDTO.getCulturalOfferId());
         	rate = rateMapper.toEntity(rateDTO);
@@ -96,6 +97,7 @@ public class RateController {
         	rate.setRegistredUser(registeredUser);
             rate = rateService.create(rate);
         } catch (Exception e) {
+        	e.printStackTrace();
             return new ResponseEntity<>("Cannot create rate: id not found", HttpStatus.BAD_REQUEST);
         }
 

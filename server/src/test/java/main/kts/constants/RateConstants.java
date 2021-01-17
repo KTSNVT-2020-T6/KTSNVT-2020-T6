@@ -36,5 +36,6 @@ public class RateConstants {
     // login credentials
     public static final String USER_EMAIL = "admin@gmail.com";
     public static final String PASSWORD = "asdf";
+    public static final String REG_USER_EMAIL = "user2@gmail.com";
     
 }

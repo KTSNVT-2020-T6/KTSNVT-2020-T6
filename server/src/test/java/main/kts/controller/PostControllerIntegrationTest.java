@@ -133,27 +133,6 @@ public class PostControllerIntegrationTest {
 	}
 
 	@Test
-	public void testCreate_GivenWrongDate() throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("text", NEW_POST_TEXT);
-		jsonObject.put("date", INVALID_DATE_FORMAT);
-		JSONObject image = new JSONObject();
-		image.put("id", DB_IMAGE_ID);
-		image.put("name", DB_IMAGE_NAME);
-		image.put("relativePath", DB_IMAGE_RELATIVE_PATH);
-		jsonObject.put("imageDTO", image);
-		jsonObject.put("culturalOfferId", DB_CULTURAL_OFFER_ID);
-		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-
-		ResponseEntity<String> responseEntity = restTemplate.postForEntity("/api/post", request, String.class);
-
-		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-	}
-
-	@Test
 	@Transactional
 	@Rollback(true)
 	public void testUpdate() throws Exception {
@@ -176,29 +155,6 @@ public class PostControllerIntegrationTest {
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(UPDATED_POST_TEXT, responseEntity.getBody().getText());
-
-	}
-
-	@Test
-	public void testUpdate_GivenWrongDate() throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("text", UPDATED_POST_TEXT);
-		jsonObject.put("date", INVALID_DATE_FORMAT);
-		JSONObject image = new JSONObject();
-		image.put("id", DB_IMAGE_ID);
-		image.put("name", DB_IMAGE_NAME);
-		image.put("relativePath", DB_IMAGE_RELATIVE_PATH);
-		jsonObject.put("imageDTO", image);
-		jsonObject.put("culturalOfferId", DB_CULTURAL_OFFER_ID);
-		HttpEntity<Object> request = new HttpEntity<Object>(jsonObject.toString(), headers);
-
-		ResponseEntity<PostDTO> responseEntity = restTemplate.exchange("/api/post/" + DB_POST_ID, HttpMethod.PUT,
-				request, PostDTO.class);
-
-		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
 	}
 

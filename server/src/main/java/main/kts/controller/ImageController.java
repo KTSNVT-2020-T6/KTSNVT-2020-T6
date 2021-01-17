@@ -56,6 +56,8 @@ public class ImageController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getImage(@PathVariable Long id) throws IOException {
+		
+		
 		Image image = imageService.findOne(id);
 		if (image == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

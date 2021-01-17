@@ -3,7 +3,7 @@
 insert into authority (role) values ('ROLE_REGISTERED_USER');
 insert into authority (role) values ('ROLE_ADMIN');
 
-insert into image (name, relative_path, active) values ('slika','path.jpg', true);
+insert into image (name, relative_path, active) values ('slika','src/main/resources/static/images/path.jpg', true);
 insert into image (name, relative_path, active) values ('slika2', 'path2.jpg', true);
 insert into image (name, relative_path, active) values ('slika3', 'path3.jpg', true);
 insert into image (name, relative_path, active) values ('slika4', 'path4.jpg', true);

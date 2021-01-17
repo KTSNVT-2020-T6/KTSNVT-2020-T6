@@ -39,15 +39,22 @@ public class RateControllerIntegrationTest {
 
 	private String accessToken;
 
-	@Before
+	
 	public void login() {
 		ResponseEntity<UserTokenStateDTO> responseEntity = restTemplate.postForEntity("/auth/log-in",
 				new UserLoginDTO(USER_EMAIL, PASSWORD), UserTokenStateDTO.class);
 		accessToken = "Bearer " + responseEntity.getBody().getAccessToken();
 	}
+	
+	public void loginUser() {
+		ResponseEntity<UserTokenStateDTO> responseEntity = restTemplate.postForEntity("/auth/log-in",
+				new UserLoginDTO(REG_USER_EMAIL, PASSWORD), UserTokenStateDTO.class);
+		accessToken = "Bearer " + responseEntity.getBody().getAccessToken();
+	}
 
 	@Test
 	public void testGetAll() {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -64,6 +71,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testGetPage() {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -80,6 +88,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testGetById() {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -96,6 +105,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testGetById_GivenFalseId() {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -112,6 +122,7 @@ public class RateControllerIntegrationTest {
 	@Transactional
 	@Rollback(true)
 	public void testCreate() throws Exception {
+		this.loginUser();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -130,6 +141,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testCreate_GivenWrongNumber() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -148,6 +160,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testCreate_GivenNonexistentUserId() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -167,6 +180,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testCreate_GivenNonexistentCulturalOfferId() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -187,6 +201,7 @@ public class RateControllerIntegrationTest {
 	@Transactional
 	@Rollback(true)
 	public void testUpdate() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -206,6 +221,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testUpdate_GivenWrongNumber() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -224,6 +240,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testUpdate_GivenNonexistentId() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -241,6 +258,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testUpdate_GivenNonexistentCulturalOfferId() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -260,6 +278,7 @@ public class RateControllerIntegrationTest {
 	@Transactional
 	@Rollback(true)
 	public void testDelete() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -274,6 +293,7 @@ public class RateControllerIntegrationTest {
 
 	@Test
 	public void testDelete_GivenNonexistentId() throws Exception {
+		this.login();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);

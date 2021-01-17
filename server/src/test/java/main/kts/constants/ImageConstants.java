@@ -2,7 +2,7 @@ package main.kts.constants;
 
 public class ImageConstants {
 	public static final String DB_IMAGE_NAME = "slika";
-	public static final String DB_IMAGE_RELATIVE_PATH = "path.jpg";
+	public static final String DB_IMAGE_RELATIVE_PATH = "src/main/resources/static/images/path.jpg";
 	public static final Long DB_IMAGE_ID = 1L;
 	
 	public static final Long DB_CULTURAL_OFFER_ID = 1L;
@@ -33,7 +33,7 @@ public class ImageConstants {
 	public static final String ADMIN_PASSWORD_LOGIN = "asdf";
 	
 	
-	public static final String IMAGE_RELATIVE_PATH = "path.jpg";
+	public static final String IMAGE_RELATIVE_PATH = "src/main/resources/static/images/path.jpg";
 	
 	public static final String IMAGE_REL_PATH = "src/main/resources/static/images/file9.jpg";
 	
