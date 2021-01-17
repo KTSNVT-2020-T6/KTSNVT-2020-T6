@@ -14,7 +14,10 @@ public class PostMapper implements MapperInterface<Post, PostDTO> {
 	
 	@Override
 	public Post toEntity(PostDTO dto) {
-		Image image = imageMapper.toEntity(dto.getImageDTO());
+		Image image = null;
+		if(dto.getImageDTO() != null) {
+			image = imageMapper.toEntity(dto.getImageDTO());
+		}
 		return new Post(dto.getId(),dto.getText(), dto.getDate(), image);	
 	}
 

@@ -17,13 +17,9 @@ import { PostService } from '../services/post/post.service';
   styleUrls: ['./add-post.component.scss']
 })
 export class AddPostComponent implements OnInit {
-/*
-  @Input()
-  coId!: number;
-*/
-// @Inject(MAT_DIALOG_DATA) public coId: any;
+
   culturalOfferId: any = '';
-  post: Post = {"text" : "",  "culturalOfferId": 0, "imageDTO": {"id" : 0}};
+  post: Post = {};
   postForm!: FormGroup;
   co!: CulturalOffer;
   todayDate!: Date;
@@ -53,31 +49,23 @@ export class AddPostComponent implements OnInit {
   createForm() {
     this.postForm = this.fb.group({
       'text': ['', Validators.required],
-      'date':['',Validators.required],
       'image':['']
        });
   }
   addPost(){
     this.post.text = this.postForm.controls['text'].value;
-    this.post.date = this.postForm.controls['date'].value;
-    this.post.culturalOfferId = this.co.id;
-    this.imageService.getImage(1).subscribe(
-      res => {
-        this.post.imageDTO = res.body as Img;
-      }, error => {
-        this.toastr.error("Cannot get image!");
-      }
-    );
-    
+    this.post.date = new Date();
+    this.post.culturalOfferId = this.co.id; 
     this.postService.addPost(this.post as Post).subscribe(
       result => {
+        this.toastr.success("Successfully added post!");
+        this.postForm.reset();
         this.dialogRef.close();
-        this.toastr.success("Successfully added post");
       }, error => {
         this.toastr.error("Cannot create post!");
       }
     );
-    this.postForm.reset();
+   
   }
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {
