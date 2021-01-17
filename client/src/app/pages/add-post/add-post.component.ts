@@ -1,6 +1,6 @@
 import { NONE_TYPE } from '@angular/compiler';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -52,8 +52,8 @@ export class AddPostComponent implements OnInit {
   }
   createForm() {
     this.postForm = this.fb.group({
-      'text': [''],
-      'date':[''],
+      'text': ['', Validators.required],
+      'date':['',Validators.required],
       'image':['']
        });
   }

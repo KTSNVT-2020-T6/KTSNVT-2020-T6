@@ -7059,10 +7059,10 @@ insert into post (date, text, image_id, cultural_offer_id, active) values ('2020
 
 ----------------------------------------------------------------
 --- COMMENTS
-insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-07-07 19:15:41', 'potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur', 2313, 312, true, 346);
-insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-07-30 08:45:05', 'dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt', 2340, 411, true, 855);
-insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-08-18 04:28:04', 'sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non', 2146, 191, true, 619);
-insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-01-27 23:52:54', 'luctus et ultrices posuere cubilia curae duis faucibus accumsan odio', 2022, 422, true, 481);
+insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-07-07 19:15:41', 'potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur', 2313, 1, true, 1);
+insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-07-30 08:45:05', 'dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt', 2340, 1, true, 1);
+insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-08-18 04:28:04', 'sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non', 2146, 1, true, 1);
+insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-01-27 23:52:54', 'luctus et ultrices posuere cubilia curae duis faucibus accumsan odio', 2022, 1, true, 1);
 insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-07-27 19:45:34', 'tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse', 2005, 407, true, 132);
 insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-11-18 15:22:20', 'diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna', 2130, 96, true, 763);
 insert into comment (date, text, image_id, cultural_offer_id, active, registred_user_id) values ('2020-11-12 10:55:13', 'condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque', 2136, 434, true, 430);

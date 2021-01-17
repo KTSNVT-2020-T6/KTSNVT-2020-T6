@@ -95,6 +95,7 @@ export class CommentListComponent implements OnInit {
       this.commentService.delete(comId).subscribe(
         res =>{
           location.reload();
+          this.toastr.success("Successfully deleted comment!");
         }, error => {
           this.toastr.error("Cannot delete comment!");
                   

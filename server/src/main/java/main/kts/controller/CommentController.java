@@ -85,16 +85,13 @@ public class CommentController {
 		CulturalOffer culturalOffer;
 		RegisteredUser registeredUser;
 		if (!this.validateCommentDTO(commentDTO)) {
-			System.out.println("validate fail");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			
 			image = imageService.findOne(commentDTO.getImageDTO().getId());
 			culturalOffer = culturalOfferService.findOne(commentDTO.getCulturalOfferId());
-			System.out.println("CO found");
 			registeredUser = registeredUserService.findOne(commentDTO.getUserId());
-			System.out.println("User found");
 			comment = commentMapper.toEntity(commentDTO);
 			comment.setImage(image);
 			comment.setCulturalOffer(culturalOffer);
