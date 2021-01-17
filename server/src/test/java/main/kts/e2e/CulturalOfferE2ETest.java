@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -291,20 +292,19 @@ public class CulturalOfferE2ETest {
        
     }
     
-//    @Test
-//    public void ChangePageTestSuccess() throws InterruptedException {
-//    	loginRegisteredUser();
-//        driver.get("http://localhost:4200/culturaloffer/1");
-//
-//        justWait(1000);
-//        
-//        culturalOfferPage.getPage2().click();
-//        justWait(1000);
-//        culturalOfferPage.ensureIsDisplayedPage3();
-//                
-//        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
-//
-//    }
+    @Test
+    public void ChangePageTestSuccess() throws InterruptedException {
+    	loginRegisteredUser();
+        driver.get("http://localhost:4200/culturaloffer/1");
+
+        justWait(1000);
+     
+        culturalOfferPage.getPage2().click();
+        culturalOfferPage.ensureIsDisplayedBackPaginationButton();
+        justWait(2000); 
+        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+
+    }
     
     @Test
     @Rollback
@@ -324,27 +324,109 @@ public class CulturalOfferE2ETest {
        
     }
        
-//    @Test
-//    @Rollback
-//    public void AddPostWithoutImageCulturalOfferTestSuccess() throws InterruptedException {
-//    
-//    	loginAdmin();
-//        driver.get("http://localhost:4200/culturaloffer/1");
-//        
-//        justWait(1000);
-//        
-//        culturalOfferPage.ensureIsDisplayedAddPost();
-//        justWait(1000);
-//        culturalOfferPage.getAddPostButton().click();
-//        culturalOfferPage.getTextPost().sendKeys("Sadrzaj novog posta");
-//        culturalOfferPage.getDatePickerToggleBtn().click();
-//        culturalOfferPage.getTodaysDate().click();
-//        justWait(1000);
-//        culturalOfferPage.getAddPostButtonSave().click();
-//        justWait(15000);
-//        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
-//       
-//    }
+    @Test
+    @Rollback
+    public void AddPostWithoutImageCulturalOfferTestSuccess() throws InterruptedException {
+    
+    	loginAdmin();
+        driver.get("http://localhost:4200/culturaloffer/1");
+        
+        justWait(1000);
+        
+        culturalOfferPage.ensureIsDisplayedAddPost();
+        justWait(1000);
+        culturalOfferPage.getAddPostButton().click();
+        justWait(1000);
+        culturalOfferPage.getTextPost().sendKeys("Sadrzaj novog posta");
+        justWait(1000);
+        culturalOfferPage.getAddPostButtonSave().click();
+        String toast = culturalOfferPage.ensureIsDisplayedToast();
+        justWait(15000);
+        assertEquals("Successfully added post!", toast);
+        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+       
+    }
+    @Test
+    public void AddPostJustImageCulturalOfferTestError() throws InterruptedException {
+    
+    	loginAdmin();
+        driver.get("http://localhost:4200/culturaloffer/1");
+        
+        justWait(1000);
+        culturalOfferPage.ensureIsDisplayedAddPost();
+        justWait(1000);
+        culturalOfferPage.getAddPostButton().click();
+        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+        justWait(1000);
+        culturalOfferPage.ensureIsDisplayedAddPostAndNotClickable();
+        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+       
+    }
+    
+    @Test
+    @Rollback
+    public void AddPostTextAndImageCulturalOfferTestSuccess() throws InterruptedException {
+    
+    	loginAdmin();
+        driver.get("http://localhost:4200/culturaloffer/1");
+        justWait(1000);
+        
+        culturalOfferPage.ensureIsDisplayedAddPost();
+        justWait(1000);
+        culturalOfferPage.getAddPostButton().click();
+        justWait(1000);
+        culturalOfferPage.getTextPost().sendKeys("Sadrzaj novog posta");
+        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+        justWait(1000);
+        culturalOfferPage.getAddPostButtonSave().click();
+        String toast = culturalOfferPage.ensureIsDisplayedToast();
+        justWait(15000);
+        assertEquals("Successfully added post!", toast);
+        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+       
+    }
+    
+    @Test
+    @Rollback
+    public void EditCulturalOfferTestSuccess() throws InterruptedException {
+    
+    	loginAdmin();
+        driver.get("http://localhost:4200/culturaloffer/1");
+        justWait(1000);
+        
+        culturalOfferPage.ensureIsDisplayedEditCulturalOffer();
+        justWait(1000);
+        culturalOfferPage.getEditCulturalOfferButton().click();
+        justWait(1000);
+    
+        culturalOfferPage.getEditNameCulturalOffer().clear();
+        culturalOfferPage.getEditNameCulturalOffer().sendKeys("Editovvan naazivv");
+        culturalOfferPage.getEditDescriptionCulturalOffer().clear();
+        culturalOfferPage.getEditDescriptionCulturalOffer().sendKeys("Editovanje opisa kulturne ponude");
+        culturalOfferPage.getGeocoder().clear();
+        culturalOfferPage.getGeocoder().sendKeys("Novi Sad");
+        justWait(1000);
+        culturalOfferPage.getGeocoder().sendKeys(Keys.DOWN);
+        culturalOfferPage.getGeocoder().sendKeys(Keys.RETURN);
+        justWait(1000);
+        culturalOfferPage.getDatePickerToggleEditCOButton().click();
+        culturalOfferPage.getTodaysDate().click();
+        justWait(2500);
+       
+        culturalOfferPage.getEditTypeCulturalOffer().click();
+        culturalOfferPage.getSelectType().click();
+        justWait(2500);
+
+        culturalOfferPage.getEditImageCulturalOfferButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+        justWait(1000);
+        culturalOfferPage.getEditCultOfferSaveButton().click();
+        justWait(1000);
+        String toast = culturalOfferPage.ensureIsDisplayedToast();
+        justWait(15000);
+        assertEquals("Cultural offer information saved!", toast);
+       
+    }
+    
     private void justWait(int milliseconds) throws InterruptedException {
         synchronized (driver)
         {

@@ -18,7 +18,10 @@ public class CommentMapper implements MapperInterface<Comment, CommentDTO>{
 	public Comment toEntity(CommentDTO dto) {
 		RegisteredUser registeredUser = new RegisteredUser();
 		CulturalOffer culturalOffer = new CulturalOffer(); 
-		Image image = imageMapper.toEntity(dto.getImageDTO());
+		Image image = null;
+		if(dto.getImageDTO() != null) {
+			image = imageMapper.toEntity(dto.getImageDTO());
+		}
 		return new Comment(dto.getId(),dto.getText(), dto.getDate(), registeredUser, image, culturalOffer);
 	}
 
