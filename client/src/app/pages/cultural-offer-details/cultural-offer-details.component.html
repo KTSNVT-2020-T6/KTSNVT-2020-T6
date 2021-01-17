@@ -3,8 +3,8 @@
     <br>
     <div class="center">
         <span>
-            <button *ngIf="!checker && role==='ROLE_REGISTERED_USER'" id="subscribe" mdbBtn type="button" style="background-color:#8dd4dd" mdbWavesEffect (click)="subscribeUser()">Subscribe</button>
-            <button *ngIf="checker && role==='ROLE_REGISTERED_USER'" id="unsubscribe" mdbBtn type="button" style="background-color:#B0BEC5" mdbWavesEffect (click)="unsubscribe()">Unsubscribe</button> 
+            <button *ngIf="!checker && role==='ROLE_REGISTERED_USER'" id="subscribe" mdbBtn type="button"  mdbWavesEffect (click)="subscribeUser()">Subscribe</button>
+            <button *ngIf="checker && role==='ROLE_REGISTERED_USER'" id="unsubscribe" mdbBtn type="button"  mdbWavesEffect (click)="unsubscribe()">Unsubscribe</button> 
             Subscribers:<span id="numberOfSubscribed">{{subscribed}}</span> 
 
         </span> 
@@ -18,13 +18,13 @@
             <mat-form-field class="example-full-width" >
                 <mat-label>Leave a comment</mat-label>
                 <textarea matInput id="newComment" inline="true" [(ngModel)]="commentText"></textarea>
-                <button matSuffix mat-button (click)="uploader.click()" matTooltip="Upload image" style="color:#576869" inline="true">
+                <button matSuffix mat-button (click)="uploader.click()" matTooltip="Upload image" class="button-color" inline="true">
                     <mat-icon matSuffix>photo</mat-icon>
                 </button>
              </mat-form-field> 
              <input hidden type="file" id="uploadButton" #uploader (change)="onFileSelect($event)">
             <mat-card-actions>    
-                <button mat-button (click)="addNewComment()" id="sendComment" matTooltip="Send" style="color:#576869" inline="true">
+                <button mat-button (click)="addNewComment()" id="sendComment" matTooltip="Send" class="button-color" inline="true">
                     <mat-icon>send</mat-icon>
                 </button>
             </mat-card-actions> 

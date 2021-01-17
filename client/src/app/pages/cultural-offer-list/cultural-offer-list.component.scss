@@ -3,7 +3,17 @@
     height:85vh;
     margin-left: 0px;
 }
-
+.listed{
+    justify-content: center;
+    align-items: center;
+}
+mat-card-content{
+    justify-content: center;
+    align-items: center;
+}
+.open_in_new{
+    color:#576869
+}
 .scrollbar {
 margin-left: 0px;
 float: left;

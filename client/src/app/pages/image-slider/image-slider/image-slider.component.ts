@@ -33,7 +33,6 @@ export class ImageSliderComponent implements OnInit, OnChanges {
     
           }, error => {
             this.toastr.error("Cannot subscribe user!");
-          
           });
       });
     }

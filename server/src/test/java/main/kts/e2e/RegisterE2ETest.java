@@ -54,7 +54,7 @@ public class RegisterE2ETest {
 
 	        registerPage.ensureIsNotVisibleEmail();
 
-	        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+	        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
 
 	    }
 	    

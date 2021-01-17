@@ -101,13 +101,13 @@ public class CulturalOfferE2ETest {
     	loginRegisteredUser();
         driver.get("http://localhost:4200/culturaloffer/1");
         
-        justWait(1000);
+        justWait(2000);
         double beforeClick = Double.parseDouble(culturalOfferPage.getAverageRate().getText());
         culturalOfferPage.ensureIsDisplayedFifthStar();
         culturalOfferPage.getRateFive().click();
-        justWait(1000);
+        justWait(2000);
         driver.get("http://localhost:4200/culturaloffer/1");
-        justWait(1000);
+        justWait(2000);
         double afterClick = Double.parseDouble(culturalOfferPage.getAverageRate().getText());
        
         assertNotEquals(beforeClick, afterClick);
@@ -120,13 +120,13 @@ public class CulturalOfferE2ETest {
     	loginRegisteredUser();
         driver.get("http://localhost:4200/culturaloffer/1");
         
-        justWait(1000);
+        justWait(2000);
         double beforeClick = Double.parseDouble(culturalOfferPage.getAverageRate().getText());
         culturalOfferPage.ensureIsDisplayedForthStar();
         culturalOfferPage.getRateFour().click();
-        justWait(1000);
+        justWait(2000);
         driver.get("http://localhost:4200/culturaloffer/1");
-        justWait(1000);
+        justWait(2000);
         double afterClick = Double.parseDouble(culturalOfferPage.getAverageRate().getText());
        
         assertNotEquals(beforeClick, afterClick);
@@ -320,7 +320,7 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.getYesDeleteButton().click();
         culturalOfferPage.ensureIsNotDisplayedDeleteCulturalOffer();
         justWait(15000);
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
        
     }
        
@@ -424,6 +424,27 @@ public class CulturalOfferE2ETest {
         String toast = culturalOfferPage.ensureIsDisplayedToast();
         justWait(15000);
         assertEquals("Cultural offer information saved!", toast);
+       
+    }
+    
+    @Test
+    public void EditCulturalOfferTestError() throws InterruptedException {
+    
+    	loginAdmin();
+        driver.get("http://localhost:4200/culturaloffer/1");
+        justWait(1000);
+        
+        culturalOfferPage.ensureIsDisplayedEditCulturalOffer();
+        justWait(1000);
+        culturalOfferPage.getEditCulturalOfferButton().click();
+        justWait(1000);
+    
+        culturalOfferPage.getEditNameCulturalOffer().clear();
+        culturalOfferPage.getEditNameCulturalOffer().sendKeys("Lpivefish");
+
+        culturalOfferPage.getEditCultOfferSaveButton().click();
+        String toast = culturalOfferPage.ensureIsDisplayedToast();
+        assertEquals("Error saving data!", toast);
        
     }
     

@@ -117,7 +117,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
   deleteCulturalOffer(){
     this.coService.delete(this.id).subscribe(
       result => {
-        this.router.navigate(['home']);
+        this.router.navigate(['/']);
         this.toastr.success("Successfully deleted cultural offer");
       }, error => {
         this.toastr.error("Cannot delete from server!");

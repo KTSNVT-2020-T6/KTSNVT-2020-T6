@@ -2,22 +2,22 @@
   <nav aria-label="...">
     <ul class="pagination">
       <li class="page-item" (click)="selected(activePage-1)" *ngIf="activePage > 1">
-        <a style="background-color:white;color:black" id="back" class="page-link"  aria-label="Previous">
+        <a id="back" class="page-link"  aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
           <span class="sr-only">Previous</span>
         </a>
       </li>
       <li class="page-item" (click)="selected(activePage-1)"  *ngIf="activePage > 1">
-        <a style="background-color:white;color:black;" class="page-link">{{activePage-1}}</a>
+        <a  class="page-link">{{activePage-1}}</a>
       </li>
       <li class="page-item" (click)="selected(activePage)">
-        <a style="background-color:white;color:black;" class="page-link">{{activePage}}</a>
+        <a  class="page-link">{{activePage}}</a>
       </li>
       <li class="page-item" (click)="selected(activePage+1)" *ngIf="activePage < pages.length">
-        <a style="background-color:white;color:black;" id="page{{activePage}}" class="page-link">{{activePage+1}}</a>
+        <a id="page{{activePage}}" class="page-link">{{activePage+1}}</a>
       </li>
       <li class="page-item" (click)="selected(activePage+1)" *ngIf="activePage < pages.length">
-        <a style="background-color:white;color:black" class="page-link" aria-label="Next">
+        <a class="page-link" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
           <span class="sr-only">Next</span>
         </a>

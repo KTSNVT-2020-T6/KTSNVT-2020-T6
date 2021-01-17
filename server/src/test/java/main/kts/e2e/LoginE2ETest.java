@@ -45,7 +45,7 @@ public class LoginE2ETest {
         loginPage.getLoginBtn().click();
         loginPage.ensureIsNotVisibleEmail();
         
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
 
     }
     

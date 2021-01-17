@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.kts.dto.UserDTO;
 import main.kts.helper.UserMapper;
-import main.kts.model.Image;
 import main.kts.model.User;
-import main.kts.service.ImageService;
+
 import main.kts.service.UserService;
 
 @RestController
@@ -31,8 +30,6 @@ public class UserController {
 	
 	@Autowired 
 	private UserService service;
-	@Autowired
-	private ImageService imageService;
 	
 	private UserMapper userMapper = new UserMapper();
 	

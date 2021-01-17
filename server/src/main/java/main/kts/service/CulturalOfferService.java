@@ -97,11 +97,12 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 			throw new Exception("Cultural offer with given id doesn't exist");
 		}
 		CulturalOffer existingCO = optCO.orElse(null);
-
 		/***
 		 * set everything except averageRate, posts and comments (it is changed only
 		 * through other methods)
 		 */
+		//does name exist in data base, check name
+				
 		existingCO.setDescription(entity.getDescription());
 		existingCO.setName(entity.getName());
 		existingCO.setDate(entity.getDate());
@@ -111,11 +112,13 @@ public class CulturalOfferService implements ServiceInterface<CulturalOffer> {
 		existingCO.setCity(entity.getCity());
 		existingCO.setImage(entity.getImage());
 
+		CulturalOffer co =  culturalOfferRepository.save(existingCO);
+		
 		List<Long> usersId = registeredUserRepository.findByIdCO(existingCO.getId());
 		ArrayList<RegisteredUser> users = getListOfRegisteredUser(usersId);
 		emailService.nofiticationForUpdateCulturalOffer(users, existingCO.getName());
 
-		return culturalOfferRepository.save(existingCO);
+		return co;
 	}
 
 	@Override

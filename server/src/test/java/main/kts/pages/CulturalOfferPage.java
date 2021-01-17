@@ -147,7 +147,6 @@ public class CulturalOfferPage {
     public void ensureIsNotVisibleYesButton() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("yesBtn")));
     }
-
     public void ensureIsDisplayedBackPaginationButton() {
         (new WebDriverWait(driver, 100)).until(ExpectedConditions.presenceOfElementLocated(By.id("back")));
     }

@@ -3,13 +3,13 @@
     
     <br>
     <table class="styled-table">
-        <div style="float: left;">
-            <tr><th style='width: 140px;'>Categories:</th><th><button mat-mini-fab color="primary" id="addCategory"><mat-icon class="material-icons"  inline="true" (click)="newCategory()">add</mat-icon></button></th></tr>
+        <div class="left">
+            <tr><th >Categories:</th><th><button mat-mini-fab color="primary" id="addCategory"><mat-icon class="material-icons"  inline="true" (click)="newCategory()">add</mat-icon></button></th></tr>
             <mat-divider></mat-divider>
-            <tr><th style='width: 140px;'>Types:</th>
+            <tr><th >Types:</th>
             <th><button mat-mini-fab color="primary" id="addType"><mat-icon class="material-icons"  inline="true" (click)="newType()">add</mat-icon></button></th></tr>
         </div>
-        <div style="float: right;"  *ngFor="let cat of categories" >
+        <div class="right"  *ngFor="let cat of categories" >
             <tr>
                 <th alt="category" matTooltip="{{cat.description}}" id="{{cat.name}}">{{cat.name}}</th>
                 <th>

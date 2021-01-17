@@ -71,7 +71,7 @@ export class RegisterPageComponent implements OnInit {
         result => {
           console.log(result);
           this.toastr.success('Check your email to confirm registration!');
-          this.router.navigate(['home']);
+          this.router.navigate(['/']);
           this.form.reset();
         },
         error => {

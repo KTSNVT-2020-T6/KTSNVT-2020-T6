@@ -10,17 +10,17 @@
       </ol>
     <div class="carousel-inner" role="listbox">
       <div class="carousel-item active"  >
-        <div class="col-md-3"  style="float:left"  *ngFor="let i of culturalOffers">
+        <div class="col-md-3" *ngFor="let i of culturalOffers">
          <div class="card mb-2">
             <img class="card-img-top"
              *ngIf="i.base64image" [src]="i.base64image" alt="Card image cap">
             <div class="card-body">
               <h4 class="card-title">{{i.name}}</h4>
               <p class="card-text">{{i.description}}</p>
-              <button id="unsubscribe{{i.id}}" mat-button (click)="unsubscribe(i)" style="color:#1cc3cc" inline="true">
+              <button id="unsubscribe{{i.id}}" mat-button (click)="unsubscribe(i)"  inline="true">
                 Unsubscribe
               </button>
-              <a id = "goToPage{{i.id}}" mat-button href="/culturaloffer/{{i.id}}" matTooltip="Open to see details" style="color:#576869" inline="true">
+              <a id = "goToPage{{i.id}}" mat-button href="/culturaloffer/{{i.id}}" matTooltip="Open to see details" inline="true">
                 <mat-icon>open_in_new</mat-icon>
               </a>
             </div>

@@ -44,7 +44,7 @@ public class HomePageE2ETest {
     @Test
     public void AddCulturalOfferTestSuccess() throws InterruptedException {
 
-        driver.get("http://localhost:4200/home");
+        driver.get("http://localhost:4200/");
 
         justWait(1000);
         
@@ -75,14 +75,14 @@ public class HomePageE2ETest {
         justWait(1000);
         
         homePage.ensureIsNotVisibleName();        
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void AddCulturalOfferTestError() throws InterruptedException {
 
-        driver.get("http://localhost:4200/home");
+        driver.get("http://localhost:4200/");
 
         justWait(1000);
         
@@ -108,14 +108,14 @@ public class HomePageE2ETest {
         
         String toast = homePage.ensureIsDisplayedToast();
         assertEquals("Location is required.", toast);
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
 
     }
 
     @Test
     public void AddAdminTestSuccess() throws InterruptedException {
 
-    	driver.get("http://localhost:4200/home");
+    	driver.get("http://localhost:4200/");
 
         justWait(1000);
         
@@ -136,14 +136,14 @@ public class HomePageE2ETest {
 
         homePage.ensureIsNotVisibleEmail();
 
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void AddAdminTestEmailExists() throws InterruptedException {
 
-    	driver.get("http://localhost:4200/home");
+    	driver.get("http://localhost:4200/");
 
         justWait(1000);
         
@@ -168,14 +168,14 @@ public class HomePageE2ETest {
         
         assertEquals("Email already exists!", toast);
 
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void OpenInNewTest() throws InterruptedException {
     	
-    	driver.get("http://localhost:4200/home");
+    	driver.get("http://localhost:4200/");
 
         justWait(1000);
         
@@ -187,7 +187,7 @@ public class HomePageE2ETest {
     @Test
     public void ChangePageTestSuccess() throws InterruptedException {
 
-        driver.get("http://localhost:4200/home");
+        driver.get("http://localhost:4200/");
 
         justWait(5000);
         
@@ -196,14 +196,14 @@ public class HomePageE2ETest {
         justWait(1000);
         homePage.ensureIsDisplayedPage3();
                 
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void FilterSuccess() throws InterruptedException {
     	
-    	driver.get("http://localhost:4200/home");
+    	driver.get("http://localhost:4200/");
 
         justWait(1000);
         
@@ -215,13 +215,13 @@ public class HomePageE2ETest {
         homePage.getSubmitSearch().click();
         homePage.ensureIsDisplayedGoToBtn();
         homePage.ensureIsNotVisiblePage3();
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
     }
 
     @Test
     public void FilterRefresh() throws InterruptedException {
     	
-    	driver.get("http://localhost:4200/home");
+    	driver.get("http://localhost:4200/");
 
         justWait(1000);
         
@@ -234,13 +234,13 @@ public class HomePageE2ETest {
         justWait(1000);
         homePage.getRefresh().click();
         homePage.ensureIsDisplayedPage2();
-        assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
+        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
     }
     
     @Test
     public void LogoutUserTest() throws InterruptedException {
 
-    	driver.get("http://localhost:4200/home");
+    	driver.get("http://localhost:4200/");
     	justWait(1000);
     	
         homePage.ensureIsDisplayedAddNewBtn();

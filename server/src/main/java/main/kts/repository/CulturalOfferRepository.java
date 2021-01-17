@@ -25,6 +25,7 @@ public interface CulturalOfferRepository extends JpaRepository<CulturalOffer, Lo
 	Page<CulturalOffer> findByCombinedSearch(Pageable pageable, String upperCase, String upperCase2);
 
 	List<CulturalOffer> findByTypeId(Long id);
+
 	
 	
 

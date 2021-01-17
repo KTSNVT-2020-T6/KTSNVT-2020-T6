@@ -30,7 +30,6 @@ import main.kts.dto.UserLoginDTO;
 import main.kts.dto.UserTokenStateDTO;
 import main.kts.helper.AdminMapper;
 import main.kts.helper.RegisteredUserMapper;
-import main.kts.helper.UserMapper;
 import main.kts.model.Admin;
 import main.kts.model.Image;
 import main.kts.model.RegisteredUser;
@@ -40,7 +39,6 @@ import main.kts.service.AdminService;
 import main.kts.service.CustomUserDetailsService;
 import main.kts.service.ImageService;
 import main.kts.service.RegisteredUserService;
-import main.kts.service.UserService;
 import main.kts.verification_handler.OnAccessLinkEvent;
 
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -65,8 +63,6 @@ public class AuthenticationController {
 	private ApplicationEventPublisher eventPublisher;
     @Autowired 
 	private ImageService imageService;
-
-    private UserMapper userMapper;
     
     private AdminMapper adminMapper;
 	private RegisteredUserMapper regUserMapper;
@@ -185,7 +181,7 @@ public class AuthenticationController {
     }
 
     public AuthenticationController() {
-        userMapper = new UserMapper();
+        
         adminMapper = new AdminMapper();
         regUserMapper = new RegisteredUserMapper();
     }

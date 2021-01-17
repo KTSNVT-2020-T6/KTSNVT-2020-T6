@@ -14,7 +14,7 @@ import { PostsPageComponent } from '../pages/posts-page/posts-page.component';
 import { FavoriteComponent } from '../pages/favorite/favorite.component';
 export const routes :Routes = [
 	{
-		path: 'home',
+		path: '',
 		component: HomePageComponent
 	},
 	{
