@@ -43,21 +43,8 @@ export class RegisterPageComponent implements OnInit {
       'email':['', [Validators.required, Validators.pattern(this.emailRegx)]],
       'password':['', Validators.required],
       'repeatPassword':['', [Validators.required]],
-      // 'image':['']
-    }//,{ validator: validatePasswordRepeat}
+    }
   )};
-    
-
-    // addImage(){
-    //   this.image.relativePath = this.form.value['image'];
-    //   this.image.description = 'new_image';
-    //   this.imageService.add(this.image as Image).subscribe(
-    //     result => {
-    //       console.log(result);
-    //       this.imageId = result.body;
-    //     }
-    //   );
-    //   }
 
     addUser(){
       this.passwordError = false;
@@ -81,13 +68,5 @@ export class RegisterPageComponent implements OnInit {
       );
       
       
-      }
-
-      // onFileSelect(event: any) {
-      //   if (event.target.files.length > 0) {
-      //     const file = event.target.files[0];
-      //     this.form.value['image'].setValue(file);
-      //   }
-      // }
-
+    }
 }

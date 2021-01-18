@@ -3,6 +3,8 @@ package main.kts.controller;
 import static main.kts.constants.CulturalOfferConstants.*;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -13,6 +15,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -72,13 +76,12 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
 
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer?page=0&size=2", HttpMethod.GET,
-				request, CulturalOfferDTO[].class);
-		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
+		ResponseEntity<Object> responseEntity = restTemplate.exchange("/api/cultural-offer/?page=0&size=2", HttpMethod.GET,
+				request, Object.class);
 
+		ArrayList<Object> culturalOffers = (ArrayList<Object>)((LinkedHashMap<String, Object>)responseEntity.getBody()).get("content");
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(PAGEABLE_SIZE, new Integer(culturalOffers.length));
-		assertEquals(DB_NAME, culturalOffers[0].getName());
+		assertEquals(PAGEABLE_SIZE, new Integer(culturalOffers.size()));
 	}
 
 	@Test
@@ -520,13 +523,12 @@ public class CulturalOfferControllerIntegrationTest {
 		headers.add(HttpHeaders.AUTHORIZATION, accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
-		
-		ResponseEntity<CulturalOfferDTO[]> responseEntity = restTemplate.exchange("/api/cultural-offer/combined/"+DB_CONTENT+"_"+DB_CITY+"?page=0&size=1", HttpMethod.GET, request,
-				CulturalOfferDTO[].class);
-
-		CulturalOfferDTO[] culturalOffers = responseEntity.getBody();
+		ResponseEntity<Object> responseEntity = restTemplate.exchange("/api/cultural-offer/combined/"+DB_CONTENT+"_"+DB_CITY+"?page=0&size=2", HttpMethod.GET, request,
+				Object.class);
+	
+		ArrayList<Object> culturalOffers = (ArrayList<Object>)((LinkedHashMap<String, Object>)responseEntity.getBody()).get("content");
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(PAGEABLE_SIZE_SEARCH, new Integer(culturalOffers.length));
+		assertEquals(PAGEABLE_SIZE_SEARCH, new Integer(culturalOffers.size()));
 		
 	}
 	
