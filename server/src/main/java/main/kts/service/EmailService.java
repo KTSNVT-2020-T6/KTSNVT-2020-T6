@@ -33,6 +33,7 @@ public class EmailService {
 				mail.setTo(ru.getEmail());
 				mail.setSubject("Notification for updating");
 				mail.setText("The cultural offer " + nameOfCulturalOffer + " is deleted.");
+                
 				javaMailSender.send(mail);
 				System.out.println("Email sent!");
 			}

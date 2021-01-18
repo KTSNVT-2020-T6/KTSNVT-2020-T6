@@ -12,7 +12,7 @@ import org.springframework.test.context.TestPropertySource;
 	UserServiceIntegrationTest.class, AdminServiceIntegrationTest.class
 	, RegisteredUserServiceIntegrationTest.class, RateServiceIntegrationTest.class, TypeServiceIntegrationTest.class, 
 	CategoryServiceIntegrationTest.class, CulturalOfferServiceIntegrationTest.class, ImageServiceIntegrationTest.class, 
-	PostServiceIntegrationTest.class, CommentServiceIntegrationTest.class, AuthorityServiceIntegrationTest.class })
+	PostServiceIntegrationTest.class, CommentServiceIntegrationTest.class, AuthorityServiceIntegrationTest.class, EmailServiceUnitTest.class})
 @TestPropertySource("classpath:test.properties")
 public class SuiteServices {
 
