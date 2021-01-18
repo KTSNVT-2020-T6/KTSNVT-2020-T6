@@ -124,7 +124,7 @@ public class CulturalOfferPage {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("subscribe")));
     }
 	public void ensureIsDisplayedUnsubscribedButton() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("unsubscribe")));
+        (new WebDriverWait(driver, 500)).until(ExpectedConditions.elementToBeClickable(By.id("unsubscribe")));
     }
 	public void ensureIsDisplayedFifthStar() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("star5")));
@@ -136,10 +136,10 @@ public class CulturalOfferPage {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("sendComment")));
     }
     public String ensureIsDisplayedToast() {
-        return (new WebDriverWait(driver, 30)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
+        return (new WebDriverWait(driver, 2500)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
     }
     public void ensureIsDisplayedEditComment() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editComment1")));
+        (new WebDriverWait(driver, 500)).until(ExpectedConditions.elementToBeClickable(By.id("editComment1")));
     }
     public void ensureIsDisplayedDeleteComment() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteComment1")));
