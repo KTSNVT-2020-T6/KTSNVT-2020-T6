@@ -37,6 +37,7 @@ public class CulturalOfferConstants {
     public static final String DB_CITY = "BELGRADE";
     public static final int DB_SIZE_BY_CITY = 2;
     public static final String DB_CONTENT = "OBILAZAK";
+    public static final String DB_CONTENT2 = "opisneki";
     public static final int DB_SIZE_BY_CONTENT = 1;
     public static final int DB_SIZE_BY_COMBINED_SEARCH = 1;
     public static final Integer PAGEABLE_SIZE_SEARCH = 1;
