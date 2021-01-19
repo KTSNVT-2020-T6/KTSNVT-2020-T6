@@ -62,7 +62,7 @@ describe('AdminService', () => {
     expect(req.request.method).toBe('PUT');
     req.flush(mockUser);
     tick();
-    console.log(user);
+    
     expect(user).toBeDefined();
     expect(user.id).toEqual(1);
     expect(user.firstName).toEqual('Jovan');
