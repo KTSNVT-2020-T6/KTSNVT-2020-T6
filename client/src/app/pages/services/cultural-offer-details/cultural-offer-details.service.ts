@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { CulturalOffer } from '../../model/CulturalOffer';
 import { map } from 'rxjs/operators';
 
@@ -9,7 +9,13 @@ import { map } from 'rxjs/operators';
 })
 export class CulturalOfferDetailsService {
 	private headers = new HttpHeaders({'Content-Type': 'application/json'});
+	private RegenerateData = new Subject<void>();
 
+    RegenerateData$ = this.RegenerateData.asObservable();
+
+    announceChange() {
+        this.RegenerateData.next();
+    }
 	constructor(
 		private http: HttpClient
 	) {}

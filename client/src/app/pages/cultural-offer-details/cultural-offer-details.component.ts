@@ -17,6 +17,7 @@ import { Comment } from '../model/Comment';
 import { ImageService } from '../services/image/image.service';
 import { CommentService } from '../services/comment/comment.service';import { EditCulturalOfferComponent } from '../edit-cultural-offer/edit-cultural-offer.component';
 import { ConfirmationComponent, ConfirmDialogModel } from '../confirmation/confirmation.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cultural-offer-details',
@@ -37,6 +38,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
   rate: Rate = {};
   result:any;
   checker!: boolean;
+  subscription: Subscription;
   
   constructor(
     private fb: FormBuilder,
@@ -50,12 +52,20 @@ export class CulturalOfferDetailsComponent implements OnInit {
     private route : ActivatedRoute,
     private router: Router,
 		private toastr: ToastrService) {
-    
+
+    this.subscription = coService.RegenerateData$.subscribe(() =>
+      this.getCulturalOffer()
+    );
   }
   ngOnInit() {
     
     this.getRole();
-    
+    this.getCulturalOffer();
+    this.checkSubscription();
+    this.getNumberOfSubscribed();
+
+  }
+  getCulturalOffer(){
     //fill data
     this.id = this.route.snapshot.paramMap.get('id');
     this.coService.getOne(this.id).subscribe(
@@ -64,11 +74,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
         this.images =  this.culturalOffer.imageDTO as Img[];
       }
     );
-    this.checkSubscription();
-    this.getNumberOfSubscribed();
-
   }
-
   getNumberOfSubscribed(){
     this.regUserService.getNumberOfSubscribed(this.id).subscribe(
       res => {
