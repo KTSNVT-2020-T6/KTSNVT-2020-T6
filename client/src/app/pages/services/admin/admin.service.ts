@@ -18,4 +18,8 @@ export class AdminService {
     delete(id: any): Observable<any> {
 		return this.http.delete('http://localhost:8080/api/admin/'+id, {headers: this.headers, responseType: 'text'});
 	}
+
+	editAdmin(user: User): Observable<any> {
+		return this.http.put('http://localhost:8080/api/admin/'+user.id, user, {headers: this.headers, responseType: 'json'});
+	}
 }

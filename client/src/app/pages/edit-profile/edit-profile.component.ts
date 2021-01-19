@@ -5,8 +5,10 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../model/User';
+import { AdminService } from '../services/admin/admin.service';
 import { AuthenticationService } from '../services/authentication/authentication.service';
 import { ImageService } from '../services/image/image.service';
+import { RegisteredUserService } from '../services/registered-user/registered-user.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -22,6 +24,8 @@ export class EditProfileComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private router: Router,
     private toastr: ToastrService,
+    private regUserService: RegisteredUserService,
+    private adminService: AdminService,
     private imageService: ImageService,public dialogRef: MatDialogRef<EditProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public user: User) {
       this.createForm();
@@ -66,7 +70,7 @@ export class EditProfileComponent implements OnInit {
     this.user.email = this.form.value['email'];
 
     if(this.role == 'ROLE_ADMIN'){
-      this.authenticationService.editAdmin(this.user as User).subscribe(
+      this.adminService.editAdmin(this.user as User).subscribe(
         result => {
           this.toastr.success('Profile information saved!');
           this.form.reset();
@@ -77,7 +81,7 @@ export class EditProfileComponent implements OnInit {
         }
       );
    } else{
-    this.authenticationService.editUser(this.user as User).subscribe(
+    this.regUserService.editUser(this.user as User).subscribe(
       result => {
         this.toastr.success('Profile information saved!');
         this.form.reset();

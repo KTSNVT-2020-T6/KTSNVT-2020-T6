@@ -37,14 +37,6 @@ export class AuthenticationService {
 	
 	}
 
-	editAdmin(user: User): Observable<any> {
-		return this.http.put('http://localhost:8080/api/admin/'+user.id, user, {headers: this.headers, responseType: 'json'});
-	}
-
-	editUser(user: User): Observable<any> {
-		return this.http.put('http://localhost:8080/api/registered_user/'+user.id, user, {headers: this.headers, responseType: 'json'});
-	}
-
 	changePassword(passwordData: any): Observable<any> {
 		return this.http.post('http://localhost:8080/auth/change-password', {oldPassword: passwordData.oldPassword, newPassword: passwordData.newPassword}, {headers: this.headers, responseType: 'json'});
 	}
