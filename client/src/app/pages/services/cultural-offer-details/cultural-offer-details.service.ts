@@ -25,7 +25,7 @@ export class CulturalOfferDetailsService {
 		
 	}
 	add(newCulturalOffer: CulturalOffer): Observable<any> {
-		return this.http.post('http://localhost:8080/api/cultural-offer', newCulturalOffer, {headers: this.headers, responseType: 'text'});
+		return this.http.post('http://localhost:8080/api/cultural-offer', newCulturalOffer, {headers: this.headers, responseType: 'json'});
 	}
 	delete(id: number): Observable<any> {
 		
