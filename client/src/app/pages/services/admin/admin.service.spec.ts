@@ -72,7 +72,7 @@ describe('AdminService', () => {
     expect(user.idImageDTO).toEqual(1);
   }));
 
-   it('delete() should query url and delete an admin', () => {
+  it('delete() should query url and delete an admin', () => {
       adminService.delete(1).subscribe(res => { });
       const req = httpMock.expectOne('http://localhost:8080/api/admin/1');
       expect(req.request.method).toBe('DELETE');
@@ -81,4 +81,13 @@ describe('AdminService', () => {
       expect('OK').toBeDefined();
   });
 
+  it('announceChange() should emit the event RegenerateData', fakeAsync(() => {
+    let counter: number = 0;
+
+    adminService.RegenerateData$.subscribe(() =>  counter++);
+    adminService.announceChange();
+    tick();
+
+    expect(counter).toBe(1);
+  }));
 });

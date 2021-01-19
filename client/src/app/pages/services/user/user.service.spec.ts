@@ -59,4 +59,14 @@ describe('UserService', () => {
     expect(user.idImageDTO).toEqual(1);
     
   }));
+
+  it('announceChange() should emit the event RegenerateData', fakeAsync(() => {
+    let counter: number = 0;
+
+    userService.RegenerateData$.subscribe(() =>  counter++);
+    userService.announceChange();
+    tick();
+
+    expect(counter).toBe(1);
+  }));
 });

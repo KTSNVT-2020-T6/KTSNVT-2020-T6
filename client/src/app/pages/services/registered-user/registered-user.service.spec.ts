@@ -94,4 +94,14 @@ describe('UserService', () => {
     expect(num).toEqual(2);
     
   }));
+
+  it('announceChange() should emit the event RegenerateData', fakeAsync(() => {
+    let counter: number = 0;
+
+    registeredUserService.RegenerateData$.subscribe(() =>  counter++);
+    registeredUserService.announceChange();
+    tick();
+
+    expect(counter).toBe(1);
+  }));
 });
