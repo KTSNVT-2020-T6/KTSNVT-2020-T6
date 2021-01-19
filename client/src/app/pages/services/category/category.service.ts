@@ -23,7 +23,7 @@ export class CategoryService {
 		return this.http.get('http://localhost:8080/api/category', queryParams);
 	}
     add(newCategory: Category): Observable<any> {
-		return this.http.post('http://localhost:8080/api/category', newCategory, {headers: this.headers, responseType: 'text'});
+		return this.http.post('http://localhost:8080/api/category', newCategory, {headers: this.headers, responseType: 'json'});
 	}
 	getCategory(id: number): Observable<any> {
 		let queryParams = {};
@@ -35,7 +35,7 @@ export class CategoryService {
 	return this.http.get('http://localhost:8080/api/category/'+id, queryParams).pipe(map(res => res));
 	}
 	update(editCategory: Category, id: number): Observable<any> {
-		return this.http.put('http://localhost:8080/api/category/'+ id, editCategory, {headers: this.headers, responseType: 'text'});
+		return this.http.put('http://localhost:8080/api/category/'+ id, editCategory, {headers: this.headers, responseType: 'json'});
 
 	}
 	delete(id: number): Observable<any> {

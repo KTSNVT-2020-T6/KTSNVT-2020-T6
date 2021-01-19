@@ -20,7 +20,7 @@ export class RateService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.post('http://localhost:8080/api/rate/check', newRate , {headers: this.headers, responseType: 'text'});
+		return this.http.post('http://localhost:8080/api/rate/check', newRate , {headers: this.headers, responseType: 'json'});
 	}
 
 }

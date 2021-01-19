@@ -24,10 +24,10 @@ export class TypeService {
 		
 	}
 	add(newType: Type): Observable<any> {
-		return this.http.post('http://localhost:8080/api/type', newType, {headers: this.headers, responseType: 'text'});
+		return this.http.post('http://localhost:8080/api/type', newType, {headers: this.headers, responseType: 'json'});
 	}
 	update(editType: Type, id: number): Observable<any> {
-		return this.http.put('http://localhost:8080/api/type/'+ id, editType, {headers: this.headers, responseType: 'text'});
+		return this.http.put('http://localhost:8080/api/type/'+ id, editType, {headers: this.headers, responseType: 'json'});
 	}
 
 	delete(id: number): Observable<any> {
