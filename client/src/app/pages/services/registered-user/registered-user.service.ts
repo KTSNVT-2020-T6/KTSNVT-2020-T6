@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable } from 'rxjs';
 import { CulturalOffer } from '../../model/CulturalOffer';
 import { map } from 'rxjs/operators';
+import { User } from '../../model/User';
 
 @Injectable({
 	providedIn: 'root'
@@ -25,6 +26,9 @@ export class RegisteredUserService {
 	}
 	delete(id: any): Observable<any> {
 		return this.http.delete('http://localhost:8080/api/registered_user/'+id, {headers: this.headers, responseType: 'text'});
+	}
+	editUser(user: User): Observable<any> {
+		return this.http.put('http://localhost:8080/api/registered_user/'+user.id, user, {headers: this.headers, responseType: 'json'});
 	}
 
 }

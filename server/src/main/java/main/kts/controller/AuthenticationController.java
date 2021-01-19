@@ -81,6 +81,7 @@ public class AuthenticationController {
         
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
+        user.setActive(true);
         String jwt = tokenUtils.generateToken(user); // prijavljujemo se na sistem sa email adresom
         int expiresIn = tokenUtils.getExpiredIn();
                 

@@ -44,15 +44,15 @@ describe('CategoryService', () => {
             },
            {
             id: 2,
-            name: 'a123',
-            description: 'Petar'            
+            name: 'b456',
+            description: 'Marko'            
            }];
         
         categoryService.getAll().subscribe(data => {
           categories = data.body;        
         });
         
-        const req = httpMock.expectOne('api/category');
+        const req = httpMock.expectOne('http://localhost:8080/api/category');
         expect(req.request.method).toBe('GET');
         req.flush(mockCategories);
     
