@@ -5,13 +5,7 @@ import {fakeAsync, tick} from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { CategoryService } from './category.service';
 import { Category } from '../../model/Category';
-/*
-getAll
-add
-getCategory
-update
-delete
-*/
+
 describe('CategoryService', () => {
     let injector;
     let categoryService: CategoryService;
