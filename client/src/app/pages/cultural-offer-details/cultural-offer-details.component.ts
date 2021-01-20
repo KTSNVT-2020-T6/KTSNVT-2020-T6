@@ -67,7 +67,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
   }
   getCulturalOffer(){
     //fill data
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.params['id'];
     this.coService.getOne(this.id).subscribe(
       res => {
         this.culturalOffer = res.body as CulturalOffer;

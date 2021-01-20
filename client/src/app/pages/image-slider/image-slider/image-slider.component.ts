@@ -32,7 +32,7 @@ export class ImageSliderComponent implements OnInit, OnChanges {
             this.slides.push(this.sanitizer.bypassSecurityTrustUrl(objectURL));
     
           }, error => {
-            this.toastr.error("Cannot subscribe user!");
+            this.toastr.error("The data is not valid!");
           });
       });
     }
@@ -42,5 +42,5 @@ export class ImageSliderComponent implements OnInit, OnChanges {
   ngOnInit() { 
     
   }
-
+  
 }
