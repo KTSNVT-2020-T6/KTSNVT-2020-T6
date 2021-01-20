@@ -32,7 +32,6 @@ export class ProfileDetailsComponent implements OnInit {
     private adminService: AdminService,
     private regUserService: RegisteredUserService,
     private imageService: ImageService,
-    private route : ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer,
@@ -85,19 +84,6 @@ export class ProfileDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(EditPasswordComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('ok');
-      // this.userService.getCurrentUser().subscribe(
-      //   res => {
-      //     this.user = res.body as User;
-      //     this.imageService.getImage(this.user.idImageDTO).subscribe(
-      //       res => {
-              
-      //         let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-      //         let objectURL = 'data:image/jpg;base64,' + base64String;   
-      //         this.user.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      //     }
-      //   );
-      //   }
-      // );
     });
   }
 
