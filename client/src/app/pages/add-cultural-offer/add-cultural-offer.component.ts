@@ -36,7 +36,6 @@ export class AddCulturalOfferComponent implements OnInit {
 		private coService: CulturalOfferDetailsService,
 		private categoryService: CategoryService,
 		private typeService: TypeService,
-		private route: ActivatedRoute,
 		private toastr: ToastrService,
 		public dialogRef: MatDialogRef<AddCulturalOfferComponent>
 	) {

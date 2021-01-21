@@ -18,9 +18,7 @@ export class AddCategoryComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-		private router: Router,
 		private categoryService: CategoryService,
-		private route: ActivatedRoute,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<AddCategoryComponent>    
   ) {
@@ -28,6 +26,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.category = {id:0,description:'',name:''};
   }
   createForm() {
     this.categoryForm = this.fb.group({

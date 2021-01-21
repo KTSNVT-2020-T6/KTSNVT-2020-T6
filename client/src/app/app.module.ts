@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './core/navbar-user/navbar/navbar.component';
+import { NavbarUserComponent } from './core/navbar-user/navbar/navbar.component';
 import { CulturalOfferDetailsComponent } from './pages/cultural-offer-details/cultural-offer-details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -54,11 +54,12 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 import { SearchDetailsComponent } from './pages/search-details/search-details.component';
 import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-autocomplete';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     CulturalOfferDetailsComponent,
-    NavbarComponent,
+    NavbarUserComponent,
     StarRatingComponent,
     HomePageComponent,
     LoginPageComponent,
@@ -106,9 +107,12 @@ import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-a
     FlexLayoutModule,
     ToastrModule.forRoot(),
     MaterialModule,
-    GeoapifyGeocoderAutocompleteModule.withConfig('bac3b0a7331c49dd8a287ce77712b64e')
+    GeoapifyGeocoderAutocompleteModule.withConfig('bac3b0a7331c49dd8a287ce77712b64e'),
+   
+    
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }
