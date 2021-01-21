@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/common/http'
 import { map } from 'rxjs/operators';
 import { Post } from '../../model/Post';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +10,20 @@ import { Post } from '../../model/Post';
 export class PostService {
     private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
+	private RegenerateData = new Subject<void>();
+
+    RegenerateData$ = this.RegenerateData.asObservable();
+
+    announceChange() {
+        this.RegenerateData.next();
+	}
+	
 	constructor(
 		private http: HttpClient
     ) {}
     
     addPost(newPost: Post): Observable<any>{
-        return this.http.post('http://localhost:8080/api/post', newPost, {headers: this.headers, responseType: 'text'});
+        return this.http.post('http://localhost:8080/api/post', newPost, {headers: this.headers, responseType: 'json'});
     }
 
     getPage(page: number, size: number): Observable<any> {
