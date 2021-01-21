@@ -92,7 +92,9 @@ describe('ProfileDetailsComponent', () => {
     dialog = TestBed.get(MatDialog);
     router = TestBed.inject(Router);
   }); 
-  
+  it('should create commponent', fakeAsync(() => {
+    expect(profileComponent).toBeTruthy();
+  }));
   it('should fetch student and his enrollments on init in edit mode', fakeAsync(() => {
     profileComponent.ngOnInit();
    

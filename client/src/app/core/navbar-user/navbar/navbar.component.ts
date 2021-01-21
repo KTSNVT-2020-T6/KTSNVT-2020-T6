@@ -7,7 +7,7 @@ import { AuthenticationService } from 'src/app/pages/services/authentication/aut
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarUserComponent implements OnInit {
 
   constructor(
     private router: Router,

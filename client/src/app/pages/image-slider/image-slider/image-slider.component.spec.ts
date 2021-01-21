@@ -16,7 +16,8 @@ import { Category } from '../../model/Category';
 import { Type } from '../../model/Type';
 import { SimpleChange, SimpleChanges } from '@angular/core';
 import { MaterialModule } from '../../material-module';
-import { CarouselModule } from 'angular-bootstrap-md';
+import { CarouselModule, MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
  
 describe('ImageSliderComponent', () => {
   let component: ImageSliderComponent;
@@ -30,15 +31,12 @@ describe('ImageSliderComponent', () => {
         getImage: jasmine.createSpy('getImage').and.returnValue(of(
             ''
         ))
-        //announceChange: jasmine.createSpy('announceChange') 
     }
     
     TestBed.configureTestingModule({
        declarations: [ ImageSliderComponent],
        imports: [ToastrModule.forRoot()],
-       providers:    [   { provide: ImageService, useValue: imageServiceMock }
-            
-       ]
+       providers:    [   { provide: ImageService, useValue: imageServiceMock } ]
     });
 
     fixture = TestBed.createComponent(ImageSliderComponent);
@@ -70,6 +68,9 @@ describe('ImageSliderComponent', () => {
     imageDTO = [{id:1, description:'Van Gog', relativePath:'/r/r/rr/r'},
     {id:2, description:'Pol Gogen', relativePath:'/f/f/f/f/f/f'}];
   }); 
+  it('should create commponent', fakeAsync(() => {
+    expect(component).toBeTruthy();
+  }));
   it('should fetch images', fakeAsync(() => {
     const previousValue ='';
     const currentValue = imageDTO;
@@ -83,6 +84,7 @@ describe('ImageSliderComponent', () => {
     tick();
     expect(component.ngOnChanges).toHaveBeenCalled();
     expect(imageService.getImage).toHaveBeenCalledTimes(2);
+   
   }));
 
 });

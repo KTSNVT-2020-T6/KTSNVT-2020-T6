@@ -1,13 +1,13 @@
 <mat-toolbar class="flexSpaceBetween">
 	<div>
-		<a [routerLink]="['/']">
+		<a id="home" [routerLink]="['/']">
 			<mat-icon class="material-icons"  inline="true" >home</mat-icon>
 		</a>
 	</div>
 	<span>
-		<a mat-button [routerLink]="['/posts']"> News </a>
-		<a mat-button [routerLink]="['/favorites']"> Favorites </a>
-		<a [routerLink]="['/profileDetails']">
+		<a id="news" mat-button [routerLink]="['/posts']"> News </a>
+		<a id="favorites" mat-button [routerLink]="['/favorites']"> Favorites </a>
+		<a id="profile" [routerLink]="['/profileDetails']">
 			<mat-icon class="material-icons"  inline="true">person</mat-icon>
 		</a>
 		<a mat-button (click)="signOut()"> Sign out </a>
