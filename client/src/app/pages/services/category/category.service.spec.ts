@@ -65,6 +65,7 @@ describe('CategoryService', () => {
 
      it('add()  should query url and save a category',fakeAsync(() => {
       let newCategory: Category = {
+        id: 1,
         name: 'institution',
         description: 'institution in serbia'
       }
@@ -92,7 +93,11 @@ describe('CategoryService', () => {
    }));
 
    it('getCategory() should query url and get category',fakeAsync(() => {
-    let category: Category = {};
+    let category: Category = { 
+        id: 1,
+        name: 'institution',
+        description: 'institution in serbia'
+    };
     
     const mockCategory: Category = 
         {

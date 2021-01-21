@@ -53,8 +53,8 @@ export const routes :Routes = [
 	{
 		path: 'posts',
 		component: PostsPageComponent,
-		canActivate: [RoleGuard],
-		data: {expectedRoles: 'ROLE_ADMIN|ROLE_REGISTERED_USER'}
+		//canActivate: [RoleGuard],
+		//data: {expectedRoles: 'ROLE_ADMIN|ROLE_REGISTERED_USER'}
 	},
 	{
 		path: 'favorites',

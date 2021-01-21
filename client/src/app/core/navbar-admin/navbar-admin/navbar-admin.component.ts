@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { AddAdminComponent } from 'src/app/pages/add-admin/add-admin.component';
 import { AuthenticationService } from 'src/app/pages/services/authentication/authentication.service';
@@ -11,6 +12,7 @@ import {AddCulturalOfferComponent} from '../../../pages/add-cultural-offer/add-c
   styleUrls: ['./navbar-admin.component.scss']
 })
 export class NavbarAdminComponent implements OnInit {
+
 
   constructor(public dialog: MatDialog, private router: Router,
     private authenticationService: AuthenticationService) {}
