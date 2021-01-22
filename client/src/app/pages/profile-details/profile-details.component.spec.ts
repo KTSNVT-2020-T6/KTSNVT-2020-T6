@@ -149,6 +149,6 @@ describe('ProfileDetailsComponent', () => {
     profileComponent.confirmDialog();
     expect(dialog.open).toHaveBeenCalled();
     expect(profileComponent.deleteProfile).toHaveBeenCalled();
-
   }));
+  
 });

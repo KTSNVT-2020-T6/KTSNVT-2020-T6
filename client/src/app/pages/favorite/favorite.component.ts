@@ -5,6 +5,7 @@ import { CulturalOfferDetailsService } from '../services/cultural-offer-details/
 import { ImageService } from '../services/image/image.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-favorite',
@@ -20,10 +21,11 @@ export class FavoriteComponent implements OnInit {
   constructor(private culturalOfferDetailsService: CulturalOfferDetailsService,
     private imageService: ImageService, private sanitizer: DomSanitizer,
     private toastr: ToastrService) {
-   
   }
  
   ngOnInit() {
+    this.images = [];
+    this.culturalOffers  = [];
     this.culturalOfferDetailsService.getFavorite().subscribe(
 			res => {
         this.culturalOffers = res.body as CulturalOffer[];
@@ -53,6 +55,7 @@ export class FavoriteComponent implements OnInit {
     );
     
   }
+
   unsubscribe(co:CulturalOffer){
     this.culturalOfferDetailsService.unsubscribe(co.id).subscribe(
       res =>{
@@ -61,7 +64,7 @@ export class FavoriteComponent implements OnInit {
         this.culturalOffers.splice(idx, 1);
         
       },error =>{
-        this.toastr.success("Something went wrong");
+        this.toastr.error("Something went wrong");
         console.log(error);
       }
     )
