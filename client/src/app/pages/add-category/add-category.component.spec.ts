@@ -51,7 +51,7 @@ describe('AddCategoryComponent', () => {
   
     TestBed.configureTestingModule({
        declarations: [ AddCategoryComponent ],
-       imports: [ ReactiveFormsModule,FormsModule,FormsModule, ReactiveFormsModule, MatDialogModule, HttpClientModule, RouterModule, ToastrModule.forRoot(),
+       imports: [ ReactiveFormsModule,FormsModule, MatDialogModule, HttpClientModule, RouterModule, ToastrModule.forRoot(),
          MatCardModule, MatDialogModule],
        providers:    [ 
         { provide: CategoryService, useValue: categoryServiceMock },
@@ -93,21 +93,18 @@ describe('AddCategoryComponent', () => {
       });
 
   }));
-  it('should save new category', () => {
+  it('should save new category', fakeAsync(() => {
      
       expect(component.categoryForm.valid).toBeFalsy();
       component.categoryForm.controls['name'].setValue("Category1");
       component.categoryForm.controls['description'].setValue("Description of Category1");
      
       expect(component.categoryForm.valid).toBeTruthy();
-      //component.addCategory();
+      tick(1500);
+      // component.addCategory();
      //  expect(categoryService.add).toHaveBeenCalled();
 
 
-  });
-  
- 
-  
-
+  }));
   
 });
