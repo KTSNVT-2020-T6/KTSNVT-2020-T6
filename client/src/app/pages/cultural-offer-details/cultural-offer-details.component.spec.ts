@@ -14,7 +14,7 @@ import { Category } from '../model/Category';
 import { Type } from '../model/Type';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule} from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { Toast, ToastContainerModule, ToastInjector, ToastrModule } from 'ngx-toastr';
 import { RegisteredUserService } from '../services/registered-user/registered-user.service';
@@ -23,10 +23,12 @@ import { CommentService } from '../services/comment/comment.service';
 import { RateService } from '../services/rate/rate.service';
 import { ImageService } from '../services/image/image.service';
 import { ImageSliderComponent } from '../image-slider/image-slider/image-slider.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MaterialModule } from '../material-module';
+import { MatFormFieldModule } from '@angular/material/form-field';;
 import { Location } from '@angular/common';
 import { User } from '../model/User';
+import { StarRatingComponent} from '../star-rating/star-rating/star-rating.component';
+import { by, element } from 'protractor';
+
 class MdDialogMock {
   open() {
     return {
@@ -46,7 +48,7 @@ describe('CulturalOfferDetailsComponent', () => {
   let activatedRoute: any;
   let dialog: MdDialogMock;
   let location: Location;
-  
+  let starComponent: StarRatingComponent;
   
   beforeEach(() => {
     let userMock: User ={
@@ -130,11 +132,12 @@ describe('CulturalOfferDetailsComponent', () => {
     let routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
+   
     let activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
     activatedRouteStub.testParams = { id: 1 }; 
 
     TestBed.configureTestingModule({
-       declarations: [ CulturalOfferDetailsComponent,ImageSliderComponent],
+       declarations: [ CulturalOfferDetailsComponent,ImageSliderComponent, StarRatingComponent],
        imports: [FormsModule, ReactiveFormsModule, MatDialogModule,
          HttpClientModule, MatFormFieldModule,ToastrModule.forRoot(),
         ],
@@ -160,7 +163,7 @@ describe('CulturalOfferDetailsComponent', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     router = TestBed.inject(Router);
     dialog = TestBed.get(MatDialog);
-    
+   
   });
   
   it('should create commponent', fakeAsync(() => {
@@ -253,6 +256,7 @@ describe('CulturalOfferDetailsComponent', () => {
   it('should send a comment with text only', fakeAsync(() => {
     expect(component).toBeTruthy();
     component.ngOnInit(); //da se namesti id
+    
     //NEma reaktivne forme. MOGU LI DA POLUIM SADAS
     //podesimo parametre
 
@@ -271,18 +275,58 @@ describe('CulturalOfferDetailsComponent', () => {
     
     
   // }));
-  it('should to rate cultural offer', fakeAsync(() => {
-    
-    
-  }));
-  // it('shouldnt rate cultural offer', fakeAsync(() => {
-    
-    
-  // }));
   // it('should select file', fakeAsync(() => {
     
     
   // }));
+  it('child should emit value to parent', fakeAsync(() => {
+    component.role ="ROLE_REGISTERED_USER";
+    expect(component).toBeTruthy();
+    component.ngOnInit(); //da se namesti id co
+   
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      tick();
+      //ne moze da pronadje child eleement
+    });
+    
+    // childComponent.triggerEventHandler('rateClicked', 3)
+    // tick();     
+    // console.log(fixture.debugElement.query(By.css('app-star-rating')).nativeElement.innerText +'QWO');
+    // expect(fixture.debugElement.query(By.css('app-star-rating')).nativeElement.innerText
+    // ).toEqual(3);
+   // expect(component.lastClick).toBe(3);
+    
+  }));
+ 
+  // it('should to rate cultural offer', fakeAsync(() => {
+  //   expect(component).toBeTruthy();
+  //   component.ngOnInit(); //da se namesti id co
+  //   component.role ="ROLE_REGISTERED_USER";
+  //   //OVO RATED JE IZ OUTPUTA
+  //   let childComponent = fixture.debugElement.query(By.css('app-star-rating')).componentInstance;
+  //   childComponent.emit(3);
+  //   tick();
+  //   component.rateClicked(value);
+  //   expect(userService.getCurrentUser).toHaveBeenCalled();
+  //   tick();
+  //   expect(rateService.createOrEditRate).toHaveBeenCalled();
+  //   tick();
+  //   expect(culturalOfferService.getOne).toHaveBeenCalled();
+  //   tick();
+  //   //izracunaj
+  //   expect(component.culturalOffer.averageRate).toBe(123);
+  //   //promenjena vrednost na ne znam ni ja sta:) rucno izracunati
+
+  //   flush();
+    
+  // }));
+  
+  // it('shouldnt rate cultural offer', fakeAsync(() => {
+    
+    
+  // }));
+  
  // it('should subscribe user', fakeAsync(() => {
     
     
