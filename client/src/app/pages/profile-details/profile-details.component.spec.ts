@@ -116,7 +116,6 @@ describe('ProfileDetailsComponent', () => {
     expect(profileComponent.user.email).toEqual('aan@gmail.com');
     expect(profileComponent.user.password).toEqual('asdf');
   
-    //should display fetched student
     fixture.detectChanges(); // tell angular that data are fetched
     tick(); // initiate next cycle of binding these data to HTML components
     fixture.detectChanges(); // detect changes in the HTML components
