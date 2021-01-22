@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit,Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { CulturalOffer } from '../model/CulturalOffer';
@@ -18,6 +18,7 @@ import { ImageService } from '../services/image/image.service';
 import { CommentService } from '../services/comment/comment.service';import { EditCulturalOfferComponent } from '../edit-cultural-offer/edit-cultural-offer.component';
 import { ConfirmationComponent, ConfirmDialogModel } from '../confirmation/confirmation.component';
 import { Subscription } from 'rxjs';
+import { StarRatingComponent } from '../star-rating/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-cultural-offer-details',
@@ -86,9 +87,16 @@ export class CulturalOfferDetailsComponent implements OnInit {
   }
 
   rateClicked(rated:any){
+    this.userService.getCurrentUser().subscribe(
+      res => {
+        this.currentUser = res.body as User;
+      },error => {
+        this.toastr.error("Cannot load user from server!");
+      }
+    );
     this.rate.number = rated.rating as number;
     this.rate.culturalOfferId = this.culturalOffer.id;
-    this.rate.registredUserId = 1;
+    this.rate.registredUserId =  this.currentUser.id;
     this.rateService.createOrEditRate(this.rate).subscribe(
       result => {
         this.coService.getOne(this.id).subscribe(

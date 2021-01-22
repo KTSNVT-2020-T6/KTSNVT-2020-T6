@@ -113,6 +113,6 @@ import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-a
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
   bootstrap: [AppComponent],
-  
+  schemas:[NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

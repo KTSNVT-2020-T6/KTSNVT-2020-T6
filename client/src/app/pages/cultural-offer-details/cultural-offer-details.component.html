@@ -10,7 +10,7 @@
         </span> 
         <div class="edit">
             <p>Rating: <span id ="averageRate">{{culturalOffer?.averageRate}}</span></p>
-            <app-star-rating *ngIf="role === 'ROLE_REGISTERED_USER'" (ratingClick)="rateClicked($event)"></app-star-rating>
+            <app-star-rating  *ngIf="role === 'ROLE_REGISTERED_USER'" (ratingClick)="rateClicked($event)"></app-star-rating>
         </div>
         <br>
         <br>
