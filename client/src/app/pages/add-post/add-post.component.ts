@@ -74,6 +74,7 @@ export class AddPostComponent implements OnInit {
     }
     this.saveImage();
   };
+
   saveImage(){
     const formData = new FormData();
     formData.append('file', this.postForm.value['image']);
@@ -89,6 +90,8 @@ export class AddPostComponent implements OnInit {
 
     );
   }
-
+  cancel(){
+    this.dialogRef.close();
+  }
 
 }
