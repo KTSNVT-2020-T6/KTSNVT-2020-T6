@@ -52,7 +52,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
     private route : ActivatedRoute,
     private router: Router,
 		private toastr: ToastrService) {
-
+    this.checker = false;
     this.subscription = coService.RegenerateData$.subscribe(() =>
       this.getCulturalOffer()
     );
@@ -115,12 +115,13 @@ export class CulturalOfferDetailsComponent implements OnInit {
   }
   addPost(){
     const dialogRef = this.dialog.open(AddPostComponent);
-    dialogRef.componentInstance.culturalOfferId = this.route.snapshot.paramMap.get('id');
+    dialogRef.componentInstance.culturalOfferId = this.id;
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
   deleteCulturalOffer(){
+     
     this.coService.delete(this.id).subscribe(
       result => {
         this.router.navigate(['/']);
@@ -196,6 +197,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
+     
       if(this.result === true){
         this.deleteCulturalOffer();
       }

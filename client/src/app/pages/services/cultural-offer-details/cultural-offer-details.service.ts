@@ -34,8 +34,7 @@ export class CulturalOfferDetailsService {
 		return this.http.post('http://localhost:8080/api/cultural-offer', newCulturalOffer, {headers: this.headers, responseType: 'json'});
 	}
 	delete(id: number): Observable<any> {
-		
-		return this.http.delete('http://localhost:8080/api/cultural-offer/'+id, {headers: this.headers, responseType: 'text'});
+		return this.http.delete('http://localhost:8080/api/cultural-offer/'+id, {headers: this.headers});
 	}
 
 	getPage(page: number, size: number): Observable<any> {
