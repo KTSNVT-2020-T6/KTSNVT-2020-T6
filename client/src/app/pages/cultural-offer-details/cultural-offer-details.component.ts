@@ -40,6 +40,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
   result:any;
   checker!: boolean;
   subscription: Subscription;
+  commentForm!: FormGroup;
   
   constructor(
     private fb: FormBuilder,
@@ -53,10 +54,18 @@ export class CulturalOfferDetailsComponent implements OnInit {
     private route : ActivatedRoute,
     private router: Router,
 		private toastr: ToastrService) {
+    this.createForm();
     this.checker = false;
     this.subscription = coService.RegenerateData$.subscribe(() =>
       this.getCulturalOffer()
     );
+  }
+
+  createForm(){
+    this.commentForm = this.fb.group({
+      'text': [''],
+      'image':['']
+       });
   }
   ngOnInit() {
     
@@ -142,7 +151,8 @@ export class CulturalOfferDetailsComponent implements OnInit {
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-        this.imageAdded = file;
+       // this.imageAdded = file;
+       this.commentForm.value['image'] = file;
     }
   }
 	edit(){
@@ -159,27 +169,28 @@ export class CulturalOfferDetailsComponent implements OnInit {
       res => {
         this.currentUser = res.body as User;
         this.comment.nameSurname = this.currentUser.firstName + ' ' + this.currentUser.lastName;
-        this.comment.text = this.commentText;
+        this.comment.text = this.commentForm.controls['text'].value;
+        //this.comment.text = this.commentText;
         this.comment.culturalOfferId = this.id;
         this.comment.userId = this.currentUser.id;
         this.comment.date = new Date();
          // uploadoati sliku
       
-        if(this.imageAdded === undefined && this.commentText === undefined) {
+        if(this.commentForm.value['image'] === '' &&  this.commentForm.controls['text'].value === '') {
            this.toastr.error('Comment cannot be empty!');
            this.comment.imageDTO = undefined;
            return;
         }
-        if (this.imageAdded !== undefined)
+        else if (this.commentForm.value['image'] !== '')
         { 
           const formData = new FormData();
-          formData.append('file', this.imageAdded);
+          formData.append('file', this.commentForm.value['image']);
           this.imageService.add(formData).subscribe(
             res => {
-              this.toastr.success('Saved!');
               this.comment.imageDTO = {'id': res};
               this.commentService.save(this.comment).subscribe(
              res => {
+               console.log("cuvam sliku staru");
                this.toastr.success("Comment send!");
               })
             });
@@ -187,6 +198,7 @@ export class CulturalOfferDetailsComponent implements OnInit {
           {
             this.commentService.save(this.comment).subscribe(
               res => {
+                console.log("cuvam i komenatar");
                 this.toastr.success("Comment send!");
                })
           }
