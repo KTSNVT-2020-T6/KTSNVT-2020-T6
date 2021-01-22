@@ -9,7 +9,7 @@
                 <span class="txt1 p-b-11">
                     Username
                 </span>
-                <small class="text-danger"  *ngIf="form.controls.username.touched && form.controls.username.errors?.required">
+                <small class="text-danger" id="usernameError"  *ngIf="form.controls.username.touched && form.controls.username.errors?.required">
                     This field can't be empty!</small>
                 <div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
                     <input type="text" class="input100" id="username" name="username" formControlName = "username">
@@ -21,7 +21,7 @@
                 <span class="txt1 p-b-11">
                     Password
                 </span>
-                <small class="text-danger"  *ngIf="form.controls.password.touched && form.controls.password.errors?.required">
+                <small class="text-danger" id="passwordError" *ngIf="form.controls.password.touched && form.controls.password.errors?.required">
                     This field can't be empty!</small>
             
                 <div class="wrap-input100 validate-input m-b-12" data-validate = "Password is required">
