@@ -171,7 +171,7 @@ public class CommentController {
 	}
 
 	private boolean validateCommentDTO(CommentDTO commentDTO) {
-		if (commentDTO.getUserId() == null)
+		if (commentDTO.getUserId() == null) 
 			return false;
 		if (commentDTO.getCulturalOfferId() == null)
 			return false;

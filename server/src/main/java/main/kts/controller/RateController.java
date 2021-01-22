@@ -83,9 +83,12 @@ public class RateController {
 		RegisteredUser registeredUser;
         Rate rate;
     	CulturalOffer culturalOffer;
-    	if(!this.validateRateDTO(rateDTO)) 
+    	if(!this.validateRateDTO(rateDTO)) {
+    		
     		return new ResponseEntity<>("Object not valid", HttpStatus.BAD_REQUEST);
-	
+    		
+    	}
+    		
         try {
         	Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
             String username = ((User) currentUser.getPrincipal()).getEmail();
@@ -181,7 +184,6 @@ public class RateController {
         Rate rate;
     	CulturalOffer culturalOffer;
     	Rate check;
-  
         try {
         	Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
             String username = ((User) currentUser.getPrincipal()).getEmail();
@@ -191,15 +193,17 @@ public class RateController {
         	rate.setCulturalOffer(culturalOffer);
         	rate.setRegistredUser(registeredUser);
             check = rateService.check(rate);
-            System.out.println(check);
+           
             if(check != null)
             	this.updateRate(rateDTO, check.getId());
             else
             	this.createRate(rateDTO);
-            return new ResponseEntity<>("Rated successfully!", HttpStatus.OK);
+
+            return new ResponseEntity<>(HttpStatus.OK);
             
         } catch (Exception e) {
-            return new ResponseEntity<>("Cannot create rate: id not found", HttpStatus.BAD_REQUEST);
+        	e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

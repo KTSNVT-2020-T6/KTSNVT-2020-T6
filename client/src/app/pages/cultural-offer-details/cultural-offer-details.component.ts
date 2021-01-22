@@ -26,7 +26,7 @@ import { StarRatingComponent } from '../star-rating/star-rating/star-rating.comp
   styleUrls: ['./cultural-offer-details.component.scss']
 })
 export class CulturalOfferDetailsComponent implements OnInit {
-  
+ 
   imageAdded: any;
   comment: Comment = {'nameSurname' : '', "text": '', 'date' : new Date(), 'userId' : 1};
   currentUser!: User;
@@ -34,13 +34,14 @@ export class CulturalOfferDetailsComponent implements OnInit {
   role!: string|undefined;
   culturalOffer!: CulturalOffer;
   id: any = ''; // cultural offer id
+  userId:any= '';
   subscribed!: number;
   images!: Img[];
   rate: Rate = {};
   result:any;
   checker!: boolean;
   subscription: Subscription;
-  commentForm!: FormGroup;
+  
   
   constructor(
     private fb: FormBuilder,
@@ -54,21 +55,12 @@ export class CulturalOfferDetailsComponent implements OnInit {
     private route : ActivatedRoute,
     private router: Router,
 		private toastr: ToastrService) {
-    this.createForm();
     this.checker = false;
     this.subscription = coService.RegenerateData$.subscribe(() =>
       this.getCulturalOffer()
     );
   }
-
-  createForm(){
-    this.commentForm = this.fb.group({
-      'text': [''],
-      'image':['']
-       });
-  }
   ngOnInit() {
-    
     this.getRole();
     this.getCulturalOffer();
     this.checkSubscription();
@@ -96,23 +88,19 @@ export class CulturalOfferDetailsComponent implements OnInit {
   }
 
   rateClicked(rated:any){
-    this.userService.getCurrentUser().subscribe(
-      res => {
-        this.currentUser = res.body as User;
-      },error => {
-        this.toastr.error("Cannot load user from server!");
-      }
-    );
     this.rate.number = rated.rating as number;
     this.rate.culturalOfferId = this.culturalOffer.id;
-    this.rate.registredUserId =  this.currentUser.id;
+    //nebitno, iz konteksta izvlacimo
+    this.rate.registredUserId =  1;
     this.rateService.createOrEditRate(this.rate).subscribe(
       result => {
         this.coService.getOne(this.id).subscribe(
           res => {
             this.culturalOffer = res.body as CulturalOffer;
+            this.coService.announceChange();
             this.images =  this.culturalOffer.imageDTO as Img[];
-          }
+          },error => {
+            this.toastr.error("Error loading!")}
         );
       },error => {
         this.toastr.error("Cannot load from server!");
@@ -121,6 +109,8 @@ export class CulturalOfferDetailsComponent implements OnInit {
     );
 
   }
+
+  
   getRole() {
     const item = localStorage.getItem('user');
     if (!item) {
@@ -148,13 +138,6 @@ export class CulturalOfferDetailsComponent implements OnInit {
       }
     );
   }
-  onFileSelect(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-       // this.imageAdded = file;
-       this.commentForm.value['image'] = file;
-    }
-  }
 	edit(){
     const dialogRef = this.dialog.open(EditCulturalOfferComponent , {
       data: this.culturalOffer});
@@ -164,47 +147,6 @@ export class CulturalOfferDetailsComponent implements OnInit {
 
   }
 
-  addNewComment(){
-    this.userService.getCurrentUser().subscribe(
-      res => {
-        this.currentUser = res.body as User;
-        this.comment.nameSurname = this.currentUser.firstName + ' ' + this.currentUser.lastName;
-        this.comment.text = this.commentForm.controls['text'].value;
-        //this.comment.text = this.commentText;
-        this.comment.culturalOfferId = this.id;
-        this.comment.userId = this.currentUser.id;
-        this.comment.date = new Date();
-         // uploadoati sliku
-      
-        if(this.commentForm.value['image'] === '' &&  this.commentForm.controls['text'].value === '') {
-           this.toastr.error('Comment cannot be empty!');
-           this.comment.imageDTO = undefined;
-           return;
-        }
-        else if (this.commentForm.value['image'] !== '')
-        { 
-          const formData = new FormData();
-          formData.append('file', this.commentForm.value['image']);
-          this.imageService.add(formData).subscribe(
-            res => {
-              this.comment.imageDTO = {'id': res};
-              this.commentService.save(this.comment).subscribe(
-             res => {
-               console.log("cuvam sliku staru");
-               this.toastr.success("Comment send!");
-              })
-            });
-          }else
-          {
-            this.commentService.save(this.comment).subscribe(
-              res => {
-                console.log("cuvam i komenatar");
-                this.toastr.success("Comment send!");
-               })
-          }
-          
-      });
-  }
   confirmDialog() {
     const message = `Are you sure you want to do this?`;
 

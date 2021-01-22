@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule} from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
-import { Toast, ToastContainerModule, ToastInjector, ToastrModule } from 'ngx-toastr';
+import { Toast, ToastContainerModule, ToastInjector, ToastrModule, ToastrService } from 'ngx-toastr';
 import { RegisteredUserService } from '../services/registered-user/registered-user.service';
 import { UserService } from '../services/user/user.service';
 import { CommentService } from '../services/comment/comment.service';
@@ -48,7 +48,7 @@ describe('CulturalOfferDetailsComponent', () => {
   let activatedRoute: any;
   let dialog: MdDialogMock;
   let location: Location;
-  let starComponent: StarRatingComponent;
+  let toastr: any;
   
   beforeEach(() => {
     let userMock: User ={
@@ -89,7 +89,7 @@ describe('CulturalOfferDetailsComponent', () => {
       afterClosed: jasmine.createSpy('afterClosed').and.callThrough(),
     }
     let culturalOfferServiceMock = {
-
+      announceChange: jasmine.createSpy('announceChange'),
       getOne: jasmine.createSpy('getOne')
         .and.returnValue(of({body: culturalOffer})), 
       
@@ -99,13 +99,14 @@ describe('CulturalOfferDetailsComponent', () => {
       delete: jasmine.createSpy('delete').and.returnValue(of({ subscribe: () => {} })),
 
       subscribeUser: jasmine.createSpy('subscribeUser')
-        .and.returnValue(of()),
+        .and.returnValue(of({ subscribe: () => {} })),
       unsubscribe: jasmine.createSpy('unsubscribe')
-        .and.returnValue(of()),
+        .and.returnValue(of({ subscribe: () => {} })),
 
       RegenerateData$: {
         subscribe: jasmine.createSpy('subscribe')
       }
+      
     };
     let registeredUserServiceMock = {
 
@@ -131,6 +132,10 @@ describe('CulturalOfferDetailsComponent', () => {
 
     let routerMock = {
       navigate: jasmine.createSpy('navigate')
+    }; 
+    const toastrMocked = {
+      success: jasmine.createSpy('success'),
+      error: jasmine.createSpy('error')
     };
    
     let activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
@@ -139,7 +144,7 @@ describe('CulturalOfferDetailsComponent', () => {
     TestBed.configureTestingModule({
        declarations: [ CulturalOfferDetailsComponent,ImageSliderComponent, StarRatingComponent],
        imports: [FormsModule, ReactiveFormsModule, MatDialogModule,
-         HttpClientModule, MatFormFieldModule,ToastrModule.forRoot(),
+         HttpClientModule, MatFormFieldModule,
         ],
        providers:[ 
            { provide: CulturalOfferDetailsService, useValue: culturalOfferServiceMock },
@@ -150,7 +155,8 @@ describe('CulturalOfferDetailsComponent', () => {
            { provide: ImageService, useValue: imageServiceMock },
            { provide: ActivatedRoute, useValue: activatedRouteStub },
            { provide: Router, useValue: routerMock },
-           { provide: MatDialog, useClass: MdDialogMock} ]
+           { provide: MatDialog, useClass: MdDialogMock},
+           { provide: ToastrService, useValue: toastrMocked }]
     });
     location = TestBed.get(Location);
     fixture = TestBed.createComponent(CulturalOfferDetailsComponent);
@@ -163,6 +169,7 @@ describe('CulturalOfferDetailsComponent', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     router = TestBed.inject(Router);
     dialog = TestBed.get(MatDialog);
+    toastr = TestBed.inject(ToastrService);
    
   });
   
@@ -252,97 +259,41 @@ describe('CulturalOfferDetailsComponent', () => {
     flush();
     
   }));
-  
-  it('should send a comment with text only', fakeAsync(() => {
-    expect(component).toBeTruthy();
-    component.ngOnInit(); //da se namesti id
-    
-    //NEma reaktivne forme. MOGU LI DA POLUIM SADAS
-    //podesimo parametre
-
-    //gledamo da li hoce da radi na click button
-    
-  }));
-  // it('should send a comment with image only', fakeAsync(() => {
-    
-    
-  // }));
-  // it('should send a comment with image and text', fakeAsync(() => {
-    
-    
-  // }));
-  // it('try to send a empty comment', fakeAsync(() => {
-    
-    
-  // }));
-  // it('should select file', fakeAsync(() => {
-    
-    
-  // }));
-  it('child should emit value to parent', fakeAsync(() => {
-    component.role ="ROLE_REGISTERED_USER";
+ 
+  it('should to rate cultural offer', fakeAsync(() => {
     expect(component).toBeTruthy();
     component.ngOnInit(); //da se namesti id co
-   
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      tick();
-      //ne moze da pronadje child eleement
-    });
-    
-    // childComponent.triggerEventHandler('rateClicked', 3)
-    // tick();     
-    // console.log(fixture.debugElement.query(By.css('app-star-rating')).nativeElement.innerText +'QWO');
-    // expect(fixture.debugElement.query(By.css('app-star-rating')).nativeElement.innerText
-    // ).toEqual(3);
-   // expect(component.lastClick).toBe(3);
+    component.role ="ROLE_REGISTERED_USER";
+    component.rateClicked(1);
+    expect(rateService.createOrEditRate).toHaveBeenCalled();
+    tick();
+    expect(culturalOfferService.getOne).toHaveBeenCalled();
+    tick();
+    fixture.detectChanges();
+    tick();
+    expect(culturalOfferService.announceChange).toHaveBeenCalled();
+    flush();
     
   }));
- 
-  // it('should to rate cultural offer', fakeAsync(() => {
-  //   expect(component).toBeTruthy();
-  //   component.ngOnInit(); //da se namesti id co
-  //   component.role ="ROLE_REGISTERED_USER";
-  //   //OVO RATED JE IZ OUTPUTA
-  //   let childComponent = fixture.debugElement.query(By.css('app-star-rating')).componentInstance;
-  //   childComponent.emit(3);
-  //   tick();
-  //   component.rateClicked(value);
-  //   expect(userService.getCurrentUser).toHaveBeenCalled();
-  //   tick();
-  //   expect(rateService.createOrEditRate).toHaveBeenCalled();
-  //   tick();
-  //   expect(culturalOfferService.getOne).toHaveBeenCalled();
-  //   tick();
-  //   //izracunaj
-  //   expect(component.culturalOffer.averageRate).toBe(123);
-  //   //promenjena vrednost na ne znam ni ja sta:) rucno izracunati
 
-  //   flush();
+  it('should subscribe user', fakeAsync(() => {
+    expect(component).toBeTruthy();
+    component.ngOnInit(); //da se namesti id co
+    component.role ="ROLE_REGISTERED_USER";
+    component.subscribeUser();
+    expect(culturalOfferService.subscribeUser).toHaveBeenCalledWith(1);
+    expect(toastr.success).toHaveBeenCalledTimes(1);
+  }));
+
+  it('should unsubscribe user', fakeAsync(() => {
+    expect(component).toBeTruthy();
+    component.ngOnInit(); //da se namesti id co
+    component.role ="ROLE_REGISTERED_USER";
+    component.unsubscribe();
+    expect(culturalOfferService.unsubscribe).toHaveBeenCalledWith(1);
+    expect(toastr.success).toHaveBeenCalledTimes(1);
     
-  // }));
-  
-  // it('shouldnt rate cultural offer', fakeAsync(() => {
-    
-    
-  // }));
-  
- // it('should subscribe user', fakeAsync(() => {
-    
-    
-  // }));
-   // it('try subscribe user but not success', fakeAsync(() => {
-    
-    
-  // }));
-  // it('should unsubscribe user', fakeAsync(() => {
-    
-    
-  // }));
-   // it('try unsubscribe user but not success', fakeAsync(() => {
-    
-    
-  // }));
+  })); 
   
 
 });

@@ -78,11 +78,11 @@ export class CulturalOfferDetailsService {
 	}
 
 	unsubscribe(id: any): Observable<any> {
-		return this.http.put('http://localhost:8080/api/cultural-offer/unsubscribe/'+id, {headers: this.headers, responseType:'text'});
+		return this.http.put('http://localhost:8080/api/cultural-offer/unsubscribe/'+id, {headers: this.headers});
 	}
 
 	subscribeUser(id:any): Observable<any> {
-		return this.http.put('http://localhost:8080/api/cultural-offer/subscribe/'+id, {headers: this.headers, responseType:'text'});
+		return this.http.put('http://localhost:8080/api/cultural-offer/subscribe/'+id, {headers: this.headers});
 	}
 
 }

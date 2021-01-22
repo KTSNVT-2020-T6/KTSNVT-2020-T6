@@ -15,25 +15,7 @@
         <br>
         <br>
         <span *ngIf="role === 'ROLE_REGISTERED_USER'">
-        <form class="reactiveForm" [formGroup]="commentForm" (ngSubmit)="addNewComment()">
-            <div class="example-container">
-            <h2 mat-dialog-title>New comment</h2>
-            <mat-form-field class="example-full-width" >
-                <mat-label>Leave a comment</mat-label>
-                <textarea matInput id="newComment" inline="true" matInput formControlName="text"></textarea>
-             </mat-form-field> 
-            <br>
-             <mat-form-field>
-                <ngx-mat-file-input id="uploadButton"  placeholder="Choose image" (change)="onFileSelect($event)"></ngx-mat-file-input>
-                <mat-icon matSuffix>image</mat-icon>
-            </mat-form-field>
-            <mat-dialog-actions align="end">
-                <button mat-button type="submit" id="sendComment" matTooltip="Send" class="button-color" inline="true">
-                    <mat-icon>send</mat-icon>
-                </button>
-            </mat-dialog-actions>
-            </div>
-        </form>
+          <app-add-comment [culturalOfferId]="id"></app-add-comment>
         </span>
         <mat-card-actions *ngIf="role === 'ROLE_ADMIN'">
             <button mat-button id="addPost" color="success" (click)="addPost()">New post</button>

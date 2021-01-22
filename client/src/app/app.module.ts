@@ -53,6 +53,7 @@ import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { SearchDetailsComponent } from './pages/search-details/search-details.component';
 import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-autocomplete';
+import { AddCommentComponent } from './pages/add-comment/add-comment.component';
 
 
 @NgModule({
@@ -84,7 +85,7 @@ import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-a
     EditCommentComponent,
     PaginationComponent,
 	EditPasswordComponent, 
-	EditCulturalOfferComponent, PostsPageComponent, FavoriteComponent, ConfirmationComponent, SearchDetailsComponent
+	EditCulturalOfferComponent, PostsPageComponent, FavoriteComponent, ConfirmationComponent, SearchDetailsComponent, AddCommentComponent
      ],
     imports: [
      BrowserModule,
