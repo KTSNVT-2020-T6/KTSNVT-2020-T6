@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../pages/services/authentication/authentication.service';
 import { Img } from '../model/Image';
 import { User } from '../model/User';
-import { ImageService } from '../services/image/image.service';
 
 @Component({
   selector: 'app-register-page',
@@ -25,7 +24,6 @@ export class RegisterPageComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
     private authenticationService: AuthenticationService,
-    private imageService: ImageService,
     private router: Router,
     private toastr: ToastrService
 		
@@ -50,6 +48,7 @@ export class RegisterPageComponent implements OnInit {
       this.passwordError = false;
       if(this.form.value['password'] != this.form.value['repeatPassword']){
         this.passwordError = true;
+        return;
       }
       this.user = this.form.value as User;
 

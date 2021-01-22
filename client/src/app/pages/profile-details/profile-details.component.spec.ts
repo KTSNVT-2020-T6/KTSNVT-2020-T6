@@ -15,6 +15,7 @@ import { AuthenticationService } from '../services/authentication/authentication
 import { MatCardModule } from '@angular/material/card';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 class MdDialogMock {
   open() {
@@ -33,6 +34,7 @@ describe('ProfileDetailsComponent', () => {
   let authenticationService: any;
   let dialog: MdDialogMock;
   let router: any;
+  let jwtHelper: any;
 
  beforeEach(() => {
     
@@ -68,6 +70,11 @@ describe('ProfileDetailsComponent', () => {
     let routerMock= {
         navigate: jasmine.createSpy('navigate')
     }
+
+    const jwtServiceMocked = {
+      decodeToken: jasmine.createSpy('decodeToken').and.returnValue({role: 'ROLE_ADMIN'})
+    }
+
     TestBed.configureTestingModule({
        declarations: [ ProfileDetailsComponent ],
        imports: [ FormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule],
@@ -78,7 +85,8 @@ describe('ProfileDetailsComponent', () => {
         { provide: ImageService, useValue: imageServiceMock },
         { provide: AuthenticationService, useValue: authenticationServiceMock },
         { provide: Router, useValue: routerMock },
-        { provide: MatDialog, useClass: MdDialogMock}
+        { provide: MatDialog, useClass: MdDialogMock},
+        { provide: JwtHelperService, useValue: jwtServiceMocked}
        ]
     });
 
@@ -91,11 +99,12 @@ describe('ProfileDetailsComponent', () => {
     authenticationService = TestBed.inject(AuthenticationService);
     dialog = TestBed.get(MatDialog);
     router = TestBed.inject(Router);
+    jwtHelper = TestBed.inject(JwtHelperService);
   }); 
   it('should create commponent', fakeAsync(() => {
     expect(profileComponent).toBeTruthy();
   }));
-  it('should fetch student and his enrollments on init in edit mode', fakeAsync(() => {
+  it('should fetch user on init', fakeAsync(() => {
     profileComponent.ngOnInit();
    
     expect(userService.getCurrentUser).toHaveBeenCalled(); 
@@ -107,7 +116,6 @@ describe('ProfileDetailsComponent', () => {
     expect(profileComponent.user.email).toEqual('aan@gmail.com');
     expect(profileComponent.user.password).toEqual('asdf');
   
-    //should display fetched student
     fixture.detectChanges(); // tell angular that data are fetched
     tick(); // initiate next cycle of binding these data to HTML components
     fixture.detectChanges(); // detect changes in the HTML components
@@ -125,6 +133,12 @@ describe('ProfileDetailsComponent', () => {
   it('Open dialog for editing profile', fakeAsync(() => {
     spyOn(dialog, 'open').and.callThrough();
     profileComponent.edit();
+    expect(dialog.open).toHaveBeenCalled();
+  }));
+
+  it('Open dialog for changing password', fakeAsync(() => {
+    spyOn(dialog, 'open').and.callThrough();
+    profileComponent.editPassword();
     expect(dialog.open).toHaveBeenCalled();
   }));
 

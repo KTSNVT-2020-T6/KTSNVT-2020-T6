@@ -31,10 +31,12 @@ export class PostsPageComponent implements OnInit {
     private imageService: ImageService,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    public jwt: JwtHelperService) {
       this.pageSize = 3;
 		  this.currentPage = 1;
-		  this.totalSize = 1;
+      this.totalSize = 1;
+      this.posts = [];
   }
 
   ngOnInit(): void {
@@ -81,8 +83,7 @@ export class PostsPageComponent implements OnInit {
       this.role = undefined;
       return;
     }
-    const jwt: JwtHelperService = new JwtHelperService();
-    this.role = jwt.decodeToken(item).role;
+    this.role = this.jwt.decodeToken(item).role;
   }
   
   changePage(newPage: number) {

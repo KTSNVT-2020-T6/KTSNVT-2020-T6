@@ -65,6 +65,11 @@ export class EditCulturalOfferComponent implements OnInit {
   };
 
   saveChanges(){
+    if(this.form.value['name'] === '')
+      return;
+    if(this.form.value['description'] === '')
+      return;
+
     if(!(this.placeLat === undefined || this.placeLon === undefined)){
       this.co.lat = this.placeLat;
       this.co.lon = this.placeLon;
