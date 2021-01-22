@@ -52,7 +52,6 @@ it('getImage() should query url and get image by id', fakeAsync(() => {
     let image = new ArrayBuffer(8);
 
     const mockImage = new ArrayBuffer(8);
-    
 
     imageService.getImage(1).subscribe(res => image = res.body);
     

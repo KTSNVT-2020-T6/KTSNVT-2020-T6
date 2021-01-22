@@ -131,7 +131,7 @@ describe('EditCulturalOfferComponent', () => {
     fixture.whenStable()
       .then(() => {
         expect(component.form).toBeDefined();
-
+        console.log(component.form.value);
         expect(component.form.value.name).toEqual('co name'); 
         expect(component.form.value.description).toEqual('desc');
         expect(component.form.value.typeDTO).toEqual(mockType);
@@ -223,7 +223,6 @@ describe('EditCulturalOfferComponent', () => {
 
 it('should not save updates if name input is empty', fakeAsync(() => { 
     spyOn(dialogRef, 'close');
-    expect(component.form.invalid).toBeFalsy();
     component.form.controls['name'].setValue("");
 
     fixture.detectChanges();
@@ -237,7 +236,6 @@ it('should not save updates if name input is empty', fakeAsync(() => {
 
 it('should not save updates if description input is empty', fakeAsync(() => { 
     spyOn(dialogRef, 'close');
-    expect(component.form.invalid).toBeFalsy();
     component.form.controls['description'].setValue("");
 
     fixture.detectChanges();
