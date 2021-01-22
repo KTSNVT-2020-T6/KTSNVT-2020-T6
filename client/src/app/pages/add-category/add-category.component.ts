@@ -36,7 +36,7 @@ export class AddCategoryComponent implements OnInit {
   }
   
   addCategory() {
-    this.category = this.categoryForm.value;
+    this.category = this.categoryForm.value;  
     if(this.category.name === '' || this.category.name === null )
     {
       return;
