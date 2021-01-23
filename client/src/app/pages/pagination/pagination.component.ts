@@ -38,7 +38,9 @@ export class PaginationComponent implements OnInit, OnChanges {
 	}
 
 	selected(newPage: number) {
-		if (newPage >= 1 && newPage <= this.paginationService.getNoPages(this.totalItems, this.pageSize)) {
+		this.pageSize = 3;
+		console.log(this.paginationService.getNoPages(this.totalItems, this.pageSize));
+		if (newPage >= 1 && newPage <= this.paginationService.getNoPages(this.totalItems, this.pageSize)) {			
 			this.activePage = newPage;
 			this.pageSelected.emit(this.activePage);
 		}
