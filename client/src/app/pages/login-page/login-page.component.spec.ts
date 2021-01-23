@@ -22,7 +22,8 @@ describe('LoginPageComponent', () => {
 
     let authenticationServiceMock ={
       login: jasmine.createSpy('login').and.returnValue(of({
-        accessToken: 'tokenvalue',
+        accessToken: "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9SRUdJU1RFUkVEX1VTRVIiLCJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImF0QGdtYWlsLmNvbSIsImF1ZCI6IndlYiIsImlhdCI6MTYxMTM1Njk5NiwiZXhwIjoxNjExMzU4Nzk2fQ.zfS9kgvCNirTMIXdQRW3cKkdrDyN6sPZNGWB8kO7Z0GxFMV2BDK-uPDqyPyvTX2tskBa3ug3-nCWoHk-LHbzCg",
+      
         expiresIn: 500000
       }))
     }

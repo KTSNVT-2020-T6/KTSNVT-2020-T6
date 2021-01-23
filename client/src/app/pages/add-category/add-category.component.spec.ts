@@ -34,9 +34,8 @@ describe('AddCategoryComponent', () => {
   let fixture: ComponentFixture<AddCategoryComponent>;
   let categoryService: any;
   let dialog: MdDialogMock;
-  
-  //FormBuilder    
-
+  let dialogRef: any;
+  let toastr: any;
  beforeEach(() => {
     
     let dialogMock = {
@@ -45,10 +44,12 @@ describe('AddCategoryComponent', () => {
     }
     
     let categoryServiceMock = {
-      add: jasmine.createSpy('add')
-        .and.returnValue(of({ subscribe: () => {} }))
+      add: jasmine.createSpy('add').and.returnValue(of())
     };
-  
+    const toastrMocked = {
+      success: jasmine.createSpy('success'),
+      error: jasmine.createSpy('error')
+    };
     TestBed.configureTestingModule({
        declarations: [ AddCategoryComponent ],
        imports: [ ReactiveFormsModule,FormsModule, MatDialogModule, HttpClientModule, RouterModule, ToastrModule.forRoot(),
@@ -56,6 +57,7 @@ describe('AddCategoryComponent', () => {
        providers:    [ 
         { provide: CategoryService, useValue: categoryServiceMock },
         { provide: MatDialogRef, useClass: MatDialogRefMock},
+        { provide: ToastrService, useValue: toastrMocked },
         { provide: MatDialog, useClass: MdDialogMock}
        ]
     });
@@ -64,6 +66,8 @@ describe('AddCategoryComponent', () => {
     component = fixture.componentInstance;
     categoryService = TestBed.inject(CategoryService);
     dialog = TestBed.get(MatDialog);
+    dialogRef = TestBed.inject(MatDialogRef);
+    toastr = TestBed.inject(ToastrService);
   });
   it('should create commponent', fakeAsync(() => {
     expect(component).toBeTruthy();
@@ -94,17 +98,18 @@ describe('AddCategoryComponent', () => {
 
   }));
   it('should save new category', fakeAsync(() => {
-     
-      expect(component.categoryForm.valid).toBeFalsy();
-      component.categoryForm.controls['name'].setValue("Category1");
-      component.categoryForm.controls['description'].setValue("Description of Category1");
-     
-      expect(component.categoryForm.valid).toBeTruthy();
-      tick(1500);
-      // component.addCategory();
-     //  expect(categoryService.add).toHaveBeenCalled();
+    component.ngOnInit();
+    spyOn(dialogRef, 'close');
+    expect(component.categoryForm.valid).toBeFalsy();
+    component.categoryForm.controls['name'].setValue("Category1");
+    component.categoryForm.controls['description'].setValue("Description of Category1");
+    expect(component.categoryForm.valid).toBeTruthy();
+    component.addCategory(); 
 
-
+    expect(categoryService.add).toHaveBeenCalledTimes(1);
+    //expect(toastr.success).toHaveBeenCalledTimes(1);
+    //expect(dialogRef.close).toHaveBeenCalledTimes(1);
+    flush();
   }));
   
 });
