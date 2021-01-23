@@ -36,26 +36,25 @@ export class AddCategoryComponent implements OnInit {
   }
   
   addCategory() {
-    this.category = this.categoryForm.value;  
-    if(this.category.name === '' || this.category.name === null )
+    this.category = this.categoryForm.value; 
+    if(this.categoryForm.invalid)
     {
-      return;
-    }
-    else if(this.category.description === '' || this.category.description === null ){
       return;
     }
     else{
       this.categoryService.add(this.category as Category).subscribe(
         result => {
-          this.dialogRef.close();
+          console.log('I CAN NO LONGER WAIT');
           this.toastr.success("Category successfully added");
           window.location.reload();
+          this.categoryForm.reset();
+          this.dialogRef.close();
         },
         error => {
           this.toastr.error("Name already exists!");
         }
       );
-      this.categoryForm.reset();
+      
     }
    
   }

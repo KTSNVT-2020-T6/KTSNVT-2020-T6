@@ -30,8 +30,6 @@ export class AddCommentComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
-    private coService: CulturalOfferDetailsService,
-    private regUserService: RegisteredUserService,
     private commentService: CommentService,
     private userService: UserService,
     private imageService: ImageService,
@@ -53,11 +51,9 @@ export class AddCommentComponent implements OnInit {
         this.currentUser = res.body as User;
         this.comment.nameSurname = this.currentUser.firstName + ' ' + this.currentUser.lastName;
         this.comment.text = this.commentForm.controls['text'].value;
-        
         this.comment.culturalOfferId = this.culturalOfferId;
         this.comment.userId = this.currentUser.id;
         this.comment.date = new Date();
-       
         if(this.commentForm.invalid) {
            this.toastr.error('Comment cannot be empty!');
            this.comment.imageDTO = undefined;
