@@ -14,7 +14,6 @@ import { AddTypeComponent } from './add-type.component';
 import { Type } from '../model/Type';
 export class MatDialogRefMock {
     close(value = '') {
-
     }
 }
 
