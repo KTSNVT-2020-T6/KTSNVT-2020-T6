@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { CulturalOffer } from '../../model/CulturalOffer';
 import { map } from 'rxjs/operators';
 import { Comment } from '../../model/Comment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root'
@@ -32,7 +33,8 @@ export class CommentService {
 				.set('page', String(page))
 				.append('size', String(size)),
 		};
-		return this.http.get('http://localhost:8080/api/comment/page/'+culturalOfferId, queryParams);
+		
+		return this.http.get(`${environment.baseUrl}/${environment.comment}/page/${culturalOfferId}`, queryParams);
 		
 	}
 	getComment(id: number):Observable<any>{
@@ -42,15 +44,16 @@ export class CommentService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/comment/'+id, queryParams).pipe(map(res => res));
+		
+		return this.http.get(`${environment.baseUrl}/${environment.comment}/${id}`, queryParams).pipe(map(res => res));
 	}
 	update(editComment: Comment, id: number): Observable<any> {
-		return this.http.put('http://localhost:8080/api/comment/'+ id, editComment, {headers: this.headers, responseType: 'json'});
+		return this.http.put(`${environment.baseUrl}/${environment.comment}/${id}`, editComment, {headers: this.headers, responseType: 'json'});
 	}
 	save(comment: Comment):Observable<any> {
-		return this.http.post('http://localhost:8080/api/comment', comment, {headers: this.headers, responseType: 'json'});
+		return this.http.post(`${environment.baseUrl}/${environment.comment}`, comment, {headers: this.headers, responseType: 'json'});
 	}
 	delete(id: number): Observable<any> {
-		return this.http.delete('http://localhost:8080/api/comment/'+ id, {headers: this.headers, responseType: 'text'});
+		return this.http.delete(`${environment.baseUrl}/${environment.comment}/${id}`, {headers: this.headers, responseType: 'text'});
 	}
 }

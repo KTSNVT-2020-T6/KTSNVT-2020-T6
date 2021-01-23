@@ -65,7 +65,7 @@ describe('AddCommentComponent', () => {
 
     TestBed.configureTestingModule({
        declarations: [ AddCommentComponent ],
-       imports: [ FormsModule, ReactiveFormsModule, HttpClientModule,
+       imports: [  FormsModule, ReactiveFormsModule, HttpClientModule,
          RouterModule, ToastrModule.forRoot(), MatCardModule,
           BrowserModule, BrowserAnimationsModule, MaterialModule],
        providers:    [ 

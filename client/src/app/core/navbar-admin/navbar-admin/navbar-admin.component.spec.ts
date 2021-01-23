@@ -25,6 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { MaterialModule } from 'src/app/pages/material-module';
 class MdDialogMock {
     open() {
       return {
@@ -54,8 +55,7 @@ describe('NavbarAdminComponent', () => {
     }
     TestBed.configureTestingModule({
        declarations: [HomePageComponent , NavbarAdminComponent],
-       imports: [ MatToolbarModule,MatCardModule, MatIconModule,NoopAnimationsModule,
-        MatMenuModule,
+       imports: [ MaterialModule,
         RouterTestingModule.withRoutes([
             {path: '', component: HomePageComponent},
             {path: 'posts', component: PostsPageComponent},

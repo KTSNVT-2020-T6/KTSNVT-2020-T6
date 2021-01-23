@@ -17,6 +17,8 @@ import { ConfirmationComponent } from '../confirmation/confirmation.component';
 import { AddCategoryComponent } from './add-category.component';
 import { CategoryService } from '../services/category/category.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from '../material-module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export class MatDialogRefMock {
     close(value = '') {
 
@@ -52,7 +54,8 @@ describe('AddCategoryComponent', () => {
     };
     TestBed.configureTestingModule({
        declarations: [ AddCategoryComponent ],
-       imports: [ ReactiveFormsModule,FormsModule, MatDialogModule, HttpClientModule, RouterModule, ToastrModule.forRoot(),
+       imports: [ MaterialModule,ReactiveFormsModule,FormsModule,BrowserAnimationsModule,
+         MatDialogModule, HttpClientModule, RouterModule, ToastrModule.forRoot(),
          MatCardModule, MatDialogModule],
        providers:    [ 
         { provide: CategoryService, useValue: categoryServiceMock },

@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable, Subject } from 'rxjs';
 import { User } from '../../model/User';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -28,6 +29,6 @@ export class UserService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/user/currentUser', queryParams).pipe(map(res => res));
+		return this.http.get(`${environment.baseUrl}/${environment.user}/currentUser`, queryParams).pipe(map(res => res));
     }
 }

@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Rate} from '../../model/Rate';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root'
@@ -20,7 +21,7 @@ export class RateService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.post('http://localhost:8080/api/rate/check', newRate , {headers: this.headers, responseType: 'json'});
+		return this.http.post(`${environment.baseUrl}/${environment.rate}/check`, newRate , {headers: this.headers, responseType: 'json'});
 	}
 
 }

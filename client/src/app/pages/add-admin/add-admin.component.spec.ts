@@ -12,6 +12,7 @@ import { Observable, of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { User } from '../model/User';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MaterialModule } from '../material-module';
 
 class MatDialogRefMock {
     close(value = '') {
@@ -43,7 +44,7 @@ describe('AddAdminComponent', () => {
 
     TestBed.configureTestingModule({
        declarations: [ AddAdminComponent ],
-       imports: [ FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule, BrowserModule, BrowserAnimationsModule],
+       imports: [ MaterialModule,FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule, BrowserModule, BrowserAnimationsModule],
        providers:    [ 
         { provide: AuthenticationService, useValue: authenticationServiceMock },
         { provide: Router, useValue: routerMock },

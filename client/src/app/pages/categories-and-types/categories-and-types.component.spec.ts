@@ -13,6 +13,7 @@ import { TypeService } from '../services/type/type.service';
 
 import { CategoriesAndTypesComponent } from './categories-and-types.component';
 import { By } from '@angular/platform-browser';
+import { MaterialModule } from '../material-module';
 class MdDialogMock {
     open() {
       return {
@@ -59,7 +60,7 @@ describe('CategoriesAndTypesComponent', () => {
     TestBed.configureTestingModule({
         declarations: [ CategoriesAndTypesComponent],
         imports: [ToastrModule.forRoot(), FormsModule, ReactiveFormsModule, MatDialogModule,
-         MatFormFieldModule,
+         MatFormFieldModule,MaterialModule
          ],
         providers:[ 
             { provide: CategoryService, useValue: catServiceMock },

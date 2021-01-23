@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable } from 'rxjs';
 import { Category } from '../../model/Category';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root'
@@ -20,25 +21,26 @@ export class CategoryService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/category', queryParams);
+	
+		return this.http.get(`${environment.baseUrl}/${environment.category}`, queryParams);
 	}
     add(newCategory: Category): Observable<any> {
-		return this.http.post('http://localhost:8080/api/category', newCategory, {headers: this.headers, responseType: 'json'});
+		return this.http.post(`${environment.baseUrl}/${environment.category}`, newCategory, {headers: this.headers, responseType: 'json'});
 	}
 	getCategory(id: number): Observable<any> {
 		let queryParams = {};
 		queryParams = {
 			headers: this.headers,
 			observe: 'response',
-			params: new HttpParams()
-	};
-	return this.http.get('http://localhost:8080/api/category/'+id, queryParams).pipe(map(res => res));
+			params: new HttpParams()  
+	    };
+	    return this.http.get(`${environment.baseUrl}/${environment.category}/${id}`, queryParams).pipe(map(res => res));
 	}
 	update(editCategory: Category, id: number): Observable<any> {
-		return this.http.put('http://localhost:8080/api/category/'+ id, editCategory, {headers: this.headers, responseType: 'json'});
+		return this.http.put(`${environment.baseUrl}/${environment.category}/${id}`, editCategory, {headers: this.headers, responseType: 'json'});
 
 	}
 	delete(id: number): Observable<any> {
-		return this.http.delete('http://localhost:8080/api/category/'+id, {headers: this.headers, responseType: 'text'});
+		return this.http.delete(`${environment.baseUrl}/${environment.category}/${id}`, {headers: this.headers, responseType: 'text'});
 	}
 }

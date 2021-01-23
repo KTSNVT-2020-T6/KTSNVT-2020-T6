@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable, Subject } from 'rxjs';
 import { Img } from '../../model/Image';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -31,10 +32,11 @@ export class ImageService {
 			params: new HttpParams(),
 			responseType: 'arraybuffer'
 		};
-        return this.http.get('http://localhost:8080/api/image/'+ id, queryParams);
+		
+        return this.http.get(`${environment.baseUrl}/${environment.image}/${id}`, queryParams);
 	}
 	
 	add(image: FormData): Observable<any> {
-		return this.http.post('http://localhost:8080/api/image', image, {headers: new HttpHeaders(), reportProgress: true}).pipe(map(res => res));
+		return this.http.post(`${environment.baseUrl}/${environment.image}`, image, {headers: new HttpHeaders(), reportProgress: true}).pipe(map(res => res));
 	}
 }

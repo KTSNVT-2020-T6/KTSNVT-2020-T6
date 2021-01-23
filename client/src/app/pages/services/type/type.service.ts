@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable } from 'rxjs';
 import { Type } from '../../model/Type';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root'
@@ -20,18 +21,18 @@ export class TypeService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/type/category/'+ id, queryParams).pipe(map(res => res));
+		return this.http.get(`${environment.baseUrl}/${environment.type}/category/${id}`, queryParams).pipe(map(res => res));
 		
 	}
 	add(newType: Type): Observable<any> {
-		return this.http.post('http://localhost:8080/api/type', newType, {headers: this.headers, responseType: 'json'});
+		return this.http.post(`${environment.baseUrl}/${environment.type}`, newType, {headers: this.headers, responseType: 'json'});
 	}
 	update(editType: Type, id: number): Observable<any> {
-		return this.http.put('http://localhost:8080/api/type/'+ id, editType, {headers: this.headers, responseType: 'json'});
+		return this.http.put(`${environment.baseUrl}/${environment.type}/${id}`, editType, {headers: this.headers, responseType: 'json'});
 	}
 
 	delete(id: number): Observable<any> {
-		return this.http.delete('http://localhost:8080/api/type/'+ id, {headers: this.headers, responseType: 'text'});
+		return this.http.delete(`${environment.baseUrl}/${environment.type}/${id}`, {headers: this.headers, responseType: 'text'});
 	}
 
 	getType(id:number):Observable<any>{
@@ -41,7 +42,7 @@ export class TypeService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/type/'+id, queryParams).pipe(map(res => res));
+		return this.http.get(`${environment.baseUrl}/${environment.type}/${id}`, queryParams).pipe(map(res => res));
 	}
 
 	getAll():Observable<any>{
@@ -51,7 +52,7 @@ export class TypeService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/type', queryParams);
+		return this.http.get(`${environment.baseUrl}/${environment.type}`, queryParams);
 	}
 
 }

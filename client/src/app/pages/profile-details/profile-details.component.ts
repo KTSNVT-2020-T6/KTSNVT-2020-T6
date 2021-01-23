@@ -36,8 +36,7 @@ export class ProfileDetailsComponent implements OnInit {
     private toastr: ToastrService,
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
-    private authenticationService: AuthenticationService,
-    private jwt: JwtHelperService
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -138,7 +137,8 @@ export class ProfileDetailsComponent implements OnInit {
       this.role = undefined;
       return;
     }
-    this.role = this.jwt.decodeToken(item).role;
+    const jwt: JwtHelperService = new JwtHelperService();
+    this.role = jwt.decodeToken(item).role;
   }
 
 }

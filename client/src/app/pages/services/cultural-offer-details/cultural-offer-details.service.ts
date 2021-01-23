@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable, Subject } from 'rxjs';
 import { CulturalOffer } from '../../model/CulturalOffer';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root'
@@ -27,14 +28,14 @@ export class CulturalOfferDetailsService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/cultural-offer/'+ id, queryParams).pipe(map(res => res));
+		return this.http.get(`${environment.baseUrl}/${environment.culturalOffer}/${id}`, queryParams).pipe(map(res => res));
 		
 	}
 	add(newCulturalOffer: CulturalOffer): Observable<any> {
-		return this.http.post('http://localhost:8080/api/cultural-offer', newCulturalOffer, {headers: this.headers, responseType: 'json'});
+		return this.http.post(`${environment.baseUrl}/${environment.culturalOffer}`, newCulturalOffer, {headers: this.headers, responseType: 'json'});
 	}
 	delete(id: number): Observable<any> {
-		return this.http.delete('http://localhost:8080/api/cultural-offer/'+id, {headers: this.headers});
+		return this.http.delete(`${environment.baseUrl}/${environment.culturalOffer}/${id}`, {headers: this.headers});
 	}
 
 	getPage(page: number, size: number): Observable<any> {
@@ -46,7 +47,7 @@ export class CulturalOfferDetailsService {
 				.set('page', String(page))
 				.append('size', String(size)),
 		};
-		return this.http.get('http://localhost:8080/api/cultural-offer/', queryParams).pipe(map(res => res));
+		return this.http.get(`${environment.baseUrl}/${environment.culturalOffer}/`, queryParams).pipe(map(res => res));
 		
 	}
 	getFavorite(): Observable<any> {
@@ -57,12 +58,12 @@ export class CulturalOfferDetailsService {
 			params: new HttpParams()
 			
 		};
-		return this.http.get('http://localhost:8080/api/cultural-offer/find/subscriptions', queryParams).pipe(map(res => res));
+		return this.http.get(`${environment.baseUrl}/${environment.culturalOffer}/find/subscriptions`, queryParams).pipe(map(res => res));
 		
 	}
 
 	edit(newCulturalOffer: CulturalOffer): Observable<any> {
-		return this.http.put('http://localhost:8080/api/cultural-offer/'+newCulturalOffer.id, newCulturalOffer, {headers: this.headers, responseType: 'json'});
+		return this.http.put(`${environment.baseUrl}/${environment.culturalOffer}/${newCulturalOffer.id}`, newCulturalOffer, {headers: this.headers, responseType: 'json'});
 	}
 	
 	searchCombined(page: number, size: number, content: string, city: string): Observable<any> {
@@ -74,15 +75,16 @@ export class CulturalOfferDetailsService {
 				.set('page', String(page))
 				.append('size', String(size)),
 		};
-		return this.http.get('http://localhost:8080/api/cultural-offer/combined/'+ content + '_' + city, queryParams).pipe(map(res => res));
-	}
+
+		return this.http.get(`${environment.baseUrl}/${environment.culturalOffer}/combined/${content}_${city}`, queryParams).pipe(map(res => res));
+	}		
 
 	unsubscribe(id: any): Observable<any> {
-		return this.http.put('http://localhost:8080/api/cultural-offer/unsubscribe/'+id, {headers: this.headers});
+		return this.http.put(`${environment.baseUrl}/${environment.culturalOffer}/unsubscribe/${id}`, {headers: this.headers});
 	}
 
 	subscribeUser(id:any): Observable<any> {
-		return this.http.put('http://localhost:8080/api/cultural-offer/subscribe/'+id, {headers: this.headers});
+		return this.http.put(`${environment.baseUrl}/${environment.culturalOffer}/subscribe/${id}`, {headers: this.headers});
 	}
 
 }

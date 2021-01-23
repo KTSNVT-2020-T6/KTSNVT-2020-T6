@@ -144,7 +144,7 @@ describe('CulturalOfferDetailsComponent', () => {
     TestBed.configureTestingModule({
        declarations: [ CulturalOfferDetailsComponent,ImageSliderComponent, StarRatingComponent],
        imports: [FormsModule, ReactiveFormsModule, MatDialogModule,
-         HttpClientModule, MatFormFieldModule,
+         HttpClientModule, MatFormFieldModule
         ],
        providers:[ 
            { provide: CulturalOfferDetailsService, useValue: culturalOfferServiceMock },

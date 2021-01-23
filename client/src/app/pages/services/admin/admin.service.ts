@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { Observable, Subject } from 'rxjs';
 import { User } from '../../model/User';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -22,10 +23,10 @@ export class AdminService {
     ) {}
     
     delete(id: any): Observable<any> {
-		return this.http.delete('http://localhost:8080/api/admin/'+id, {headers: this.headers, responseType: 'text'});
+		return this.http.delete(`${environment.baseUrl}/${environment.admin}/${id}`, {headers: this.headers, responseType: 'text'});
 	}
 
 	editAdmin(user: User): Observable<any> {
-		return this.http.put('http://localhost:8080/api/admin/'+user.id, user, {headers: this.headers, responseType: 'json'});
+		return this.http.put(`${environment.baseUrl}/${environment.admin}/${user.id}`, user, {headers: this.headers, responseType: 'json'});
 	}
 }

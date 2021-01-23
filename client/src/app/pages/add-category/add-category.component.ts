@@ -44,7 +44,6 @@ export class AddCategoryComponent implements OnInit {
     else{
       this.categoryService.add(this.category as Category).subscribe(
         result => {
-          console.log('I CAN NO LONGER WAIT');
           this.toastr.success("Category successfully added");
           window.location.reload();
           this.categoryForm.reset();

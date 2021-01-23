@@ -16,6 +16,7 @@ import { PostService } from '../services/post/post.service';
 import { CulturalOfferDetailsService } from '../services/cultural-offer-details/cultural-offer-details.service';
 import { ImageService } from '../services/image/image.service';
 import { ActivatedRouteStub } from 'src/app/testing/router-stubs';
+import { MaterialModule } from '../material-module';
 
 class MatDialogRefMock {
     close(value = '') {
@@ -59,7 +60,7 @@ describe('AddPostComponent', () => {
 
     TestBed.configureTestingModule({
        declarations: [ AddPostComponent ],
-       imports: [ FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule, BrowserModule, BrowserAnimationsModule],
+       imports: [ MaterialModule,FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule, BrowserModule, BrowserAnimationsModule],
        providers:    [ 
         { provide: CulturalOfferDetailsService, useValue: coServiceMock },
         { provide: ImageService, useValue: imageServiceMock },

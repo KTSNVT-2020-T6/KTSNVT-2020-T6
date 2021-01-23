@@ -18,6 +18,9 @@ import { Type } from '../model/Type';
 import { AddCulturalOfferComponent } from './add-cultural-offer.component';
 import { TypeService } from '../services/type/type.service';
 import { CategoryService } from '../services/category/category.service';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../material-module';
+import { MatSelectModule } from '@angular/material/select';
 
 export class MatDialogRefMock {
     close(value = '') {
@@ -92,7 +95,7 @@ describe('AddCulturalOfferComponent', () => {
 
     TestBed.configureTestingModule({
        declarations: [ AddCulturalOfferComponent ],
-       imports: [ToastrModule.forRoot(), ReactiveFormsModule, FormsModule, MatDialogModule],
+       imports: [ToastrModule.forRoot(), NoopAnimationsModule,ReactiveFormsModule, FormsModule, MatDialogModule],
        providers:    [ {provide: TypeService, useValue: typeServiceMock },
                        {provide: CulturalOfferDetailsService, useValue: culturalOfferServiceMock },
                        {provide: CategoryService, useValue: categoryServiceMock},

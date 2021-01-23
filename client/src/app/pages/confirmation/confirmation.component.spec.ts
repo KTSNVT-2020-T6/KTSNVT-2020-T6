@@ -6,7 +6,7 @@ import { async } from '@angular/core/testing';
 import { OverlayContainer, ToastrModule, ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmationComponent } from './confirmation.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MaterialModule } from '../material-module';
 import { of } from 'rxjs';
@@ -41,6 +41,7 @@ describe('ConfirmationComponent', () => {
           }
         ],
         declarations: [ConfirmationComponent],
+        
       });
   
       TestBed.overrideModule(BrowserDynamicTestingModule, {

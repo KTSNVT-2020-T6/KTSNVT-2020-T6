@@ -3,6 +3,7 @@ import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/
 import { map } from 'rxjs/operators';
 import { Post } from '../../model/Post';
 import { Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,7 @@ export class PostService {
     ) {}
     
     addPost(newPost: Post): Observable<any>{
-        return this.http.post('http://localhost:8080/api/post', newPost, {headers: this.headers, responseType: 'json'});
+        return this.http.post(`${environment.baseUrl}/${environment.post}`, newPost, {headers: this.headers, responseType: 'json'});
     }
 
     getPage(page: number, size: number): Observable<any> {
@@ -36,11 +37,11 @@ export class PostService {
 				.append('size', String(size))
 				.append('sort','date,desc'),
 		};
-		return this.http.get('http://localhost:8080/api/post/', queryParams).pipe(map(res => res));
+		return this.http.get(`${environment.baseUrl}/${environment.post}/`, queryParams).pipe(map(res => res));
 		
 	}
 	delete(postId: number): Observable<any>{
-		return this.http.delete('http://localhost:8080/api/post/' + postId, {headers: this.headers, responseType: 'text'});
+		return this.http.delete(`${environment.baseUrl}/${environment.post}/${postId}`, {headers: this.headers, responseType: 'text'});
 	}
 
 }

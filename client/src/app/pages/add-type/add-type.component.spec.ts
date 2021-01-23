@@ -12,6 +12,8 @@ import { TypeService } from '../services/type/type.service';
 
 import { AddTypeComponent } from './add-type.component';
 import { Type } from '../model/Type';
+import { MaterialModule } from '../material-module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 export class MatDialogRefMock {
     close(value = '') {
     }
@@ -53,7 +55,7 @@ describe('AddTypeComponent', () => {
       };
       TestBed.configureTestingModule({
         declarations: [ AddTypeComponent ],
-        imports: [ToastrModule.forRoot(), ReactiveFormsModule, FormsModule, MatDialogModule],
+        imports: [ ToastrModule.forRoot(),NoopAnimationsModule, ReactiveFormsModule, FormsModule, MatDialogModule],
         providers:    [ { provide: TypeService, useValue: typeServiceMock },
                         { provide: CategoryService, useValue: categoryServiceMock },
                         { provide: MatDialogRef, useClass: MatDialogRefMock},

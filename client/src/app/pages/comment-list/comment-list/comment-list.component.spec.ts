@@ -15,6 +15,8 @@ import { CommentService } from '../../services/comment/comment.service';
 import { UserService } from '../../services/user/user.service';
 import { ImageService } from '../../services/image/image.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../material-module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 class MdDialogMock {
     open() {
@@ -73,7 +75,7 @@ describe('CommentListComponent', () => {
 
     TestBed.configureTestingModule({
        declarations: [ CommentListComponent ],
-       imports: [FormsModule, ReactiveFormsModule, ToastrModule.forRoot()],
+       imports: [FormsModule, ReactiveFormsModule, ToastrModule.forRoot(),NoopAnimationsModule,MaterialModule],
        providers:    [ {provide: CommentService, useValue: commentServiceMock },
                        {provide: UserService, useValue: userServiceMock },
                        {provide: ImageService, useValue: imageServiceMock },

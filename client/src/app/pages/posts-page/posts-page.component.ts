@@ -31,8 +31,7 @@ export class PostsPageComponent implements OnInit {
     private imageService: ImageService,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer,
-    public dialog: MatDialog,
-    public jwt: JwtHelperService) {
+    public dialog: MatDialog) {
       this.pageSize = 3;
 		  this.currentPage = 1;
       this.totalSize = 1;
@@ -83,7 +82,8 @@ export class PostsPageComponent implements OnInit {
       this.role = undefined;
       return;
     }
-    this.role = this.jwt.decodeToken(item).role;
+    const jwt: JwtHelperService = new JwtHelperService();
+    this.role = jwt.decodeToken(item).role;
   }
   
   changePage(newPage: number) {

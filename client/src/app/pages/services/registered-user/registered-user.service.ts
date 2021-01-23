@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { CulturalOffer } from '../../model/CulturalOffer';
 import { map } from 'rxjs/operators';
 import { User } from '../../model/User';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root'
@@ -27,14 +28,14 @@ export class RegisteredUserService {
 			observe: 'response',
 			params: new HttpParams()
 		};
-		return this.http.get('http://localhost:8080/api/registered_user/interested/'+ id, queryParams);
+		return this.http.get(`${environment.baseUrl}/${environment.registeredUser}/interested/${id}`, queryParams);
 
 	}
 	delete(id: any): Observable<any> {
-		return this.http.delete('http://localhost:8080/api/registered_user/'+id, {headers: this.headers, responseType: 'text'});
+		return this.http.delete(`${environment.baseUrl}/${environment.registeredUser}/${id}`, {headers: this.headers, responseType: 'text'});
 	}
 	editUser(user: User): Observable<any> {
-		return this.http.put('http://localhost:8080/api/registered_user/'+user.id, user, {headers: this.headers, responseType: 'json'});
+		return this.http.put(`${environment.baseUrl}/${environment.registeredUser}/${user.id}`, user, {headers: this.headers, responseType: 'json'});
 	}
 
 }
