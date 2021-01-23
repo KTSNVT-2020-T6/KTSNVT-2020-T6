@@ -4,7 +4,11 @@
         <h2 mat-dialog-title>New cultural offer</h2>
         <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
-            <mat-select [formControl]="selectFormControl" id="catSelect" (valueChange)="onSelectionCategory($event)" required>
+            <!--            
+                <mat-select [formControl]="selectFormControl" id="catSelect" (valueChange)="onSelectionCategory($event)" required>
+
+                -->
+            <mat-select id="catSelect" (valueChange)="onSelectionCategory($event)" required>
                 <mat-option *ngFor="let cat of categories" id="cat{{cat.id}}" [value]="cat.id">
                     {{cat.name}}
                 </mat-option>
