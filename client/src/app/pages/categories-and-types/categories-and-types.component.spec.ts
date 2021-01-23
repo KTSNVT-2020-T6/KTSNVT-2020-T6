@@ -31,7 +31,6 @@ describe('CategoriesAndTypesComponent', () => {
   let catService: any;
   let typeService: any;
 
- 
 
   beforeEach(() => {
     let dialogMock = {
