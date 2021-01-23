@@ -21,7 +21,6 @@ import { CategoryService } from '../services/category/category.service';
 
 export class MatDialogRefMock {
     close(value = '') {
-
     }
 }
 
