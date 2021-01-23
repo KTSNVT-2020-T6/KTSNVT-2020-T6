@@ -25,10 +25,10 @@ export class EditTypeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-		private router: Router,
+	//	private router: Router,
 		private typeService: TypeService,
 		private categoryService: CategoryService,
-		private route: ActivatedRoute,
+	//	private route: ActivatedRoute,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<EditTypeComponent>
 	) {

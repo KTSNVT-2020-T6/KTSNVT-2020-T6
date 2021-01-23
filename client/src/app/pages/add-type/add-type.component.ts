@@ -18,13 +18,13 @@ export class AddTypeComponent implements OnInit {
   categories: Category[] = [];
   type!: Type;
   typeForm!: FormGroup;
-
+//  testValue: any;
   constructor(
 		private fb: FormBuilder,
-		private router: Router,
+	//	private router: Router,
 		private typeService: TypeService,
 		private categoryService: CategoryService,
-		private route: ActivatedRoute,
+	//	private route: ActivatedRoute,
 		private toastr: ToastrService,
 		public dialogRef: MatDialogRef<AddTypeComponent>
 	) {
@@ -46,6 +46,11 @@ export class AddTypeComponent implements OnInit {
 		'description': ['',Validators.required],
 		'categoryDTO': ['', Validators.required]
      });
+  }
+
+  onSelection(event: any){
+	this.typeForm.controls['categoryDTO'].setValue(event);
+
   }
 
   addType(){
