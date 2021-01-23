@@ -74,6 +74,7 @@ describe('NavbarAdminComponent', () => {
     component = fixture.componentInstance;
     authenticationService = TestBed.inject(AuthenticationService);
     router = TestBed.get(Router);
+    dialog = TestBed.get(MatDialog);
   }); 
   it('should create commponent', fakeAsync(() => {
     expect(component).toBeTruthy();
@@ -110,19 +111,26 @@ describe('NavbarAdminComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
 
   }));
-  it('should  have the menu open', fakeAsync(() => {
-    
-  }));
+
   it('should not have the menu open', async () => {
     let matMenu = fixture.nativeElement.parentNode.querySelector('.mat-menu-panel');
     expect(matMenu).toBeFalsy();
 
   });
-  it('should mat-menu and open add new cultural offer on mat-menu click button add-new-co', fakeAsync(() => {
-   
+  it('should open dialog add new cultural offer', fakeAsync(() => {
+    expect(component).toBeTruthy();
+    spyOn(dialog, 'open').and.callThrough();
+    component.newCulturalOffer();
+    expect(dialog.open).toHaveBeenCalled();
+    flush();
   })); 
-  it('should open add new admin on mat-menu click button add-new-admin', fakeAsync(() => {
-    
+
+  it('should open dialog add new admin on mat-menu', fakeAsync(() => {
+    expect(component).toBeTruthy();
+    spyOn(dialog, 'open').and.callThrough();
+    component.newAdmin();
+    expect(dialog.open).toHaveBeenCalled();
+    flush();
   }));
   
 
