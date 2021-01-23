@@ -141,7 +141,7 @@ describe('EditProfileComponent', () => {
       });   
   }));
 
-  it('should save reg user chages', fakeAsync(() =>{
+  it('should save reg user changes', fakeAsync(() =>{
     component.role = "ROLE_REGISTERED_USER";
     spyOn(dialogRef, 'close'); 
     component.saveChanges();
