@@ -22,14 +22,14 @@ public class CulturalOfferPage {
     @FindBy(id = "averageRate")
 	private WebElement averageRate;
     
-    @FindBy(id = "newComment")
-	private WebElement newComment;
-	
-    @FindBy(id = "uploadButton")
-	private WebElement uploadButton;
-    
-    @FindBy(id = "sendComment")
-	private WebElement sendCommentButton;
+    @FindBy(xpath = "//*[@id=\"newComment\"]")
+   	private WebElement newComment;
+   	
+    @FindBy(xpath = "//*[@id=\"ngx-mat-file-input-0\"]/input")
+   	private WebElement uploadButton;
+       
+    @FindBy(xpath = "//*[@id=\"sendComment\"]")
+   	private WebElement sendCommentButton;
     
     @FindBy(id = "addPost")
 	private WebElement addPostButton;
@@ -58,7 +58,7 @@ public class CulturalOfferPage {
     @FindBy(id = "editCommentButtonSave")
    	private WebElement editCommentButtonSave;
     
-    @FindBy(id = "deleteComment1")
+    @FindBy(id = "deleteComment2")
    	private WebElement deleteButton;
     
     @FindBy(id = "yesBtn")
@@ -92,7 +92,7 @@ public class CulturalOfferPage {
     @FindBy(className="geoapify-autocomplete-input")
     private WebElement geocoder;
     
-    @FindBy(id="datePicker")
+    @FindBy(id="datePickerToggleBtn")
     private WebElement datePickerToggleEditCOButton;
     
     @FindBy(id="editNameCulturalOffer")
@@ -119,6 +119,9 @@ public class CulturalOfferPage {
 	public CulturalOfferPage(WebDriver driver) {
 	        this.driver = driver;
 	}
+//	public void ensureIsClickableDate() {
+//        (new WebDriverWait(driver, 100)).until(ExpectedConditions.elementToBeClickable(By.id("//*[@id=\\\"datePicker\\\"]/button/span[1]/svg")));
+//    }
 	
 	public void ensureIsDisplayedSubscribedButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("subscribe")));
@@ -133,8 +136,9 @@ public class CulturalOfferPage {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("star4")));
     }
 	public void ensureIsDisplayedAddCommentButton() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("sendComment")));
+        (new WebDriverWait(driver, 40)).until(ExpectedConditions.elementToBeClickable(By.id("sendComment")));
     }
+	
     public String ensureIsDisplayedToast() {
         return (new WebDriverWait(driver, 2500)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
     }
@@ -142,7 +146,7 @@ public class CulturalOfferPage {
         (new WebDriverWait(driver, 500)).until(ExpectedConditions.elementToBeClickable(By.id("editComment1")));
     }
     public void ensureIsDisplayedDeleteComment() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteComment1")));
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteComment2")));
     }
     public void ensureIsNotVisibleYesButton() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("yesBtn")));
@@ -196,17 +200,7 @@ public class CulturalOfferPage {
 		return averageRate;
 	}
 
-	public WebElement getNewComment() {
-		return newComment;
-	}
-
-	public WebElement getUploadButton() {
-		return uploadButton;
-	}
-
-	public WebElement getSendCommentButton() {
-		return sendCommentButton;
-	}
+	
 
 	public WebElement getEditCulturalOfferButton() {
 		return editCulturalOfferButton;
@@ -410,6 +404,50 @@ public class CulturalOfferPage {
 
 	public void setEditCultOfferSaveButton(WebElement editCultOfferSaveButton) {
 		this.editCultOfferSaveButton = editCultOfferSaveButton;
+	}
+
+	public WebElement getNewComment() {
+		return newComment;
+	}
+
+	public void setNewComment(WebElement newComment) {
+		this.newComment = newComment;
+	}
+
+	public WebElement getUploadButton() {
+		return uploadButton;
+	}
+
+	public void setUploadButton(WebElement uploadButton) {
+		this.uploadButton = uploadButton;
+	}
+
+	public WebElement getSendCommentButton() {
+		return sendCommentButton;
+	}
+
+	public void setSendCommentButton(WebElement sendCommentButton) {
+		this.sendCommentButton = sendCommentButton;
+	}
+
+	public void setSubscribeButton(WebElement subscribeButton) {
+		this.subscribeButton = subscribeButton;
+	}
+
+	public void setUnsubscribeButton(WebElement unsubscribeButton) {
+		this.unsubscribeButton = unsubscribeButton;
+	}
+
+	public void setNumberOfSubscribed(WebElement numberOfSubscribed) {
+		this.numberOfSubscribed = numberOfSubscribed;
+	}
+
+	public void setAverageRate(WebElement averageRate) {
+		this.averageRate = averageRate;
+	}
+
+	public void setDeleteCulturalOfferButton(WebElement deleteCulturalOfferButton) {
+		this.deleteCulturalOfferButton = deleteCulturalOfferButton;
 	}
 
 
