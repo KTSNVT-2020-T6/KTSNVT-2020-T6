@@ -87,7 +87,7 @@ export class EditCommentComponent implements OnInit {
     }
      
     cancelClicked(){
-
+      this.dialogRef.close();
     }
     
 }
