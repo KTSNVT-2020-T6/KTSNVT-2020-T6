@@ -98,7 +98,7 @@ describe('AddCommentComponent', () => {
     expect(component.commentForm.invalid).toBeFalsy();
    
   });
-  it('should map text on form', fakeAsync(() => {
+  it('should map on form', fakeAsync(() => {
 
     component.role ="ROLE_REGISTERED_USER";
     fixture.detectChanges();
@@ -132,11 +132,56 @@ describe('AddCommentComponent', () => {
     expect(component.windowReload).toHaveBeenCalled();
     flush();
   }));
+
   it('should save image on upload', async(() => {
     component.ngOnInit();
 
     component.onFileSelect({target: {files: ["mockImage"]}});
     expect(component.commentForm.valid).toBeTruthy();
     expect(component.commentForm.value['image']).toBe("mockImage");
+  }));
+
+  it('should add comment with image', fakeAsync(() => {
+    component.ngOnInit();
+    spyOn(component, "windowReload").and.callFake(function(){});
+    spyOn(component, "onFileSelect").and.callFake(function(){});
+    component.commentForm.controls['image'].setValue("image.jpg");
+    component.addNewComment();
+    component.culturalOfferId = 1;  
+    expect(userService.getCurrentUser).toHaveBeenCalledTimes(1);
+    expect(imageService.add).toHaveBeenCalledTimes(1);
+    expect(component.comment.imageDTO).toBeDefined();
+    expect(toastr.success).toHaveBeenCalledTimes(1);
+    expect(component.windowReload).toHaveBeenCalled();
+    flush();
+  }));
+
+  it('should add comment with image and text', fakeAsync(() => {
+    component.ngOnInit();
+    spyOn(component, "windowReload").and.callFake(function(){});
+    spyOn(component, "onFileSelect").and.callFake(function(){});
+    component.commentForm.controls['text'].setValue("Sadrzaj teksta");
+    component.commentForm.controls['image'].setValue("image.jpg");
+    component.addNewComment();
+    component.culturalOfferId = 1;  
+    expect(userService.getCurrentUser).toHaveBeenCalledTimes(1);
+    expect(imageService.add).toHaveBeenCalledTimes(1);
+    expect(component.comment.imageDTO).toBeDefined();
+    expect(component.comment.text).toBeDefined();
+    expect(toastr.success).toHaveBeenCalledTimes(1);
+    expect(component.windowReload).toHaveBeenCalled();
+    flush();
+  }));
+  it('should add comment with text', fakeAsync(() => {
+    component.ngOnInit();
+    spyOn(component, "windowReload").and.callFake(function(){});
+    component.commentForm.controls['text'].setValue("Sadrzaj teksta");
+    component.addNewComment();
+    component.culturalOfferId = 1;  
+    expect(userService.getCurrentUser).toHaveBeenCalledTimes(1);
+    expect(component.comment.text).toBeDefined();
+    expect(toastr.success).toHaveBeenCalledTimes(1);
+    expect(component.windowReload).toHaveBeenCalled();
+    flush();
   }));
 });

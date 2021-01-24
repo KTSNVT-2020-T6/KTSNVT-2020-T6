@@ -48,9 +48,6 @@ export class AddCommentComponent implements OnInit {
   addNewComment(){
     this.userService.getCurrentUser().subscribe(
       res => {
-        console.log("aaaaaaaaa");
-        console.log(res);
-        console.log(res.body);
         this.currentUser = res.body as User;
         this.comment.nameSurname = this.currentUser.firstName + ' ' + this.currentUser.lastName;
         this.comment.text = this.commentForm.controls['text'].value;
