@@ -1,129 +1,170 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import {  ActivatedRoute, Router, RouterModule } from '@angular/router';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { fakeAsync, tick } from '@angular/core/testing';
-// import { By } from '@angular/platform-browser';
-// import { Observable, of } from 'rxjs';
-// import { UserService } from '../services/user/user.service';
-// import { ImageService } from '../services/image/image.service';
-// import { ToastrModule, ToastrService } from 'ngx-toastr';
-// import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-// import { MatCardModule } from '@angular/material/card';
-// import { EditCommentComponent } from './edit-comment.component';
-// import { CommentService } from '../services/comment/comment.service';
+import {  ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { BrowserModule, By } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { EditCommentComponent } from './edit-comment.component';
+import { ActivatedRouteStub } from 'src/app/testing/router-stubs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ImageService } from 'src/app/core/services/image/image.service';
+import { CommentService } from 'src/app/core/services/comment/comment.service';
+import { MaterialModule } from '../../material-module';
 
-// class MdDialogMock {
-//   open() {
-//     return {
-//       afterClosed: jasmine.createSpy('afterClosed').and.returnValue(of(true))
-//     };
-//   }
-// };
-// describe('EditCommentComponent', () => {
-//   let editCommentComponent: EditCommentComponent;
-//   let fixture: ComponentFixture<EditCommentComponent>;
-//   let commentService: any;
-//   let route: any;
-//   let userService: any;
-//   let imageService:any;
-//   let dialog: MdDialogMock;
-  
+class MatDialogRefMock {
+    close(value = '') {
 
-//  beforeEach(() => {
+    }
+}
+
+describe('EditCommentComponent', () => {
+  let component: EditCommentComponent;
+  let fixture: ComponentFixture<EditCommentComponent>;
+  let commentService: any;
+  let route: any;
+  let userService: any;
+  let imageService:any;
+  let dialog: any;
+  let toastr : any;
+
+ beforeEach(() => {
     
-//     let dialogMock = {
-//       open: jasmine.createSpy('open').and.callThrough(),
-//       afterClosed: jasmine.createSpy('afterClosed').and.callThrough(),
-//     }
-//     let userServiceMock = {
-//       getCurrentUser: jasmine.createSpy('getCurrentUser')
-//         .and.returnValue(of({body: {  
-//             id: 1,
-//             firstName: 'Ana',
-//             lastName: 'Anic',
-//             email: 'aan@gmail.com',
-//             password: 'asdf',
-//             active:  true,
-//             verified: true,
-//             idImageDTO: 1,
-//             src: '' 
-//           }})),
-//     };
+    let imageServiceMock = {
+      add: jasmine.createSpy('add')
+        .and.returnValue(of({body:''}))
+    }
+    let commentServiceMock = {
+        getComment : jasmine.createSpy('getComment')
+        .and.returnValue(of({body: {
+          id: 1,
+	      text: "I'm losing it",
+	      date: new Date(),
+          nameSurname: "Sandro Boticeli",
+          userId: 1,
+          culturalOfferId: 1, 
+        }})),
+        update : jasmine.createSpy('update')
+        .and.returnValue(of({}))
+    };
+
+
+
+    let activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
+    activatedRouteStub.testParams = {id: 1};
+
+
+    const toastrMocked = {
+        success: jasmine.createSpy('success'),
+        error: jasmine.createSpy('error')
+    };
+
+    TestBed.configureTestingModule({
+       declarations: [ EditCommentComponent ],
+       imports: [ FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule, MaterialModule, BrowserModule, BrowserAnimationsModule],
+       providers:    [ 
+        { provide: ImageService, useValue: imageServiceMock },
+        { provide: CommentService, useValue: commentServiceMock },
+        { provide: MatDialogRef, useClass: MatDialogRefMock},
+        { provide: ActivatedRoute, useValue: activatedRouteStub},
+       ]
+    });
+
+    fixture = TestBed.createComponent(EditCommentComponent);
+    component = fixture.componentInstance;
+    imageService = TestBed.inject(ImageService);
+    commentService = TestBed.inject(CommentService);
+    toastr = TestBed.inject(ToastrService);
+    dialog = TestBed.inject(MatDialogRef);
+    route = TestBed.inject(ActivatedRoute);
+  }); 
+
+  it('should create commponent', fakeAsync(() => {
+    expect(component).toBeTruthy();
+  }));
+
+  it('should be initialized', async(() => {
+    component.ngOnInit();
+    expect(commentService.getComment).toHaveBeenCalled();
+    expect(component.comment.id).toBe(1);
+    expect(component.comment.text).toEqual("I'm losing it");
+    expect(component.comment.date).toBeDefined();
+    expect(component.comment.nameSurname).toEqual("Sandro Boticeli");
+    expect(component.comment.userId).toEqual(1);
+    expect(component.comment.culturalOfferId).toEqual(1);
+    expect(component.editForm).toBeDefined();
+  
+    fixture.whenStable().then(() => {
+        let text = fixture.debugElement.query(By.css('#editText')).nativeElement;
+        text.value = component.comment.text;
+
+        text.dispatchEvent(new Event('input')); 
+        
+        let controlText = component.editForm.controls['text'];
+       
+        expect(controlText.value).toEqual("I'm losing it");
+
+      });   
+
+    }));
+
+  it('should close dialog on cancel', async(() => {
+    spyOn(dialog, 'close');
+    component.cancelClicked();
+    expect(dialog.close).toHaveBeenCalled();   
+    }));
+
+  it('should set input in reactive form', fakeAsync(() => {
+    fixture.detectChanges(); 
+        
+    fixture.whenStable().then(() => {
     
-//     let imageServiceMock = {
-//       add: jasmine.createSpy('add')
-//         .and.returnValue(of({body:''}))
-//     }
-//     let commentServiceMock = {
-//         getComment : jasmine.createSpy('getComment')
-//         .and.returnValue(of({body: {
-//           id: 1,
-// 	        text: "I'm losing it",
-// 	        date: new Date(),
-//           nameSurname: "Sandro Boticeli",
-//           userId: 1,
-//           culturalOfferId: 1, 
-//         }})),
-//           //ne znam ovo verovatno treba drugacije
-//           update : jasmine.createSpy('update')
-//           .and.returnValue(of({body:''}))
-//     };
-
-//     let routerMock= {
-//         navigate: jasmine.createSpy('navigate')
-//     }
-//     TestBed.configureTestingModule({
-//        declarations: [ EditCommentComponent ],
-//        imports: [ FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule],
-//        providers:    [ 
-//         { provide: UserService, useValue: userServiceMock },
-//         { provide: ImageService, useValue: imageServiceMock },
-//         { provide: CommentService, useValue: commentServiceMock },
-//         { provide: Router, useValue: routerMock },
-//         { provide: MatDialog, useClass: MdDialogMock}
-//        ]
-//     });
-
-//     fixture = TestBed.createComponent(EditCommentComponent);
-//     editCommentComponent = fixture.componentInstance;
-//     userService = TestBed.inject(UserService);
-//     imageService = TestBed.inject(ImageService);
-//     commentService = TestBed.inject(CommentService);
-//     dialog = TestBed.get(MatDialog);
-//     route = TestBed.inject(Router);
-//   }); 
-//   it('should create commponent', fakeAsync(() => {
-//     expect(editCommentComponent).toBeTruthy();
-//   }));
-//   it('should fetch student and his enrollments on init in edit mode', fakeAsync(() => {
-//     editCommentComponent.ngOnInit();
-   
-//     expect(commentService.getComment).toHaveBeenCalled(); 
-//     tick();
-//     // should fetch comment from service
-//     expect(editCommentComponent.comment.id).toBe(1);
-//     expect(editCommentComponent.comment.text).toEqual("I'm losing it");
-//     expect(editCommentComponent.comment.date).toEqual(new Date());
-//     expect(editCommentComponent.comment.nameSurname).toEqual("Sandro Boticeli");
-//     expect(editCommentComponent.comment.userId).toEqual(1);
-//     expect(editCommentComponent.comment.culturalOfferId).toEqual(1);
+        expect(fixture.debugElement.query(By.css('#editText')).nativeElement.value).toEqual("I'm losing it");
+                  
+        let text = fixture.debugElement.query(By.css('#editText')).nativeElement;
+        text.value = "Now I'm great";
+        text.dispatchEvent(new Event('input')); 
+        
+        let controlText = component.editForm.controls['text'];
+        
+        expect(controlText.value).toEqual("Now I'm great");
+        
+        });   
+  }));
   
-//     //should display fetched comment
-//     fixture.detectChanges(); // tell angular that data are fetched
-//     tick(); // initiate next cycle of binding these data to HTML components
-//     fixture.detectChanges(); // detect changes in the HTML components
-//     // assert that values in the HTML components are as expected
+  it('should edit comment with image', fakeAsync(() => {  
+        component.ngOnInit();
+        spyOn(dialog, 'close');
+        spyOn(toastr, 'success');
+        component.imageAdded = "D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat.jpg";
+        component.editForm.controls['text'].setValue("Building with very poor horizontal and vertical isolation....");
+        component.editForm.controls['image'].setValue("D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat.jpg");
 
-//     let text = fixture.debugElement.query(By.css('#editText')).nativeElement;
-//     expect(text.textContent).toEqual("I'm losing it");
+        component.editComment();
+
+        
+        expect(imageService.add).toHaveBeenCalledTimes(1);
+        expect(toastr.success).toHaveBeenCalled();
+        expect(component.comment.imageDTO).toBeDefined();
+        expect(component.editForm.valid).toBeTruthy();
+        
     
-    
-//   }));
+        expect(commentService.update).toHaveBeenCalledTimes(1);
+        expect(dialog.close).toHaveBeenCalledTimes(1);
+        expect(toastr.success).toHaveBeenCalled();
+    }));
 
-  
+  it('should save edited comment', fakeAsync(() =>{
 
-//   //TREBA STAVITI SPY NA EDIT DUGME I ONDA UGASITI DIJALOG AKO JE REKAO EDIT, ali treba da se zapravo zatvori u ts na save
+    spyOn(dialog, 'close'); 
+    spyOn(toastr, 'success');
+    component.editComment();
+    tick(15000);
 
+    expect(commentService.update).toHaveBeenCalled(); 
+    expect(dialog.close).toHaveBeenCalled();
+    expect(toastr.success).toHaveBeenCalled();
+ }));
   
-  
-// });
+});
