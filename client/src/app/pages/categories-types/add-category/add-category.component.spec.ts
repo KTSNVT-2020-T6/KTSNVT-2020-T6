@@ -46,7 +46,7 @@ describe('AddCategoryComponent', () => {
     }
     
     let categoryServiceMock = {
-      add: jasmine.createSpy('add').and.returnValue(of())
+      add: jasmine.createSpy('add').and.returnValue(of({}))
     };
     const toastrMocked = {
       success: jasmine.createSpy('success'),
@@ -103,15 +103,19 @@ describe('AddCategoryComponent', () => {
   it('should save new category', fakeAsync(() => {
     component.ngOnInit();
     spyOn(dialogRef, 'close');
+    spyOn(component, "windowReload").and.callFake(function(){});
+    
+    
     expect(component.categoryForm.valid).toBeFalsy();
     component.categoryForm.controls['name'].setValue("Category1");
     component.categoryForm.controls['description'].setValue("Description of Category1");
     expect(component.categoryForm.valid).toBeTruthy();
     component.addCategory(); 
-
+    tick(15000);
     expect(categoryService.add).toHaveBeenCalledTimes(1);
-    //expect(toastr.success).toHaveBeenCalledTimes(1);
-    //expect(dialogRef.close).toHaveBeenCalledTimes(1);
+    expect(toastr.success).toHaveBeenCalledTimes(1);
+    expect(dialogRef.close).toHaveBeenCalledTimes(1);
+    expect(component.windowReload).toHaveBeenCalled();
     flush();
   }));
   

@@ -149,7 +149,7 @@ public class HomePage {
     }
     
     public String ensureIsDisplayedToast() {
-        return (new WebDriverWait(driver, 100)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
+        return (new WebDriverWait(driver, 2000)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
     }
 
 	public WebElement getAddNewBtn() {

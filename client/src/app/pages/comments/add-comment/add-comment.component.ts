@@ -48,6 +48,9 @@ export class AddCommentComponent implements OnInit {
   addNewComment(){
     this.userService.getCurrentUser().subscribe(
       res => {
+        console.log("aaaaaaaaa");
+        console.log(res);
+        console.log(res.body);
         this.currentUser = res.body as User;
         this.comment.nameSurname = this.currentUser.firstName + ' ' + this.currentUser.lastName;
         this.comment.text = this.commentForm.controls['text'].value;
@@ -70,7 +73,7 @@ export class AddCommentComponent implements OnInit {
               res => {
                 this.toastr.success("Comment send!");
                 this.commentForm.reset()
-                window.location.reload();
+                this.windowReload();
               },error=>{
                 this.toastr.error("Error on server!");
               }
@@ -82,7 +85,7 @@ export class AddCommentComponent implements OnInit {
               res => {
                 this.toastr.success("Comment send!");
                 this.commentForm.reset()
-                window.location.reload();
+                this.windowReload();
                },error=>{
                 this.toastr.error("Error on server!");
             }
@@ -95,5 +98,8 @@ export class AddCommentComponent implements OnInit {
       const file = event.target.files[0];
        this.commentForm.value['image'] = file;
     }
+  }
+  windowReload(){
+    window.location.reload();
   }
 }

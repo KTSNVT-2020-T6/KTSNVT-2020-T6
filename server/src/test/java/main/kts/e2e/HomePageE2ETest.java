@@ -50,6 +50,7 @@ public class HomePageE2ETest {
         
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getAddNewBtn().click();
+        justWait(1000);
         homePage.getAddNewCOBtn().click();
         homePage.ensureIsDisplayedNameInput();
         
@@ -69,7 +70,7 @@ public class HomePageE2ETest {
                 
         homePage.getDatePicker().click();
         homePage.getTodaysDate().click();
-        justWait(500);
+        justWait(5000);
         homePage.getSubmitCO().click();
         
         justWait(1000);
@@ -84,10 +85,11 @@ public class HomePageE2ETest {
 
         driver.get("http://localhost:4200/");
 
-        justWait(3000);
+        justWait(5000);
         
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getAddNewBtn().click();
+        justWait(1000);
         homePage.getAddNewCOBtn().click();
         homePage.ensureIsDisplayedNameInput();
         
@@ -103,9 +105,9 @@ public class HomePageE2ETest {
                 
         homePage.getDatePicker().click();
         homePage.getTodaysDate().click();
-        justWait(500);
+        justWait(1000);
         homePage.getSubmitCO().click();
-        
+        justWait(1000);
         String toast = homePage.ensureIsDisplayedToast();
         assertEquals("Location is required.", toast);
         assertEquals("http://localhost:4200/", driver.getCurrentUrl());
@@ -132,7 +134,7 @@ public class HomePageE2ETest {
         homePage.getPasswordRepeat().sendKeys("asdf");
         homePage.getRegisterBtn().click();
         
-        justWait(500);
+        justWait(3000);
 
         homePage.ensureIsNotVisibleEmail();
 
