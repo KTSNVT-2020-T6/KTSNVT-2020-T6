@@ -52,7 +52,6 @@ describe('EditTypeComponent', () => {
   let categoryService: any;
   let toastr: any;
   let dialogRef: any;
-
   const mockCategory: Category = {
     id: 1,
     name: 'category number 1',
@@ -67,13 +66,14 @@ describe('EditTypeComponent', () => {
 
 
   beforeEach(() => {
+    
     let categoryServiceMock = {
         getAll: jasmine.createSpy('getAll')
             .and.returnValue(of({body: [{}, {}] })), 
     };
     let typeServiceMock = {
         update: jasmine.createSpy('update')
-            .and.returnValue(of({body:{}})),
+            .and.returnValue(of({body: {}})),
         getType: jasmine.createSpy('getType')
             .and.returnValue(of({body: mockType})),
     }
@@ -153,22 +153,20 @@ describe('EditTypeComponent', () => {
         expect(controlDesc.value).toEqual('type desc');
       });   
   }));
-/* ovde je u beskonacnoj petljiiiiii
-  it('should save type changes', fakeAsync(() =>{
-    
-    component.typeForm.controls['name'].setValue(mockType.name);
-    component.typeForm.controls['description'].setValue(mockType.description);
 
-    spyOn(dialogRef, 'close'); 
+  it('should save type changes', fakeAsync(() =>{
+    spyOn(dialogRef, 'close');
+    spyOn(component, "windowReload").and.callFake(function(){});
     component.editType();
     tick(15000);
 
     expect(typeService.update).toHaveBeenCalled(); 
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
-   
+    expect(component.windowReload).toHaveBeenCalled();
+  
   }));
-*/
+
   it('should close dialog on cancel', async(() => {
     spyOn(dialogRef, 'close');
     component.cancelClicked();

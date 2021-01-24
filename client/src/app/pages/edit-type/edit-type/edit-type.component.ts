@@ -71,7 +71,7 @@ export class EditTypeComponent implements OnInit {
       result => {
         this.toastr.success("Succesfully edited!");
         this.dialogRef.close();
-        window.location.reload();
+        this.windowReload();
       },
       error => {
         this.dialogRef.close()
@@ -84,6 +84,10 @@ export class EditTypeComponent implements OnInit {
     cancelClicked(){
       this.dialogRef.close();
       
+    }
+
+    windowReload(){
+      window.location.reload();
     }
 
 }

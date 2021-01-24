@@ -62,6 +62,15 @@ describe('AddCulturalOfferComponent', () => {
     typeDTO: mockType
   };
 
+  const mockPlace = {
+    properties: {
+        lat: 45.50,
+        lon: 20.23,
+        address_line1: 'Novi Sad',
+        address_line2: 'Bulevar Oslobodjenja 129'
+    }
+}
+
 
   beforeEach(() => {
     let typeServiceMock = {
@@ -92,6 +101,8 @@ describe('AddCulturalOfferComponent', () => {
         success: jasmine.createSpy('success'),
         error: jasmine.createSpy('error')
       };
+
+
 
     TestBed.configureTestingModule({
        declarations: [ AddCulturalOfferComponent ],
@@ -138,14 +149,7 @@ describe('AddCulturalOfferComponent', () => {
 
   
   it('should set place coordinates and city on place selected', async(() => {
-    let mockPlace = {
-        properties: {
-            lat: 45.50,
-            lon: 20.23,
-            address_line1: 'Novi Sad',
-            address_line2: 'Bulevar Oslobodjenja 129'
-        }
-    }
+   
     component.placeSelected(mockPlace);
     
     expect(component.placeLat).toEqual(45.50); 
@@ -180,25 +184,36 @@ describe('AddCulturalOfferComponent', () => {
       });   
   }));
 
-  /*
-  it('should save updates', fakeAsync(() => { 
+  
+  it('should save cultural offer', fakeAsync(() => { 
     spyOn(dialogRef, 'close'); 
-    component.saveChanges();
+    spyOn(component, "windowReload").and.callFake(function(){});
+    component.coForm.controls['name'].setValue("cultural offer");
+    component.coForm.controls['description'].setValue("desc");
+    component.coForm.controls['date'].setValue(new Date());
+    component.coForm.controls['typeDTO'].setValue(mockType);
+    component.placeLat = mockPlace.properties.lat;
+    component.placeLon = mockPlace.properties.lon;
+    component.city = "City";
+    fixture.detectChanges();
+
+    component.addCulturalOffer();
     tick(15000);
 
-    expect(culturalOfferService.edit).toHaveBeenCalled(); 
+    expect(culturalOfferService.add).toHaveBeenCalled(); 
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
-    expect(component.form.invalid).toBeTruthy();
+    expect(component.windowReload).toHaveBeenCalled();
+   // expect(component.form.invalid).toBeTruthy();
  
 }));
 
-it('should not save updates if name input is empty', fakeAsync(() => { 
+it('should not save if name input is empty', fakeAsync(() => { 
     spyOn(dialogRef, 'close');
-    component.form.controls['name'].setValue("");
+    component.coForm.controls['name'].setValue("");
 
     fixture.detectChanges();
-    component.saveChanges();
+    component.addCulturalOffer();
 
     expect(culturalOfferService.edit).not.toHaveBeenCalled(); 
     expect(toastr.success).not.toHaveBeenCalledWith('Cultural offer information saved!');
@@ -206,18 +221,18 @@ it('should not save updates if name input is empty', fakeAsync(() => {
  
 }));
 
-it('should not save updates if description input is empty', fakeAsync(() => { 
+it('should not save if description input is empty', fakeAsync(() => { 
     spyOn(dialogRef, 'close');
-    component.form.controls['description'].setValue("");
+    component.coForm.controls['description'].setValue("");
 
     fixture.detectChanges();
-    component.saveChanges();
+    component.addCulturalOffer();
 
     expect(culturalOfferService.edit).not.toHaveBeenCalled(); 
     expect(toastr.success).not.toHaveBeenCalled();
     expect(dialogRef.close).not.toHaveBeenCalled();
  
 }));
-*/
+
 
 });

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Route } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Comment } from '../model/Comment';
@@ -22,6 +23,7 @@ export class EditCommentComponent implements OnInit {
     private route: ActivatedRoute,
     private imageService: ImageService,
     private toastr: ToastrService,
+    public dialogRef: MatDialogRef<EditCommentComponent>
 		) { 
       this.createForm();
     }
@@ -69,6 +71,7 @@ export class EditCommentComponent implements OnInit {
           this.comment.imageDTO = {'id': res};
           this.commentService.update(this.comment, this.commentId).subscribe(
           res => {
+            this.dialogRef.close();
              this.toastr.success("Comment edited!");
             })
           });
@@ -77,6 +80,7 @@ export class EditCommentComponent implements OnInit {
       {
         this.commentService.update(this.comment, this.commentId).subscribe(
           res => {
+            this.dialogRef.close();
              this.toastr.success("Comment edited!");
           })
       }
