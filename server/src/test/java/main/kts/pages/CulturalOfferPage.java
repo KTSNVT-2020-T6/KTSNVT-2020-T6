@@ -46,7 +46,7 @@ public class CulturalOfferPage {
     @FindBy(id = "star4")
    	private WebElement rateFour;
   
-    @FindBy(id = "editComment1")
+    @FindBy(id = "editComment4")
    	private WebElement editCommentButton;
     
     @FindBy(id = "editText")
@@ -119,9 +119,6 @@ public class CulturalOfferPage {
 	public CulturalOfferPage(WebDriver driver) {
 	        this.driver = driver;
 	}
-//	public void ensureIsClickableDate() {
-//        (new WebDriverWait(driver, 100)).until(ExpectedConditions.elementToBeClickable(By.id("//*[@id=\\\"datePicker\\\"]/button/span[1]/svg")));
-//    }
 	
 	public void ensureIsDisplayedSubscribedButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("subscribe")));
@@ -143,7 +140,7 @@ public class CulturalOfferPage {
         return (new WebDriverWait(driver, 2500)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
     }
     public void ensureIsDisplayedEditComment() {
-        (new WebDriverWait(driver, 500)).until(ExpectedConditions.elementToBeClickable(By.id("editComment1")));
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editComment4")));
     }
     public void ensureIsDisplayedDeleteComment() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteComment2")));

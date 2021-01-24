@@ -43,6 +43,7 @@ public class LoginE2ETest {
         loginPage.getEmail().sendKeys("admin@gmail.com");
         loginPage.getPassword().sendKeys("asdf");
         loginPage.getLoginBtn().click();
+        justWait();
         loginPage.ensureIsNotVisibleEmail();
         
         assertEquals("http://localhost:4200/", driver.getCurrentUrl());
@@ -72,7 +73,7 @@ public class LoginE2ETest {
     private void justWait() throws InterruptedException {
         synchronized (driver)
         {
-            driver.wait(1000);
+            driver.wait(3000);
         }
     }
 }

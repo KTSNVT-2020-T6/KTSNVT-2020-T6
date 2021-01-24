@@ -14,7 +14,7 @@ public class FavoritesPage {
 	
 	// navbar buttons
 
-    @FindBy(id = "unsubscribe21")
+    @FindBy(id = "unsubscribe29")
     private WebElement unsubscribeBtn;
 
     @FindBy(id = "goToPage22")
@@ -45,7 +45,7 @@ public class FavoritesPage {
 	}
     
 	public void ensureIsDisplayedUnsubscribeBtn() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("unsubscribe21")));
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("unsubscribe29")));
     }
 	
 	public void ensureIsDisplayedGoToPageBtn() {
@@ -53,7 +53,7 @@ public class FavoritesPage {
     }
 	
 	public void ensureIsNotVisibleGoToPageBtn() {
-		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("goToPage21")));
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("goToPage29")));
     }
 	
     

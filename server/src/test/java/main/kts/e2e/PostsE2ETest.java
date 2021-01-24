@@ -46,7 +46,7 @@ public class PostsE2ETest {
 
 	        driver.get("http://localhost:4200/posts");
 
-	        justWait(5000);
+	        justWait(7000);
 	        
 	        postsPage.ensureIsDisplayedDeleteButton();
 	        postsPage.getDeletePostBtn().click();
@@ -63,7 +63,7 @@ public class PostsE2ETest {
 
 	        driver.get("http://localhost:4200/posts");
 
-	        justWait(5000);
+	        justWait(7000);
 	        
 	        postsPage.ensureIsDisplayedDeleteButton();
 	        postsPage.getPage2().click();
