@@ -168,9 +168,10 @@ public class ProfileE2ETest {
 		 justWait(1000);
 		 profilePage.ensureIsDisplayedEditBtn();
 		 profilePage.getEditBtn().click();
+		 justWait(2000);
 		 profilePage.ensureIsDisplayedFirstNameInput();
 		
-		 profilePage.getUploadImage().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+		 profilePage.getUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
 		 justWait(1000);
 		 profilePage.getSubmitBtn().click();
 		 

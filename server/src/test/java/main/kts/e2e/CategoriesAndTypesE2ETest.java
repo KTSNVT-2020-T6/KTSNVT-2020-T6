@@ -49,7 +49,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void AddCategoryTestSuccess() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedAddCategoryBtn();
 		 categoriesAndTypesPage.getAddCategoryBtn().click();
@@ -69,7 +69,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void AddCategoryTestError() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedAddCategoryBtn();
 		 categoriesAndTypesPage.getAddCategoryBtn().click();
@@ -90,7 +90,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void AddTypeTestSuccess() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedAddTypeBtn();
 		 categoriesAndTypesPage.getAddTypeBtn().click();
@@ -112,7 +112,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void AddTypeTestError() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedAddTypeBtn();
 		 categoriesAndTypesPage.getAddTypeBtn().click();
@@ -135,7 +135,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void EditTypeTestSucces() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedEditTypeBtn();
 		 categoriesAndTypesPage.getEditType3btn().click();
@@ -154,7 +154,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void EditTypeTestError() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 categoriesAndTypesPage.ensureIsDisplayedEditTypeBtn();
 		 categoriesAndTypesPage.getEditType3btn().click();
 		 categoriesAndTypesPage.ensureIsDisplayedTypeEditNameInput();
@@ -174,7 +174,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void EditCategoryTestSucces() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedEditCategoryBtn();
 		 categoriesAndTypesPage.getEditCategory2btn().click();
@@ -195,7 +195,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void EditCategoryTestError() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedEditCategoryBtn();
 		 categoriesAndTypesPage.getEditCategory2btn().click();
@@ -215,7 +215,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void DeleteCategoryTestSucces() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedDeleteCategoryBtn();
 		 categoriesAndTypesPage.getDeleteCategory4btn().click();
@@ -232,7 +232,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void DeleteTypeTestSucces() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedDeleteTypeBtn();
 		 categoriesAndTypesPage.getDeleteType14btn().click();
@@ -247,7 +247,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void DeleteCategoryTestError() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedDeleteCategory1Btn();
 		 categoriesAndTypesPage.getDeleteCategory1btn().click();
@@ -267,7 +267,7 @@ public class CategoriesAndTypesE2ETest {
 	 @Test
 	 public void DeleteTypeTestError() throws InterruptedException {
 		 driver.get("http://localhost:4200/categoriesAndTypes");
-		 justWait(1000);
+		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedDeleteType1Btn();
 		 categoriesAndTypesPage.getDeleteType1btn().click();

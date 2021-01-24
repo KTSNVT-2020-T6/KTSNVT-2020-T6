@@ -55,7 +55,9 @@ public class FavoritesE2ETest {
     
     @Test
     public void UnsubscribeTest() throws InterruptedException {
+    	justWait(2000);
     	driver.get("http://localhost:4200/favorites");
+    	justWait(2000);
     	favouritesPage.ensureIsDisplayedUnsubscribeBtn();
         favouritesPage.getUnsubscribeBtn().click();
         favouritesPage.ensureIsNotVisibleGoToPageBtn();

@@ -46,7 +46,7 @@ public class HomePageE2ETest {
 
         driver.get("http://localhost:4200/");
 
-        justWait(1000);
+        justWait(5000);
         
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getAddNewBtn().click();
@@ -84,7 +84,7 @@ public class HomePageE2ETest {
 
         driver.get("http://localhost:4200/");
 
-        justWait(1000);
+        justWait(3000);
         
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getAddNewBtn().click();
@@ -117,7 +117,7 @@ public class HomePageE2ETest {
 
     	driver.get("http://localhost:4200/");
 
-        justWait(1000);
+        justWait(4000);
         
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getAddNewBtn().click();
@@ -145,7 +145,7 @@ public class HomePageE2ETest {
 
     	driver.get("http://localhost:4200/");
 
-        justWait(1000);
+        justWait(4000);
         
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getAddNewBtn().click();
@@ -177,7 +177,7 @@ public class HomePageE2ETest {
     	
     	driver.get("http://localhost:4200/");
 
-        justWait(1000);
+        justWait(4000);
         
         homePage.ensureIsDisplayedGoToBtn();
         homePage.getGoToPage().click();
@@ -189,7 +189,7 @@ public class HomePageE2ETest {
 
         driver.get("http://localhost:4200/");
 
-        justWait(5000);
+        justWait(7000);
         
         homePage.ensureIsDisplayedGoToBtn();
         homePage.getPage2().click();
@@ -241,7 +241,7 @@ public class HomePageE2ETest {
     public void LogoutUserTest() throws InterruptedException {
 
     	driver.get("http://localhost:4200/");
-    	justWait(1000);
+    	justWait(4000);
     	
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getSignOut().click();
