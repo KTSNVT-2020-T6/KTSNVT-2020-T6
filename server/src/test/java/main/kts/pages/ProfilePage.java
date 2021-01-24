@@ -20,7 +20,7 @@ public class ProfilePage {
 	private WebElement deactivateBtn;
 	
 	// modal dialog edit
-	@FindBy(xpath = "//*[@id=\"firstName\"]")
+	@FindBy(id = "firstName")
     private WebElement firstName;
 
     @FindBy(id = "lastName")
@@ -64,7 +64,7 @@ public class ProfilePage {
 	public String ensureIsDisplayedToast() {
         return (new WebDriverWait(driver, 100)).until(ExpectedConditions.presenceOfElementLocated(By.id("toast-container"))).getText();
     }
-	
+	//
 	public void ensureIsDisplayedYesBtn() {
     	(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("yesBtn")));
     }
@@ -75,7 +75,7 @@ public class ProfilePage {
     }
 
 	public void ensureIsDisplayedFirstNameInput() {
-    	(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\\\"firstName\\\"]")));
+    	(new WebDriverWait(driver, 30)).until(ExpectedConditions.presenceOfElementLocated(By.id("firstName")));
     }
 	public void ensureIsDisplayedSubmitEditBtn() {
     	(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("submitBtn")));

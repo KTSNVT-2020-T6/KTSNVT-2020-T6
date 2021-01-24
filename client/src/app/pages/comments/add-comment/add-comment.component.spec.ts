@@ -45,7 +45,7 @@ describe('AddCommentComponent', () => {
     }
     let userServiceMock={
       getCurrentUser: jasmine.createSpy('getCurrentUser').and.
-      returnValue(of()) 
+      returnValue(of({body:userMock})) 
     }
     let imageServiceMock={
       add: jasmine.createSpy('add')
@@ -123,23 +123,13 @@ describe('AddCommentComponent', () => {
 
   it('should add comment', fakeAsync(() => {
     component.ngOnInit();
-    let userMock: User ={
-      id: 1,
-      firstName: 'Stefan',
-      lastName: 'Stefic',
-      email: 'stefa@gmail.com',
-      password: 'asdf',
-      active:  true,
-      verified: true,
-      idImageDTO: 1,
-      src: ''  
-    }  
+    spyOn(component, "windowReload").and.callFake(function(){});
+   
     component.addNewComment();
-    component.currentUser = userMock;
     component.culturalOfferId = 1;  
     expect(userService.getCurrentUser).toHaveBeenCalledTimes(1);
-    // fixture.detectChanges();
-    // expect(toastr.success).toHaveBeenCalledTimes(1);
+    expect(toastr.success).toHaveBeenCalledTimes(1);
+    expect(component.windowReload).toHaveBeenCalled();
     flush();
   }));
   it('should save image on upload', async(() => {

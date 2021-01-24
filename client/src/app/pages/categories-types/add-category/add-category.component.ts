@@ -45,9 +45,9 @@ export class AddCategoryComponent implements OnInit {
       this.categoryService.add(this.category as Category).subscribe(
         result => {
           this.toastr.success("Category successfully added");
-          window.location.reload();
           this.categoryForm.reset();
           this.dialogRef.close();
+          this.windowReload();
         },
         error => {
           this.toastr.error("Name already exists!");
@@ -57,5 +57,8 @@ export class AddCategoryComponent implements OnInit {
     }
    
   }
- 
+  windowReload(){
+    window.location.reload();
+  }
+
 }
