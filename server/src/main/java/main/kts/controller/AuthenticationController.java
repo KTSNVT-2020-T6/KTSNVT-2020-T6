@@ -34,11 +34,13 @@ import main.kts.model.Admin;
 import main.kts.model.Image;
 import main.kts.model.RegisteredUser;
 import main.kts.model.User;
+import main.kts.repository.UserRepository;
 import main.kts.security.TokenUtils;
 import main.kts.service.AdminService;
 import main.kts.service.CustomUserDetailsService;
 import main.kts.service.ImageService;
 import main.kts.service.RegisteredUserService;
+import main.kts.service.UserService;
 import main.kts.verification_handler.OnAccessLinkEvent;
 
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -58,6 +60,9 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private UserRepository userRepository;
     
     @Autowired
 	private ApplicationEventPublisher eventPublisher;
@@ -81,7 +86,11 @@ public class AuthenticationController {
         
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
-        user.setActive(true);
+        User dbUser = userRepository.findByEmail(user.getUsername());
+        dbUser.setActive(true);
+        userRepository.save(dbUser);
+  
+        
         String jwt = tokenUtils.generateToken(user); // prijavljujemo se na sistem sa email adresom
         int expiresIn = tokenUtils.getExpiredIn();
                 

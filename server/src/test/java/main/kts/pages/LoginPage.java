@@ -14,7 +14,7 @@ public class LoginPage {
     @FindBy(id = "username")
     private WebElement email;
 
-    @FindBy(id = "password")
+    @FindBy(xpath = "//*[@id=\"password\"]")
     private WebElement password;
 
     @FindBy(id = "submit")

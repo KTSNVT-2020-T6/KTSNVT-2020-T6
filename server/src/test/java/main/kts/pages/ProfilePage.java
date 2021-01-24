@@ -20,7 +20,7 @@ public class ProfilePage {
 	private WebElement deactivateBtn;
 	
 	// modal dialog edit
-	@FindBy(id = "firstName")
+	@FindBy(xpath = "//*[@id=\"firstName\"]")
     private WebElement firstName;
 
     @FindBy(id = "lastName")
@@ -75,7 +75,7 @@ public class ProfilePage {
     }
 
 	public void ensureIsDisplayedFirstNameInput() {
-    	(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("firstName")));
+    	(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\\\"firstName\\\"]")));
     }
 	public void ensureIsDisplayedSubmitEditBtn() {
     	(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("submitBtn")));

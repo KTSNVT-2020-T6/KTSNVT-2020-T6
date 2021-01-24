@@ -1,0 +1,35 @@
+<div >
+    <app-image-slider [culturalOffer]="culturalOffer" [imageDTO]="images"></app-image-slider>
+    <br>
+    <div class="center">
+        <span>
+            <button *ngIf="!checker && role==='ROLE_REGISTERED_USER'" id="subscribe" mdbBtn type="button"  mdbWavesEffect (click)="subscribeUser()">Subscribe</button>
+            <button *ngIf="checker && role==='ROLE_REGISTERED_USER'" id="unsubscribe" mdbBtn type="button"  mdbWavesEffect (click)="unsubscribe()">Unsubscribe</button> 
+            Subscribers:<span id="numberOfSubscribed">{{subscribed}}</span> 
+
+        </span> 
+        <div class="edit">
+            <p>Rating: <span id ="averageRate">{{culturalOffer?.averageRate | number:'1.0-2'}}</span></p>
+            <app-star-rating  *ngIf="role === 'ROLE_REGISTERED_USER'" (ratingClick)="rateClicked($event)"></app-star-rating>
+        </div>
+        <br>
+        <br>
+        <span *ngIf="role === 'ROLE_REGISTERED_USER'">
+          <app-add-comment [culturalOfferId]="id"></app-add-comment>
+        </span>
+        <mat-card-actions *ngIf="role === 'ROLE_ADMIN'">
+            <button mat-button id="addPost" color="success" (click)="addPost()">New post</button>
+            <button mat-button id="editCulturalOffer" (click)="edit()">Edit</button>
+            <button mat-button id="deleteCulturalOffer" color="warn" (click)="confirmDialog()">Delete</button>
+        </mat-card-actions> 
+        <br>
+        <br>  
+        <div>
+           <app-comment-list [culturalOfferId]="id"></app-comment-list>
+        </div>
+
+    </div>
+    
+</div>       
+
+   

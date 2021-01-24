@@ -1,17 +1,17 @@
 import { Routes } from '@angular/router';
 
-import { CulturalOfferDetailsComponent } from '../pages/cultural-offer-details/cultural-offer-details.component';
+import { CulturalOfferDetailsComponent } from '../pages/cultural-offer/cultural-offer-details/cultural-offer-details.component';
 //import { MainPageComponent } from '../pages/main-page/main-page.component';
-import { HomePageComponent } from '../pages/home-page/home-page/home-page.component';
+import { HomePageComponent } from '../pages/cultural-offer/home-page/home-page/home-page.component';
 import { RoleGuard } from '../guards/role/role.service';
 import { LoginGuard } from '../guards/login/login.service';
-import { LoginPageComponent } from '../pages/login-page/login-page.component';
-import { ProfileDetailsComponent } from '../pages/profile-details/profile-details.component';
-import { RegisterPageComponent } from '../pages/register-page/register-page.component';
-import { VerificationPageComponent } from '../pages/verification-page/verification-page.component';
-import { CategoriesAndTypesComponent } from '../pages/categories-and-types/categories-and-types.component';
-import { PostsPageComponent } from '../pages/posts-page/posts-page.component';
-import { FavoriteComponent } from '../pages/favorite/favorite.component';
+import { LoginPageComponent } from '../pages/auth/login-page/login-page.component';
+import { ProfileDetailsComponent } from '../pages/user/profile-details/profile-details.component';
+import { RegisterPageComponent } from '../pages/auth/register-page/register-page.component';
+import { VerificationPageComponent } from '../pages/auth/verification-page/verification-page.component';
+import { CategoriesAndTypesComponent } from '../pages/categories-types/categories-and-types/categories-and-types.component';
+import { PostsPageComponent } from '../pages/posts/posts-page/posts-page.component';
+import { FavoriteComponent } from '../pages/cultural-offer/favorite/favorite.component';
 export const routes :Routes = [
 	{
 		path: '',

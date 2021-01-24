@@ -1,0 +1,33 @@
+<form class="reactiveForm" [formGroup]="typeForm" (ngSubmit)="editType()">
+    <div class="example-container">
+    <h2 mat-dialog-title>Edit type</h2>
+    <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select id="catEdtiSelect" [(value)]="selected" (valueChange)="onSelection($event)">
+            <mat-option  *ngFor="let cat of categories" id="cat{{cat.id}}" [value]="cat">
+                {{cat.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input id="typeEditName" matInput formControlName="name" required>
+        <mat-error *ngIf="typeForm.controls.name.touched && typeForm.controls.name.invalid">
+            <span *ngIf="typeForm.controls.name.errors?.required">This field is mandatory.</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea id="typeEditDescritpion" matInput formControlName="description" required></textarea>
+        <mat-error *ngIf="typeForm.controls.description.touched && typeForm.controls.description.invalid">
+            <span *ngIf="typeForm.controls.description.errors?.required">This field is mandatory.</span>
+        </mat-error>
+    </mat-form-field>
+    <mat-dialog-actions align="end">
+        <button type="button" mat-raised-button (click)="cancelClicked()" >Cancel</button>
+        <button id="typeEditSubmit" type="submit" mat-raised-button color="success">Save</button>
+    </mat-dialog-actions>
+    </div>
+</form>

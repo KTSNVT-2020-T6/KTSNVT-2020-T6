@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
-import { AddAdminComponent } from 'src/app/pages/add-admin/add-admin.component';
-import { AuthenticationService } from 'src/app/pages/services/authentication/authentication.service';
-import {AddCulturalOfferComponent} from '../../../pages/add-cultural-offer/add-cultural-offer.component';
+import { AddAdminComponent } from 'src/app/pages/user/add-admin/add-admin.component';
+import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
+import {AddCulturalOfferComponent} from '../../../pages/cultural-offer/add-cultural-offer/add-cultural-offer.component';
 
 @Component({
   selector: 'app-navbar-admin',
