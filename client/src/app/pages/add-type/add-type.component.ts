@@ -71,7 +71,7 @@ export class AddTypeComponent implements OnInit {
 			result => {
 				this.dialogRef.close();
 				this.toastr.success("Type successfully added");
-				window.location.reload();
+				this.windowReload();
 			},
 			error => {
 				this.toastr.error("Name already exists!");
@@ -79,5 +79,8 @@ export class AddTypeComponent implements OnInit {
 		);
 		this.typeForm.reset();
 	}
+  }
+  windowReload(){
+	window.location.reload();
   }
 }

@@ -45,12 +45,16 @@ export class EditCategoryComponent implements OnInit {
        });
   }
   editCategory(){
+   
     this.category = this.categoryForm.value;
+    if(this.category.name === '' || this.category.name === null){
+      return;
+    }
     this.categoryService.update(this.category as Category, this.catId).subscribe(
       result => {
         this.toastr.success("Successful!");
         this.dialogRef.close();
-        window.location.reload();
+        this.windowReload();
       }, error => {
         this.dialogRef.close()
         this.toastr.error("Cannot edit category!");
@@ -60,6 +64,9 @@ export class EditCategoryComponent implements OnInit {
     }
   cancelClicked(){
     this.dialogRef.close();
+  }
+  windowReload(){
+    window.location.reload();
   }
     
 }

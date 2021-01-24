@@ -137,30 +137,32 @@ describe('EditCategoryComponent', () => {
         expect(controlDesc.value).toEqual('new desc');
       });   
   }));
-/* sa ovim je u beskonacnoj petlji
+
   it('should save edited category', fakeAsync(() =>{
   
     spyOn(dialogRef, 'close'); 
+    spyOn(component, "windowReload").and.callFake(function(){});
     component.editCategory();
     tick(15000);
 
     expect(categoryService.update).toHaveBeenCalled(); 
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
+    expect(component.windowReload).toHaveBeenCalled();
     //expect(component.categoryForm.invalid).toBeTruthy();
   }));
 
 it('should not save updates if name input is empty', fakeAsync(() => { 
   spyOn(dialogRef, 'close');
   component.categoryForm.controls['name'].setValue("");
-
+  spyOn(component, "windowReload").and.callFake(function(){});
   fixture.detectChanges();
   component.editCategory();
 
-  //expect(categoryService.update).not.toHaveBeenCalled(); 
-  expect(toastr.console.error).toHaveBeenCalled();
-  expect(dialogRef.close).toHaveBeenCalled();
+  expect(categoryService.update).not.toHaveBeenCalled();
+  expect(dialogRef.close).not.toHaveBeenCalled();
+  expect(component.windowReload).not.toHaveBeenCalled();
 
 }));
-*/
+
 });

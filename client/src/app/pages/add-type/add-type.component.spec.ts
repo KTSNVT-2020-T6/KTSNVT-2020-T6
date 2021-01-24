@@ -136,22 +136,24 @@ describe('AddTypeComponent', () => {
       });   
   }));
 
-  /*
+  
   it('should save type', fakeAsync(() =>{
-    component.typeForm.controls['name'].setValue(mockType.name);
-    component.typeForm.controls['description'].setValue(mockType.description);
-    component.typeForm.controls['categoryDTO'].setValue(mockType.categoryDTO);
-
+     component.typeForm.controls['name'].setValue(mockType.name);
+     component.typeForm.controls['description'].setValue(mockType.description);
+     component.typeForm.controls['categoryDTO'].setValue(mockType.categoryDTO);
+    fixture.detectChanges();
     spyOn(dialogRef, 'close'); 
+    spyOn(component, "windowReload").and.callFake(function(){});
     component.addType();
     tick(15000);
 
     expect(typeService.add).toHaveBeenCalled(); 
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
+    expect(component.windowReload).toHaveBeenCalled();
     expect(component.typeForm.invalid).toBeTruthy();
   }));
-  */
+
   it('should not save type without name', fakeAsync(() =>{
     component.typeForm.controls['name'].setValue("");
     component.typeForm.controls['description'].setValue(mockType.description);

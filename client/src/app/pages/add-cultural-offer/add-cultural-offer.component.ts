@@ -99,7 +99,7 @@ export class AddCulturalOfferComponent implements OnInit {
 			result => {
 				this.dialogRef.close();
 				this.toastr.success("Cultural offer successfully added");
-				window.location.reload();
+				this.windowReload();
 			}
 		);
 		this.coForm.reset();
@@ -112,5 +112,7 @@ export class AddCulturalOfferComponent implements OnInit {
 	this.placeLon = place.properties.lon;
 	this.city = place.properties.address_line1 + " " + place.properties.address_line2;
   }
-
+  windowReload(){
+	window.location.reload();
+  }
 }
