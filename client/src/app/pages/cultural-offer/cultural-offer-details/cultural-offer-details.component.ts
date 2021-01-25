@@ -90,7 +90,6 @@ export class CulturalOfferDetailsComponent implements OnInit {
   rateClicked(rated:any){
     this.rate.number = rated.rating as number;
     this.rate.culturalOfferId = this.culturalOffer.id;
-    //nebitno, iz konteksta izvlacimo
     this.rate.registredUserId =  1;
     this.rateService.createOrEditRate(this.rate).subscribe(
       result => {

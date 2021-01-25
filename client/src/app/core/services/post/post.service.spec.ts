@@ -57,7 +57,7 @@ describe('PostService', () => {
     
     postService.addPost(post).subscribe(res => post = res);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/post');
+    const req = httpMock.expectOne('https://localhost:8443/api/post');
     expect(req.request.method).toBe('POST');
     req.flush(mockPost);
     tick();
@@ -103,7 +103,7 @@ describe('PostService', () => {
     
     postService.getPage(0, 2).subscribe(res => posts = res.body);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/post/?page=0&size=2&sort=date,desc');
+    const req = httpMock.expectOne('https://localhost:8443/api/post/?page=0&size=2&sort=date,desc');
     expect(req.request.method).toBe('GET');
     req.flush(mockPosts);
     tick();
@@ -128,10 +128,68 @@ describe('PostService', () => {
   it('delete() should query url and delete post', fakeAsync(() => {
     postService.delete(1).subscribe(res => {});
     
-    const req = httpMock.expectOne('http://localhost:8080/api/post/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/post/1');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   }));
 
+  it("should throw error",()=> {
+    
+    let error:string = '';
+    postService.delete(1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/post/1');
+    expect(req.request.method).toBe('DELETE');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
   
+  it("getPage() should throw error",()=> {
+    let error:string = '';
+    postService.getPage(0, 2).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/post/?page=0&size=2&sort=date,desc');
+    expect(req.request.method).toBe('GET');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
+
+  it("addPost should throw error",()=> {
+    const mockImage: Img = {
+      id: 1,
+    description: 'image of gallery',
+      relativePath: 'relPath.jpg'
+  }
+  
+  let post: Post = {
+      text: 'Exhibition of paintings by artist Uros Predic',
+      date: new Date('2021-05-05'),
+      imageDTO: mockImage,
+      culturalOfferId: 1,
+      culturalOfferName: 'Gallery Paja Jovanovic'
+  };
+  
+  let error:string = '';
+  postService.addPost(post).subscribe(null,e => {
+    error = e.statusText;
+  });
+    const req = httpMock.expectOne('https://localhost:8443/api/post');
+    expect(req.request.method).toBe('POST');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
 });

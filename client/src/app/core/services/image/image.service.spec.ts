@@ -40,7 +40,7 @@ describe('ImageService', () => {
     
     imageService.add(formData).subscribe(res => formData = res);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/image');
+    const req = httpMock.expectOne('https://localhost:8443/api/image');
     expect(req.request.method).toBe('POST');
     req.flush(formDataMock);
     tick();
@@ -55,13 +55,33 @@ it('getImage() should query url and get image by id', fakeAsync(() => {
 
     imageService.getImage(1).subscribe(res => image = res.body);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/image/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/image/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockImage);
     tick();
 
     expect(image).toBeDefined();
   }));
+  it("should throw error on add image",()=> {
+    let  formData = new FormData();
+    formData.append('file', "D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat" );
+    
+    const formDataMock = new FormData();
+    formDataMock.append('file', "D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat" );
 
+
+    let error:string = '';
+    imageService.add(formData).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/image');
+    expect(req.request.method).toBe('POST');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
 
 });

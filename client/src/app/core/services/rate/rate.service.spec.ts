@@ -46,7 +46,7 @@ describe('TypeService', () => {
           newRate = data;        
         });
         
-        const req = httpMock.expectOne('http://localhost:8080/api/rate/check');
+        const req = httpMock.expectOne('https://localhost:8443/api/rate/check');
         expect(req.request.method).toBe('POST');
         req.flush(mockRate);
     
@@ -56,7 +56,33 @@ describe('TypeService', () => {
         expect(newRate.registredUserId).toEqual(1);
         expect(newRate.culturalOfferId).toEqual(1);
      }));
-
      
+     it("should throw  error",()=> {
+      let newRate: Rate ={
+        id: 1,
+      number: 4,
+        registredUserId: 1,
+        culturalOfferId: 1
+      };
+
+      const mockRate: Rate = {
+          id: 1,
+        number: 4,
+          registredUserId: 1,
+          culturalOfferId: 1  
+      }
+      let error:string = '';
+      rateService.createOrEditRate(newRate).subscribe(null,e => {
+        error = e.statusText;
+      });
+      const req = httpMock.expectOne('https://localhost:8443/api/rate/check');
+      expect(req.request.method).toBe('POST');
+      req.flush("Error on server",{
+        status: 404,
+        statusText: 'Error on server'
+      });
+     
+      expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+    });
     
 })

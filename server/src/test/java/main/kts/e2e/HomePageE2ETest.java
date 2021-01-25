@@ -26,7 +26,7 @@ public class HomePageE2ETest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
          
-        driver.get ("http://localhost:4200/login");
+        driver.get ("https://localhost:4200/login");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         loginPage.getEmail().sendKeys("admin@gmail.com");;
         loginPage.getPassword().sendKeys("asdf");;
@@ -44,7 +44,7 @@ public class HomePageE2ETest {
     @Test
     public void AddCulturalOfferTestSuccess() throws InterruptedException {
 
-        driver.get("http://localhost:4200/");
+        driver.get("https://localhost:4200/");
 
         justWait(5000);
         
@@ -76,14 +76,14 @@ public class HomePageE2ETest {
         justWait(1000);
         
         homePage.ensureIsNotVisibleName();        
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void AddCulturalOfferTestError() throws InterruptedException {
 
-        driver.get("http://localhost:4200/");
+        driver.get("https://localhost:4200/");
 
         justWait(5000);
         
@@ -110,14 +110,14 @@ public class HomePageE2ETest {
         justWait(1000);
         String toast = homePage.ensureIsDisplayedToast();
         assertEquals("Location is required.", toast);
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 
     }
 
     @Test
     public void AddAdminTestSuccess() throws InterruptedException {
 
-    	driver.get("http://localhost:4200/");
+    	driver.get("https://localhost:4200/");
 
         justWait(4000);
         
@@ -138,14 +138,14 @@ public class HomePageE2ETest {
 
         homePage.ensureIsNotVisibleEmail();
 
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void AddAdminTestEmailExists() throws InterruptedException {
 
-    	driver.get("http://localhost:4200/");
+    	driver.get("https://localhost:4200/");
 
         justWait(4000);
         
@@ -170,26 +170,26 @@ public class HomePageE2ETest {
         
         assertEquals("Email already exists!", toast);
 
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void OpenInNewTest() throws InterruptedException {
     	
-    	driver.get("http://localhost:4200/");
+    	driver.get("https://localhost:4200/");
 
         justWait(4000);
         
         homePage.ensureIsDisplayedGoToBtn();
         homePage.getGoToPage().click();
-        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
     }
     
     @Test
     public void ChangePageTestSuccess() throws InterruptedException {
 
-        driver.get("http://localhost:4200/");
+        driver.get("https://localhost:4200/");
 
         justWait(7000);
         
@@ -198,14 +198,14 @@ public class HomePageE2ETest {
         justWait(1000);
         homePage.ensureIsDisplayedPage3();
                 
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void FilterSuccess() throws InterruptedException {
     	
-    	driver.get("http://localhost:4200/");
+    	driver.get("https://localhost:4200/");
 
         justWait(1000);
         
@@ -217,13 +217,54 @@ public class HomePageE2ETest {
         homePage.getSubmitSearch().click();
         homePage.ensureIsDisplayedGoToBtn();
         homePage.ensureIsNotVisiblePage3();
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
     }
+    
+    @Test
+    public void FilterCombinedSuccess() throws InterruptedException {
+    	
+    	driver.get("https://localhost:4200/");
+
+        justWait(1000);
+        
+        homePage.ensureIsDisplayedFilterBtn();
+        homePage.getFilter().click();
+        homePage.getSearchContent().click();
+        homePage.getSearchContent().sendKeys("meep");
+        justWait(500);
+        homePage.getSearchCity().sendKeys("Court");
+        justWait(500);
+        homePage.getSubmitSearch().click();
+        homePage.ensureIsDisplayedGoToBtn();
+        homePage.ensureIsNotVisiblePage3();
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+    }
+    
+    @Test
+    public void FilterCitySuccess() throws InterruptedException {
+    	
+    	driver.get("https://localhost:4200/");
+
+        justWait(1000);
+        
+        homePage.ensureIsDisplayedFilterBtn();
+        homePage.getFilter().click();
+        homePage.getSearchCity().click();
+   
+        justWait(500);
+        homePage.getSearchCity().sendKeys("Court");
+        justWait(500);
+        homePage.getSubmitSearch().click();
+        homePage.ensureIsDisplayedGoToBtn();
+        homePage.ensureIsNotVisiblePage3();
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+    }
+
 
     @Test
     public void FilterRefresh() throws InterruptedException {
     	
-    	driver.get("http://localhost:4200/");
+    	driver.get("https://localhost:4200/");
 
         justWait(1000);
         
@@ -236,20 +277,20 @@ public class HomePageE2ETest {
         justWait(1000);
         homePage.getRefresh().click();
         homePage.ensureIsDisplayedPage2();
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
     }
     
     @Test
     public void LogoutUserTest() throws InterruptedException {
 
-    	driver.get("http://localhost:4200/");
+    	driver.get("https://localhost:4200/");
     	justWait(4000);
     	
         homePage.ensureIsDisplayedAddNewBtn();
         homePage.getSignOut().click();
         justWait(1000);
 
-        assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
 
     }
     

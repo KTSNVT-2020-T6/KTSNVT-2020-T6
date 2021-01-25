@@ -19,7 +19,6 @@ export class EditCategoryComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
-		//private route: ActivatedRoute,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<EditCategoryComponent>
   ) { 

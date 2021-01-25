@@ -33,7 +33,7 @@ public class ProfileE2ETest {
 	 }
 	 public void loginUser() throws InterruptedException
 	 {
-		 driver.get ("http://localhost:4200/login");
+		 driver.get ("https://localhost:4200/login");
 	     loginPage = PageFactory.initElements(driver, LoginPage.class);
 	     loginPage.getEmail().sendKeys("at@gmail.com");;
 	     loginPage.getPassword().sendKeys("asdf");;
@@ -45,7 +45,7 @@ public class ProfileE2ETest {
 	 
 	 public void loginAdmin() throws InterruptedException
 	 {
-		 driver.get ("http://localhost:4200/login");
+		 driver.get ("https://localhost:4200/login");
 	     loginPage = PageFactory.initElements(driver, LoginPage.class);
 	     loginPage.getEmail().sendKeys("admin@gmail.com");;
 	     loginPage.getPassword().sendKeys("asdf");;
@@ -70,7 +70,7 @@ public class ProfileE2ETest {
 	 @Rollback
 	 public void ChangePasswordSuccess() throws InterruptedException {
 		 loginAdmin();
-		 driver.get("http://localhost:4200/profileDetails");
+		 driver.get("https://localhost:4200/profileDetails");
 		 justWait(1000);
 		 profilePage.ensureIsDisplayedChangePasswordBtn();
 		 profilePage.getChangePasswordBtn().click();
@@ -88,14 +88,14 @@ public class ProfileE2ETest {
 		 String toast = profilePage.ensureIsDisplayedToast();
 		 assertEquals("New password saved! You have to sign in again.", toast);
 		 //New password saved! You have to sign in again.
-		 assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
 		 
 	 }
 	
 	 @Test
 	 public void ChangePasswordError() throws InterruptedException {
 		 loginAdmin();
-		 driver.get("http://localhost:4200/profileDetails");
+		 driver.get("https://localhost:4200/profileDetails");
 		 justWait(1000);
 		 profilePage.ensureIsDisplayedChangePasswordBtn();
 		 profilePage.getChangePasswordBtn().click();
@@ -112,7 +112,7 @@ public class ProfileE2ETest {
 		 justWait(1000);
 		 String toast = profilePage.ensureIsDisplayedToast();
 		 assertEquals("Passwords are the same!", toast);
-		 assertEquals("http://localhost:4200/profileDetails", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/profileDetails", driver.getCurrentUrl());
 		 
 	 }
 	 
@@ -121,7 +121,7 @@ public class ProfileE2ETest {
 	 public void DeactivateAccountSuccess() throws InterruptedException {
 		 loginUser();
 		
-		 driver.get("http://localhost:4200/profileDetails");
+		 driver.get("https://localhost:4200/profileDetails");
 		 justWait(1000);
 		 profilePage.ensureIsDisplayedDeactivateBtn();
 		 profilePage.getDeactivateBtn().click();
@@ -132,54 +132,54 @@ public class ProfileE2ETest {
 		 justWait(1000);
 		 String toast = profilePage.ensureIsDisplayedToast();
 		 assertEquals("Profile successfully deactivated.", toast);
-		 assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
 	 }
-//	 
-//	 @Test
-//	 public void EditProfileSuccess() throws InterruptedException {
-//		 loginAdmin();
-//		 driver.get("http://localhost:4200/profileDetails");
-//		 justWait(2000);
-//		 profilePage.ensureIsDisplayedEditBtn();
-//		 profilePage.getEditBtn().click();
-//		 justWait(1000);
-//		// profilePage.getFirstName().clear();
-//		 justWait(1000);
-//		 profilePage.getFirstName().sendKeys("novo ime");
-//		 justWait(1000);
-//		 profilePage.getSubmitBtn().click();
-//		 
-//		 justWait(1000);
-//		 String toast = profilePage.ensureIsDisplayedToast();
-//		 assertEquals("Profile information saved!", toast);
-//		 assertEquals("http://localhost:4200/profileDetails", driver.getCurrentUrl());
-//	
-//	 }
-	 
+	 /*
+	 @Test
+	 public void EditProfileSuccess() throws InterruptedException {
+		 loginAdmin();
+		 driver.get("https://localhost:4200/profileDetails");
+		 justWait(2000);
+		 profilePage.ensureIsDisplayedEditBtn();
+		 profilePage.getEditBtn().click();
+		 justWait(1000);
+		 profilePage.getFirstName().clear();
+		 justWait(1000);
+		 profilePage.getFirstName().sendKeys("novo ime");
+		 justWait(1000);
+		 profilePage.getSubmitBtn().click();
+		 
+		 justWait(1000);
+		 String toast = profilePage.ensureIsDisplayedToast();
+		 assertEquals("Profile information saved!", toast);
+		 assertEquals("https://localhost:4200/profileDetails", driver.getCurrentUrl());
+	
+	 }
+	 */
 	 @Test
 	 public void EditImageProfileSuccess() throws InterruptedException {
 		 loginAdmin();
-		 driver.get("http://localhost:4200/profileDetails");
+		 driver.get("https://localhost:4200/profileDetails");
 		 justWait(1000);
 		 profilePage.ensureIsDisplayedEditBtn();
 		 profilePage.getEditBtn().click();
 		 justWait(2000);
 		
 		
-		 profilePage.getUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+		 profilePage.getUploadImage().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
 		 justWait(1000);
 		 profilePage.getSubmitBtn().click();
 		 
 		 String toast = profilePage.ensureIsDisplayedToast();
 		 assertEquals("Profile information saved!", toast);
-		 assertEquals("http://localhost:4200/profileDetails", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/profileDetails", driver.getCurrentUrl());
 		 justWait(2000);
 	 }
 	 
 //	 @Test
 //	 public void EditProfileError() throws InterruptedException {
 //		 loginAdmin();
-//		 driver.get("http://localhost:4200/profileDetails");
+//		 driver.get("https://localhost:4200/profileDetails");
 //		 justWait(1000);
 //		 profilePage.ensureIsDisplayedEditBtn();
 //		 profilePage.getEditBtn().click();

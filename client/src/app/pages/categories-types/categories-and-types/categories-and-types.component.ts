@@ -30,7 +30,6 @@ export class CategoriesAndTypesComponent implements OnInit {
     public dialog: MatDialog,
     private catService: CategoryService,
     private typeService: TypeService,
-    //private route : ActivatedRoute,
     private router : Router,
     private toastr: ToastrService
   ) { }

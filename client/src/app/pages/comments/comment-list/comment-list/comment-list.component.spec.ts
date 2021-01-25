@@ -136,7 +136,6 @@ describe('CommentListComponent', () => {
 
     expect(dialog.open).toHaveBeenCalled();
     expect(commentService.delete).toHaveBeenCalled();
-    //expect(toastr.success).toHaveBeenCalled();
   }); 
 
 });

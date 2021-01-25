@@ -59,7 +59,7 @@ describe('CulturalOfferDetailsService', () => {
     
     culturalOfferDetailsService.getOne(1).subscribe(res => culturalOffer = res.body);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockCulturalOffer);
     tick();
@@ -116,7 +116,7 @@ describe('CulturalOfferDetailsService', () => {
     
     culturalOfferDetailsService.getPage(0, 2).subscribe(res => culturalOffers = res.body);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer/?page=0&size=2');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/?page=0&size=2');
     expect(req.request.method).toBe('GET');
     req.flush(mockCulturalOffers);
     tick();
@@ -182,7 +182,7 @@ describe('CulturalOfferDetailsService', () => {
     
     culturalOfferDetailsService.getFavorite().subscribe(res => culturalOffers = res.body);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer/find/subscriptions');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/find/subscriptions');
     expect(req.request.method).toBe('GET');
     req.flush(mockCulturalOffers);
     tick();
@@ -248,7 +248,7 @@ describe('CulturalOfferDetailsService', () => {
     
     culturalOfferDetailsService.searchCombined(0, 2, 'co', 'belg').subscribe(res => culturalOffers = res.body);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer/combined/co_belg?page=0&size=2');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/combined/co_belg?page=0&size=2');
     expect(req.request.method).toBe('GET');
     req.flush(mockCulturalOffers);
     tick();
@@ -312,7 +312,7 @@ describe('CulturalOfferDetailsService', () => {
     
     culturalOfferDetailsService.add(culturalOffer).subscribe(res => culturalOffer = res);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer');
     expect(req.request.method).toBe('POST');
     req.flush(mockCulturalOffer);
     tick();
@@ -369,7 +369,7 @@ describe('CulturalOfferDetailsService', () => {
     
     culturalOfferDetailsService.edit(culturalOffer).subscribe(res => culturalOffer = res);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/1');
     expect(req.request.method).toBe('PUT');
     req.flush(mockCulturalOffer);
     tick();
@@ -389,7 +389,7 @@ describe('CulturalOfferDetailsService', () => {
   it('delete() should query url and delete cultural offer', fakeAsync(() => {
     culturalOfferDetailsService.delete(1).subscribe(res => {});
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/1');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   }));
@@ -397,7 +397,7 @@ describe('CulturalOfferDetailsService', () => {
   it('subscribeUser() should query url and subscribe current user to cultural offer', fakeAsync(() => {
     culturalOfferDetailsService.subscribeUser(1).subscribe(res => {});
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer/subscribe/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/subscribe/1');
     expect(req.request.method).toBe('PUT');
     req.flush({});
   }));
@@ -405,9 +405,166 @@ describe('CulturalOfferDetailsService', () => {
   it('unsubscribe() should query url and unsubscribe current user from cultural offer', fakeAsync(() => {
     culturalOfferDetailsService.unsubscribe(1).subscribe(res => {});
     
-    const req = httpMock.expectOne('http://localhost:8080/api/cultural-offer/unsubscribe/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/unsubscribe/1');
     expect(req.request.method).toBe('PUT');
     req.flush({});
   }));
+
+
+  it("should throw get one error",()=> {
+    let error:string = '';
+    culturalOfferDetailsService.getOne(1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/1');
+    expect(req.request.method).toBe('GET');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
+
+  it("should throw get page error",()=> {
+    let error:string = '';
+    culturalOfferDetailsService.getPage(0, 2).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/?page=0&size=2');
+    expect(req.request.method).toBe('GET');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
+
+  it("should throw get favorites error",()=> {
+    let error:string = '';
+    culturalOfferDetailsService.getFavorite().subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/find/subscriptions');
+    expect(req.request.method).toBe('GET');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
+
+  it("should throw get search combined error",()=> {
+    let error:string = '';
+    culturalOfferDetailsService.searchCombined(0, 2, 'lala', 'la').subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/combined/lala_la?page=0&size=2');
+    expect(req.request.method).toBe('GET');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
+
+  it("should throw add error",()=> {
+    let culturalOffer: CulturalOffer = {
+        averageRate: 5,
+        description: 'desc',
+        name: 'co name',
+        city: 'belgrade',
+        date: new Date,
+        lat: 45.41,
+        lon: 21.16,
+        typeDTO: undefined
+    }
+    let error:string = '';
+    culturalOfferDetailsService.add(culturalOffer).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer');
+    expect(req.request.method).toBe('POST');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
+
+  it("should throw edit error",()=> {
+    let culturalOffer: CulturalOffer = {
+        id: 1,
+        averageRate: 5,
+        description: 'desc',
+        name: 'co name',
+        city: 'belgrade',
+        date: new Date,
+        lat: 45.41,
+        lon: 21.16,
+        typeDTO: undefined
+    }
+    let error:string = '';
+    culturalOfferDetailsService.edit(culturalOffer).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/1');
+    expect(req.request.method).toBe('PUT');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
+
+  it("should throw delete error",()=> {
+    let error:string = '';
+    culturalOfferDetailsService.delete(1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/1');
+    expect(req.request.method).toBe('DELETE');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
+
+  it("should throw subscribe user error",()=> {
+    let error:string = '';
+    culturalOfferDetailsService.subscribeUser(1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/subscribe/1');
+    expect(req.request.method).toBe('PUT');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
+
+  it("should throw unsubscribe user error",()=> {
+    let error:string = '';
+    culturalOfferDetailsService.unsubscribe(1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/cultural-offer/unsubscribe/1');
+    expect(req.request.method).toBe('PUT');
+    req.flush("Bad request",{
+      status: 400,
+      statusText: 'Bad request'
+    });
+   
+    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+  });
 
 });

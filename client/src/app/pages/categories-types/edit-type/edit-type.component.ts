@@ -3,7 +3,6 @@ import { Category } from '../../../core/model/Category';
 import { Type} from '../../../core/model/Type';
 import { TypeService } from '../../../core/services/type/type.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -14,8 +13,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./edit-type.component.scss']
 })
 export class EditTypeComponent implements OnInit {
-  //kad se namesti parent komponenta tek se tada moze istestirati 
- // @Input() type!:Type;
+
   selected : any;
   typeId: any;
   type!:Type;
@@ -25,10 +23,8 @@ export class EditTypeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-	//	private router: Router,
 		private typeService: TypeService,
 		private categoryService: CategoryService,
-	//	private route: ActivatedRoute,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<EditTypeComponent>
 	) {

@@ -57,7 +57,7 @@ describe('TypeService', () => {
           types = data.body;        
         });
         
-        const req = httpMock.expectOne('http://localhost:8080/api/type');
+        const req = httpMock.expectOne('https://localhost:8443/api/type');
         expect(req.request.method).toBe('GET');
         req.flush(mockTypes);
     
@@ -109,7 +109,7 @@ describe('TypeService', () => {
           types = data.body;        
         });
         
-        const req = httpMock.expectOne('http://localhost:8080/api/type/category/1');
+        const req = httpMock.expectOne('https://localhost:8443/api/type/category/1');
         expect(req.request.method).toBe('GET');
         req.flush(mockTypes);
     
@@ -158,7 +158,7 @@ describe('TypeService', () => {
     typeService.add(newType).subscribe(res => newType = res);
       
       
-    const req = httpMock.expectOne('http://localhost:8080/api/type');
+    const req = httpMock.expectOne('https://localhost:8443/api/type');
     expect(req.request.method).toBe('POST');
     req.flush(mockType);
   
@@ -192,7 +192,7 @@ describe('TypeService', () => {
     typeService.getType(1).subscribe(res => type = res.body);
     
     
-    const req = httpMock.expectOne('http://localhost:8080/api/type/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/type/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockCategory);
 
@@ -233,7 +233,7 @@ describe('TypeService', () => {
         typeService.update(type, 1).subscribe(res => type = res
         );
       
-        const req = httpMock.expectOne('http://localhost:8080/api/type/1');
+        const req = httpMock.expectOne('https://localhost:8443/api/type/1');
         expect(req.request.method).toBe('PUT');
         req.flush(mockCategory);
       
@@ -249,9 +249,110 @@ describe('TypeService', () => {
      it('delete() should query url and delete a type', () => {
       typeService.delete(1).subscribe(res => { });
       
-      const req = httpMock.expectOne('http://localhost:8080/api/type/1');
+      const req = httpMock.expectOne('https://localhost:8443/api/type/1');
       expect(req.request.method).toBe('DELETE');
       req.flush({});
+    });
+
+    it("should throw error on get all types",()=> {
+
+        let error:string = '';
+        typeService.getAll().subscribe(null,e => {
+          error = e.statusText;
+        });
+        const req = httpMock.expectOne('https://localhost:8443/api/type');
+        expect(req.request.method).toBe('GET');
+        req.flush("Error on server",{
+          status: 404,
+          statusText: 'Error on server'
+        });
+    });
+
+    it("should throw error on get types of category",()=> {
+
+        let error:string = '';
+        typeService.getTypesOfCategory(1).subscribe(null,e => {
+          error = e.statusText;
+        });
+        const req = httpMock.expectOne('https://localhost:8443/api/type/category/1');
+        expect(req.request.method).toBe('GET');
+        req.flush("Error on server",{
+          status: 404,
+          statusText: 'Error on server'
+        });
+    });
+
+    it("should throw error on add type",()=> {
+        let newType: Type = {
+            name: "theatar",
+            description: "Srpsko narodno pozoriste",
+            categoryDTO: {
+                id: 1,
+                name: "institution",
+                description: "institution in serbia"
+            }
+          }
+        let error:string = '';
+        typeService.add(newType).subscribe(null,e => {
+          error = e.statusText;
+        });
+        const req = httpMock.expectOne('https://localhost:8443/api/type');
+        expect(req.request.method).toBe('POST');
+        req.flush("Error on server",{
+          status: 404,
+          statusText: 'Error on server'
+        });
+    });
+
+    it("should throw error on get type",()=> {
+
+        let error:string = '';
+        typeService.getType(1).subscribe(null,e => {
+          error = e.statusText;
+        });
+        const req = httpMock.expectOne('https://localhost:8443/api/type/1');
+        expect(req.request.method).toBe('GET');
+        req.flush("Error on server",{
+          status: 404,
+          statusText: 'Error on server'
+        });
+    });
+
+    it("should throw error on update type",()=> {
+        let type: Type = {
+            id:1,
+            name: "theatar",
+            description: "Srpsko narodno pozoriste",
+            categoryDTO: {
+                id: 1,
+                name: "institution",
+                description: "institution in serbia"
+            }
+        }
+        let error:string = '';
+        typeService.update(type, 1).subscribe(null,e => {
+          error = e.statusText;
+        });
+        const req = httpMock.expectOne('https://localhost:8443/api/type/1');
+        expect(req.request.method).toBe('PUT');
+        req.flush("Error on server",{
+          status: 404,
+          statusText: 'Error on server'
+        });
+    });
+
+    
+    it("should throw error on delete type",()=> {
+        let error:string = '';
+        typeService.delete(1).subscribe(null,e => {
+          error = e.statusText;
+        });
+        const req = httpMock.expectOne('https://localhost:8443/api/type/1');
+        expect(req.request.method).toBe('DELETE');
+        req.flush("Error on server",{
+          status: 404,
+          statusText: 'Error on server'
+        });
     });
     
 })

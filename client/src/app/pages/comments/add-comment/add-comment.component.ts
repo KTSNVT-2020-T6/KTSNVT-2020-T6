@@ -54,12 +54,12 @@ export class AddCommentComponent implements OnInit {
         this.comment.culturalOfferId = this.culturalOfferId;
         this.comment.userId = this.currentUser.id;
         this.comment.date = new Date();
-        if(this.commentForm.invalid) {
+        if(this.commentForm.controls['text'].value === '' && this.commentForm.controls['image'].value === '') {
            this.toastr.error('Comment cannot be empty!');
            this.comment.imageDTO = undefined;
            return;
         }
-        else if (this.commentForm.value['image'] !== '')
+        else if (this.commentForm.controls['image'].value !== '')
         {
           const formData = new FormData();
           formData.append('file', this.commentForm.value['image']);
@@ -93,7 +93,7 @@ export class AddCommentComponent implements OnInit {
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-       this.commentForm.value['image'] = file;
+       this.commentForm.controls['image'].setValue(file);
     }
   }
   windowReload(){

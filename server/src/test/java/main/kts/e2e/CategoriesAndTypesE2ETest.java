@@ -26,7 +26,7 @@ public class CategoriesAndTypesE2ETest {
 	     driver = new ChromeDriver();
 	     driver.manage().window().maximize();
 	        
-	     driver.get ("http://localhost:4200/login");
+	     driver.get ("https://localhost:4200/login");
 	     loginPage = PageFactory.initElements(driver, LoginPage.class);
 	     loginPage.getEmail().sendKeys("admin@gmail.com");;
 	     loginPage.getPassword().sendKeys("asdf");;
@@ -48,7 +48,7 @@ public class CategoriesAndTypesE2ETest {
 	 
 	 @Test
 	 public void AddCategoryTestSuccess() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedAddCategoryBtn();
@@ -63,12 +63,12 @@ public class CategoriesAndTypesE2ETest {
 		 
 		 categoriesAndTypesPage.ensureIsNotVisibleCatNameInput();
 		 justWait(1000);
-	     assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+	     assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 	 }
 	 
 	 @Test
 	 public void AddCategoryTestError() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedAddCategoryBtn();
@@ -83,13 +83,13 @@ public class CategoriesAndTypesE2ETest {
 		 
 		 String toast = categoriesAndTypesPage.ensureIsDisplayedToast();
 		 assertEquals("Name already exists!", toast);
-	     assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+	     assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 
 	 }
 	 
 	 @Test
 	 public void AddTypeTestSuccess() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedAddTypeBtn();
@@ -107,11 +107,11 @@ public class CategoriesAndTypesE2ETest {
 		 
 		 categoriesAndTypesPage.ensureIsNotVisibleTypeNameInput();
 		 justWait(1000);
-	     assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+	     assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 	 }
 	 @Test
 	 public void AddTypeTestError() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedAddTypeBtn();
@@ -129,12 +129,12 @@ public class CategoriesAndTypesE2ETest {
 		 justWait(1000);
 		 String toast = categoriesAndTypesPage.ensureIsDisplayedToast();
 		 assertEquals("Name already exists!", toast);
-	     assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+	     assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 	 }
 	
 	 @Test
 	 public void EditTypeTestSucces() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedEditTypeBtn();
@@ -146,14 +146,14 @@ public class CategoriesAndTypesE2ETest {
 		 justWait(1000);
 		 categoriesAndTypesPage.getTypeEditSubmitBtn().click();
 		 categoriesAndTypesPage.ensureIsNotVisibleTypeEditNameInput();
-		 assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 		 justWait(2000);
 		 categoriesAndTypesPage.ensureIsNotVisibleOldTypeNameInput();
 	 }
 	 
 	 @Test
 	 public void EditTypeTestError() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 categoriesAndTypesPage.ensureIsDisplayedEditTypeBtn();
 		 categoriesAndTypesPage.getEditType3btn().click();
@@ -164,7 +164,7 @@ public class CategoriesAndTypesE2ETest {
 		 justWait(2000);
 		 categoriesAndTypesPage.getTypeEditSubmitBtn().click();
 		 categoriesAndTypesPage.ensureIsNotVisibleTypeEditNameInput();
-		 assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 		 
 		 categoriesAndTypesPage.ensureIsNotVisibleOldTypeNameInput();
 		 
@@ -173,7 +173,7 @@ public class CategoriesAndTypesE2ETest {
 	 
 	 @Test
 	 public void EditCategoryTestSucces() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedEditCategoryBtn();
@@ -186,7 +186,7 @@ public class CategoriesAndTypesE2ETest {
 		 categoriesAndTypesPage.getCatEditSubmitBtn().click();
 		 
 		 categoriesAndTypesPage.ensureIsNotVisibleCatNameInput();
-		 assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 		 justWait(2000);
 		 categoriesAndTypesPage.ensureIsNotVisibleOldCatNameInput();
 		 
@@ -194,7 +194,7 @@ public class CategoriesAndTypesE2ETest {
 	 
 	 @Test
 	 public void EditCategoryTestError() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedEditCategoryBtn();
@@ -209,12 +209,12 @@ public class CategoriesAndTypesE2ETest {
 		 
 		 String toast = categoriesAndTypesPage.ensureIsDisplayedToast();
 		 assertEquals("Cannot edit category!", toast);
-	     assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+	     assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 	 }
 	
 	 @Test
 	 public void DeleteCategoryTestSucces() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedDeleteCategoryBtn();
@@ -224,14 +224,14 @@ public class CategoriesAndTypesE2ETest {
 		 categoriesAndTypesPage.getYesBtn().click();
 		 
 		 justWait(2000);
-		 assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 
 		 
 	 }
 	 
 	 @Test
 	 public void DeleteTypeTestSucces() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedDeleteTypeBtn();
@@ -240,13 +240,13 @@ public class CategoriesAndTypesE2ETest {
 		 categoriesAndTypesPage.ensureIsDisplayedYesBtn();
 		 categoriesAndTypesPage.getYesBtn().click();
 		 justWait(2000);
-		 assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+		 assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 		 
 	 }
 	 
 	 @Test
 	 public void DeleteCategoryTestError() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedDeleteCategory1Btn();
@@ -259,14 +259,14 @@ public class CategoriesAndTypesE2ETest {
 		 
 		 String toast = categoriesAndTypesPage.ensureIsDisplayedToast();
 		 assertEquals("Cannot delete this category!", toast);
-	     assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+	     assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 
 		 
 	 }
 	 
 	 @Test
 	 public void DeleteTypeTestError() throws InterruptedException {
-		 driver.get("http://localhost:4200/categoriesAndTypes");
+		 driver.get("https://localhost:4200/categoriesAndTypes");
 		 justWait(3000);
 		 
 		 categoriesAndTypesPage.ensureIsDisplayedDeleteType1Btn();
@@ -278,7 +278,7 @@ public class CategoriesAndTypesE2ETest {
 		 
 		 String toast = categoriesAndTypesPage.ensureIsDisplayedToast();
 		 assertEquals("Cannot delete this type!", toast);
-	     assertEquals("http://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
+	     assertEquals("https://localhost:4200/categoriesAndTypes", driver.getCurrentUrl());
 		 
 	 }
 	 

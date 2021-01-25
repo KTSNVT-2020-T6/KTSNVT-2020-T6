@@ -204,7 +204,6 @@ describe('AddCulturalOfferComponent', () => {
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
     expect(component.windowReload).toHaveBeenCalled();
-   // expect(component.form.invalid).toBeTruthy();
  
 }));
 

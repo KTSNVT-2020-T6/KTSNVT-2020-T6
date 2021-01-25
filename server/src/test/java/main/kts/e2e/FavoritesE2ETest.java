@@ -25,7 +25,7 @@ public class FavoritesE2ETest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
          
-        driver.get ("http://localhost:4200/login");
+        driver.get ("https://localhost:4200/login");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         loginPage.getEmail().sendKeys("at@gmail.com");;
         loginPage.getPassword().sendKeys("asdf");;
@@ -44,24 +44,24 @@ public class FavoritesE2ETest {
     @Test
     public void OpenInNewTest() throws InterruptedException {
     	
-    	driver.get("http://localhost:4200/favorites");
+    	driver.get("https://localhost:4200/favorites");
 
         justWait(1000);
         
         favouritesPage.ensureIsDisplayedGoToPageBtn();
         favouritesPage.getGoToPage().click();
-        assertEquals("http://localhost:4200/culturaloffer/22", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/culturaloffer/22", driver.getCurrentUrl());
     }
     
     @Test
     public void UnsubscribeTest() throws InterruptedException {
     	justWait(2000);
-    	driver.get("http://localhost:4200/favorites");
+    	driver.get("https://localhost:4200/favorites");
     	justWait(2000);
     	favouritesPage.ensureIsDisplayedUnsubscribeBtn();
         favouritesPage.getUnsubscribeBtn().click();
         favouritesPage.ensureIsNotVisibleGoToPageBtn();
-        assertEquals("http://localhost:4200/favorites", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/favorites", driver.getCurrentUrl());
 
     }
     

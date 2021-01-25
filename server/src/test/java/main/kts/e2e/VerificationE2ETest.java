@@ -36,19 +36,19 @@ public class VerificationE2ETest {
     @Test
     public void VerificationSuccess() throws InterruptedException {
 
-        driver.get("http://localhost:4200/verification/"+VERIFICATION_TOKEN);
+        driver.get("https://localhost:4200/verification/"+VERIFICATION_TOKEN);
         justWait(2000);
-        assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
 
     }
     
     @Test
     public void VerificationInvalidToken() throws InterruptedException {
 
-        driver.get("http://localhost:4200/verification/"+FALSE_VERIFICATION_TOKEN);
+        driver.get("https://localhost:4200/verification/"+FALSE_VERIFICATION_TOKEN);
         justWait(2000);
         assertEquals("Token is not valid or expired!", verificationPage.getVerificationMessage().getText());
-        assertEquals("http://localhost:4200/verification/"+FALSE_VERIFICATION_TOKEN, driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/verification/"+FALSE_VERIFICATION_TOKEN, driver.getCurrentUrl());
 
     }
     

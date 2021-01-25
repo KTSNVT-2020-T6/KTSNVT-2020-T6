@@ -34,7 +34,7 @@ public class RegisterE2ETest {
 	    @Test
 	    public void SignUpTestSuccess() throws InterruptedException {
 
-	        driver.get("http://localhost:4200/register");
+	        driver.get("https://localhost:4200/register");
 
 	        justWait(1000);
 	        
@@ -54,14 +54,14 @@ public class RegisterE2ETest {
 
 	        registerPage.ensureIsNotVisibleEmail();
 
-	        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+	        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 
 	    }
 	    
 	    @Test
 	    public void SignUpTestEmailExists() throws InterruptedException {
 
-	        driver.get("http://localhost:4200/register");
+	        driver.get("https://localhost:4200/register");
 
 	        justWait(1000);
 	        
@@ -80,7 +80,7 @@ public class RegisterE2ETest {
 	        String toast = registerPage.ensureIsDisplayedToast();
 	        
 	        assertEquals("Email already exists!", toast);
-	        assertEquals("http://localhost:4200/register", driver.getCurrentUrl());
+	        assertEquals("https://localhost:4200/register", driver.getCurrentUrl());
 
 	    }
 

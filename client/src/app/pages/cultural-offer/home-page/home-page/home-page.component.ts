@@ -119,7 +119,8 @@ export class HomePageComponent implements OnInit {
   searchClicked(){
     this.currentPage = 1;
     const dialogRef = this.dialog.open(SearchDetailsComponent);
-    console.log(dialogRef.componentInstance+" INSTANCA");
+    if(dialogRef.componentInstance === undefined)
+      return;
     const sub = dialogRef.componentInstance.done.subscribe(() => {
       this.searchDetails = dialogRef.componentInstance.searchDetails;
     });

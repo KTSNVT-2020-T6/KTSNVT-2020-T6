@@ -30,6 +30,8 @@ describe('HomePageComponent', () => {
   let dialog: MdDialogMock;
   let jwtHelper: any;
 
+  
+
   beforeEach(() => {
     let dialogMock = {
         open: jasmine.createSpy('open').and.callThrough(),
@@ -117,13 +119,19 @@ describe('HomePageComponent', () => {
 
   }));
 
-  // it ('should open search dialog', () => {
-  //   spyOn(dialog, 'open').and.callThrough();
-  //   component.searchClicked();
-  //   //treba da ga prespojisa SearchDetailsComponent ali to ne odradi        
-  //   expect(dialog.open).toHaveBeenCalled();
-  //   expect(component.searchDetails).toBeDefined();
-  //   expect(culturalOfferService.searchCombined).toHaveBeenCalled();
-  // }); 
+  it ('should open search dialog', fakeAsync(() => {
+    spyOn(dialog, 'open').and.callThrough();
+   
+ //   let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
+ //   dialogRefSpyObj.componentInstance = { searchDetails: {content: 'content', city: 'city'} };
+//    spyOn(dialogRefSpyObj.componentInstance, 'subscribe');
+//    spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
+    
+    component.searchClicked();
+        
+    expect(dialog.open).toHaveBeenCalled();
+   // expect(component.searchDetails).toBeDefined();
+  //  expect(culturalOfferService.searchCombined).toHaveBeenCalled();
+  })); 
 
 });

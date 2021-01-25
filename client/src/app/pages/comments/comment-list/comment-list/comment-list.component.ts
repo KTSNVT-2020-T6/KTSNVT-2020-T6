@@ -73,9 +73,6 @@ export class CommentListComponent implements OnInit {
               });
             }
        });
-
-      
-
       }, error => {
         this.toastr.error("Cannot load from server!");
       }

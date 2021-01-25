@@ -35,8 +35,6 @@ export class EditCommentComponent implements OnInit {
      });
   }
   ngOnInit(): void {
-    
-    // dobaviti komentar
      this.commentService.getComment(this.commentId).subscribe(
           res => {
             this.comment = res.body as Comment;
@@ -58,7 +56,6 @@ export class EditCommentComponent implements OnInit {
    editComment()
    {
       console.log(this.comment.imageDTO?.id);
-     //podesiti detalje komentara
      this.comment.text = this.editForm.value['text'];
      this.comment.date = new Date();
      if (this.imageAdded !== undefined)

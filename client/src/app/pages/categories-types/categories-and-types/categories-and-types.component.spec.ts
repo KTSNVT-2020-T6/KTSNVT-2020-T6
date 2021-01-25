@@ -27,7 +27,6 @@ describe('CategoriesAndTypesComponent', () => {
   let fixture: ComponentFixture<CategoriesAndTypesComponent>;
   let dialog: MdDialogMock;
   let router: any;
-  //let activatedRoute: any;
   let toastr: any;
   let catService: any;
   let typeService: any;
@@ -99,7 +98,6 @@ describe('CategoriesAndTypesComponent', () => {
 
   it('should open dialog for edit type on click  ', fakeAsync(() => {
     expect(component).toBeTruthy();
-    //component.ngOnInit();
     let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
     dialogRefSpyObj.componentInstance = { typeId: '' };
     spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
@@ -111,7 +109,6 @@ describe('CategoriesAndTypesComponent', () => {
 
   it('should open dialog for edit category on click  ', fakeAsync(() => {
     expect(component).toBeTruthy();
-    //component.ngOnInit();
     let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
     dialogRefSpyObj.componentInstance = { catId: '' };
     spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);

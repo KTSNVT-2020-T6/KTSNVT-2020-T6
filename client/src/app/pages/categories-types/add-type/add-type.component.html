@@ -4,9 +4,6 @@
         <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
             <mat-select id="catSelect" (valueChange)="onSelection($event)" required>
-                <!-- ako padnu neki testovi to je mozda jer je ovde bilo 
-                <mat-select id="catSelect" formControlName="categoryDTO" required>
-                -->
                 <mat-option  *ngFor="let cat of categories" id="cat{{cat.id}}" [value]="cat">
                     {{cat.name}}
                 </mat-option>

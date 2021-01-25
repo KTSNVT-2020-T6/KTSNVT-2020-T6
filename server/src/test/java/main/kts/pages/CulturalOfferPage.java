@@ -58,7 +58,7 @@ public class CulturalOfferPage {
     @FindBy(id = "editCommentButtonSave")
    	private WebElement editCommentButtonSave;
     
-    @FindBy(id = "deleteComment2")
+    @FindBy(id = "deleteComment3")
    	private WebElement deleteButton;
     
     @FindBy(id = "yesBtn")
@@ -143,7 +143,7 @@ public class CulturalOfferPage {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editComment4")));
     }
     public void ensureIsDisplayedDeleteComment() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteComment2")));
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("deleteComment3")));
     }
     public void ensureIsNotVisibleYesButton() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("yesBtn")));

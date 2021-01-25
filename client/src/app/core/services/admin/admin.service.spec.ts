@@ -58,7 +58,7 @@ describe('AdminService', () => {
     
     adminService.editAdmin(user).subscribe(res => user = res);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/admin/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/admin/1');
     expect(req.request.method).toBe('PUT');
     req.flush(mockUser);
     tick();
@@ -74,7 +74,7 @@ describe('AdminService', () => {
 
   it('delete() should query url and delete an admin', () => {
       adminService.delete(1).subscribe(res => { });
-      const req = httpMock.expectOne('http://localhost:8080/api/admin/1');
+      const req = httpMock.expectOne('https://localhost:8443/api/admin/1');
       expect(req.request.method).toBe('DELETE');
       req.flush({});
 
@@ -90,4 +90,18 @@ describe('AdminService', () => {
 
     expect(counter).toBe(1);
   }));
+
+  it("should throw error",()=> {
+    let error:string = '';
+    adminService.delete(1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/admin/1');
+    expect(req.request.method).toBe('DELETE');
+    req.flush("Error deleting",{
+      status: 404,
+      statusText: 'Error deleting'
+    });
+    expect(error.toString().indexOf("Error deleting") >= 0).toBeTruthy();
+  });
 });

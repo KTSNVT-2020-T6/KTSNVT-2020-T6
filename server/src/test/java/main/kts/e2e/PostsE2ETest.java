@@ -26,7 +26,7 @@ public class PostsE2ETest {
 	        driver = new ChromeDriver();
 	        driver.manage().window().maximize();
 	         
-	        driver.get ("http://localhost:4200/login");
+	        driver.get ("https://localhost:4200/login");
 	        loginPage = PageFactory.initElements(driver, LoginPage.class);
 	        loginPage.getEmail().sendKeys("admin@gmail.com");;
 	        loginPage.getPassword().sendKeys("asdf");;
@@ -44,7 +44,7 @@ public class PostsE2ETest {
 	    @Test
 	    public void DeletePostTestSuccess() throws InterruptedException {
 
-	        driver.get("http://localhost:4200/posts");
+	        driver.get("https://localhost:4200/posts");
 
 	        justWait(7000);
 	        
@@ -54,14 +54,14 @@ public class PostsE2ETest {
 	        postsPage.getYesBtn().click();
 	        postsPage.ensureIsNotVisibleDeleteButton();
 	               
-	        assertEquals("http://localhost:4200/posts", driver.getCurrentUrl());
+	        assertEquals("https://localhost:4200/posts", driver.getCurrentUrl());
 
 	    }
 	    
 	    @Test
 	    public void ChangePageTestSuccess() throws InterruptedException {
 
-	        driver.get("http://localhost:4200/posts");
+	        driver.get("https://localhost:4200/posts");
 
 	        justWait(7000);
 	        
@@ -70,7 +70,7 @@ public class PostsE2ETest {
 	        justWait(1000);
 	        postsPage.ensureIsDisplayedPage3();
 	                
-	        assertEquals("http://localhost:4200/posts", driver.getCurrentUrl());
+	        assertEquals("https://localhost:4200/posts", driver.getCurrentUrl());
 
 	    }
 	    

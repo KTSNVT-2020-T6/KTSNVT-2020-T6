@@ -69,7 +69,6 @@ describe('EditTypeComponent', () => {
     categoryService = TestBed.inject(CategoryService);
     toastr = TestBed.inject(ToastrService);
     dialogRef = TestBed.inject(MatDialogRef);
-    //fixture.detectChanges();
   });
 
   it('should create', fakeAsync(() => {

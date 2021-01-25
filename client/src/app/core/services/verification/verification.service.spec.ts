@@ -34,9 +34,24 @@ describe('VerificationService', () => {
   
   it('verify() should query url and verify user', () => {
     verificationService.verify('verificationtokenvalue').subscribe(res => { });
-    const req = httpMock.expectOne('http://localhost:8080/api/verification/verificationtokenvalue');
+    const req = httpMock.expectOne('https://localhost:8443/api/verification/verificationtokenvalue');
     expect(req.request.method).toBe('GET');
     req.flush({});
+  });
+  
+  it("should throw  error",()=> {
+    let error:string = '';
+    verificationService.verify('verificationtokenvalue').subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/verification/verificationtokenvalue');
+    expect(req.request.method).toBe('GET');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
   });
   
 });

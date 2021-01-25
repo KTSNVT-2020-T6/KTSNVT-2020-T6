@@ -3,7 +3,6 @@ import {Category} from '../../../core/model/Category';
 import {Type} from '../../../core/model/Type';
 import {TypeService} from '../../../core/services/type/type.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { MatDialog ,MatDialogRef} from '@angular/material/dialog';
@@ -18,13 +17,10 @@ export class AddTypeComponent implements OnInit {
   categories: Category[] = [];
   type!: Type;
   typeForm!: FormGroup;
-//  testValue: any;
   constructor(
 		private fb: FormBuilder,
-	//	private router: Router,
 		private typeService: TypeService,
 		private categoryService: CategoryService,
-	//	private route: ActivatedRoute,
 		private toastr: ToastrService,
 		public dialogRef: MatDialogRef<AddTypeComponent>
 	) {
@@ -55,7 +51,6 @@ export class AddTypeComponent implements OnInit {
 
   addType(){
 	this.type = this.typeForm.value;
-	//this.type.categoryDTO = this.category
 	if(this.type.name === '' || this.type.name === null )
     {
       return;

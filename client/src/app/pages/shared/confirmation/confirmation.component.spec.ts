@@ -19,7 +19,6 @@ describe('ConfirmationComponent', () => {
     
     const mockDialogRef = {
       close: jasmine.createSpy('close')};
-      //.and.returnValue(of(true))};
   
     beforeEach(async(() => {
       TestBed.configureTestingModule({

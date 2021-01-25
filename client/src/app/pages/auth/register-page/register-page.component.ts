@@ -55,7 +55,6 @@ export class RegisterPageComponent implements OnInit {
 
       this.authenticationService.register(this.user as User).subscribe(
         result => {
-          console.log(result);
           this.toastr.success('Check your email to confirm registration!');
           this.router.navigate(['/']);
           this.form.reset();

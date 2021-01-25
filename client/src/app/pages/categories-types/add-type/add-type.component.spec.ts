@@ -68,7 +68,6 @@ describe('AddTypeComponent', () => {
     categoryService = TestBed.inject(CategoryService);
     toastr = TestBed.inject(ToastrService);
     dialogRef = TestBed.inject(MatDialogRef);
-    //fixture.detectChanges();
   });
 
   it('should create', fakeAsync(() => {
@@ -113,15 +112,7 @@ describe('AddTypeComponent', () => {
         typeName.value = 'type';
         let typeDesc = fixture.debugElement.query(By.css('#typeDescription')).nativeElement;
         typeDesc.value = 'type desc';
-      /*
-        const typeCat: HTMLSelectElement = fixture.debugElement.query(By.css('#catSelect')).nativeElement;
-        typeCat.click();
-        fixture.detectChanges();
-        const selectOptions = fixture.debugElement.queryAll(By.css('mat-option'));
-        const type = selectOptions[0].nativeElement.click();
-        typeCat.dispatchEvent(new Event('valueChange'));
-        fixture.detectChanges();
-        */
+     
         component.onSelection(component.categories[0]);
         typeName.dispatchEvent(new Event('input')); 
         typeDesc.dispatchEvent(new Event('input'));

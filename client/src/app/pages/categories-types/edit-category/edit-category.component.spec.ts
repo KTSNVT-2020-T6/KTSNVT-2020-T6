@@ -7,7 +7,6 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { Category } from '../../../core/model/Category';
 import { CategoryService } from '../../../core/services/category/category.service';
-import { VerificationPageComponent } from '../../auth/verification-page/verification-page.component';
 
 import { EditCategoryComponent } from './edit-category.component';
 

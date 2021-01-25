@@ -48,7 +48,7 @@ public class CulturalOfferE2ETest {
 
     public void loginAdmin() throws InterruptedException {
     	 
-        driver.get ("http://localhost:4200/login");
+        driver.get ("https://localhost:4200/login");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         loginPage.getEmail().sendKeys("admin@gmail.com");;
         loginPage.getPassword().sendKeys("asdf");;
@@ -58,7 +58,7 @@ public class CulturalOfferE2ETest {
     
     public void loginRegisteredUser() throws InterruptedException {
    	 
-        driver.get("http://localhost:4200/login");
+        driver.get("https://localhost:4200/login");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         loginPage.getEmail().sendKeys("at@gmail.com");;
         loginPage.getPassword().sendKeys("asdf");;
@@ -67,53 +67,46 @@ public class CulturalOfferE2ETest {
     }
     
     @Test
-    @Rollback
-    public void SubscribeRegUserTestSuccess() throws InterruptedException {
+    
+    public void SubscribeUnsubscribeRegUserTestSuccess() throws InterruptedException {
     	loginRegisteredUser();
     	
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         
         justWait(1000);
         int beforeClick = Integer.parseInt(culturalOfferPage.getNumberOfSubscribed().getText());
         culturalOfferPage.ensureIsDisplayedSubscribedButton();
         culturalOfferPage.getSubscribeButton().click();
-        driver.get("http://localhost:4200/culturaloffer/1");
         justWait(1000);
         int afterClick = Integer.parseInt(culturalOfferPage.getNumberOfSubscribed().getText());
-       
         assertEquals(beforeClick+1, afterClick);
-
-    }
-   
-    @Test
-    public void UnsubscribeRegUserTestSuccess() throws InterruptedException {
-    	loginRegisteredUser();
-    	justWait(3000);
-        driver.get("http://localhost:4200/culturaloffer/21");
         
         justWait(1000);
-        int beforeClick = Integer.parseInt(culturalOfferPage.getNumberOfSubscribed().getText());
+        beforeClick = Integer.parseInt(culturalOfferPage.getNumberOfSubscribed().getText());
         culturalOfferPage.ensureIsDisplayedUnsubscribedButton();
         culturalOfferPage.getUnsubscribeButton().click();
-        driver.get("http://localhost:4200/culturaloffer/21");
+        justWait(1000);
+        driver.get("https://localhost:4200/culturaloffer/1");
         //culturalOfferPage.ensureIsDisplayedSubscribedButton();
-        int afterClick = Integer.parseInt(culturalOfferPage.getNumberOfSubscribed().getText());
+        afterClick = Integer.parseInt(culturalOfferPage.getNumberOfSubscribed().getText());
         assertEquals(beforeClick-1, afterClick);
         
+
     }
+
     @Test
     @Rollback
     public void RateFiveTestSuccess() throws InterruptedException {
     	
     	loginRegisteredUser();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         
         justWait(2000);
         double beforeClick = Double.parseDouble(culturalOfferPage.getAverageRate().getText());
         culturalOfferPage.ensureIsDisplayedFifthStar();
         culturalOfferPage.getRateFive().click();
         justWait(2000);
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         justWait(2000);
         double afterClick = Double.parseDouble(culturalOfferPage.getAverageRate().getText());
        
@@ -125,14 +118,14 @@ public class CulturalOfferE2ETest {
     public void RateFourTestSuccess() throws InterruptedException {
     	
     	loginRegisteredUser();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         
         justWait(2000);
         double beforeClick = Double.parseDouble(culturalOfferPage.getAverageRate().getText());
         culturalOfferPage.ensureIsDisplayedForthStar();
         culturalOfferPage.getRateFour().click();
         justWait(2000);
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         justWait(2000);
         double afterClick = Double.parseDouble(culturalOfferPage.getAverageRate().getText());
        
@@ -143,10 +136,10 @@ public class CulturalOfferE2ETest {
     public void UploadImageCommentTestSuccess() throws InterruptedException {
     	
     	loginRegisteredUser();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         
         justWait(1000);
-        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
         justWait(1000);
         assertTrue(true);
        
@@ -157,11 +150,11 @@ public class CulturalOfferE2ETest {
     public void SendCommentTestSuccess() throws InterruptedException {
     	
     	loginRegisteredUser();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         
         justWait(1000);
         culturalOfferPage.getNewComment().sendKeys("Komentarisem ovu ponudu sa slikom");
-        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
         justWait(1000);
         culturalOfferPage.ensureIsDisplayedAddCommentButton();
         
@@ -170,7 +163,7 @@ public class CulturalOfferE2ETest {
        // String toast = culturalOfferPage.ensureIsDisplayedToast();
         
         //assertEquals("Comment send!\nSaved!", toast);
-        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
        
        
     }
@@ -178,7 +171,7 @@ public class CulturalOfferE2ETest {
 //    public void SendCommentWithoutImageTestSuccess() throws InterruptedException {
 //    	
 //    	loginRegisteredUser();
-//        driver.get("http://localhost:4200/culturaloffer/1");
+//        driver.get("https://localhost:4200/culturaloffer/1");
 //        
 //        justWait(1000);
 //        culturalOfferPage.getNewComment().sendKeys("Komentarisem ovu ponudu bez slike");
@@ -194,10 +187,10 @@ public class CulturalOfferE2ETest {
 //    	
 //
 //    	loginRegisteredUser();
-//        driver.get("http://localhost:4200/culturaloffer/1");
+//        driver.get("https://localhost:4200/culturaloffer/1");
 //        
 //        justWait(1000);
-//        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+//        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
 //        justWait(1000);
 //        culturalOfferPage.ensureIsDisplayedAddCommentButton();
 //        culturalOfferPage.getSendCommentButton().click();
@@ -215,7 +208,7 @@ public class CulturalOfferE2ETest {
 //    public void SendEmptyCommentTestError() throws InterruptedException {
 //    	
 //    	loginRegisteredUser();
-//        driver.get("http://localhost:4200/culturaloffer/1");
+//        driver.get("https://localhost:4200/culturaloffer/1");
 //        
 //        justWait(1000);
 //        culturalOfferPage.ensureIsDisplayedAddCommentButton();
@@ -230,7 +223,7 @@ public class CulturalOfferE2ETest {
 //    public void EditCommentJustTextTestSuccess() throws InterruptedException {
 //    	
 //    	loginRegisteredUser();
-//        driver.get("http://localhost:4200/culturaloffer/1");
+//        driver.get("https://localhost:4200/culturaloffer/1");
 //        
 //        justWait(1000);
 //        culturalOfferPage.ensureIsDisplayedEditComment();
@@ -242,7 +235,7 @@ public class CulturalOfferE2ETest {
 //      //  String toast = culturalOfferPage.ensureIsDisplayedToast();
 //      //  justWait(1000);
 //      //("Comment edited!", toast);
-//        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+//        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
 //        
 //       
  //   }
@@ -252,7 +245,7 @@ public class CulturalOfferE2ETest {
     public void DeleteCommentTestSuccess() throws InterruptedException {
     
     	loginRegisteredUser();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         
         justWait(1000);
         culturalOfferPage.ensureIsDisplayedDeleteComment();
@@ -260,28 +253,28 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.getYesDeleteButton().click();
         culturalOfferPage.ensureIsNotVisibleYesButton();
         
-        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
        
     }
 
     @Test
     public void ChangePageTestSuccess() throws InterruptedException {
     	loginRegisteredUser();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
 
         justWait(1000);
      
         culturalOfferPage.getPage2().click();
         culturalOfferPage.ensureIsDisplayedBackPaginationButton();
         justWait(2000); 
-        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
 
     }
   @Test
   public void EditCommentTestSuccess() throws InterruptedException {
   	
   	loginRegisteredUser();
-      driver.get("http://localhost:4200/culturaloffer/1");
+      driver.get("https://localhost:4200/culturaloffer/1");
       
       justWait(2000);
       culturalOfferPage.ensureIsDisplayedEditComment();
@@ -289,14 +282,14 @@ public class CulturalOfferE2ETest {
       culturalOfferPage.getEditTextCommentButton().clear();
       culturalOfferPage.getEditTextCommentButton().sendKeys("Izmenjen sadrzaj komentaraasdas");
       justWait(1000);
-      culturalOfferPage.getEditImageCommentButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+      culturalOfferPage.getEditImageCommentButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
       justWait(1000);
       culturalOfferPage.getEditCommentButtonSave().click();
       justWait(1000);
 //      String toast = culturalOfferPage.ensureIsDisplayedToast();
 //     
 //      assertEquals("Comment edited!\nSaved!", toast);
-      assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+      assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
      
   }
 //    @Test
@@ -304,7 +297,7 @@ public class CulturalOfferE2ETest {
 //    public void EditCommentJustImageTestSuccess() throws InterruptedException {
 //    	
 //    	loginRegisteredUser();
-//        driver.get("http://localhost:4200/culturaloffer/1");
+//        driver.get("https://localhost:4200/culturaloffer/1");
 //        
 //        justWait(1000);
 //        culturalOfferPage.ensureIsDisplayedEditComment();
@@ -321,7 +314,7 @@ public class CulturalOfferE2ETest {
     public void DeleteCulturalOfferTestSuccess() throws InterruptedException {
     
     	loginAdmin();
-        driver.get("http://localhost:4200/culturaloffer/29");
+        driver.get("https://localhost:4200/culturaloffer/29");
         
         justWait(3000);
         
@@ -330,7 +323,7 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.getYesDeleteButton().click();
         culturalOfferPage.ensureIsNotDisplayedDeleteCulturalOffer();
         justWait(15000);
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
        
     }
        
@@ -339,7 +332,7 @@ public class CulturalOfferE2ETest {
 //    public void AddPostWithoutImageCulturalOfferTestSuccess() throws InterruptedException {
 //     //radi samo ako sam radi hah
 //    	loginAdmin();
-//        driver.get("http://localhost:4200/culturaloffer/1");
+//        driver.get("https://localhost:4200/culturaloffer/1");
 //        
 //        justWait(1000);
 //        
@@ -354,23 +347,24 @@ public class CulturalOfferE2ETest {
 //        String toast = culturalOfferPage.ensureIsDisplayedToast();
 //       
 //        assertEquals("Successfully added post!", toast);
-//        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+//        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
 //       
 //    }
+    
     @Test
     public void AddPostJustImageCulturalOfferTestError() throws InterruptedException {
     
     	loginAdmin();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         
         justWait(3000);
         culturalOfferPage.ensureIsDisplayedAddPost();
         justWait(1000);
         culturalOfferPage.getAddPostButton().click();
-        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
         justWait(1000);
         culturalOfferPage.ensureIsDisplayedAddPostAndNotClickable();
-        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
        
     }
     
@@ -379,7 +373,7 @@ public class CulturalOfferE2ETest {
     public void AddPostTextAndImageCulturalOfferTestSuccess() throws InterruptedException {
     
     	loginAdmin();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         justWait(3000);
         
         culturalOfferPage.ensureIsDisplayedAddPost();
@@ -387,14 +381,14 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.getAddPostButton().click();
         justWait(1000);
         culturalOfferPage.getTextPost().sendKeys("Sadrzaj novog posta");
-        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
         justWait(1000);
         culturalOfferPage.getAddPostButtonSave().click();
         justWait(1000);
        // String toast = culturalOfferPage.ensureIsDisplayedToast();
         
         //assertEquals("Successfully added post!", toast);
-        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
        
     }
     
@@ -403,7 +397,7 @@ public class CulturalOfferE2ETest {
     public void EditCulturalOfferTestSuccess() throws InterruptedException {
     
     	loginAdmin();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         justWait(3000);
         
         culturalOfferPage.ensureIsDisplayedEditCulturalOffer();
@@ -429,14 +423,14 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.getSelectType().click();
         justWait(2500);
 
-        culturalOfferPage.getEditImageCulturalOfferButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
+        culturalOfferPage.getEditImageCulturalOfferButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
         justWait(1000);
         culturalOfferPage.getEditCultOfferSaveButton().click();
         justWait(10000);
        // String toast = culturalOfferPage.ensureIsDisplayedToast();
       
        // assertEquals("Cultural offer information saved!", toast);
-        assertEquals("http://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
         
        
     }
@@ -445,7 +439,7 @@ public class CulturalOfferE2ETest {
     public void EditCulturalOfferTestError() throws InterruptedException {
     
     	loginAdmin();
-        driver.get("http://localhost:4200/culturaloffer/1");
+        driver.get("https://localhost:4200/culturaloffer/1");
         justWait(3000);
         
         culturalOfferPage.ensureIsDisplayedEditCulturalOffer();
@@ -461,7 +455,6 @@ public class CulturalOfferE2ETest {
         assertEquals("Error saving data!", toast);
        
     }
-    
     private void justWait(int milliseconds) throws InterruptedException {
         synchronized (driver)
         {

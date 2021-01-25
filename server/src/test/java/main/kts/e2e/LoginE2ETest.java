@@ -36,7 +36,7 @@ public class LoginE2ETest {
     @Test
     public void LogInTestSuccess() throws InterruptedException {
 
-        driver.get("http://localhost:4200/login");
+        driver.get("https://localhost:4200/login");
 
         justWait();
 
@@ -46,14 +46,14 @@ public class LoginE2ETest {
         justWait();
         loginPage.ensureIsNotVisibleEmail();
         
-        assertEquals("http://localhost:4200/", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 
     }
     
     @Test
     public void LogInTestWrongPassword() throws InterruptedException {
 
-        driver.get("http://localhost:4200/login");
+        driver.get("https://localhost:4200/login");
 
         justWait();
 
@@ -66,7 +66,7 @@ public class LoginE2ETest {
         String toast = loginPage.ensureIsDisplayedToast();
         
         assertEquals("Wrong password or username", toast);
-        assertEquals("http://localhost:4200/login", driver.getCurrentUrl());
+        assertEquals("https://localhost:4200/login", driver.getCurrentUrl());
 
     }
 

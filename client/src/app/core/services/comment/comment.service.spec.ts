@@ -59,7 +59,7 @@ describe('CommentService', () => {
     
     commentService.getComment(1).subscribe(res => comment = res.body);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/comment/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/comment/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockComment);
     tick();
@@ -112,7 +112,7 @@ describe('CommentService', () => {
     
     commentService.getPage(0, 2, 1).subscribe(res => comments = res.body);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/comment/page/1?page=0&size=2');
+    const req = httpMock.expectOne('https://localhost:8443/api/comment/page/1?page=0&size=2');
     expect(req.request.method).toBe('GET');
     req.flush(mockComments);
     tick();
@@ -163,7 +163,7 @@ describe('CommentService', () => {
     
     commentService.save(comment).subscribe(res => comment = res);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/comment');
+    const req = httpMock.expectOne('https://localhost:8443/api/comment');
     expect(req.request.method).toBe('POST');
     req.flush(mockComment);
     tick();
@@ -206,7 +206,7 @@ describe('CommentService', () => {
     
     commentService.update(comment, 1).subscribe(res => comment = res);
     
-    const req = httpMock.expectOne('http://localhost:8080/api/comment/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/comment/1');
     expect(req.request.method).toBe('PUT');
     req.flush(mockComment);
     tick();
@@ -223,9 +223,113 @@ describe('CommentService', () => {
   it('delete() should query url and delete comment', fakeAsync(() => {
     commentService.delete(1).subscribe(res => {});
     
-    const req = httpMock.expectOne('http://localhost:8080/api/comment/1');
+    const req = httpMock.expectOne('https://localhost:8443/api/comment/1');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   }));
+
+  it("should throw deleting error",()=> {
+    let error:string = '';
+    commentService.delete(1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/comment/1');
+    expect(req.request.method).toBe('DELETE');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
+
+  it("get comment should throw error",()=> {
+    let error:string = '';
+    commentService.getComment(1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/comment/1');
+    expect(req.request.method).toBe('GET');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
+
+  it("getPage should throw error",()=> {
+    let error:string = '';
+    commentService.getPage(0, 2, 1).subscribe(null,e => {
+      error = e.statusText;
+    });
+    const req = httpMock.expectOne('https://localhost:8443/api/comment/page/1?page=0&size=2');
+    expect(req.request.method).toBe('GET');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
+
+  it("save should throw error",()=> {
+    const mockImageUser: Img = {
+      id: 1,
+    description: 'user image',
+      relativePath: 'relPath.jpg'
+    };
+
+  let comment: Comment = {
+    text: 'It was great expirience!',
+      nameSurname: 'Nebojsa Pecalica',
+      userId: 1,
+      userImage: mockImageUser,
+      culturalOfferId: 1
+
+  }
+  let error:string = '';
+  commentService.save(comment).subscribe(null, e =>{
+    error = e.statusText;
+  });
+    
+    const req = httpMock.expectOne('https://localhost:8443/api/comment');
+    expect(req.request.method).toBe('POST');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
+
+  it("update should throw error",()=> {
+    const mockImageUser: Img = {
+      id: 1,
+    description: 'user image',
+      relativePath: 'relPath.jpg'
+    };
+
+  let comment: Comment = {
+    text: 'It was great expirience!',
+      nameSurname: 'Nebojsa Pecalica',
+      userId: 1,
+      userImage: mockImageUser,
+      culturalOfferId: 1
+
+  }
+  let error:string = '';
+  commentService.update(comment, 1).subscribe(null,e => {
+    error = e.statusText;
+  });
+    const req = httpMock.expectOne('https://localhost:8443/api/comment/1');
+    expect(req.request.method).toBe('PUT');
+    req.flush("Error on server",{
+      status: 404,
+      statusText: 'Error on server'
+    });
+   
+    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+  });
 
 });

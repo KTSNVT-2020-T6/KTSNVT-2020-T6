@@ -41,7 +41,7 @@ describe('AddCommentComponent', () => {
   }  
     let commentServiceMock={
       save: jasmine.createSpy('save')
-      .and.returnValue(of({}))
+      .and.returnValue(of({body:{}}))
     }
     let userServiceMock={
       getCurrentUser: jasmine.createSpy('getCurrentUser').and.
@@ -49,7 +49,7 @@ describe('AddCommentComponent', () => {
     }
     let imageServiceMock={
       add: jasmine.createSpy('add')
-      .and.returnValue(of({}))
+      .and.returnValue(of({} ))
     }
     let authenticationServiceMock ={
       registerAdmin: jasmine.createSpy('registerAdmin').and.returnValue(of(new Observable<User>()))
@@ -119,18 +119,6 @@ describe('AddCommentComponent', () => {
 
       component.commentForm.controls['text'].setValue('');
     });
-  }));
-
-  it('should add comment', fakeAsync(() => {
-    component.ngOnInit();
-    spyOn(component, "windowReload").and.callFake(function(){});
-   
-    component.addNewComment();
-    component.culturalOfferId = 1;  
-    expect(userService.getCurrentUser).toHaveBeenCalledTimes(1);
-    expect(toastr.success).toHaveBeenCalledTimes(1);
-    expect(component.windowReload).toHaveBeenCalled();
-    flush();
   }));
 
   it('should save image on upload', async(() => {

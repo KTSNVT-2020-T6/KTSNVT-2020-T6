@@ -52,8 +52,6 @@ describe('EditProfileComponent', () => {
     };
   
     let adminServiceMock = {
-        //   edit: jasmine.createSpy('edit')
-        //       .and.returnValue(of({body: {}})), 
         editAdmin: jasmine.createSpy('editAdmin')
          .and.returnValue(of({body: {}})),
     };
@@ -150,7 +148,6 @@ describe('EditProfileComponent', () => {
     expect(regUserService.editUser).toHaveBeenCalled(); 
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
-    //expect(component.form.invalid).toBeTruthy();
   }));
 
   it('should save admin changes', fakeAsync(() => {

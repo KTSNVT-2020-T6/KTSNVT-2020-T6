@@ -134,7 +134,6 @@ describe('EditCulturalOfferComponent', () => {
         console.log(component.form.value);
         expect(component.form.value.name).toEqual('co name'); 
         expect(component.form.value.description).toEqual('desc');
-        //expect(component.form.value.typeDTO).toEqual(mockType);
         expect(component.form.value.image).toEqual('');
         expect(component.form.value.date).toEqual(mockCulturalOffer.date);
 
