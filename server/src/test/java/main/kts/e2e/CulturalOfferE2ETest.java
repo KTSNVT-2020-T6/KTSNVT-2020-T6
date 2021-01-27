@@ -48,7 +48,7 @@ public class CulturalOfferE2ETest {
 
     public void loginAdmin() throws InterruptedException {
     	 
-        driver.get ("https://localhost:4200/login");
+        driver.get("https://localhost:4200/login");
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         loginPage.getEmail().sendKeys("admin@gmail.com");;
         loginPage.getPassword().sendKeys("asdf");;
@@ -87,7 +87,7 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.getUnsubscribeButton().click();
         justWait(1000);
         driver.get("https://localhost:4200/culturaloffer/1");
-        //culturalOfferPage.ensureIsDisplayedSubscribedButton();
+       
         afterClick = Integer.parseInt(culturalOfferPage.getNumberOfSubscribed().getText());
         assertEquals(beforeClick-1, afterClick);
         
@@ -154,15 +154,13 @@ public class CulturalOfferE2ETest {
         
         justWait(1000);
         culturalOfferPage.getNewComment().sendKeys("Komentarisem ovu ponudu sa slikom");
-        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\\\Korisnik\\Desktop\\image.jpg");
+        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
         justWait(1000);
         culturalOfferPage.ensureIsDisplayedAddCommentButton();
         
         culturalOfferPage.getSendCommentButton().click();
         justWait(1000);
-       // String toast = culturalOfferPage.ensureIsDisplayedToast();
-        
-        //assertEquals("Comment send!\nSaved!", toast);
+      
         assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
        
        
@@ -286,9 +284,7 @@ public class CulturalOfferE2ETest {
       justWait(1000);
       culturalOfferPage.getEditCommentButtonSave().click();
       justWait(1000);
-//      String toast = culturalOfferPage.ensureIsDisplayedToast();
-//     
-//      assertEquals("Comment edited!\nSaved!", toast);
+
       assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
      
   }
@@ -385,9 +381,7 @@ public class CulturalOfferE2ETest {
         justWait(1000);
         culturalOfferPage.getAddPostButtonSave().click();
         justWait(1000);
-       // String toast = culturalOfferPage.ensureIsDisplayedToast();
-        
-        //assertEquals("Successfully added post!", toast);
+    
         assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
        
     }
