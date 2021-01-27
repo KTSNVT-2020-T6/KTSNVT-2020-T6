@@ -110,16 +110,6 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 		return repository.findByEmailAndActive(email, true);
 	}
 
-	public void subscribeUser(Long id) {
-		RegisteredUser registeredUser;
-		CulturalOffer culturalOffer = culturalOfferRepository.getOne(id);
-		Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-		String username = currentUser.getName();
-
-		registeredUser = repository.findByEmail(username);
-		registeredUser.getFavoriteCulturalOffers().add(culturalOffer);
-		repository.save(registeredUser);
-	}
 
 	public List<CulturalOffer> findAllSubscribedCO(Long id) {
 		RegisteredUser user = repository.findById(id).orElse(null);
@@ -137,6 +127,17 @@ public class RegisteredUserService implements ServiceInterface<RegisteredUser> {
 		return repository.findByIdCO(id);
 	}
 
+	public void subscribeUser(Long id) {
+		RegisteredUser registeredUser;
+		CulturalOffer culturalOffer = culturalOfferRepository.getOne(id);
+		Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = currentUser.getName();
+		registeredUser = repository.findByEmail(username);
+		
+		registeredUser.getFavoriteCulturalOffers().add(culturalOffer);
+		repository.save(registeredUser);
+	}
+	
 	public void unsubscribeUser(Long id) {
 		RegisteredUser registeredUser;
 		CulturalOffer culturalOffer = culturalOfferRepository.getOne(id);

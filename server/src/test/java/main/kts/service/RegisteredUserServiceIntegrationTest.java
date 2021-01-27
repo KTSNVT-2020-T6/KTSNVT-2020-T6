@@ -160,10 +160,23 @@ public class RegisteredUserServiceIntegrationTest {
 	roles = "REGISTERED_USER")
 	public void testSubscribeUser() throws Exception {
 
-		service.subscribeUser(DB_REGISTERED_USER_CO1);
+		service.subscribeUser(DB_REGISTERED_USER_CO);
 		List<CulturalOffer> found = service.findAllSubscribedCO(DB_REGISTERED_USER_ID1);
 		assertEquals(DB_REGISTERED_USER_CO_SIZE, found.size());
     }
+	
+	@Test
+	@Rollback(true)
+	@Transactional
+	@WithMockUser(username = REGISTERED_USER_EMAIL_LOGIN, password = REGISTERED_USER_PASSWORD_LOGIN,
+	roles = "REGISTERED_USER")
+	public void testUnsubscribeUser() throws Exception {
+
+		service.unsubscribeUser(DB_REGISTERED_USER_CO1);
+		List<CulturalOffer> found = service.findAllSubscribedCO(DB_REGISTERED_USER_ID1);
+		assertEquals(1, found.size());
+    }
+	
 	@Test
 	public void testfindByIdCO() throws Exception {
 		List<Long> found = service.findByIdCO(DB_REGISTERED_USER_CO);
