@@ -127,7 +127,8 @@ public class HomePageE2ETest {
         homePage.getAddNewAdminBtn().click();
         homePage.ensureIsDisplayedEmail();
         
-        homePage.getFirstName().sendKeys("Jana");       
+        homePage.getFirstName().sendKeys("Jana");  
+        justWait(1000);
         homePage.getLastName().sendKeys("Mara");
         homePage.getEmail().sendKeys("janamara123@gmail.com");
         homePage.getPassword().sendKeys("asdf");
@@ -213,9 +214,11 @@ public class HomePageE2ETest {
         homePage.getFilter().click();
         homePage.getSearchContent().click();
         homePage.getSearchContent().sendKeys("meep");
-        justWait(500);
+        justWait(1000);
         homePage.getSubmitSearch().click();
+        justWait(1000);
         homePage.ensureIsDisplayedGoToBtn();
+        justWait(1000);
         homePage.ensureIsNotVisiblePage3();
         assertEquals("https://localhost:4200/", driver.getCurrentUrl());
     }
@@ -235,6 +238,7 @@ public class HomePageE2ETest {
         homePage.getSearchCity().sendKeys("Court");
         justWait(500);
         homePage.getSubmitSearch().click();
+        justWait(1000);
         homePage.ensureIsDisplayedGoToBtn();
         homePage.ensureIsNotVisiblePage3();
         assertEquals("https://localhost:4200/", driver.getCurrentUrl());
@@ -251,7 +255,7 @@ public class HomePageE2ETest {
         homePage.getFilter().click();
         homePage.getSearchCity().click();
    
-        justWait(500);
+        justWait(1000);
         homePage.getSearchCity().sendKeys("Court");
         justWait(500);
         homePage.getSubmitSearch().click();

@@ -10,11 +10,11 @@ import { VerificationService } from '../../../core/services/verification/verific
 })
 export class VerificationPageComponent implements OnInit {
   private token: any;
-  public verificationMessage: string = '';
+  public verificationMessage = '';
 
   constructor(
     private verificationService: VerificationService,
-    private route : ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService) { }
 
@@ -23,16 +23,16 @@ export class VerificationPageComponent implements OnInit {
     this.token = this.route.snapshot.paramMap.get('token');
     this.verificationService.verify(this.token).subscribe(
       res => {
-        if(res == "redirect: access denied"){
+        if (res === 'redirect: access denied'){
           this.verificationMessage = 'Token is not valid or expired!';
           return;
         }
         this.router.navigate(['login']);
         this.toastr.success('Successfully verified!');
-      },error => {
+      }, error => {
         this.verificationMessage = 'Token is not valid or expired!';
       }
-      
+
     );
   }
 

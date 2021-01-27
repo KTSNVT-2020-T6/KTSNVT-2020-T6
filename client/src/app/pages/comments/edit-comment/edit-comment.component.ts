@@ -16,22 +16,21 @@ export class EditCommentComponent implements OnInit {
   editForm!: FormGroup;
   commentId!: number;
   imageAdded!: any;
-  comment: Comment = {'nameSurname' : '', "text": '', 'date' : new Date(), 'userId' : 1};
+  comment: Comment = { nameSurname : '', text: '', date : new Date(), userId : 1};
 
-  constructor(private fb: FormBuilder,
-		private commentService: CommentService,
+  constructor(
+    private fb: FormBuilder,
+    private commentService: CommentService,
     private route: ActivatedRoute,
     private imageService: ImageService,
     private toastr: ToastrService,
-    public dialogRef: MatDialogRef<EditCommentComponent>
-		) { 
+    public dialogRef: MatDialogRef<EditCommentComponent>) {
       this.createForm();
     }
-
-  createForm(){
+  createForm(): void {
     this.editForm = this.fb.group({
-      'text': [''],
-      'image': [''],
+      text: [''],
+      image: [''],
      });
   }
   ngOnInit(): void {
@@ -39,38 +38,38 @@ export class EditCommentComponent implements OnInit {
           res => {
             this.comment = res.body as Comment;
             this.editForm = this.fb.group({
-            'text': [this.comment.text],
-            'image': [this.comment.imageDTO],
+            text: [this.comment.text],
+            image: [this.comment.imageDTO],
            });
           }
       );
     }
 
-  onFileSelect(event: any) {
+  onFileSelect(event: any): void {
     if (event.target.files.length > 0) {
        const file = event.target.files[0];
-        this.imageAdded = file;
+       this.imageAdded = file;
      }
    }
 
-   editComment()
+   editComment(): void
    {
       console.log(this.comment.imageDTO?.id);
-     this.comment.text = this.editForm.value['text'];
-     this.comment.date = new Date();
-     if (this.imageAdded !== undefined)
+      this.comment.text = this.editForm.value.text;
+      this.comment.date = new Date();
+      if (this.imageAdded !== undefined)
       {
       const formData = new FormData();
       formData.append('file', this.imageAdded);
       this.imageService.add(formData).subscribe(
         res => {
           this.toastr.success('Saved!');
-          this.comment.imageDTO = {'id': res};
+          this.comment.imageDTO = {id: res};
           this.commentService.update(this.comment, this.commentId).subscribe(
-          res => {
+          response => {
             this.dialogRef.close();
-             this.toastr.success("Comment edited!");
-            })
+            this.toastr.success('Comment edited!');
+            });
           });
       }
       else
@@ -78,13 +77,13 @@ export class EditCommentComponent implements OnInit {
         this.commentService.update(this.comment, this.commentId).subscribe(
           res => {
             this.dialogRef.close();
-             this.toastr.success("Comment edited!");
-          })
+            this.toastr.success('Comment edited!');
+          });
       }
     }
-     
-    cancelClicked(){
+
+    cancelClicked(): void {
       this.dialogRef.close();
     }
-    
+
 }

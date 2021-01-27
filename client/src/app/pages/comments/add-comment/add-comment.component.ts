@@ -16,7 +16,7 @@ import { Comment } from '../../../core/model/Comment';
   styleUrls: ['./add-comment.component.scss']
 })
 export class AddCommentComponent implements OnInit {
-  @Input() culturalOfferId!:number;
+  @Input() culturalOfferId!: number;
   commentForm!: FormGroup;
   imageAdded: any;
   comment!: Comment;
@@ -25,78 +25,78 @@ export class AddCommentComponent implements OnInit {
   role!: string|undefined;
   culturalOffer!: CulturalOffer;
   subscribed!: number;
-  result:any;
+  result: any;
   checker!: boolean;
-  
+
   constructor(
     private fb: FormBuilder,
     private commentService: CommentService,
     private userService: UserService,
     private imageService: ImageService,
-		private toastr: ToastrService) {
+    private toastr: ToastrService) {
     this.createForm();
-    this.comment =  {'nameSurname' : '', "text": '', 'date' : new Date(), 'userId' : 0};
+    this.comment =  {nameSurname : '', text: '', date : new Date(), userId : 0};
   }
-   createForm(){
+   createForm(): void {
     this.commentForm = this.fb.group({
-      'text': [''],
-      'image':['']
+      text: [''],
+      image: ['']
        });
   }
   ngOnInit(): void {
   }
-  addNewComment(){
+  addNewComment(): void{
     this.userService.getCurrentUser().subscribe(
       res => {
         this.currentUser = res.body as User;
         this.comment.nameSurname = this.currentUser.firstName + ' ' + this.currentUser.lastName;
-        this.comment.text = this.commentForm.controls['text'].value;
+        this.comment.text = this.commentForm.controls.text.value;
         this.comment.culturalOfferId = this.culturalOfferId;
         this.comment.userId = this.currentUser.id;
         this.comment.date = new Date();
-        if(this.commentForm.controls['text'].value === '' && this.commentForm.controls['image'].value === '') {
+        if (this.commentForm.controls.text.value === '' && this.commentForm.controls.image.value === '') {
            this.toastr.error('Comment cannot be empty!');
            this.comment.imageDTO = undefined;
            return;
         }
-        else if (this.commentForm.controls['image'].value !== '')
+        else if (this.commentForm.controls.image.value !== '')
         {
           const formData = new FormData();
-          formData.append('file', this.commentForm.value['image']);
+          formData.append('file', this.commentForm.value.image);
           this.imageService.add(formData).subscribe(
-            res => {
-              this.comment.imageDTO = {'id': res};
+            responsee => {
+              this.comment.imageDTO = {id: responsee};
               this.commentService.save(this.comment).subscribe(
-              res => {
-                this.toastr.success("Comment send!");
-                this.commentForm.reset()
+                response => {
+                this.toastr.success('Comment send!');
+                this.commentForm.reset();
                 this.windowReload();
-              },error=>{
-                this.toastr.error("Error on server!");
+              }, error => {
+                this.toastr.error('Error on server!');
               }
-              )
+              );
           });
-          }else 
-          { 
+          }else
+          {
             this.commentService.save(this.comment).subscribe(
-              res => {
-                this.toastr.success("Comment send!");
-                this.commentForm.reset()
+              response => {
+                this.toastr.success('Comment send!');
+                this.commentForm.reset();
                 this.windowReload();
-               },error=>{
-                this.toastr.error("Error on server!");
+               }, error => {
+                this.toastr.error('Error on server!');
             }
-           )
+           );
         }
       });
   }
-  onFileSelect(event: any) {
+  onFileSelect(event: any): void {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-       this.commentForm.controls['image'].setValue(file);
+      this.commentForm.controls.image.setValue(file);
     }
   }
-  windowReload(){
+  windowReload(): void{
     window.location.reload();
   }
 }

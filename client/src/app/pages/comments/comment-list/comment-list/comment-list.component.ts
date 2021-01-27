@@ -18,68 +18,68 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./comment-list.component.scss']
 })
 export class CommentListComponent implements OnInit {
-  
-  @Input() culturalOfferId!:number;
+
+  @Input() culturalOfferId!: number;
   comments!: Comment[];
   pageSize: number;
-	currentPage: number;
+    currentPage: number;
   totalSize: number;
   userImage!: Img;
-  commentImage!:Img;
-  currentUser! : User ;
-  result:any;
+  commentImage!: Img;
+  currentUser!: User ;
+  result: any;
 
   constructor(private fb: FormBuilder,
               public dialog: MatDialog,
               private commentService: CommentService,
               private imageService: ImageService,
-              private userService : UserService,
+              private userService: UserService,
               private toastr: ToastrService,
               private sanitizer: DomSanitizer) {
     this.pageSize = 3;
-		this.currentPage = 1;
-		this.totalSize = 1;
+    this.currentPage = 1;
+    this.totalSize = 1;
   }
-  changePage(newPage: number) {
-		this.commentService.getPage(newPage - 1, this.pageSize, this.culturalOfferId).subscribe(
-			res => {
+  changePage(newPage: number): void {
+        this.commentService.getPage(newPage - 1, this.pageSize, this.culturalOfferId).subscribe(
+            res => {
         this.comments = res.body.content as Comment[];
-				this.totalSize = Number(res.body.totalElements);
-		
+        this.totalSize = Number(res.body.totalElements);
+
         this.comments.forEach(element => {
-          if(element.userImage?.id  !== undefined){
+          if (element.userImage?.id  !== undefined){
             this.imageService.getImage(element.userImage?.id).subscribe(
-              res => {
-                let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-                let objectURL = 'data:image/jpg;base64,' + base64String;   
+              response => {
+                const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+                const objectURL = 'data:image/jpg;base64,' + base64String;
                 element.srcUser = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    
+
               }, error => {
-                this.toastr.error("Cannot load image!");
-                
+                this.toastr.error('Cannot load image!');
+
               });
           }
-         
-          if(element.imageDTO?.id  !== undefined){
+
+          if (element.imageDTO?.id  !== undefined){
             this.imageService.getImage(element.imageDTO?.id).subscribe(
-              res => {
-                let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-                let objectURL = 'data:image/jpg;base64,' + base64String;   
+            response => {
+                const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+                const objectURL = 'data:image/jpg;base64,' + base64String;
                 element.srcComment = this.sanitizer.bypassSecurityTrustUrl(objectURL);
 
               }, error => {
-                this.toastr.error("Cannot load image!");
-                 
+                this.toastr.error('Cannot load image!');
+
               });
             }
        });
       }, error => {
-        this.toastr.error("Cannot load from server!");
+        this.toastr.error('Cannot load from server!');
       }
     );
-    
+
   }
-  editComment(comId: any){
+  editComment(comId: any): void {
 
     const dialogRef = this.dialog.open(EditCommentComponent);
     dialogRef.componentInstance.commentId = comId;
@@ -88,79 +88,79 @@ export class CommentListComponent implements OnInit {
       location.reload();
     });
   }
-  deleteComment(comId: any){
+  deleteComment(comId: any): void {
       this.commentService.delete(comId).subscribe(
-        res =>{
+        res => {
           location.reload();
-          this.toastr.success("Successfully deleted comment!");
+          this.toastr.success('Successfully deleted comment!');
         }, error => {
-          this.toastr.error("Cannot delete comment!");
-                  
+          this.toastr.error('Cannot delete comment!');
+
         }
       );
-      
+
   }
-  
+
   ngOnInit(): void {
     this.userService.getCurrentUser().subscribe(
       res => {
         this.currentUser = res.body as User;
       } , error => {
-        this.toastr.error("Cannot load user!");        
+        this.toastr.error('Cannot load user!');
       }
-    
-    )
+
+    );
     this.commentService.getPage(this.currentPage - 1, this.pageSize, this.culturalOfferId).subscribe(
       res => {
         this.comments = res.body.content as Comment[];
-				this.totalSize = Number(res.body.totalElements);
-		
+        this.totalSize = Number(res.body.totalElements);
+
         this.comments.forEach(element => {
-          if(element.userImage?.id  !== undefined){
+          if (element.userImage?.id  !== undefined){
             this.imageService.getImage(element.userImage?.id).subscribe(
-              res => {
-                let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-                let objectURL = 'data:image/jpg;base64,' + base64String;   
+                response => {
+                const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+                const objectURL = 'data:image/jpg;base64,' + base64String;
                 element.srcUser = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    
+
               }, error => {
-                this.toastr.error("Cannot load image!");
-                                
+                this.toastr.error('Cannot load image!');
+
               });
           }
-         
-          if(element.imageDTO?.id  !== undefined){
+
+          if (element.imageDTO?.id  !== undefined){
             this.imageService.getImage(element.imageDTO?.id).subscribe(
-              res => {
-                let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-                let objectURL = 'data:image/jpg;base64,' + base64String;   
+            response => {
+                const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+                const objectURL = 'data:image/jpg;base64,' + base64String;
                 element.srcComment = this.sanitizer.bypassSecurityTrustUrl(objectURL);
 
               }, error => {
-                this.toastr.error("Cannot load image!");
-                
-                
+                this.toastr.error('Cannot load image!');
+
+
               });
             }
         });
-      },error =>{
-        this.toastr.error("Cannot load from server!");
-        
+      }, error => {
+        this.toastr.error('Cannot load from server!');
+
       }
-     )
-     
+     );
+
     }
-  confirmDialog(id:any) {
+  confirmDialog(id: any): void  {
       const message = `Are you sure you want to do this?`;
-      const dialogData = new ConfirmDialogModel("Confirm Action", message);
+      const dialogData = new ConfirmDialogModel('Confirm Action', message);
       const dialogRef = this.dialog.open(ConfirmationComponent, {
-        maxWidth: "400px",
+        maxWidth: '400px',
         data: dialogData
       });
-  
+
       dialogRef.afterClosed().subscribe(dialogResult => {
         this.result = dialogResult;
-        if(this.result === true){
+        if (this.result === true){
           this.deleteComment(id);
         }
       });

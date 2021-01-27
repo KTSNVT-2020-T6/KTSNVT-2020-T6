@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService} from '../../../core/services/category/category.service';
-import { MatDialog ,MatDialogRef} from '@angular/material/dialog';
+import { MatDialog , MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-category',
@@ -18,46 +18,46 @@ export class AddCategoryComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-		private categoryService: CategoryService,
+    private categoryService: CategoryService,
     private toastr: ToastrService,
-    public dialogRef: MatDialogRef<AddCategoryComponent>    
+    public dialogRef: MatDialogRef<AddCategoryComponent>
   ) {
     this.createForm();
   }
 
-  ngOnInit() {
-    this.category = {id:0,description:'',name:''};
+  ngOnInit(): void {
+    this.category = {id: 0, description: '', name: ''};
   }
-  createForm() {
+  createForm(): void {
     this.categoryForm = this.fb.group({
-      'name': ['',Validators.required],
-      'description': ['',Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required]
        });
   }
-  
-  addCategory() {
-    this.category = this.categoryForm.value; 
-    if(this.categoryForm.invalid)
+
+  addCategory(): void {
+    this.category = this.categoryForm.value;
+    if (this.categoryForm.invalid)
     {
       return;
     }
     else{
       this.categoryService.add(this.category as Category).subscribe(
         result => {
-          this.toastr.success("Category successfully added");
+          this.toastr.success('Category successfully added');
           this.categoryForm.reset();
           this.dialogRef.close();
           this.windowReload();
         },
         error => {
-          this.toastr.error("Name already exists!");
+          this.toastr.error('Name already exists!');
         }
       );
-      
+
     }
-   
+
   }
-  windowReload(){
+  windowReload(): void{
     window.location.reload();
   }
 

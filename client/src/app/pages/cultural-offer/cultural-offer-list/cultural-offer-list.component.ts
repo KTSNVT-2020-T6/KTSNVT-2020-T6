@@ -23,16 +23,16 @@ import { EventEmitter } from '@angular/core';
 })
 export class CulturalOfferListComponent implements OnInit {
   @Input() culturalOfferList!: CulturalOffer[];
- 
+
   constructor( private fb: FormBuilder,
-    private coService: CulturalOfferDetailsService,
-    private route : ActivatedRoute,
-    private router: Router,
-    private imageService: ImageService,
-    private toastr: ToastrService,
-    private sanitizer: DomSanitizer) { }
+               private coService: CulturalOfferDetailsService,
+               private route: ActivatedRoute,
+               private router: Router,
+               private imageService: ImageService,
+               private toastr: ToastrService,
+               private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
   }
-  
+
 }

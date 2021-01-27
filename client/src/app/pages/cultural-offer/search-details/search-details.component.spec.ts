@@ -12,7 +12,7 @@ import { SearchDetailsComponent } from './search-details.component';
 import { ActivatedRouteStub } from 'src/app/testing/router-stubs';
 
 class MatDialogRefMock {
-    close(value = '') {
+    close(value = ''): void{
 
     }
 }
@@ -20,24 +20,24 @@ class MatDialogRefMock {
 describe('SearchDetailsComponent', () => {
   let component: SearchDetailsComponent;
   let fixture: ComponentFixture<SearchDetailsComponent>;
-  let route : any;
-  let router : any;
+  let route: any;
+  let router: any;
   let toastr: any;
   let dialogRef: any;
 
-let routerMock= {
+  const routerMock = {
     navigate: jasmine.createSpy('navigate')
-}
-let activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
-activatedRouteStub.testParams = {id: 1};
+};
+  const activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
+  activatedRouteStub.testParamss = {id: 1};
 
 
-const toastrMocked = {
+  const toastrMocked = {
     success: jasmine.createSpy('success'),
     error: jasmine.createSpy('error')
   };
 
- beforeEach(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
        declarations: [ SearchDetailsComponent ],
        imports: [ FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot()],
@@ -55,7 +55,7 @@ const toastrMocked = {
     toastr = TestBed.inject(ToastrService);
     dialogRef = TestBed.inject(MatDialogRef);
     route = TestBed.inject(ActivatedRoute);
-  }); 
+  });
 
   it('should create component', fakeAsync(() => {
     expect(component).toBeTruthy();
@@ -67,19 +67,19 @@ const toastrMocked = {
   });
 
   it('should set input in reactive form', fakeAsync(() => {
-    fixture.detectChanges();  
+    fixture.detectChanges();
     fixture.whenStable().then(() => {
         expect(fixture.debugElement.query(By.css('#searchContent')).nativeElement.value).toEqual('');
         expect(fixture.debugElement.query(By.css('#searchCity')).nativeElement.value).toEqual('');
 
-        let text = fixture.debugElement.query(By.css('#searchContent')).nativeElement;
+        const text = fixture.debugElement.query(By.css('#searchContent')).nativeElement;
         text.value = 'Mee';
-        
 
-        text.dispatchEvent(new Event('input')); 
-        
-        let controlText = component.searchForm.controls['content'];
-        
+
+        text.dispatchEvent(new Event('input'));
+
+        const controlText = component.searchForm.controls.content;
+
 
         expect(controlText.value).toEqual('Mee');
 
@@ -87,23 +87,23 @@ const toastrMocked = {
 
   }));
 
-  it('should search', fakeAsync(() => {  
+  it('should search', fakeAsync(() => {
     component.ngOnInit();
     spyOn(dialogRef, 'close');
-    component.searchForm.controls['content'].setValue("Mee");
-    component.searchForm.controls['city'].setValue('');
-       
+    component.searchForm.controls.content.setValue('Mee');
+    component.searchForm.controls.city.setValue('');
+
     expect(component.searchForm.valid).toBeTruthy();
-    
+
 
     spyOn(component.done, 'emit');
-    component.search(); 
+    component.search();
     expect(component.done.emit).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
-    
+
     }));
 
-  
+
 
 
 });

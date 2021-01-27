@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { fakeAsync, tick} from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from "../../model/User";
+import { User } from '../../model/User';
 import { UserService } from '../user/user.service';
 import { AdminService } from './admin.service';
 
@@ -25,13 +25,13 @@ describe('AdminService', () => {
     httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
   });
-  
+
   afterEach(() => {
     httpMock.verify();
   });
 
   it('editAdmin() should query url and edit an admin', fakeAsync(() => {
-    let user: User = {  
+    let user: User = {
       id: 1,
       firstName: 'Jovan',
       lastName: 'Jovic',
@@ -40,10 +40,10 @@ describe('AdminService', () => {
       active:  true,
       verified: true,
       idImageDTO: 1,
-      src: '' 
+      src: ''
     };
 
-    const mockUser: User = 
+    const mockUser: User =
     {
       id: 1,
       firstName: 'Jovan',
@@ -53,16 +53,16 @@ describe('AdminService', () => {
       active:  true,
       verified: true,
       idImageDTO: 1 ,
-      src: ''      
+      src: ''
     };
-    
+
     adminService.editAdmin(user).subscribe(res => user = res);
-    
+
     const req = httpMock.expectOne('https://localhost:8443/api/admin/1');
     expect(req.request.method).toBe('PUT');
     req.flush(mockUser);
     tick();
-    
+
     expect(user).toBeDefined();
     expect(user.id).toEqual(1);
     expect(user.firstName).toEqual('Jovan');
@@ -82,7 +82,7 @@ describe('AdminService', () => {
   });
 
   it('announceChange() should emit the event RegenerateData', fakeAsync(() => {
-    let counter: number = 0;
+    let counter = 0;
 
     adminService.RegenerateData$.subscribe(() =>  counter++);
     adminService.announceChange();
@@ -91,17 +91,15 @@ describe('AdminService', () => {
     expect(counter).toBe(1);
   }));
 
-  it("should throw error",()=> {
-    let error:string = '';
-    adminService.delete(1).subscribe(null,e => {
-      error = e.statusText;
-    });
+  it('should throw error', () => {
+    let errorr = '';
+    adminService.delete(1).subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/api/admin/1');
     expect(req.request.method).toBe('DELETE');
-    req.flush("Error deleting",{
+    req.flush('Error deleting', {
       status: 404,
       statusText: 'Error deleting'
     });
-    expect(error.toString().indexOf("Error deleting") >= 0).toBeTruthy();
+    expect(errorr.toString().indexOf('Error deleting') >= 0).toBeTruthy();
   });
 });

@@ -7,36 +7,37 @@ import { environment } from 'src/environments/environment';
 
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class ImageService {
     private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-	private RegenerateData = new Subject<void>();
+    private RegenerateData = new Subject<void>();
 
     RegenerateData$ = this.RegenerateData.asObservable();
 
-    announceChange() {
+    announceChange(): void{
         this.RegenerateData.next();
-	}
-	
-	constructor(
-		private http: HttpClient
+    }
+
+    constructor(
+        private http: HttpClient
     ) {}
-    
+
     getImage(id: any): Observable<any>{
-		let queryParams = {};
-		queryParams = {
-			headers: this.headers,
-			observe: 'response',
-			params: new HttpParams(),
-			responseType: 'arraybuffer'
-		};
-		
+        let queryParams = {};
+        queryParams = {
+            headers: this.headers,
+            observe: 'response',
+            params: new HttpParams(),
+            responseType: 'arraybuffer'
+        };
+
         return this.http.get(`${environment.baseUrl}/${environment.image}/${id}`, queryParams);
-	}
-	
-	add(image: FormData): Observable<any> {
-		return this.http.post(`${environment.baseUrl}/${environment.image}`, image, {headers: new HttpHeaders(), reportProgress: true}).pipe(map(res => res));
-	}
+    }
+
+    add(image: FormData): Observable<any> {
+        return this.http.post(`${environment.baseUrl}/${environment.image}`,
+         image, {headers: new HttpHeaders(), reportProgress: true}).pipe(map(res => res));
+    }
 }

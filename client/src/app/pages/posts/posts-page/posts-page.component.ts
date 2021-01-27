@@ -19,21 +19,21 @@ import { PostService } from '../../../core/services/post/post.service';
 export class PostsPageComponent implements OnInit {
   posts!: Post[];
   pageSize: number;
-	currentPage: number;
+  currentPage: number;
   totalSize: number;
   image: any;
   role!: string|undefined;
   result: any;
 
-
-  constructor(private postService: PostService,
+  constructor(
+    private postService: PostService,
     private culturalOfferService: CulturalOfferDetailsService,
     private imageService: ImageService,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer,
     public dialog: MatDialog) {
       this.pageSize = 3;
-		  this.currentPage = 1;
+      this.currentPage = 1;
       this.totalSize = 1;
       this.posts = [];
   }
@@ -41,42 +41,38 @@ export class PostsPageComponent implements OnInit {
   ngOnInit(): void {
     this.getRole();
     this.postService.getPage(this.currentPage - 1, this.pageSize).subscribe(
-			res => {
+    res => {
         this.posts = res.body.content as Post[];
         this.totalSize = Number(res.body.totalElements);
-     
+
         this.posts.forEach(element => {
           this.image = element.imageDTO as Img;
-      
           this.culturalOfferService.getOne(element.culturalOfferId).subscribe(
-            res => {
-              const co = res.body as CulturalOffer;
+            response => {
+              const co = response.body as CulturalOffer;
               element.culturalOfferName = co.name;
             }, error => {
-              console.log(error.error);               
+              console.log(error.error);
             });
-          if(this.image == null){
+          if (this.image === null || this.image === undefined){
               return;
-            }
+          }
           this.imageService.getImage(this.image.id).subscribe(
-            res => {
-              let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-              let objectURL = 'data:image/jpg;base64,' + base64String;           
+            response => {
+              const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+              const objectURL = 'data:image/jpg;base64,' + base64String;
               element.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);
             }, error => {
               console.log(error.error);
             });
        });
-      
-
-			}, error => {
+      }, error => {
         console.log(error.console.error);
-        
       }
     );
   }
 
-  getRole() {
+  getRole(): void {
     const item = localStorage.getItem('user');
     if (!item) {
       this.role = undefined;
@@ -85,70 +81,60 @@ export class PostsPageComponent implements OnInit {
     const jwt: JwtHelperService = new JwtHelperService();
     this.role = jwt.decodeToken(item).role;
   }
-  
-  changePage(newPage: number) {
-		this.postService.getPage(newPage - 1, this.pageSize).subscribe(
-			res => {
+
+  changePage(newPage: number): void {
+    this.postService.getPage(newPage - 1, this.pageSize).subscribe(
+    res => {
         this.posts = res.body.content as Post[];
         this.totalSize = Number(res.body.totalElements);
-     
         this.posts.forEach(element => {
           this.image = element.imageDTO as Img;
-      
           this.culturalOfferService.getOne(element.culturalOfferId).subscribe(
-            res => {
-              const co = res.body as CulturalOffer;
+            response => {
+              const co = response.body as CulturalOffer;
               element.culturalOfferName = co.name;
             }, error => {
-              console.log(error.error);               
+              console.log(error.error);
             });
-          if(this.image == null){
+          if (this.image === null || this.image === undefined){
               return;
             }
           this.imageService.getImage(this.image.id).subscribe(
-            res => {
-              let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-              let objectURL = 'data:image/jpg;base64,' + base64String;           
+            response => {
+              const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+              const objectURL = 'data:image/jpg;base64,' + base64String;
               element.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);
             }, error => {
               console.log(error.error);
             });
        });
-      
-
-			}, error => {
+      }, error => {
         console.log(error.console.error);
-        
       }
     );
-	}
-  
-  deletePost(postId: any)
-  {
-    this.postService.delete(postId).subscribe(
-      res => {
-        this.toastr.success("Post successfully deleted.");
-        window.location.reload();
-    },error =>{
-      this.toastr.error("Cannot delete this post!");
-      
-    });
   }
 
-  confirmDialog(id:any) {
+  deletePost(postId: any): void {
+    this.postService.delete(postId).subscribe(
+      res => {
+        this.toastr.success( 'Post successfully deleted. ');
+        window.location.reload();
+    }, error => {
+      this.toastr.error( 'Cannot delete this post! ');
+    });
+  }
+  confirmDialog(id: any): void {
     const message = `Are you sure you want to do this?`;
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogData = new ConfirmDialogModel( 'Confirm Action ', message);
     const dialogRef = this.dialog.open(ConfirmationComponent, {
-      maxWidth: "400px", 
+      maxWidth:  '400px ',
       data: dialogData
     });
-
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
-      if(this.result === true){
+      if (this.result === true){
         this.deletePost(id);
       }
     });
   }
-
 }

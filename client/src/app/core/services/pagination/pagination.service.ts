@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class PaginationService {
 
-	constructor() { }
+    constructor() { }
 
-	public getNoPages(totalItems: number, pageSize: number): number {
-		return Math.ceil(totalItems / pageSize);
-	}
+    public getNoPages(totalItems: number, pageSize: number): number {
+        return Math.ceil(totalItems / pageSize);
+    }
 }

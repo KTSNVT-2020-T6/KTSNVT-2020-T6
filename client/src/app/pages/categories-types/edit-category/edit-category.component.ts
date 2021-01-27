@@ -21,7 +21,7 @@ export class EditCategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<EditCategoryComponent>
-  ) { 
+  ) {
     this.createForm();
   }
 
@@ -30,41 +30,41 @@ export class EditCategoryComponent implements OnInit {
       res => {
         this.category = res.body as Category;
         this.categoryForm = this.fb.group({
-          'name': [this.category.name],
-          'description': [this.category.description],
+          name: [this.category.name],
+          description: [this.category.description],
            });
       }
     );
   }
-  createForm() {
+  createForm(): void{
     this.categoryForm = this.fb.group({
-      'name': ['', Validators.required],
-      'description': ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required]
        });
   }
-  editCategory(){
-   
+  editCategory(): void{
+
     this.category = this.categoryForm.value;
-    if(this.category.name === '' || this.category.name === null){
+    if (this.category.name === '' || this.category.name === null){
       return;
     }
     this.categoryService.update(this.category as Category, this.catId).subscribe(
       result => {
-        this.toastr.success("Successful!");
+        this.toastr.success('Successful!');
         this.dialogRef.close();
         this.windowReload();
       }, error => {
-        this.dialogRef.close()
-        this.toastr.error("Cannot edit category!");
+        this.dialogRef.close();
+        this.toastr.error('Cannot edit category!');
       }
     );
     this.categoryForm.reset();
     }
-  cancelClicked(){
+  cancelClicked(): void{
     this.dialogRef.close();
   }
-  windowReload(){
+  windowReload(): void{
     window.location.reload();
   }
-    
+
 }

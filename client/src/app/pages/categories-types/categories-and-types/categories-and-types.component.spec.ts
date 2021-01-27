@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, flush, TestBed } from '@angular/core/testing';
+import { ComponentFixture, flush, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,17 +15,17 @@ import { CategoriesAndTypesComponent } from './categories-and-types.component';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../../material-module';
 class MdDialogMock {
-    open() {
+    open(): any{
       return {
         afterClosed: jasmine.createSpy('afterClosed').and.returnValue(of(true))
       };
     }
-  };
+  }
 
 describe('CategoriesAndTypesComponent', () => {
   let component: CategoriesAndTypesComponent;
   let fixture: ComponentFixture<CategoriesAndTypesComponent>;
-  let dialog: MdDialogMock;
+  let dialog: MatDialog;
   let router: any;
   let toastr: any;
   let catService: any;
@@ -33,47 +33,47 @@ describe('CategoriesAndTypesComponent', () => {
 
 
   beforeEach(() => {
-    let dialogMock = {
+    const dialogMock = {
         open: jasmine.createSpy('open').and.callThrough(),
         afterClosed: jasmine.createSpy('afterClosed').and.callThrough(),
-    }
-    let routerMock = {
+    };
+    const routerMock = {
         navigate: jasmine.createSpy('navigate')
     };
     const toastrMocked = {
         success: jasmine.createSpy('success'),
         error: jasmine.createSpy('error')
     };
-    let catServiceMock = {
+    const catServiceMock = {
         getAll: jasmine.createSpy('getAll')
-        .and.returnValue(of({body: [{}, {}] })), 
+        .and.returnValue(of({body: [{}, {}] })),
         delete: jasmine.createSpy('delete')
         .and.returnValue(of()),
     };
-    let typeServiceMock = {
+    const typeServiceMock = {
         getTypesOfCategory: jasmine.createSpy('getTypesOfCategory')
-        .and.returnValue(of({body: [{}, {}] })), 
+        .and.returnValue(of({body: [{}, {}] })),
         delete: jasmine.createSpy('delete')
         .and.returnValue(of()),
     };
     TestBed.configureTestingModule({
         declarations: [ CategoriesAndTypesComponent],
         imports: [ToastrModule.forRoot(), FormsModule, ReactiveFormsModule, MatDialogModule,
-         MatFormFieldModule,MaterialModule
+         MatFormFieldModule, MaterialModule
          ],
-        providers:[ 
+        providers: [
             { provide: CategoryService, useValue: catServiceMock },
             { provide: TypeService, useValue: typeServiceMock },
             { provide: Router, useValue: routerMock },
             { provide: MatDialog, useClass: MdDialogMock},
             { provide: ToastrService, useValue: toastrMocked }]
-     })
+     });
     fixture = TestBed.createComponent(CategoriesAndTypesComponent);
     component = fixture.componentInstance;
     catService = TestBed.inject(CategoryService);
     typeService = TestBed.inject(TypeService);
     router = TestBed.inject(Router);
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     toastr = TestBed.inject(ToastrService);
     fixture.detectChanges();
   });
@@ -81,9 +81,9 @@ describe('CategoriesAndTypesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should fetch the categories and types on init', async(() => {
+  it('should fetch the categories and types on init', waitForAsync(() => {
     component.ngOnInit();
-   
+
     expect(catService.getAll).toHaveBeenCalled();
     expect(component.categories.length).toEqual(2);
     fixture.whenStable()
@@ -91,31 +91,31 @@ describe('CategoriesAndTypesComponent', () => {
           component.categories.forEach(element => {
             component.getTypes(element.id);
             expect(typeService.getTypesOfCategory).toHaveBeenCalled();
-          })
-        
+          });
+
       });
   }));
 
   it('should open dialog for edit type on click  ', fakeAsync(() => {
     expect(component).toBeTruthy();
-    let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
     dialogRefSpyObj.componentInstance = { typeId: '' };
-    spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
+    spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     component.editType(1);
     expect(dialog.open).toHaveBeenCalled();
     flush();
-    
+
   }));
 
   it('should open dialog for edit category on click  ', fakeAsync(() => {
     expect(component).toBeTruthy();
-    let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
     dialogRefSpyObj.componentInstance = { catId: '' };
-    spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
+    spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     component.editCategory(1);
     expect(dialog.open).toHaveBeenCalled();
     flush();
-    
+
   }));
   it('should open dialog for new type on click  ', fakeAsync(() => {
     expect(component).toBeTruthy();
@@ -123,7 +123,7 @@ describe('CategoriesAndTypesComponent', () => {
     component.newType();
     expect(dialog.open).toHaveBeenCalled();
     flush();
-    
+
   }));
   it('should open dialog for new category on click  ', fakeAsync(() => {
     expect(component).toBeTruthy();
@@ -131,7 +131,7 @@ describe('CategoriesAndTypesComponent', () => {
     component.newCategory();
     expect(dialog.open).toHaveBeenCalled();
     flush();
-    
+
   }));
   it('should open dialog for delete category on click for delete and delete', fakeAsync(() => {
     expect(component).toBeTruthy();

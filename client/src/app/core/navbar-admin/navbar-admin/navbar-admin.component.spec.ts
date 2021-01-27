@@ -27,32 +27,32 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MaterialModule } from 'src/app/pages/material-module';
 class MdDialogMock {
-    open() {
+    open(): any {
       return {
         afterClosed: jasmine.createSpy('afterClosed').and.returnValue(of(true))
       };
     }
-  };
+  }
 describe('NavbarAdminComponent', () => {
   let component: NavbarAdminComponent;
   let fixture: ComponentFixture<NavbarAdminComponent>;
   let location: Location;
   let router: Router;
-  let dialog: MdDialogMock;
+  let dialog: MatDialog;
   let debugElement: DebugElement;
   let authenticationService: any;
-  
+
   beforeEach(() => {
-    let dialogMock = {
+    const dialogMock = {
         open: jasmine.createSpy('open').and.callThrough(),
         afterClosed: jasmine.createSpy('afterClosed').and.callThrough(),
-      }
-    let routerMock = {
+      };
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
-    let authenticationServiceMock ={
+    const authenticationServiceMock = {
         signOut: jasmine.createSpy('signOut').and.returnValue(of({ subscribe: () => {} })),
-    }
+    };
     TestBed.configureTestingModule({
        declarations: [HomePageComponent , NavbarAdminComponent],
        imports: [ MaterialModule,
@@ -60,35 +60,35 @@ describe('NavbarAdminComponent', () => {
             {path: '', component: HomePageComponent},
             {path: 'posts', component: PostsPageComponent},
             {path: 'profileDetails', component: ProfileDetailsComponent},
-            
+
         ])
       ],
-       providers:    [ 
+       providers:    [
             { provide: AuthenticationService, useValue: authenticationServiceMock },
-            { provide: MatDialog, useClass: MdDialogMock}]       
+            { provide: MatDialog, useClass: MdDialogMock}]
     });
-   
-    location = TestBed.get(Location);
+
+    location = TestBed.inject(Location);
     fixture = TestBed.createComponent(NavbarAdminComponent);
     debugElement = fixture.debugElement;
     component = fixture.componentInstance;
     authenticationService = TestBed.inject(AuthenticationService);
-    router = TestBed.get(Router);
-    dialog = TestBed.get(MatDialog);
-  }); 
+    router = TestBed.inject(Router);
+    dialog = TestBed.inject(MatDialog);
+  });
   it('should create commponent', fakeAsync(() => {
     expect(component).toBeTruthy();
   }));
   it('check redirection on home page', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#home')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/');
    }));
   it('check redirection on news page', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#news')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/posts');
@@ -96,7 +96,7 @@ describe('NavbarAdminComponent', () => {
 
   it('check redirection on page for profile details', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#profile')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/profileDetails');
@@ -113,7 +113,7 @@ describe('NavbarAdminComponent', () => {
   }));
 
   it('should not have the menu open', async () => {
-    let matMenu = fixture.nativeElement.parentNode.querySelector('.mat-menu-panel');
+    const matMenu = fixture.nativeElement.parentNode.querySelector('.mat-menu-panel');
     expect(matMenu).toBeFalsy();
 
   });
@@ -123,7 +123,7 @@ describe('NavbarAdminComponent', () => {
     component.newCulturalOffer();
     expect(dialog.open).toHaveBeenCalled();
     flush();
-  })); 
+  }));
 
   it('should open dialog add new admin on mat-menu', fakeAsync(() => {
     expect(component).toBeTruthy();
@@ -132,6 +132,6 @@ describe('NavbarAdminComponent', () => {
     expect(dialog.open).toHaveBeenCalled();
     flush();
   }));
-  
+
 
 });

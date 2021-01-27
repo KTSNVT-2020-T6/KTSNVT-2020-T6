@@ -1,4 +1,4 @@
-import { Img } from "./Image";
+import { Img } from './Image';
 export interface User{
     id?: number;
     firstName?: string;
@@ -8,5 +8,5 @@ export interface User{
     active?: boolean;
     verified?: boolean;
     idImageDTO?: any;
-    src?:any;
+    src?: any;
 }

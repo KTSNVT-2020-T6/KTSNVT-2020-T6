@@ -11,16 +11,16 @@ export const environment = {
   signOut: 'auth/sign-out',
   changePassword: 'auth/change-password',
   category: 'api/category',
-  admin:'api/admin',
-  registeredUser:'api/registered_user',
-  user:'api/user',
-  culturalOffer:'api/cultural-offer',
-  type:'api/type',
-  post:'api/post',
-  comment:'api/comment',
-  verification:'api/verification',
-  rate:'api/rate',
-  image:'api/image'
+  admin: 'api/admin',
+  registeredUser: 'api/registered_user',
+  user: 'api/user',
+  culturalOffer: 'api/cultural-offer',
+  type: 'api/type',
+  post: 'api/post',
+  comment: 'api/comment',
+  verification: 'api/verification',
+  rate: 'api/rate',
+  image: 'api/image'
 
 };
 

@@ -4,31 +4,31 @@ import { AuthenticationService } from '../../core/services/authentication/authen
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class RoleGuard implements CanActivate {
-	constructor(
-		public auth: AuthenticationService,
-		public router: Router
-	) { }
+    constructor(
+        public auth: AuthenticationService,
+        public router: Router
+    ) { }
 
-	canActivate(route: ActivatedRouteSnapshot): boolean {
-		const expectedRoles: string = route.data.expectedRoles;
-	
-		const token = localStorage.getItem('user') || '';
-		const jwt: JwtHelperService = new JwtHelperService();
-		let accessToken = JSON.parse(token);
-		if (!token) {
-			this.router.navigate(['/login']);
-			return false;
-		}
-		const roles: string[] = expectedRoles.split('|', 2);
-		const info = jwt.decodeToken(token);
+    canActivate(route: ActivatedRouteSnapshot): boolean {
+        const expectedRoles: string = route.data.expectedRoles;
 
-		if (roles.indexOf(info.role) === -1) {
-			this.router.navigate(['/']);
-			return false;
-		}
-		return true;
-	}
+        const token = localStorage.getItem('user') || '';
+        const jwt: JwtHelperService = new JwtHelperService();
+        const accessToken = JSON.parse(token);
+        if (!token) {
+            this.router.navigate(['/login']);
+            return false;
+        }
+        const roles: string[] = expectedRoles.split('|', 2);
+        const info = jwt.decodeToken(token);
+
+        if (roles.indexOf(info.role) === -1) {
+            this.router.navigate(['/']);
+            return false;
+        }
+        return true;
+    }
 }

@@ -18,18 +18,18 @@ describe('CategoryService', () => {
           imports: [HttpClientTestingModule],
            providers:    [CategoryService ]
         });
-    
+
         injector = getTestBed();
         categoryService = TestBed.inject(CategoryService);
         httpClient = TestBed.inject(HttpClient);
         httpMock = TestBed.inject(HttpTestingController);
       });
-      afterEach(() => {
+    afterEach(() => {
         httpMock.verify();
       });
-      it('getAll() should return some categories',fakeAsync(() => {
+    it('getAll() should return some categories', fakeAsync(() => {
         let categories: Category[] = [];
-        
+
         const mockCategories: Category[] = [
             {
              id: 1,
@@ -39,76 +39,76 @@ describe('CategoryService', () => {
            {
             id: 2,
             name: 'manifestation',
-            description: 'manifestation in serbia'            
+            description: 'manifestation in serbia'
            }];
-        
+
         categoryService.getAll().subscribe(data => {
-          categories = data.body;        
+          categories = data.body;
         });
-        
+
         const req = httpMock.expectOne('https://localhost:8443/api/category');
         expect(req.request.method).toBe('GET');
         req.flush(mockCategories);
-    
+
         tick();
-    
+
         expect(categories.length).toEqual(2, 'should contain given amount of students');
         expect(categories[0].id).toEqual(1);
         expect(categories[0].name).toEqual('institution');
         expect(categories[0].description).toEqual('institution in serbia');
-    
+
         expect(categories[1].id).toEqual(2);
         expect(categories[1].name).toEqual('manifestation');
         expect(categories[1].description).toEqual('manifestation in serbia');
-       
+
      }));
 
-     it('add()  should query url and save a category',fakeAsync(() => {
+    it('add()  should query url and save a category', fakeAsync(() => {
       let newCategory: Category = {
         id: 1,
         name: 'institution',
         description: 'institution in serbia'
-      }
-      
-      const mockCategory: Category = 
+      };
+
+      const mockCategory: Category =
           {
            id: 1,
            name: 'institution',
            description: 'institution in serbia'
           };
-      
+
       categoryService.add(newCategory).subscribe(data => newCategory = data);
-      
-      
+
+
       const req = httpMock.expectOne('https://localhost:8443/api/category');
       expect(req.request.method).toBe('POST');
       req.flush(mockCategory);
-  
+
       tick();
-  
+
       expect(newCategory).toBeDefined();
       expect(newCategory.id).toEqual(1);
       expect(newCategory.name).toEqual('institution');
       expect(newCategory.description).toEqual('institution in serbia');
    }));
 
-   it('getCategory() should query url and get category',fakeAsync(() => {
-    let category: Category = { 
+    it('getCategory() should query url and get category', fakeAsync(() => {
+    let category: Category = {
         id: 1,
         name: 'institution',
         description: 'institution in serbia'
     };
-    
-    const mockCategory: Category = 
+
+    const mockCategory: Category =
         {
          id: 1,
          name: 'institution',
          description: 'institution in serbia'
         };
-    
+
     categoryService.getCategory(1).subscribe(data => category = data.body);
-    
-    
+
+
     const req = httpMock.expectOne('https://localhost:8443/api/category/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockCategory);
@@ -127,154 +127,144 @@ describe('CategoryService', () => {
           name: 'institution',
           description: 'institution in serbia'
          };
-      
-  
-      const mockCategory: Category = 
+
+
+      const mockCategory: Category =
       {
         id: 1,
         name: 'institution',
-        description: 'institution in serbia'           
+        description: 'institution in serbia'
       };
-      
+
       categoryService.update(category, 1).subscribe(res => category = res
       );
-      
+
       const req = httpMock.expectOne('https://localhost:8443/api/category/1');
       expect(req.request.method).toBe('PUT');
       req.flush(mockCategory);
-      
+
       tick();
       expect(category).toBeDefined();
       expect(category.id).toEqual(1);
       expect(category.name).toEqual('institution');
       expect(category.description).toEqual('institution in serbia');
     }));
-  
-     it('delete() should query url and delete a category', () => {
+
+    it('delete() should query url and delete a category', () => {
       categoryService.delete(1).subscribe(res => { });
-      
+
       const req = httpMock.expectOne('https://localhost:8443/api/category/1');
       expect(req.request.method).toBe('DELETE');
       req.flush({});
     });
 
-    it("should throw deleting error",()=> {
-      let error:string = '';
-      categoryService.delete(1).subscribe(null,e => {
-        error = e.statusText;
-      });
+    it('should throw deleting error', () => {
+      let errorr = '';
+      categoryService.delete(1).subscribe({error: (e) => errorr = e.statusText});
       const req = httpMock.expectOne('https://localhost:8443/api/category/1');
       expect(req.request.method).toBe('DELETE');
-      req.flush("Error on server",{
+      req.flush('Error on server', {
         status: 404,
         statusText: 'Error on server'
       });
-     
-      expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+      expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
     });
-    it("should throw error on adding category",()=> {
-      let newCategory: Category = {
+    it('should throw error on adding category', () => {
+      const newCategory: Category = {
         id: 1,
         name: 'institution',
         description: 'institution in serbia'
-      }
-      
-      const mockCategory: Category = 
+      };
+
+      const mockCategory: Category =
           {
            id: 1,
            name: 'institution',
            description: 'institution in serbia'
           };
-      
-      let error:string = '';
-      categoryService.add(newCategory).subscribe(null,e => {
-        error = e.statusText;
-      });
+
+      let errorr = '';
+      categoryService.add(newCategory).subscribe({error: (e) => errorr = e.statusText});
       const req = httpMock.expectOne('https://localhost:8443/api/category');
       expect(req.request.method).toBe('POST');
-      req.flush("Error on server",{
+      req.flush('Error on server', {
         status: 404,
         statusText: 'Error on server'
       });
-     
-      expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+      expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
     });
-      it("should throw error",()=> {
-    
-        let error:string = '';
-        categoryService.delete(1).subscribe(null,e => {
-          error = e.statusText;
-        });
+    it('should throw error', () => {
+
+        let errorr = '';
+        categoryService.delete(1).subscribe({error: (e) => errorr = e.statusText});
         const req = httpMock.expectOne('https://localhost:8443/api/category/1');
         expect(req.request.method).toBe('DELETE');
-        req.flush("Error on server",{
+        req.flush('Error on server', {
           status: 404,
           statusText: 'Error on server'
         });
-       
-        expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+        expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
       });
-  
-      it("should throw error on update category",()=> {
-        let category: Category = {
+
+    it('should throw error on update category', () => {
+        const category: Category = {
           id: 1,
           name: 'institution',
           description: 'institution in serbia'
          };
-  
-        const mockCategory: Category = 
+
+        const mockCategory: Category =
         {
-          id: 1,
-          name: 'institution',
-          description: 'institution in serbia'           
-        };
-      
-        let error:string = '';
-        categoryService.update(category, 1).subscribe(null,e => {
-          error = e.statusText;
-        });
-        const req = httpMock.expectOne('https://localhost:8443/api/category/1');
-        expect(req.request.method).toBe('PUT');
-        req.flush("Error on server",{
-          status: 404,
-          statusText: 'Error on server'
-        });
-       
-        expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
-      });
-  
-  
-      it("should throw error on get category",()=> {
-        let category: Category = { 
           id: 1,
           name: 'institution',
           description: 'institution in serbia'
         };
-        
-        const mockCategory: Category = 
+
+        let errorr = '';
+        categoryService.update(category, 1).subscribe({error: (e) => errorr = e.statusText});
+        const req = httpMock.expectOne('https://localhost:8443/api/category/1');
+        expect(req.request.method).toBe('PUT');
+        req.flush('Error on server', {
+          status: 404,
+          statusText: 'Error on server'
+        });
+
+        expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
+      });
+
+
+    it('should throw error on get category', () => {
+        const category: Category = {
+          id: 1,
+          name: 'institution',
+          description: 'institution in serbia'
+        };
+
+        const mockCategory: Category =
             {
            id: 1,
            name: 'institution',
            description: 'institution in serbia'
           };
-        let error:string = '';
-        categoryService.getCategory(1).subscribe(null,e => {
-          error = e.statusText;
-        });
+        let errorr = '';
+        categoryService.getCategory(1).subscribe({error: (e) => errorr = e.statusText});
         const req = httpMock.expectOne('https://localhost:8443/api/category/1');
         expect(req.request.method).toBe('GET');
-        req.flush("Error on server",{
+        req.flush('Error on server', {
           status: 404,
           statusText: 'Error on server'
         });
-       
-        expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+        expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
       });
-  
-  
-      it("should throw error on get all category",()=> {
-        let categories: Category[] = [];
-          
+
+
+    it('should throw error on get all category', () => {
+        const categories: Category[] = [];
+
         const mockCategories: Category[] = [
             {
              id: 1,
@@ -284,21 +274,19 @@ describe('CategoryService', () => {
            {
             id: 2,
             name: 'manifestation',
-            description: 'manifestation in serbia'            
+            description: 'manifestation in serbia'
            }];
-        
-    
-        let error:string = '';
-        categoryService.getAll().subscribe(null,e => {
-          error = e.statusText;
-        });
+
+
+        let errorr = '';
+        categoryService.getAll().subscribe({error: (e) => errorr = e.statusText});
         const req = httpMock.expectOne('https://localhost:8443/api/category');
         expect(req.request.method).toBe('GET');
-        req.flush("Error on server",{
+        req.flush('Error on server', {
           status: 404,
           statusText: 'Error on server'
         });
-       
-        expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+        expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
       });
-})
+});

@@ -15,18 +15,19 @@ describe('FavoriteComponent', () => {
   let imageService: any;
   let toastr: any;
 
- beforeEach(() => {
+  beforeEach(() => {
     const toastrMocked = {
         success: jasmine.createSpy('success'),
         error: jasmine.createSpy('error')
     };
 
-    let coServiceMock = {
-        getFavorite: jasmine.createSpy('getFavorite').and.returnValue(of({body: [{id: 1, name:'Sinisa', imageDTO: []}, {id: 2, imageDTO:[]}] })),
+    const coServiceMock = {
+        getFavorite: jasmine.createSpy('getFavorite').and.returnValue(
+            of({body: [{id: 1, name: 'Sinisa', imageDTO: []}, {id: 2, imageDTO: []}] })),
         unsubscribe: jasmine.createSpy('unsubscribe').and.returnValue(of({}))
     };
-    
-    let imageServiceMock = {
+
+    const imageServiceMock = {
         getImage : jasmine.createSpy('getImage').and.returnValue(of({body: {}}))
     };
 
@@ -34,7 +35,7 @@ describe('FavoriteComponent', () => {
        declarations: [ FavoriteComponent ],
        imports: [ ToastrModule.forRoot()],
        providers: [
-        { provide: ToastrService, useValue: toastrMocked},    
+        { provide: ToastrService, useValue: toastrMocked},
         { provide: CulturalOfferDetailsService, useValue: coServiceMock },
         { provide: ImageService, useValue: imageServiceMock },
        ]
@@ -45,7 +46,7 @@ describe('FavoriteComponent', () => {
     culturalOfferService = TestBed.inject(CulturalOfferDetailsService);
     imageService = TestBed.inject(ImageService);
     toastr = TestBed.inject(ToastrService);
-  }); 
+  });
 
   it('should create commponent', fakeAsync(() => {
     expect(favoriteComponent).toBeTruthy();
@@ -53,22 +54,22 @@ describe('FavoriteComponent', () => {
 
   it('should fetch favorites on init', fakeAsync(() => {
     favoriteComponent.ngOnInit();
-    expect(culturalOfferService.getFavorite).toHaveBeenCalled(); 
+    expect(culturalOfferService.getFavorite).toHaveBeenCalled();
     tick();
     expect(favoriteComponent.culturalOffers).toHaveSize(2);
-  
+
   }));
 
   it('unsubscribe', fakeAsync(() => {
     favoriteComponent.ngOnInit();
     favoriteComponent.unsubscribe(favoriteComponent.culturalOffers[0]);
     expect(culturalOfferService.unsubscribe).toHaveBeenCalled();
-    
+
     expect(toastr.success).toHaveBeenCalled();
     expect(favoriteComponent.culturalOffers.length).toBe(1);
 
   }));
-  
 
-  
+
+
 });

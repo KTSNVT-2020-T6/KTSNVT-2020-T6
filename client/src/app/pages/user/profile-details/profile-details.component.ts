@@ -1,7 +1,6 @@
 import { UserService } from '../../../core/services/user/user.service';
-import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../../core/model/User';
@@ -39,27 +38,26 @@ export class ProfileDetailsComponent implements OnInit {
     private authenticationService: AuthenticationService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getRole();
     this.userService.getCurrentUser().subscribe(
       res => {
         this.user = res.body as User;
-        if(this.user.idImageDTO === null){
+        if (this.user.idImageDTO === null){
           return;
         }
         this.imageService.getImage(this.user.idImageDTO).subscribe(
-          res => {
-            let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-            let objectURL = 'data:image/jpg;base64,' + base64String;   
+          response => {
+            const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+            const objectURL = 'data:image/jpg;base64,' + base64String;
             this.user.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         }
       );
       }
     );
-   
   }
 
-  edit(){
+  edit(): void{
     const dialogRef = this.dialog.open(EditProfileComponent , {
       width: '350px',
       data: this.user});
@@ -68,10 +66,9 @@ export class ProfileDetailsComponent implements OnInit {
         res => {
           this.user = res.body as User;
           this.imageService.getImage(this.user.idImageDTO).subscribe(
-            res => {
-              
-              let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-              let objectURL = 'data:image/jpg;base64,' + base64String;   
+            response => {
+              const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+              const objectURL = 'data:image/jpg;base64,' + base64String;
               this.user.src = this.sanitizer.bypassSecurityTrustUrl(objectURL);
           }
         );
@@ -80,35 +77,35 @@ export class ProfileDetailsComponent implements OnInit {
     });
   }
 
-  editPassword(){
+  editPassword(): void{
     const dialogRef = this.dialog.open(EditPasswordComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('ok');
     });
   }
 
-  confirmDialog() {
+  confirmDialog(): void {
     const message = `Are you sure you want to deactivate account`;
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogData = new ConfirmDialogModel('Confirm Action', message);
     const dialogRef = this.dialog.open(ConfirmationComponent, {
-      maxWidth: "400px",
+      maxWidth: '400px',
       data: dialogData
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
-      if(this.result === true){
+      if (this.result === true){
         this.deleteProfile();
       }
     });
   }
-  deleteProfile(){
-    if(this.role === "ROLE_ADMIN"){
+  deleteProfile(): void {
+    if (this.role === 'ROLE_ADMIN'){
       this.adminService.delete(this.user.id).subscribe(
         result => {
-          this.authenticationService.signOut().subscribe(      
-            result => {
-              this.toastr.warning("Profile successfully deactivated.");
+          this.authenticationService.signOut().subscribe(
+            res => {
+              this.toastr.warning('Profile successfully deactivated.');
               localStorage.removeItem('user');
               this.router.navigate(['/login']);
             }
@@ -119,9 +116,9 @@ export class ProfileDetailsComponent implements OnInit {
     else{
       this.regUserService.delete(this.user.id).subscribe(
         result => {
-          this.authenticationService.signOut().subscribe(      
-            result => {
-              this.toastr.warning("Profile successfully deactivated.");
+          this.authenticationService.signOut().subscribe(
+            res => {
+              this.toastr.warning('Profile successfully deactivated.');
               localStorage.removeItem('user');
               this.router.navigate(['/login']);
             }
@@ -131,7 +128,7 @@ export class ProfileDetailsComponent implements OnInit {
     }
 
   }
-  getRole() {
+  getRole(): void {
     const item = localStorage.getItem('user');
     if (!item) {
       this.role = undefined;

@@ -25,19 +25,19 @@ describe('PostService', () => {
     httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
   });
-  
+
   afterEach(() => {
     httpMock.verify();
   });
 
   it('addPost() should query url and create new post', fakeAsync(() => {
-    
+
     const mockImage: Img = {
         id: 1,
-	    description: 'image of gallery',
+        description: 'image of gallery',
         relativePath: 'relPath.jpg'
-    }
-    
+    };
+
     let post: Post = {
         text: 'Exhibition of paintings by artist Uros Predic',
         date: new Date('2021-05-05'),
@@ -54,14 +54,14 @@ describe('PostService', () => {
         culturalOfferId: 1,
         culturalOfferName: 'Gallery Paja Jovanovic'
     };
-    
+
     postService.addPost(post).subscribe(res => post = res);
-    
+
     const req = httpMock.expectOne('https://localhost:8443/api/post');
     expect(req.request.method).toBe('POST');
     req.flush(mockPost);
     tick();
- 
+
     expect(post).toBeDefined();
     expect(post.id).toEqual(1);
     expect(post.text).toEqual('Exhibition of paintings by artist Uros Predic');
@@ -69,7 +69,7 @@ describe('PostService', () => {
     expect(post.imageDTO).toEqual(mockImage);
     expect(post.culturalOfferId).toEqual(1);
     expect(post.culturalOfferName).toEqual('Gallery Paja Jovanovic');
-  
+
 }));
 
 
@@ -78,9 +78,9 @@ describe('PostService', () => {
 
     const mockImage: Img = {
         id: 1,
-	    description: 'image of gallery',
+        description: 'image of gallery',
         relativePath: 'relPath.jpg'
-    }
+    };
 
     const mockPosts: Post[] = [
         {
@@ -100,14 +100,14 @@ describe('PostService', () => {
             culturalOfferName: 'Gallery Kasandra'
         }
     ];
-    
+
     postService.getPage(0, 2).subscribe(res => posts = res.body);
-    
+
     const req = httpMock.expectOne('https://localhost:8443/api/post/?page=0&size=2&sort=date,desc');
     expect(req.request.method).toBe('GET');
     req.flush(mockPosts);
     tick();
- 
+
     expect(posts.length).toEqual(2, 'should contain given amount of cultural offers');
     expect(posts[0].id).toEqual(1);
     expect(posts[0].text).toEqual('Exhibition of paintings by artist Uros Predic');
@@ -115,7 +115,7 @@ describe('PostService', () => {
     expect(posts[0].imageDTO).toEqual(mockImage);
     expect(posts[0].culturalOfferId).toEqual(1);
     expect(posts[0].culturalOfferName).toEqual('Gallery Paja Jovanovic');
-    
+
 
     expect(posts[1].id).toEqual(2);
     expect(posts[1].text).toEqual('Exhibition of paintings by artist Jovana Kacanski');
@@ -127,69 +127,63 @@ describe('PostService', () => {
 
   it('delete() should query url and delete post', fakeAsync(() => {
     postService.delete(1).subscribe(res => {});
-    
+
     const req = httpMock.expectOne('https://localhost:8443/api/post/1');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   }));
 
-  it("should throw error",()=> {
-    
-    let error:string = '';
-    postService.delete(1).subscribe(null,e => {
-      error = e.statusText;
-    });
+  it('should throw error', () => {
+
+    let errorr = '';
+    postService.delete(1).subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/api/post/1');
     expect(req.request.method).toBe('DELETE');
-    req.flush("Error on server",{
+    req.flush('Error on server', {
       status: 404,
       statusText: 'Error on server'
     });
-   
-    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
-  });
-  
-  it("getPage() should throw error",()=> {
-    let error:string = '';
-    postService.getPage(0, 2).subscribe(null,e => {
-      error = e.statusText;
-    });
-    const req = httpMock.expectOne('https://localhost:8443/api/post/?page=0&size=2&sort=date,desc');
-    expect(req.request.method).toBe('GET');
-    req.flush("Error on server",{
-      status: 404,
-      statusText: 'Error on server'
-    });
-   
-    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
   });
 
-  it("addPost should throw error",()=> {
+  it('getPage() should throw error', () => {
+    let errorr = '';
+    postService.getPage(0, 2).subscribe({error: (e) => errorr = e.statusText});
+    const req = httpMock.expectOne('https://localhost:8443/api/post/?page=0&size=2&sort=date,desc');
+    expect(req.request.method).toBe('GET');
+    req.flush('Error on server', {
+      status: 404,
+      statusText: 'Error on server'
+    });
+
+    expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
+  });
+
+  it('addPost should throw error', () => {
     const mockImage: Img = {
       id: 1,
     description: 'image of gallery',
       relativePath: 'relPath.jpg'
-  }
-  
-  let post: Post = {
+  };
+
+    const post: Post = {
       text: 'Exhibition of paintings by artist Uros Predic',
       date: new Date('2021-05-05'),
       imageDTO: mockImage,
       culturalOfferId: 1,
       culturalOfferName: 'Gallery Paja Jovanovic'
   };
-  
-  let error:string = '';
-  postService.addPost(post).subscribe(null,e => {
-    error = e.statusText;
-  });
+
+    let errorr = '';
+    postService.addPost(post).subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/api/post');
     expect(req.request.method).toBe('POST');
-    req.flush("Error on server",{
+    req.flush('Error on server', {
       status: 404,
       statusText: 'Error on server'
     });
-   
-    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
   });
 });

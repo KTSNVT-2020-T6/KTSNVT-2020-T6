@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { routes } from './routes'
+import { routes } from './routes';
 
 @NgModule({
   imports: [
@@ -9,7 +9,7 @@ import { routes } from './routes'
     RouterModule.forRoot(routes)
   ],
   exports: [
-  	RouterModule
+    RouterModule
   ],
   declarations: []
 })

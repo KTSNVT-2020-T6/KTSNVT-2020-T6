@@ -14,9 +14,7 @@ import { User } from '../../../core/model/User';
 import { MatDialogRef } from '@angular/material/dialog';
 
 class MatDialogRefMock {
-    close(value = '') {
-
-    }
+    close(value = ''): void {}
 }
 
 describe('EditPasswordComponent', () => {
@@ -27,25 +25,23 @@ describe('EditPasswordComponent', () => {
   let toastr: any;
   let dialogRef: any;
 
- beforeEach(() => {
- 
-    let authenticationServiceMock ={
+  beforeEach(() => {
+    const authenticationServiceMock = {
       changePassword: jasmine.createSpy('changePassword').and.returnValue(of(new Observable<any>())),
       signOut: jasmine.createSpy('signOut').and.returnValue(of(new Observable<any>()))
-    }
-    let routerMock= {
-        navigate: jasmine.createSpy('navigate')
-    }
-
+    };
+    const routerMock = {
+      navigate: jasmine.createSpy('navigate')
+    };
     const toastrMocked = {
-        success: jasmine.createSpy('success'),
-        error: jasmine.createSpy('error')
-      };
-
+      success: jasmine.createSpy('success'),
+       error: jasmine.createSpy('error')
+    };
     TestBed.configureTestingModule({
        declarations: [ EditPasswordComponent ],
-       imports: [ FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule, BrowserModule, BrowserAnimationsModule],
-       providers:    [ 
+       imports: [ FormsModule, ReactiveFormsModule, RouterModule,
+        ToastrModule.forRoot(), MatCardModule, BrowserModule, BrowserAnimationsModule ],
+       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceMock },
         { provide: Router, useValue: routerMock },
         { provide: ToastrService, useValue: toastrMocked },
@@ -59,12 +55,12 @@ describe('EditPasswordComponent', () => {
     router = TestBed.inject(Router);
     toastr = TestBed.inject(ToastrService);
     dialogRef = TestBed.inject(MatDialogRef);
-  }); 
+  });
 
   it('should create component', fakeAsync(() => {
     expect(component).toBeTruthy();
   }));
-  
+
   it('should be initialized', () => {
     component.ngOnInit();
     expect(component.form).toBeDefined();
@@ -72,95 +68,74 @@ describe('EditPasswordComponent', () => {
   });
 
   it('should set input in reactive form', fakeAsync(() => {
-    fixture.detectChanges();  
+    fixture.detectChanges();
     fixture.whenStable().then(() => {
         expect(fixture.debugElement.query(By.css('#newPassword')).nativeElement.value).toEqual('');
         expect(fixture.debugElement.query(By.css('#oldPassword')).nativeElement.value).toEqual('');
-        
-        let oldPassword = fixture.debugElement.query(By.css('#oldPassword')).nativeElement;
+        const oldPassword = fixture.debugElement.query(By.css('#oldPassword')).nativeElement;
         oldPassword.value = 'asdf';
-        let newPassword = fixture.debugElement.query(By.css('#newPassword')).nativeElement;
+        const newPassword = fixture.debugElement.query(By.css('#newPassword')).nativeElement;
         newPassword.value = 'asdfghjk';
-
-        oldPassword.dispatchEvent(new Event('input')); 
+        oldPassword.dispatchEvent(new Event('input'));
         newPassword.dispatchEvent(new Event('input'));
-
-        let controlOldPassword = component.form.controls['oldPassword'];
-        let controlNewPassword = component.form.controls['newPassword'];
-
+        const controlOldPassword = component.form.controls.oldPassword;
+        const controlNewPassword = component.form.controls.newPassword;
         expect(controlOldPassword.value).toEqual('asdf');
         expect(controlNewPassword.value).toEqual('asdfghjk');
-
       });
-
-    
   }));
 
-  it('should change user`s password', fakeAsync(() => {    
+  it('should change user`s password', fakeAsync(() => {
     spyOn(dialogRef, 'close');
     expect(component.form.valid).toBeFalsy();
-    component.form.controls['oldPassword'].setValue("asdf");
-    component.form.controls['newPassword'].setValue("asdfghjk");
-   
+    component.form.controls.oldPassword.setValue('asdf');
+    component.form.controls.newPassword.setValue('asdfghjk');
     expect(component.form.valid).toBeTruthy();
-    component.saveChanges(); 
-
+    component.saveChanges();
     expect(authenticationService.changePassword).toHaveBeenCalledTimes(1);
     expect(toastr.success).toHaveBeenCalledTimes(1);
     expect(dialogRef.close).toHaveBeenCalledTimes(1);
     expect(authenticationService.signOut).toHaveBeenCalledTimes(1);
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
-}));
+  }));
 
-    it('should be invalid form when old password is empty', () => {
-        expect(component.form.valid).toBeFalsy();
-      
-        component.form.controls['oldPassword'].setValue("");
-        component.form.controls['newPassword'].setValue("asdfghjk");
+  it('should be invalid form when old password is empty', () => {
+    expect(component.form.valid).toBeFalsy();
+    component.form.controls.oldPassword.setValue('');
+    component.form.controls.newPassword.setValue('asdfghjk');
+    expect(component.form.invalid).toBeTruthy();
+    fixture.detectChanges();
+    const submitButton = fixture.debugElement.query(By.css('#submitPasswordBtn')).nativeElement;
+    expect(submitButton.disabled).toBeTruthy();
+  });
 
-        expect(component.form.invalid).toBeTruthy();
-        fixture.detectChanges();
+  it('should be invalid form when new password is empty', () => {
+    expect(component.form.valid).toBeFalsy();
+    component.form.controls.oldPassword.setValue('asdf');
+    component.form.controls.newPassword.setValue('');
+    expect(component.form.invalid).toBeTruthy();
+    fixture.detectChanges();
+    const submitButton = fixture.debugElement.query(By.css('#submitPasswordBtn')).nativeElement;
+    expect(submitButton.disabled).toBeTruthy();
+  });
 
-        const submitButton = fixture.debugElement.query(By.css('#submitPasswordBtn')).nativeElement;
-        expect(submitButton.disabled).toBeTruthy();
-    });
+  it('should not close dialog if new password equals old password', fakeAsync(() => {
+    spyOn(dialogRef, 'close');
+    expect(component.form.valid).toBeFalsy();
+    component.form.controls.oldPassword.setValue('asdf');
+    component.form.controls.newPassword.setValue('asdf');
+    expect(component.form.valid).toBeTruthy();
+    component.saveChanges();
+    expect(authenticationService.changePassword).toHaveBeenCalledTimes(0);
+    expect(toastr.error).toHaveBeenCalledTimes(1);
+    expect(dialogRef.close).toHaveBeenCalledTimes(1);
+    expect(authenticationService.signOut).toHaveBeenCalledTimes(0);
+    expect(component.passwordError).toBeTruthy();
+  }));
 
-    it('should be invalid form when new password is empty', () => {
-        expect(component.form.valid).toBeFalsy();
-      
-        component.form.controls['oldPassword'].setValue("asdf");
-        component.form.controls['newPassword'].setValue("");
-
-        expect(component.form.invalid).toBeTruthy();
-        fixture.detectChanges();
-
-        const submitButton = fixture.debugElement.query(By.css('#submitPasswordBtn')).nativeElement;
-        expect(submitButton.disabled).toBeTruthy();
-    });
-
-    it('should not close dialog if new password equals old password', fakeAsync(() => {    
-        spyOn(dialogRef, 'close');
-        expect(component.form.valid).toBeFalsy();
-        component.form.controls['oldPassword'].setValue("asdf");
-        component.form.controls['newPassword'].setValue("asdf");
-       
-        expect(component.form.valid).toBeTruthy();
-        component.saveChanges(); 
-    
-        expect(authenticationService.changePassword).toHaveBeenCalledTimes(0);
-        expect(toastr.error).toHaveBeenCalledTimes(1);
-        expect(dialogRef.close).toHaveBeenCalledTimes(1);
-        expect(authenticationService.signOut).toHaveBeenCalledTimes(0);
-        expect(component.passwordError).toBeTruthy();
-    }));
-
-    it('should close the dialog', fakeAsync(() => {
-        spyOn(dialogRef, 'close');   
-        component.cancel();
-
-        expect(dialogRef.close).toHaveBeenCalledTimes(1);
-
-    }));
-   
+  it('should close the dialog', fakeAsync(() => {
+    spyOn(dialogRef, 'close');
+    component.cancel();
+    expect(dialogRef.close).toHaveBeenCalledTimes(1);
+  }));
 });
-

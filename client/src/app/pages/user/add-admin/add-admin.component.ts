@@ -21,7 +21,8 @@ export class AddAdminComponent implements OnInit {
   hide = true;
   passwordError = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
     private toastr: ToastrService,
@@ -32,24 +33,22 @@ export class AddAdminComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  createForm() {
+  createForm(): void {
     this.form = this.fb.group({
-      'firstName': ['', Validators.required],
-      'lastName': ['', Validators.required],
-      'email':['', [Validators.required, Validators.pattern(this.emailRegx)]],
-      'password':['', Validators.required],
-      'repeatPassword':['', [Validators.required]]
-    }
-  )};
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.emailRegx)]],
+      password: ['', Validators.required],
+      repeatPassword: ['', [Validators.required]]
+    });
+  }
 
-  addAdmin(){
+  addAdmin(): void {
     this.passwordError = false;
-    if(this.form.value['password'] != this.form.value['repeatPassword']){
+    if (this.form.value.password !== this.form.value.repeatPassword){
       this.passwordError = true;
     }
     this.user = this.form.value as User;
-
-
     this.authenticationService.registerAdmin(this.user as User).subscribe(
       result => {
         this.toastr.success('New admin added!');
@@ -57,11 +56,11 @@ export class AddAdminComponent implements OnInit {
         this.dialogRef.close();
       },
       error => {
-        this.toastr.error("Email already exists!");
+        this.toastr.error('Email already exists!');
       }
     );
     }
-    cancel(){
+    cancel(): void {
       this.dialogRef.close();
     }
 }

@@ -26,33 +26,33 @@ describe('NavbarNonAuthComponent', () => {
   let location: Location;
   let router: Router;
   let debugElement: DebugElement;
-  
+
   beforeEach(() => {
-    
+
     TestBed.configureTestingModule({
        declarations: [HomePageComponent , NavbarNonAuthComponent],
-       imports: [MatToolbarModule,MatIconModule,CarouselModule,RouterTestingModule.withRoutes([
+       imports: [MatToolbarModule, MatIconModule, CarouselModule, RouterTestingModule.withRoutes([
             {path: '', component: HomePageComponent},
             {path: 'posts', component: PostsPageComponent},
             {path: 'login', component: LoginPageComponent},
             {path: 'register', component: RegisterPageComponent}
         ])],
-        
-       
+
+
     });
-    router = TestBed.get(Router);
-    location = TestBed.get(Location);
+    router = TestBed.inject(Router);
+    location = TestBed.inject(Location);
     fixture = TestBed.createComponent(NavbarNonAuthComponent);
     debugElement = fixture.debugElement;
     component = fixture.componentInstance;
-    
-  }); 
+
+  });
   it('should create commponent', fakeAsync(() => {
     expect(component).toBeTruthy();
   }));
   it('check redirection on news page', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#news')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/posts');
@@ -60,21 +60,21 @@ describe('NavbarNonAuthComponent', () => {
 
   it('check redirection on home page', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#home')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/');
   }));
   it('check redirection on login page', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#login')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/login');
   }));
   it('check redirection on page for registration', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#register')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/register');

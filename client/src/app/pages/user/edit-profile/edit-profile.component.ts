@@ -20,13 +20,15 @@ export class EditProfileComponent implements OnInit {
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
   role!: string|undefined;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
     private toastr: ToastrService,
     private regUserService: RegisteredUserService,
     private adminService: AdminService,
-    private imageService: ImageService,public dialogRef: MatDialogRef<EditProfileComponent>,
+    private imageService: ImageService,
+    public dialogRef: MatDialogRef<EditProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public user: User) {
       this.createForm();
       this.form.patchValue(this.user);
@@ -35,8 +37,7 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getRole();
   }
-
-  getRole() {
+  getRole(): void {
     const item = localStorage.getItem('user');
     if (!item) {
       this.role = undefined;
@@ -46,30 +47,29 @@ export class EditProfileComponent implements OnInit {
     this.role = jwt.decodeToken(item).role;
   }
 
-  createForm() {
+  createForm(): void {
     this.form = this.fb.group({
-      'firstName': ['', Validators.required],
-      'lastName': ['', Validators.required],
-      'email':['', [Validators.required, Validators.pattern(this.emailRegx)]],
-      'image':[]
-    }
-  )};
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.emailRegx)]],
+      image: []
+    });
+  }
 
-  onFileSelect(event: any) {
+  onFileSelect(event: any): void {
         if (event.target.files.length > 0) {
           const file = event.target.files[0];
-          this.form.value['image'] = file;
+          this.form.value.image = file;
         }
         this.saveImage();
-  };
+  }
 
-  saveChanges(){
-    
-    this.user.firstName = this.form.value['firstName'];
-    this.user.lastName = this.form.value['lastName'];
-    this.user.email = this.form.value['email'];
+  saveChanges(): void {
+    this.user.firstName = this.form.value.firstName;
+    this.user.lastName = this.form.value.lastName;
+    this.user.email = this.form.value.email;
 
-    if(this.role == 'ROLE_ADMIN'){
+    if (this.role === 'ROLE_ADMIN'){
       this.adminService.editAdmin(this.user as User).subscribe(
         result => {
           this.toastr.success('Profile information saved!');
@@ -77,7 +77,7 @@ export class EditProfileComponent implements OnInit {
           this.dialogRef.close();
         },
         error => {
-          this.toastr.error("Error saving data!");
+          this.toastr.error('Error saving data!');
         }
       );
    } else{
@@ -88,30 +88,27 @@ export class EditProfileComponent implements OnInit {
         this.dialogRef.close();
       },
       error => {
-        this.toastr.error("Error saving data!");
+        this.toastr.error('Error saving data!');
       }
     );
 
    }
     }
 
-    saveImage(){
+    saveImage(): void {
       const formData = new FormData();
-      formData.append('file', this.form.value['image']);
-
+      formData.append('file', this.form.value.image);
       this.imageService.add(formData).subscribe(
         result => {
-          this.user.idImageDTO = result; 
+          this.user.idImageDTO = result;
         },
         error => {
-          this.toastr.error("Error saving image! Choose different one!");
+          this.toastr.error('Error saving image! Choose different one!');
         }
-
       );
     }
 
-    cancel(){
+    cancel(): void {
       this.dialogRef.close();
     }
-
 }

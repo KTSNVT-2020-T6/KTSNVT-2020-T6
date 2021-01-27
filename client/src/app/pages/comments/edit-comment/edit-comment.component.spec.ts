@@ -1,6 +1,6 @@
 import {  ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
@@ -14,9 +14,7 @@ import { CommentService } from 'src/app/core/services/comment/comment.service';
 import { MaterialModule } from '../../material-module';
 
 class MatDialogRefMock {
-    close(value = '') {
-
-    }
+    close(value = ''): void {}
 }
 
 describe('EditCommentComponent', () => {
@@ -24,26 +22,24 @@ describe('EditCommentComponent', () => {
   let fixture: ComponentFixture<EditCommentComponent>;
   let commentService: any;
   let route: any;
-  let userService: any;
-  let imageService:any;
+  let imageService: any;
   let dialog: any;
-  let toastr : any;
+  let toastr: any;
 
- beforeEach(() => {
-    
-    let imageServiceMock = {
+  beforeEach(() => {
+    const imageServiceMock = {
       add: jasmine.createSpy('add')
-        .and.returnValue(of({body:''}))
-    }
-    let commentServiceMock = {
+        .and.returnValue(of({body: ''}))
+    };
+    const commentServiceMock = {
         getComment : jasmine.createSpy('getComment')
         .and.returnValue(of({body: {
-          id: 1,
-	      text: "I'm losing it",
-	      date: new Date(),
-          nameSurname: "Sandro Boticeli",
-          userId: 1,
-          culturalOfferId: 1, 
+        id: 1,
+        text: 'I\'m losing it',
+        date: new Date(),
+        nameSurname: 'Sandro Boticeli',
+        userId: 1,
+        culturalOfferId: 1,
         }})),
         update : jasmine.createSpy('update')
         .and.returnValue(of({}))
@@ -51,8 +47,8 @@ describe('EditCommentComponent', () => {
 
 
 
-    let activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
-    activatedRouteStub.testParams = {id: 1};
+    const activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
+    activatedRouteStub.testParamss = {id: 1};
 
 
     const toastrMocked = {
@@ -62,8 +58,9 @@ describe('EditCommentComponent', () => {
 
     TestBed.configureTestingModule({
        declarations: [ EditCommentComponent ],
-       imports: [ FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule, MaterialModule, BrowserModule, BrowserAnimationsModule],
-       providers:    [ 
+       imports: [ FormsModule, ReactiveFormsModule,
+        RouterModule, ToastrModule.forRoot(), MatCardModule, MaterialModule, BrowserModule, BrowserAnimationsModule],
+       providers:    [
         { provide: ImageService, useValue: imageServiceMock },
         { provide: CommentService, useValue: commentServiceMock },
         { provide: MatDialogRef, useClass: MatDialogRefMock},
@@ -78,93 +75,93 @@ describe('EditCommentComponent', () => {
     toastr = TestBed.inject(ToastrService);
     dialog = TestBed.inject(MatDialogRef);
     route = TestBed.inject(ActivatedRoute);
-  }); 
+  });
 
   it('should create commponent', fakeAsync(() => {
     expect(component).toBeTruthy();
   }));
 
-  it('should be initialized', async(() => {
+  it('should be initialized', waitForAsync(() => {
     component.ngOnInit();
     expect(commentService.getComment).toHaveBeenCalled();
     expect(component.comment.id).toBe(1);
-    expect(component.comment.text).toEqual("I'm losing it");
+    expect(component.comment.text).toEqual('I\'m losing it');
     expect(component.comment.date).toBeDefined();
-    expect(component.comment.nameSurname).toEqual("Sandro Boticeli");
+    expect(component.comment.nameSurname).toEqual('Sandro Boticeli');
     expect(component.comment.userId).toEqual(1);
     expect(component.comment.culturalOfferId).toEqual(1);
     expect(component.editForm).toBeDefined();
-  
+
     fixture.whenStable().then(() => {
-        let text = fixture.debugElement.query(By.css('#editText')).nativeElement;
+        const text = fixture.debugElement.query(By.css('#editText')).nativeElement;
         text.value = component.comment.text;
 
-        text.dispatchEvent(new Event('input')); 
-        
-        let controlText = component.editForm.controls['text'];
-       
-        expect(controlText.value).toEqual("I'm losing it");
+        text.dispatchEvent(new Event('input'));
 
-      });   
+        const controlText = component.editForm.controls.text;
+
+        expect(controlText.value).toEqual('I\'m losing it');
+
+      });
 
     }));
 
-  it('should close dialog on cancel', async(() => {
+  it('should close dialog on cancel', waitForAsync(() => {
     spyOn(dialog, 'close');
     component.cancelClicked();
-    expect(dialog.close).toHaveBeenCalled();   
+    expect(dialog.close).toHaveBeenCalled();
     }));
 
   it('should set input in reactive form', fakeAsync(() => {
-    fixture.detectChanges(); 
-        
+    fixture.detectChanges();
+
     fixture.whenStable().then(() => {
-    
-        expect(fixture.debugElement.query(By.css('#editText')).nativeElement.value).toEqual("I'm losing it");
-                  
-        let text = fixture.debugElement.query(By.css('#editText')).nativeElement;
-        text.value = "Now I'm great";
-        text.dispatchEvent(new Event('input')); 
-        
-        let controlText = component.editForm.controls['text'];
-        
-        expect(controlText.value).toEqual("Now I'm great");
-        
-        });   
+
+        expect(fixture.debugElement.query(By.css('#editText')).nativeElement.value).toEqual('I\'m losing it');
+
+        const text = fixture.debugElement.query(By.css('#editText')).nativeElement;
+        text.value = 'Now I\'m great';
+        text.dispatchEvent(new Event('input'));
+
+        const controlText = component.editForm.controls.text;
+
+        expect(controlText.value).toEqual('Now I\'m great');
+
+        });
   }));
-  
-  it('should edit comment with image', fakeAsync(() => {  
+
+  it('should edit comment with image', fakeAsync(() => {
         component.ngOnInit();
         spyOn(dialog, 'close');
         spyOn(toastr, 'success');
-        component.imageAdded = "D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat.jpg";
-        component.editForm.controls['text'].setValue("Building with very poor horizontal and vertical isolation....");
-        component.editForm.controls['image'].setValue("D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat.jpg");
+        component.imageAdded = 'D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat.jpg';
+        component.editForm.controls.text.setValue('Building with very poor horizontal and vertical isolation....');
+        component.editForm.controls.image.setValue('D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat.jpg');
 
         component.editComment();
 
-        
+
         expect(imageService.add).toHaveBeenCalledTimes(1);
         expect(toastr.success).toHaveBeenCalled();
         expect(component.comment.imageDTO).toBeDefined();
         expect(component.editForm.valid).toBeTruthy();
-        
-    
+
+
         expect(commentService.update).toHaveBeenCalledTimes(1);
         expect(dialog.close).toHaveBeenCalledTimes(1);
         expect(toastr.success).toHaveBeenCalled();
     }));
 
-  it('should save edited comment', fakeAsync(() =>{
+  it('should save edited comment', fakeAsync(() => {
 
-    spyOn(dialog, 'close'); 
+    spyOn(dialog, 'close');
     spyOn(toastr, 'success');
     component.editComment();
     tick(15000);
 
-    expect(commentService.update).toHaveBeenCalled(); 
+    expect(commentService.update).toHaveBeenCalled();
     expect(dialog.close).toHaveBeenCalled();
     expect(toastr.success).toHaveBeenCalled();
  }));
-  
+
 });

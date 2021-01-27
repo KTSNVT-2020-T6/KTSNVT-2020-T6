@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -15,7 +15,7 @@ import { Type } from '../../../core/model/Type';
 import { MaterialModule } from '../../material-module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 export class MatDialogRefMock {
-    close(value = '') {
+    close(value = ''): void {
     }
 }
 
@@ -31,36 +31,36 @@ describe('AddTypeComponent', () => {
     id: 1,
     name: 'category number 1',
     description: 'this is a category no 1'
-  }
+  };
   const mockType: Type = {
     id: 1,
     name: 'type number 1',
     description: 'this is a type no 1',
     categoryDTO: mockCategory
-  }
+  };
 
 
   beforeEach(() => {
-    let categoryServiceMock = {
+    const categoryServiceMock = {
         getAll: jasmine.createSpy('getAll')
-            .and.returnValue(of({body: [{}, {}] })), 
+            .and.returnValue(of({body: [{}, {}] })),
     };
-    let typeServiceMock = {
+    const typeServiceMock = {
         add: jasmine.createSpy('add')
-            .and.returnValue(of({body:{}})),
-    }
+            .and.returnValue(of({body: {}})),
+    };
     const toastrMocked = {
         success: jasmine.createSpy('success'),
         error: jasmine.createSpy('error')
       };
-      TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
         declarations: [ AddTypeComponent ],
-        imports: [ ToastrModule.forRoot(),NoopAnimationsModule, ReactiveFormsModule, FormsModule, MatDialogModule],
+        imports: [ ToastrModule.forRoot(), NoopAnimationsModule, ReactiveFormsModule, FormsModule, MatDialogModule],
         providers:    [ { provide: TypeService, useValue: typeServiceMock },
                         { provide: CategoryService, useValue: categoryServiceMock },
                         { provide: MatDialogRef, useClass: MatDialogRefMock},
                         { provide: ToastrService, useValue: toastrMocked }]
-                        
+
         });
     fixture = TestBed.createComponent(AddTypeComponent);
     component = fixture.componentInstance;
@@ -74,113 +74,113 @@ describe('AddTypeComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should fetch all categories on init', async(() => {
+  it('should fetch all categories on init', waitForAsync(() => {
     component.ngOnInit();
 
     expect(categoryService.getAll).toHaveBeenCalled();
 
     fixture.whenStable()
       .then(() => {
-        expect(component.categories.length).toBe(2); 
-        fixture.detectChanges();     
-        let elements: DebugElement[] = 
+        expect(component.categories.length).toBe(2);
+        fixture.detectChanges();
+        const elements: DebugElement[] =
           fixture.debugElement.queryAll(By.css('mat-option'));
-        expect(elements.length).toBe(2); 
-    
+        expect(elements.length).toBe(2);
+
       });
   }));
   it('form invalid when empty', () => {
     expect(component.typeForm.valid).toBeFalsy();
   });
 
-  it('should set category on selection', async(() => {
-    component.categories = [{id: 1},{id: 2}];   
+  it('should set category on selection', waitForAsync(() => {
+    component.categories = [{id: 1}, {id: 2}];
     component.onSelection(component.categories[0]);
-    
-    expect(component.typeForm.controls['categoryDTO'].value).toEqual(component.categories[0]); 
+
+    expect(component.typeForm.controls.categoryDTO.value).toEqual(component.categories[0]);
  }));
 
   it('should set input in reactive form', fakeAsync(() => {
-   
-    fixture.detectChanges();  
+
+    fixture.detectChanges();
     fixture.whenStable().then(() => {
         expect(fixture.debugElement.query(By.css('#typeName')).nativeElement.value).toEqual('');
         expect(fixture.debugElement.query(By.css('#typeDescription')).nativeElement.value).toEqual('');
         expect(fixture.debugElement.query(By.css('#catSelect')).nativeElement.value).toEqual(undefined);
 
-        let typeName = fixture.debugElement.query(By.css('#typeName')).nativeElement;
+        const typeName = fixture.debugElement.query(By.css('#typeName')).nativeElement;
         typeName.value = 'type';
-        let typeDesc = fixture.debugElement.query(By.css('#typeDescription')).nativeElement;
+        const typeDesc = fixture.debugElement.query(By.css('#typeDescription')).nativeElement;
         typeDesc.value = 'type desc';
-     
+
         component.onSelection(component.categories[0]);
-        typeName.dispatchEvent(new Event('input')); 
+        typeName.dispatchEvent(new Event('input'));
         typeDesc.dispatchEvent(new Event('input'));
 
-        let controlName = component.typeForm.controls['name'];
-        let controlDesc = component.typeForm.controls['description'];
-        let controlCat = component.typeForm.controls['categoryDTO'];
-       
+        const controlName = component.typeForm.controls.name;
+        const controlDesc = component.typeForm.controls.description;
+        const controlCat = component.typeForm.controls.categoryDTO;
+
         expect(controlName.value).toEqual('type');
         expect(controlDesc.value).toEqual('type desc');
         expect(controlCat.value).toEqual(component.categories[0]);
-      });   
+      });
   }));
 
-  
-  it('should save type', fakeAsync(() =>{
-     component.typeForm.controls['name'].setValue(mockType.name);
-     component.typeForm.controls['description'].setValue(mockType.description);
-     component.typeForm.controls['categoryDTO'].setValue(mockType.categoryDTO);
-    fixture.detectChanges();
-    spyOn(dialogRef, 'close'); 
-    spyOn(component, "windowReload").and.callFake(function(){});
+
+  it('should save type', fakeAsync(() => {
+     component.typeForm.controls.name.setValue(mockType.name);
+     component.typeForm.controls.description.setValue(mockType.description);
+     component.typeForm.controls.categoryDTO.setValue(mockType.categoryDTO);
+     fixture.detectChanges();
+     spyOn(dialogRef, 'close');
+     spyOn(component, 'windowReload').and.callFake(() => {});
+     component.addType();
+     tick(15000);
+
+     expect(typeService.add).toHaveBeenCalled();
+     expect(toastr.success).toHaveBeenCalled();
+     expect(dialogRef.close).toHaveBeenCalled();
+     expect(component.windowReload).toHaveBeenCalled();
+     expect(component.typeForm.invalid).toBeTruthy();
+  }));
+
+  it('should not save type without name', fakeAsync(() => {
+    component.typeForm.controls.name.setValue('');
+    component.typeForm.controls.description.setValue(mockType.description);
+    component.typeForm.controls.categoryDTO.setValue(mockType.categoryDTO);
+
+    spyOn(dialogRef, 'close');
     component.addType();
     tick(15000);
 
-    expect(typeService.add).toHaveBeenCalled(); 
-    expect(toastr.success).toHaveBeenCalled();
-    expect(dialogRef.close).toHaveBeenCalled();
-    expect(component.windowReload).toHaveBeenCalled();
-    expect(component.typeForm.invalid).toBeTruthy();
+    expect(typeService.add).not.toHaveBeenCalled();
+
   }));
 
-  it('should not save type without name', fakeAsync(() =>{
-    component.typeForm.controls['name'].setValue("");
-    component.typeForm.controls['description'].setValue(mockType.description);
-    component.typeForm.controls['categoryDTO'].setValue(mockType.categoryDTO);
+  it('should not save type without description', fakeAsync(() => {
+    component.typeForm.controls.name.setValue(mockType.name);
+    component.typeForm.controls.description.setValue('');
+    component.typeForm.controls.categoryDTO.setValue(mockType.categoryDTO);
 
-    spyOn(dialogRef, 'close'); 
+    spyOn(dialogRef, 'close');
     component.addType();
     tick(15000);
 
-    expect(typeService.add).not.toHaveBeenCalled(); 
-    
+    expect(typeService.add).not.toHaveBeenCalled();
+
   }));
 
-  it('should not save type without description', fakeAsync(() =>{
-    component.typeForm.controls['name'].setValue(mockType.name);
-    component.typeForm.controls['description'].setValue("");
-    component.typeForm.controls['categoryDTO'].setValue(mockType.categoryDTO);
+  it('should not save type without category', fakeAsync(() => {
+    component.typeForm.controls.name.setValue(mockType.name);
+    component.typeForm.controls.description.setValue(mockType.description);
+    component.typeForm.controls.categoryDTO.setValue('');
 
-    spyOn(dialogRef, 'close'); 
+    spyOn(dialogRef, 'close');
     component.addType();
     tick(15000);
 
-    expect(typeService.add).not.toHaveBeenCalled(); 
-    
-  }));
+    expect(typeService.add).not.toHaveBeenCalled();
 
-  it('should not save type without category', fakeAsync(() =>{
-    component.typeForm.controls['name'].setValue(mockType.name);
-    component.typeForm.controls['description'].setValue(mockType.description);
-    component.typeForm.controls['categoryDTO'].setValue("");
-
-    spyOn(dialogRef, 'close'); 
-    component.addType();
-    tick(15000);
-
-    expect(typeService.add).not.toHaveBeenCalled(); 
-    
   }));
 });

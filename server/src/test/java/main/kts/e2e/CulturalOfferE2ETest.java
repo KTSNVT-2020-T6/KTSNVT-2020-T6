@@ -139,7 +139,7 @@ public class CulturalOfferE2ETest {
         driver.get("https://localhost:4200/culturaloffer/1");
         
         justWait(1000);
-        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
         justWait(1000);
         assertTrue(true);
        
@@ -154,7 +154,7 @@ public class CulturalOfferE2ETest {
         
         justWait(1000);
         culturalOfferPage.getNewComment().sendKeys("Komentarisem ovu ponudu sa slikom");
-        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\\\Korisnik\\Desktop\\image.jpg");
         justWait(1000);
         culturalOfferPage.ensureIsDisplayedAddCommentButton();
         
@@ -190,7 +190,7 @@ public class CulturalOfferE2ETest {
 //        driver.get("https://localhost:4200/culturaloffer/1");
 //        
 //        justWait(1000);
-//        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+//        culturalOfferPage.getUploadButton().sendKeys("C:\\Users\\\\Korisnik\\Desktop\\image.jpg");
 //        justWait(1000);
 //        culturalOfferPage.ensureIsDisplayedAddCommentButton();
 //        culturalOfferPage.getSendCommentButton().click();
@@ -282,7 +282,7 @@ public class CulturalOfferE2ETest {
       culturalOfferPage.getEditTextCommentButton().clear();
       culturalOfferPage.getEditTextCommentButton().sendKeys("Izmenjen sadrzaj komentaraasdas");
       justWait(1000);
-      culturalOfferPage.getEditImageCommentButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+      culturalOfferPage.getEditImageCommentButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
       justWait(1000);
       culturalOfferPage.getEditCommentButtonSave().click();
       justWait(1000);
@@ -361,7 +361,7 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.ensureIsDisplayedAddPost();
         justWait(1000);
         culturalOfferPage.getAddPostButton().click();
-        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
         justWait(1000);
         culturalOfferPage.ensureIsDisplayedAddPostAndNotClickable();
         assertEquals("https://localhost:4200/culturaloffer/1", driver.getCurrentUrl());
@@ -381,7 +381,7 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.getAddPostButton().click();
         justWait(1000);
         culturalOfferPage.getTextPost().sendKeys("Sadrzaj novog posta");
-        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+        culturalOfferPage.getPostUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
         justWait(1000);
         culturalOfferPage.getAddPostButtonSave().click();
         justWait(1000);
@@ -423,7 +423,7 @@ public class CulturalOfferE2ETest {
         culturalOfferPage.getSelectType().click();
         justWait(2500);
 
-        culturalOfferPage.getEditImageCulturalOfferButton().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+        culturalOfferPage.getEditImageCulturalOfferButton().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
         justWait(1000);
         culturalOfferPage.getEditCultOfferSaveButton().click();
         justWait(10000);

@@ -15,9 +15,15 @@ import { MapContainerComponent } from './map-container/map-container.component';
 import { SearchDetailsComponent } from './search-details/search-details.component';
 
 @NgModule({
-  declarations: [HomePageComponent, MapContainerComponent, SearchDetailsComponent, AddCulturalOfferComponent, EditCulturalOfferComponent, CulturalOfferDetailsComponent, CulturalOfferListComponent, FavoriteComponent, ImageSliderComponent, StarRatingComponent],
-  imports: [ MaterialModule, SharedModule, GeoapifyGeocoderAutocompleteModule.withConfig('bac3b0a7331c49dd8a287ce77712b64e'), CommentsModule],
-  exports: [HomePageComponent, MapContainerComponent, SearchDetailsComponent, AddCulturalOfferComponent, EditCulturalOfferComponent, CulturalOfferDetailsComponent, CulturalOfferListComponent, FavoriteComponent, ImageSliderComponent, StarRatingComponent],
+  declarations: [HomePageComponent, MapContainerComponent,
+    SearchDetailsComponent, AddCulturalOfferComponent,
+    EditCulturalOfferComponent, CulturalOfferDetailsComponent,
+    CulturalOfferListComponent, FavoriteComponent, ImageSliderComponent, StarRatingComponent],
+  imports: [ MaterialModule, SharedModule,
+    GeoapifyGeocoderAutocompleteModule.withConfig('bac3b0a7331c49dd8a287ce77712b64e'), CommentsModule],
+  exports: [HomePageComponent, MapContainerComponent,
+    SearchDetailsComponent, AddCulturalOfferComponent, EditCulturalOfferComponent,
+     CulturalOfferDetailsComponent, CulturalOfferListComponent, FavoriteComponent, ImageSliderComponent, StarRatingComponent],
   providers: []
 })
 export class CulturalOfferModule { }

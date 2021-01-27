@@ -1,4 +1,4 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import {  ReactiveFormsModule } from '@angular/forms';
 
 import { async } from '@angular/core/testing';
@@ -16,71 +16,63 @@ describe('ConfirmationComponent', () => {
     let overlayContainer: OverlayContainer;
     let component: ConfirmationComponent;
     let fixture: ComponentFixture<ConfirmationComponent>;
-    
     const mockDialogRef = {
-      close: jasmine.createSpy('close')};
-  
-    beforeEach(async(() => {
+      close: jasmine.createSpy('close')
+    };
+    beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [
           BrowserAnimationsModule,
           ReactiveFormsModule,
           MatDialogModule,
-          MaterialModule
-          
-        ],
+          MaterialModule],
         providers: [
           { provide: MatDialogRef, useValue: mockDialogRef },
-          {
-            provide: MAT_DIALOG_DATA,
+          { provide: MAT_DIALOG_DATA,
             useValue: {
               title: 'Confirm dialog',
               message: 'Are you sure?'
             }
           }
         ],
-        declarations: [ConfirmationComponent],
-        
+        declarations: [ConfirmationComponent]
       });
-  
       TestBed.overrideModule(BrowserDynamicTestingModule, {
         set: {
           entryComponents: [ConfirmationComponent]
         }
       });
-  
       TestBed.compileComponents();
     }));
-  
+
     beforeEach(inject([MatDialog, OverlayContainer],
       (d: MatDialog, oc: OverlayContainer) => {
         dialog = d;
         overlayContainer = oc;
       })
     );
-  
+
     afterEach(() => {
       overlayContainer.ngOnDestroy();
     });
-  
+
     beforeEach(() => {
       fixture = TestBed.createComponent(ConfirmationComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
-  
+
     it('should create', () => {
       expect(component).toBeTruthy();
     });
-  
-  
+
     it('onDismiss should close the dialog', () => {
       component.onDismiss();
       expect(mockDialogRef.close).toHaveBeenCalledWith(false);
     });
+
     it('onConfirm should close the dialog', () => {
       component.onConfirm();
       expect(mockDialogRef.close).toHaveBeenCalledWith(true);
     });
-  
   });

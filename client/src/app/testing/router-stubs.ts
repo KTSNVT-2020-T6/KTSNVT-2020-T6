@@ -1,24 +1,20 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { convertToParamMap, ParamMap } from '@angular/router';
 import { Injectable } from '@angular/core';
 
+type StringPromise = {} | Promise<string>;
+
 @Injectable()
 export class ActivatedRouteStub {
-
-  // ActivatedRoute.params is Observable
-  private subject = new BehaviorSubject(this.testParams);
+  private subject = new BehaviorSubject(this.testParamss);
   params = this.subject.asObservable();
-
-  // Test parameters
-  private _testParams!: {};
-  get testParams() { return this._testParams; }
-  set testParams(params: {}) {
-    this._testParams = params;
+  private testParams!: {};
+  get testParamss(): StringPromise { return this.testParams; }
+  set testParamss(params: StringPromise) {
+    this.testParams = params;
     this.subject.next(params);
   }
-
-  // ActivatedRoute.snapshot.params
-  get snapshot() {
-    return { params: this.testParams };
+  get snapshot(): any {
+    return { params: this.testParamss };
   }
 }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, AfterViewInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import * as L from 'leaflet';
 import { CulturalOffer } from '../../../core/model/CulturalOffer';
 import { ByProximityOptions, LocationType, SupportedLanguage, CountyCode } from '@geoapify/geocoder-autocomplete';
@@ -9,10 +9,10 @@ import { ByProximityOptions, LocationType, SupportedLanguage, CountyCode } from 
   templateUrl: './map-container.component.html',
   styleUrls: ['./map-container.component.scss']
 })
-export class MapContainerComponent implements OnInit, AfterViewInit {
+export class MapContainerComponent implements OnInit, AfterViewInit, OnChanges{
   @Input() culturalOffers!: CulturalOffer[];
   private map: any;
-  private icon: any; 
+  private icon: any;
   private markers: any[] = [];
 
   constructor(private httpClient: HttpClient) { }
@@ -28,10 +28,10 @@ export class MapContainerComponent implements OnInit, AfterViewInit {
     tiles.addTo(this.map);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     this.culturalOffers = changes.culturalOffers.currentValue;
-    
-    if(this.culturalOffers === undefined){
+
+    if (this.culturalOffers === undefined){
       return;
     }
 
@@ -43,8 +43,8 @@ export class MapContainerComponent implements OnInit, AfterViewInit {
     // add new markers
     this.culturalOffers.forEach(element => {
       this.markers.push(L.marker([element.lat, element.lon], {icon: this.icon}).addTo(this.map)
-      .bindPopup("<h3><a id=placemark" + element.id + " mat-button href=/culturaloffer/"+element.id+" matTooltip=Open to see details style=color:#576869>"+element.name+"</a></h3> "));
-    });   
+      .bindPopup('<h3><a id=placemark' + element.id + ' mat-button href=/culturaloffer/' + element.id + ' matTooltip=Open to see details style=color:#576869>' + element.name + '</a></h3> '));
+    });
   }
 
   private initMap(): void {
@@ -60,7 +60,7 @@ export class MapContainerComponent implements OnInit, AfterViewInit {
       iconAnchor:   [12, 36], // point of the icon which will correspond to marker's location
       shadowAnchor: [4, 62],  // the same for the shadow
       popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-    
+
     });
 
   }

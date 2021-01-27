@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { EditProfileComponent } from './edit-profile.component';
 import { of } from 'rxjs';
 
 export class MatDialogRefMock {
-    close(value = '') {
+    close(value = ''): void {
     }
 }
 
@@ -38,7 +38,7 @@ describe('EditProfileComponent', () => {
     active: true,
     verified: true,
     idImageDTO: 1,
-    src: 'ne znam sta je src'  
+    src: 'ne znam sta je src'
   };
 
   beforeEach(() => {
@@ -46,37 +46,34 @@ describe('EditProfileComponent', () => {
         success: jasmine.createSpy('success'),
         error: jasmine.createSpy('error')
     };
-    let regUserServiceMock = {
+    const regUserServiceMock = {
          editUser: jasmine.createSpy('editUser')
          .and.returnValue(of({body: {}})),
     };
-  
-    let adminServiceMock = {
+    const adminServiceMock = {
         editAdmin: jasmine.createSpy('editAdmin')
          .and.returnValue(of({body: {}})),
     };
-  
-    let imageServiceMock = {
+    const imageServiceMock = {
         add: jasmine.createSpy('add')
         .and.returnValue(of(1)),
     };
-    let routerMock= {
+    const routerMock = {
         navigate: jasmine.createSpy('navigate')
     };
-    let authenticationServiceMock = {
-
-    };
+    const authenticationServiceMock = {};
     TestBed.configureTestingModule({
         declarations: [ EditProfileComponent ],
         imports: [ToastrModule.forRoot(), ReactiveFormsModule, FormsModule, MatDialogModule],
-        providers:    [ {provide: RegisteredUserService, useValue: regUserServiceMock },
-                        {provide: AdminService, useValue: adminServiceMock },
-                        {provide: ImageService, useValue: imageServiceMock },
-                        {provide: AuthenticationService, useValue: authenticationServiceMock},
-                        { provide: MatDialogRef, useClass: MatDialogRefMock},
-                        { provide: Router, useValue: routerMock },
-                        { provide: ToastrService, useValue: toastrMocked },
-                        { provide: MAT_DIALOG_DATA, useValue: mockUser }]
+        providers: [
+          { provide: RegisteredUserService, useValue: regUserServiceMock },
+          { provide: AdminService, useValue: adminServiceMock },
+          { provide: ImageService, useValue: imageServiceMock },
+          { provide: AuthenticationService, useValue: authenticationServiceMock},
+          { provide: MatDialogRef, useClass: MatDialogRefMock},
+          { provide: Router, useValue: routerMock },
+          { provide: ToastrService, useValue: toastrMocked },
+          { provide: MAT_DIALOG_DATA, useValue: mockUser }]
         });
     fixture = TestBed.createComponent(EditProfileComponent);
     component = fixture.componentInstance;
@@ -93,70 +90,63 @@ describe('EditProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should set form values in constructor', async(() => {
+  it('should set form values in constructor', waitForAsync(() => {
     fixture.whenStable()
       .then(() => {
         expect(component.form).toBeDefined();
         console.log(component.form.value);
-        expect(component.form.value.firstName).toEqual('John'); 
+        expect(component.form.value.firstName).toEqual('John');
         expect(component.form.value.lastName).toEqual('Smith');
         expect(component.form.value.email).toEqual('at@gmail.com');
         expect(component.form.value.image).toEqual(null);
-        fixture.detectChanges();        
-        let firstNameInput = fixture.debugElement.query(By.css('#firstName')).nativeElement;
-        let lastNameInput = fixture.debugElement.query(By.css('#lastName')).nativeElement;
-        
+        fixture.detectChanges();
+        const firstNameInput = fixture.debugElement.query(By.css('#firstName')).nativeElement;
+        const lastNameInput = fixture.debugElement.query(By.css('#lastName')).nativeElement;
         expect(firstNameInput.value).toEqual('John');
         expect(lastNameInput.value).toEqual('Smith');
       });
   }));
 
-  it('should close dialog on cancel', async(() => {
+  it('should close dialog on cancel', waitForAsync(() => {
     spyOn(dialogRef, 'close');
     component.cancel();
-    expect(dialogRef.close).toHaveBeenCalled();   
+    expect(dialogRef.close).toHaveBeenCalled();
   }));
 
   it('should set input in reactive form', fakeAsync(() => {
-    fixture.detectChanges();  
+    fixture.detectChanges();
     fixture.whenStable().then(() => {
         expect(fixture.debugElement.query(By.css('#firstName')).nativeElement.value).toEqual('John');
         expect(fixture.debugElement.query(By.css('#lastName')).nativeElement.value).toEqual('Smith');
-        
-        let firstName = fixture.debugElement.query(By.css('#firstName')).nativeElement;
+        const firstName = fixture.debugElement.query(By.css('#firstName')).nativeElement;
         firstName.value = 'new first name';
-        let lastName = fixture.debugElement.query(By.css('#lastName')).nativeElement;
+        const lastName = fixture.debugElement.query(By.css('#lastName')).nativeElement;
         lastName.value = 'new last name';
-
-        firstName.dispatchEvent(new Event('input')); 
+        firstName.dispatchEvent(new Event('input'));
         lastName.dispatchEvent(new Event('input'));
-
-        let controlFirstName = component.form.controls['firstName'];
-        let controlLastName = component.form.controls['lastName'];
-       
+        const controlFirstName = component.form.controls.firstName;
+        const controlLastName = component.form.controls.lastName;
         expect(controlFirstName.value).toEqual('new first name');
         expect(controlLastName.value).toEqual('new last name');
-      });   
+      });
   }));
 
-  it('should save reg user changes', fakeAsync(() =>{
-    component.role = "ROLE_REGISTERED_USER";
-    spyOn(dialogRef, 'close'); 
+  it('should save reg user changes', fakeAsync(() => {
+    component.role = 'ROLE_REGISTERED_USER';
+    spyOn(dialogRef, 'close');
     component.saveChanges();
     tick(15000);
-
-    expect(regUserService.editUser).toHaveBeenCalled(); 
+    expect(regUserService.editUser).toHaveBeenCalled();
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
   }));
 
   it('should save admin changes', fakeAsync(() => {
-    component.role = "ROLE_ADMIN";
-    spyOn(dialogRef, 'close'); 
+    component.role = 'ROLE_ADMIN';
+    spyOn(dialogRef, 'close');
     component.saveChanges();
     tick(15000);
-
-    expect(adminService.editAdmin).toHaveBeenCalled(); 
+    expect(adminService.editAdmin).toHaveBeenCalled();
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
   }));
@@ -166,5 +156,4 @@ describe('EditProfileComponent', () => {
     expect(imageService.add).toHaveBeenCalled();
     expect(component.user.idImageDTO).toEqual(1);
   }));
-
 });

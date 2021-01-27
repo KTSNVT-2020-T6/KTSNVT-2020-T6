@@ -7,28 +7,28 @@ import { environment } from 'src/environments/environment';
 
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
     private headers = new HttpHeaders({'Content-Type': 'application/json'});
-	private RegenerateData = new Subject<void>();
+    private RegenerateData = new Subject<void>();
 
     RegenerateData$ = this.RegenerateData.asObservable();
 
-    announceChange() {
+    announceChange(): void {
         this.RegenerateData.next();
     }
-	constructor(
-		private http: HttpClient
+    constructor(
+        private http: HttpClient
     ) {}
-    
-    getCurrentUser():Observable<any>{
+
+    getCurrentUser(): Observable<any>{
         let queryParams = {};
-		queryParams = {
-			headers: this.headers,
-			observe: 'response',
-			params: new HttpParams()
-		};
-		return this.http.get(`${environment.baseUrl}/${environment.user}/currentUser`, queryParams).pipe(map(res => res));
+        queryParams = {
+            headers: this.headers,
+            observe: 'response',
+            params: new HttpParams()
+        };
+        return this.http.get(`${environment.baseUrl}/${environment.user}/currentUser`, queryParams).pipe(map(res => res));
     }
 }

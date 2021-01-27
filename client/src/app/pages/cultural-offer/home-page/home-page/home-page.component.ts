@@ -16,37 +16,38 @@ import { SearchDetailsComponent } from '../../search-details/search-details.comp
 export class HomePageComponent implements OnInit {
 
   pageSize: number;
-	currentPage: number;
-	totalSize: number;
+    currentPage: number;
+    totalSize: number;
   culturalOfferList!: CulturalOffer[];
   images!: Img[];
   image!: any;
   base64image: any;
   content!: string;
-  searchDetails: SearchDetails={'city': '', 'content': ''};
-  filtered:boolean = false;
+  searchDetails: SearchDetails = {city: '', content: ''};
+  filtered = false;
 
   constructor(private culturalOfferDetailsService: CulturalOfferDetailsService,
-    private imageService: ImageService, private sanitizer: DomSanitizer,  public dialog: MatDialog) {
+              private imageService: ImageService, private sanitizer: DomSanitizer,  public dialog: MatDialog) {
     this.pageSize = 3;
-		this.currentPage = 1;
-		this.totalSize = 1;
+    this.currentPage = 1;
+    this.totalSize = 1;
   }
 
-  changePageFiltered(newPage: number){
-    this.culturalOfferDetailsService.searchCombined(newPage-1, this.pageSize, this.searchDetails.content, this.searchDetails.city).subscribe(
-			res => {
-				this.culturalOfferList = res.body.content as CulturalOffer[];
-        this.totalSize = Number(res.body.totalElements);
-        this.loadImage();
+  changePageFiltered(newPage: number): void {
+    this.culturalOfferDetailsService.searchCombined(
+        newPage - 1, this.pageSize, this.searchDetails.content, this.searchDetails.city).subscribe(
+            res => {
+                this.culturalOfferList = res.body.content as CulturalOffer[];
+                this.totalSize = Number(res.body.totalElements);
+                this.loadImage();
         }, error => {
           console.log(error.error);
-          
+
         }
       );
   }
-  changePage(newPage: number) {
-    if(this.filtered){
+  changePage(newPage: number): void {
+    if (this.filtered){
       this.changePageFiltered(newPage);
     }else{
       this.culturalOfferDetailsService.getPage(newPage - 1, this.pageSize).subscribe(
@@ -56,78 +57,79 @@ export class HomePageComponent implements OnInit {
           this.loadImage();
           }, error => {
             console.log(error.error);
-            
+
           }
         );
     }
-	
-	}
 
-  ngOnInit() {
+    }
+
+  ngOnInit(): void {
     this.culturalOfferDetailsService.getPage(this.currentPage - 1, this.pageSize).subscribe(
-			res => {
+            res => {
         this.culturalOfferList = res.body.content as CulturalOffer[];
         this.totalSize = Number(res.body.totalElements);
-      
+
         this.culturalOfferList.forEach(element => {
         this.images = element.imageDTO as Img[];
-        if(this.images.length == 0){
+        if (this.images.length === 0){
           return;
         }
         this.imageService.getImage(this.images[0]?.id).subscribe(
-          res => {
-            let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-            let objectURL = 'data:image/jpg;base64,' + base64String;           
+          response => {
+            const base64String = btoa(String.fromCharCode(...new Uint8Array(response.body)));
+            const objectURL = 'data:image/jpg;base64,' + base64String;
             this.base64image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
             element.base64image = this.base64image;
-    
+
           }, error => {
             console.log(error.error);
-            
+
           });
        });
-      
 
-			}, error => {
+
+            }, error => {
         console.log(error.error);
-        
+
       }
     );
-    
+
   }
-  loadImage(){
+  loadImage(): void {
     this.culturalOfferList.forEach(element => {
       this.images = element.imageDTO as Img[];
-      if(this.images.length == 0){
+      if (this.images.length === 0){
         return;
       }
       this.imageService.getImage(this.images[0]?.id).subscribe(
         res => {
-          let base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
-          let objectURL = 'data:image/jpg;base64,' + base64String;           
-          this.base64image  = this.sanitizer.bypassSecurityTrustUrl(objectURL); 
-          element.base64image =  this.base64image;            
+          const base64String = btoa(String.fromCharCode(...new Uint8Array(res.body)));
+          const objectURL = 'data:image/jpg;base64,' + base64String;
+          this.base64image  = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          element.base64image =  this.base64image;
         }, error => {
           console.log(error.error);
         });
      });
   }
-  refreshClick(){
+  refreshClick(): void{
     this.filtered = false;
     window.location.reload();
   }
-  searchClicked(){
+  searchClicked(): void {
     this.currentPage = 1;
     const dialogRef = this.dialog.open(SearchDetailsComponent);
-    if(dialogRef.componentInstance === undefined)
+    if (dialogRef.componentInstance === undefined) {
       return;
+    }
     const sub = dialogRef.componentInstance.done.subscribe(() => {
       this.searchDetails = dialogRef.componentInstance.searchDetails;
     });
     dialogRef.afterClosed().subscribe(() => {
       sub.unsubscribe();
-
-      this.culturalOfferDetailsService.searchCombined(this.currentPage-1, this.pageSize, this.searchDetails.content, this.searchDetails.city).subscribe(
+      this.culturalOfferDetailsService.searchCombined(
+          this.currentPage - 1, this.pageSize, this.searchDetails.content, this.searchDetails.city).subscribe(
         res => {
           this.culturalOfferList = res.body.content as CulturalOffer[];
           this.totalSize = Number(res.body.totalElements);
@@ -135,10 +137,9 @@ export class HomePageComponent implements OnInit {
           this.filtered = true;
         }, error => {
           console.log(error.error);
-          
         }
-      )}
-    )
+      ); }
+    );
   }
 }
-      
+

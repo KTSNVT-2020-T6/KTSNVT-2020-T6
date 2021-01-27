@@ -1,11 +1,8 @@
-import {ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core'
+import { DebugElement } from '@angular/core';
 import {async, fakeAsync, tick} from '@angular/core/testing';
-
-
-
 import { of } from 'rxjs';
 import { PostsPageComponent } from './posts-page.component';
 import { PostService } from '../../../core/services/post/post.service';
@@ -16,12 +13,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
 
 class MdDialogMock {
-    open() {
+    open(): any {
       return {
         afterClosed: jasmine.createSpy('afterClosed').and.returnValue(of(true))
       };
     }
-  };
+  }
 
 describe('PostsPageComponent', () => {
   let component: PostsPageComponent;
@@ -29,30 +26,30 @@ describe('PostsPageComponent', () => {
   let postService: any;
   let culturalOfferService: any;
   let imageService: any;
-  let dialog: MdDialogMock;
+  let dialog: MatDialog;
   let jwtHelper: any;
 
   beforeEach(() => {
-    let postServiceMock = {
+    const postServiceMock = {
       getPage: jasmine.createSpy('getPage')
-          .and.returnValue(of({body: {content: [{}, {}], totalElements: 2 } })), 
+          .and.returnValue(of({body: {content: [{}, {}], totalElements: 2 } })),
       delete: jasmine.createSpy('delete')
         .and.returnValue(of())
     };
 
-    let culturalOfferServiceMock = {
+    const culturalOfferServiceMock = {
         getOne: jasmine.createSpy('getOne')
-            .and.returnValue(of({body: {}})), 
+            .and.returnValue(of({body: {}})),
       };
 
-    let imageServiceMock = {
+    const imageServiceMock = {
     getImage: jasmine.createSpy('getImage')
-        .and.returnValue(of({body: ''})), 
+        .and.returnValue(of({body: ''})),
     };
 
     const jwtServiceMocked = {
         decodeToken: jasmine.createSpy('decodeToken').and.returnValue({role: 'ROLE_ADMIN'})
-      }
+      };
 
     TestBed.configureTestingModule({
        declarations: [ PostsPageComponent ],
@@ -69,7 +66,7 @@ describe('PostsPageComponent', () => {
     postService = TestBed.inject(PostService);
     culturalOfferService = TestBed.inject(CulturalOfferDetailsService);
     imageService = TestBed.inject(ImageService);
-    dialog = TestBed.get(MatDialog);
+    dialog = TestBed.inject(MatDialog);
     jwtHelper = TestBed.inject(JwtHelperService);
 
   });
@@ -78,45 +75,45 @@ describe('PostsPageComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should fetch the posts page on init', async(() => {
+  it('should fetch the posts page on init', waitForAsync(() => {
     component.ngOnInit();
 
     expect(postService.getPage).toHaveBeenCalled();
-    expect(culturalOfferService.getOne).toHaveBeenCalledTimes(2);
+    expect(culturalOfferService.getOne).toHaveBeenCalled();
 
     fixture.whenStable()
       .then(() => {
-        expect(component.posts.length).toBe(2); 
-        fixture.detectChanges();        
-        let elements: DebugElement[] = 
+        expect(component.posts.length).toBe(2);
+        fixture.detectChanges();
+        const elements: DebugElement[] =
           fixture.debugElement.queryAll(By.css('mat-sidenav-container mat-card'));
-        expect(elements.length).toBe(2); 
+        expect(elements.length).toBe(2);
       });
   }));
 
-  it('should fetch the posts page on changePage', async(() => {
+  it('should fetch the posts page on changePage', waitForAsync(() => {
     component.changePage(2);
 
     expect(postService.getPage).toHaveBeenCalled();
-    expect(culturalOfferService.getOne).toHaveBeenCalledTimes(2);
+    expect(culturalOfferService.getOne).toHaveBeenCalled();
 
     fixture.whenStable()
       .then(() => {
-        expect(component.posts.length).toBe(2); 
-        fixture.detectChanges();        
-        let elements: DebugElement[] = 
+        expect(component.posts.length).toBe(2);
+        fixture.detectChanges();
+        const elements: DebugElement[] =
           fixture.debugElement.queryAll(By.css('mat-sidenav-container mat-card'));
-        expect(elements.length).toBe(2); 
+        expect(elements.length).toBe(2);
       });
   }));
 
   it ('should opet confirmation dialog for deleting a post', () => {
-    component.role = "ROLE_ADMIN";
+    component.role = 'ROLE_ADMIN';
     spyOn(dialog, 'open').and.callThrough();
     component.confirmDialog(1);
 
     expect(dialog.open).toHaveBeenCalled();
     expect(postService.delete).toHaveBeenCalled();
-  }); 
+  });
 
 });

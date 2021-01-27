@@ -23,14 +23,14 @@ export class CategoriesAndTypesComponent implements OnInit {
   categories!: Array<Category>;
   types!: Array<Type>;
   res = [] as any;
-  result:any;
-  result1:any;
+  result: any;
+  result1: any;
 
   constructor(
     public dialog: MatDialog,
     private catService: CategoryService,
     private typeService: TypeService,
-    private router : Router,
+    private router: Router,
     private toastr: ToastrService
   ) { }
 
@@ -40,45 +40,45 @@ export class CategoriesAndTypesComponent implements OnInit {
         this.categories = res.body as Array<Category>;
         this.categories.forEach(element => {
           this.getTypes(element.id);
-          
+
         });
-      },error =>{
-        this.toastr.error("Cannot load from server!");
-        
+      }, error => {
+        this.toastr.error('Cannot load from server!');
+
       }
-    )
+    );
   }
 
-  getTypes(catId: number){
+  getTypes(catId: number): void{
     this.typeService.getTypesOfCategory(catId).subscribe(
       res => {
         this.res[catId] = res.body ;
-      },error =>{
-        this.toastr.error("Cannot load from server!");
-        
+      }, error => {
+        this.toastr.error('Cannot load from server!');
+
       }
-    )
+    );
   }
-  editType(typeId: number){
+  editType(typeId: number): void{
     const dialogRef = this.dialog.open(EditTypeComponent);
     dialogRef.componentInstance.typeId = typeId;
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  deleteType(typeId: number){
+  deleteType(typeId: number): void{
     this.typeService.delete(typeId).subscribe(
       result => {
-        this.toastr.success("Type successfully deleted.");
+        this.toastr.success('Type successfully deleted.');
         window.location.reload();
-      },error =>{
-        this.toastr.error("Cannot delete this type!");
-        
+      }, error => {
+        this.toastr.error('Cannot delete this type!');
+
       }
     );
   }
 
-  editCategory(catId: number){
+  editCategory(catId: number): void{
     const dialogRef2 = this.dialog.open(EditCategoryComponent);
     dialogRef2.componentInstance.catId = catId;
     dialogRef2.afterClosed().subscribe(result => {
@@ -86,57 +86,57 @@ export class CategoriesAndTypesComponent implements OnInit {
     });
   }
 
-  deleteCategory(catId: number){
+  deleteCategory(catId: number): void{
     this.catService.delete(catId).subscribe(
       result => {
-        this.toastr.success("Category successfully deleted.");
+        this.toastr.success('Category successfully deleted.');
         window.location.reload();
-      },error =>{
-        this.toastr.error("Cannot delete this category!");
-        
+      }, error => {
+        this.toastr.error('Cannot delete this category!');
+
       }
     );
   }
 
-  newType() {
+  newType(): void {
 
     const dialogRef = this.dialog.open(AddTypeComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  newCategory() {
+  newCategory(): void {
     const dialogRef = this.dialog.open(AddCategoryComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  confirmDialog(catId:number) {
+  confirmDialog(catId: number): void {
     const message = `Are you sure you want to do this?`;
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogData = new ConfirmDialogModel('Confirm Action', message);
     const dialogRef = this.dialog.open(ConfirmationComponent, {
-      maxWidth: "400px",
+      maxWidth: '400px',
       data: dialogData
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
-      if(this.result === true){
+      if (this.result === true){
         this.deleteCategory(catId);
       }
     });
   }
-  confirmDialogT(tId:number) {
+  confirmDialogT(tId: number): void {
     const message = `Are you sure you want to do this?`;
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogData = new ConfirmDialogModel('Confirm Action', message);
     const dialogRef = this.dialog.open(ConfirmationComponent, {
-      maxWidth: "400px",
+      maxWidth: '400px',
       data: dialogData
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.result = dialogResult;
-      if(this.result === true){
+      if (this.result === true){
         this.deleteType(tId);
       }
     });

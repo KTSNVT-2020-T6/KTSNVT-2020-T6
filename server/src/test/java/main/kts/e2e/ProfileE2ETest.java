@@ -166,7 +166,7 @@ public class ProfileE2ETest {
 		 justWait(2000);
 		
 		
-		 profilePage.getUploadImage().sendKeys("C:\\Users\\Tamara\\Pictures\\untitled.jpg");
+		 profilePage.getUploadImage().sendKeys("C:\\Users\\Korisnik\\Desktop\\image.jpg");
 		 justWait(1000);
 		 profilePage.getSubmitBtn().click();
 		 

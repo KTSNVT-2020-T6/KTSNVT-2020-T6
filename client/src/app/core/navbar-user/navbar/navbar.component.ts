@@ -16,13 +16,13 @@ export class NavbarUserComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signOut(){
-    this.authenticationService.signOut().subscribe(      
-			result => {
-				localStorage.removeItem('user');
-				this.router.navigate(['/login']);
-			}
-		);
+  signOut(): void{
+    this.authenticationService.signOut().subscribe(
+            result => {
+                localStorage.removeItem('user');
+                this.router.navigate(['/login']);
+            }
+        );
   }
 
 }

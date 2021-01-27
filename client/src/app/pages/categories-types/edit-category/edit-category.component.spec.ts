@@ -1,5 +1,5 @@
 
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -11,7 +11,7 @@ import { CategoryService } from '../../../core/services/category/category.servic
 import { EditCategoryComponent } from './edit-category.component';
 
 export class MatDialogRefMock {
-  close(value = '') {
+  close(value = ''): void {
   }
 }
 
@@ -26,7 +26,7 @@ describe('EditCategoryComponent', () => {
     id: 1,
     name: 'category number 1',
     description: 'this is a category no 1'
-  }
+  };
 
 
   beforeEach(() => {
@@ -36,9 +36,9 @@ describe('EditCategoryComponent', () => {
       error: jasmine.createSpy('error')
     };
 
-    let categoryServiceMock = {
+    const categoryServiceMock = {
       getCategory: jasmine.createSpy('getCategory')
-         .and.returnValue( of({ body:mockCategory})),
+         .and.returnValue( of({ body: mockCategory})),
       update: jasmine.createSpy('update')
         .and.returnValue(of({body: {}}))
     };
@@ -62,75 +62,75 @@ describe('EditCategoryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set form values on init', async(() => {
+  it('should set form values on init', waitForAsync(() => {
     component.ngOnInit();
     expect(categoryService.getCategory).toHaveBeenCalled();
     fixture.whenStable().then(() => {
-        let catEditName = fixture.debugElement.query(By.css('#catEditName')).nativeElement;
+        const catEditName = fixture.debugElement.query(By.css('#catEditName')).nativeElement;
         catEditName.value = mockCategory.name;
-        let catEdtiDescription = fixture.debugElement.query(By.css('#catEdtiDescription')).nativeElement;
+        const catEdtiDescription = fixture.debugElement.query(By.css('#catEdtiDescription')).nativeElement;
         catEdtiDescription.value = mockCategory.description;
 
-        catEditName.dispatchEvent(new Event('input')); 
+        catEditName.dispatchEvent(new Event('input'));
         catEdtiDescription.dispatchEvent(new Event('input'));
 
-        let controlName = component.categoryForm.controls['name'];
-        let controlDesc = component.categoryForm.controls['description'];
-       
+        const controlName = component.categoryForm.controls.name;
+        const controlDesc = component.categoryForm.controls.description;
+
         expect(controlName.value).toEqual('category number 1');
         expect(controlDesc.value).toEqual('this is a category no 1');
-      });   
+      });
   }));
 
-  it('should close dialog on cancel', async(() => {
+  it('should close dialog on cancel', waitForAsync(() => {
     spyOn(dialogRef, 'close');
     component.cancelClicked();
-    expect(dialogRef.close).toHaveBeenCalled();   
+    expect(dialogRef.close).toHaveBeenCalled();
   }));
 
   it('should set input in reactive form', fakeAsync(() => {
-    fixture.detectChanges(); 
-    
+    fixture.detectChanges();
+
     fixture.whenStable().then(() => {
 
       expect(fixture.debugElement.query(By.css('#catEditName')).nativeElement.value).toEqual('category number 1');
       expect(fixture.debugElement.query(By.css('#catEdtiDescription')).nativeElement.value).toEqual('this is a category no 1');
-      
-        let catEditName = fixture.debugElement.query(By.css('#catEditName')).nativeElement;
-        catEditName.value = 'new name';
-        let catEdtiDescription = fixture.debugElement.query(By.css('#catEdtiDescription')).nativeElement;
-        catEdtiDescription.value = 'new desc';
 
-        catEditName.dispatchEvent(new Event('input')); 
-        catEdtiDescription.dispatchEvent(new Event('input'));
+      const catEditName = fixture.debugElement.query(By.css('#catEditName')).nativeElement;
+      catEditName.value = 'new name';
+      const catEdtiDescription = fixture.debugElement.query(By.css('#catEdtiDescription')).nativeElement;
+      catEdtiDescription.value = 'new desc';
 
-        let controlName = component.categoryForm.controls['name'];
-        let controlDesc = component.categoryForm.controls['description'];
-       
-        expect(controlName.value).toEqual('new name');
-        expect(controlDesc.value).toEqual('new desc');
+      catEditName.dispatchEvent(new Event('input'));
+      catEdtiDescription.dispatchEvent(new Event('input'));
+
+      const controlName = component.categoryForm.controls.name;
+      const controlDesc = component.categoryForm.controls.description;
+
+      expect(controlName.value).toEqual('new name');
+      expect(controlDesc.value).toEqual('new desc');
       });
-      expect(true).toEqual(true);   
+    expect(true).toEqual(true);
   }));
 
-  it('should save edited category', fakeAsync(() =>{
-  
-    spyOn(dialogRef, 'close'); 
-    spyOn(component, "windowReload").and.callFake(function(){});
+  it('should save edited category', fakeAsync(() => {
+
+    spyOn(dialogRef, 'close');
+    spyOn(component, 'windowReload').and.callFake(() => {});
     component.editCategory();
     tick(15000);
 
-    expect(categoryService.update).toHaveBeenCalled(); 
+    expect(categoryService.update).toHaveBeenCalled();
     expect(toastr.success).toHaveBeenCalled();
     expect(dialogRef.close).toHaveBeenCalled();
     expect(component.windowReload).toHaveBeenCalled();
-    
+
   }));
 
-it('should not save updates if name input is empty', fakeAsync(() => { 
+  it('should not save updates if name input is empty', fakeAsync(() => {
   spyOn(dialogRef, 'close');
-  component.categoryForm.controls['name'].setValue("");
-  spyOn(component, "windowReload").and.callFake(function(){});
+  component.categoryForm.controls.name.setValue('');
+  spyOn(component, 'windowReload').and.callFake(() => {});
   fixture.detectChanges();
   component.editCategory();
 

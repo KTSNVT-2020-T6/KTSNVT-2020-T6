@@ -6,22 +6,22 @@ import { Rate} from '../../model/Rate';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class RateService {
-	private headers = new HttpHeaders({'Content-Type': 'application/json'});
+    private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-	constructor(
-		private http: HttpClient
+    constructor(
+        private http: HttpClient
     ) {}
-    createOrEditRate(newRate : Rate):Observable<any>{
+    createOrEditRate(newRate: Rate): Observable<any>{
         let queryParams = {};
-		queryParams = {
-			headers: this.headers,
-			observe: 'response',
-			params: new HttpParams()
-		};
-		return this.http.post(`${environment.baseUrl}/${environment.rate}/check`, newRate , {headers: this.headers, responseType: 'json'});
-	}
+        queryParams = {
+            headers: this.headers,
+            observe: 'response',
+            params: new HttpParams()
+        };
+        return this.http.post(`${environment.baseUrl}/${environment.rate}/check`, newRate , {headers: this.headers, responseType: 'json'});
+    }
 
 }

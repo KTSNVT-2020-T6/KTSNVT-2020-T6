@@ -15,30 +15,30 @@ export class NavbarAdminComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, private router: Router,
-    private authenticationService: AuthenticationService) {}
+              private authenticationService: AuthenticationService) {}
 
-  ngOnInit(){
+  ngOnInit(): void {
   }
-  newCulturalOffer(){
+  newCulturalOffer(): void{
     const dialogRef = this.dialog.open(AddCulturalOfferComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  newAdmin(){
+  newAdmin(): void{
     const dialogRef = this.dialog.open(AddAdminComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  signOut(){
-    this.authenticationService.signOut().subscribe(      
-			result => {
-				localStorage.removeItem('user');
-				this.router.navigate(['/login']);
-			}
-		);
+  signOut(): void{
+    this.authenticationService.signOut().subscribe(
+            result => {
+                localStorage.removeItem('user');
+                this.router.navigate(['/login']);
+            }
+        );
   }
 }

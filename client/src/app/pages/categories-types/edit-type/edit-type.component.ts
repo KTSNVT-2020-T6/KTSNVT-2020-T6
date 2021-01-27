@@ -1,4 +1,4 @@
-import { Component, OnInit,Input} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { Category } from '../../../core/model/Category';
 import { Type} from '../../../core/model/Type';
 import { TypeService } from '../../../core/services/type/type.service';
@@ -14,20 +14,20 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class EditTypeComponent implements OnInit {
 
-  selected : any;
+  selected: any;
   typeId: any;
-  type!:Type;
+  type!: Type;
   categories: Category[] = [];
   category!: Category | undefined;
   typeForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-		private typeService: TypeService,
-		private categoryService: CategoryService,
+    private typeService: TypeService,
+    private categoryService: CategoryService,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<EditTypeComponent>
-	) {
+    ) {
     this.createForm();
   }
   ngOnInit(): void {
@@ -38,51 +38,51 @@ export class EditTypeComponent implements OnInit {
         this.selected = this.category;
         console.log(this.type.id);
         this.typeForm = this.fb.group({
-          'name': [this.type.name],
-          'description': [this.type.description],
+          name: [this.type.name],
+          description: [this.type.description],
            });
-          
+
       }
-    ) 
+    );
     this.categoryService.getAll().subscribe(
       res => {
         this.categories = res.body as Category[];
       }
     );
   }
-  createForm() {
+  createForm(): void{
     this.typeForm = this.fb.group({
-      'name': ['', Validators.required],
-      'description': ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required]
        });
     }
-    onSelection(event:any) {
+    onSelection(event: any): void{
     this.category = event;
     }
-    
-    editType(){
+
+    editType(): void{
     this.type = this.typeForm.value;
     this.type.categoryDTO = this.category;
     this.typeService.update(this.type as Type, this.typeId).subscribe(
       result => {
-        this.toastr.success("Succesfully edited!");
+        this.toastr.success('Succesfully edited!');
         this.dialogRef.close();
         this.windowReload();
       },
       error => {
-        this.dialogRef.close()
-        this.toastr.error("Cannot edit type!");
+        this.dialogRef.close();
+        this.toastr.error('Cannot edit type!');
       }
     );
     this.typeForm.reset();
     }
 
-    cancelClicked(){
+    cancelClicked(): void{
       this.dialogRef.close();
-      
+
     }
 
-    windowReload(){
+    windowReload(): void{
       window.location.reload();
     }
 

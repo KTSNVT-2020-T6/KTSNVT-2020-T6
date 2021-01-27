@@ -19,23 +19,23 @@ import { TypeService } from '../../../core/services/type/type.service';
 export class EditCulturalOfferComponent implements OnInit {
   form!: FormGroup;
   types: Type[] = [];
-  newType!: Type; 
+  newType!: Type;
   placeLon: any;
   placeLat: any;
   city: any;
   todayDate: any;
-  loading: boolean = false;;
+  loading = false;
 
   selectedFiles!: FileList;
   progressInfos: any[] = [];
 
   constructor(private fb: FormBuilder,
-    private culturalOfferService: CulturalOfferDetailsService,
-    private typeService: TypeService,
-    private router: Router,
-    private toastr: ToastrService,
-    private imageService: ImageService,public dialogRef: MatDialogRef<EditCulturalOfferComponent>,
-    @Inject(MAT_DIALOG_DATA) public co: CulturalOffer) { 
+              private culturalOfferService: CulturalOfferDetailsService,
+              private typeService: TypeService,
+              private router: Router,
+              private toastr: ToastrService,
+              private imageService: ImageService, public dialogRef: MatDialogRef<EditCulturalOfferComponent>,
+              @Inject(MAT_DIALOG_DATA) public co: CulturalOffer) {
       this.createForm();
       this.form.patchValue(this.co);
       this.todayDate = new Date();
@@ -50,85 +50,87 @@ export class EditCulturalOfferComponent implements OnInit {
       );
   }
 
-  onSelection(event:any) {
-    this.co.typeDTO = event; 
+  onSelection(event: any): void {
+    this.co.typeDTO = event;
     }
 
-  createForm() {
+  createForm(): void{
     this.form = this.fb.group({
-      'name': ['', Validators.required],
-      'description': ['', Validators.required],
-      'typeDTO':['', Validators.required],
-      'image':[''],
-      'date':['']
-    })
-  };
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      typeDTO: ['', Validators.required],
+      image: [''],
+      date: ['']
+    });
+  }
 
-  saveChanges(){
-    if(this.form.value['name'] === '')
+  saveChanges(): void{
+    if (this.form.value.name === '') {
       return;
-    if(this.form.value['description'] === '')
+    }
+    if (this.form.value.description === '') {
       return;
+    }
 
-    if(!(this.placeLat === undefined || this.placeLon === undefined)){
+    if (!(this.placeLat === undefined || this.placeLon === undefined)){
       this.co.lat = this.placeLat;
       this.co.lon = this.placeLon;
       this.co.city = this.city;
-    }    
-      this.co.name = this.form.value['name'];
-      this.co.description = this.form.value['description'];
-      this.co.date = this.form.value['date'];
+    }
+    this.co.name = this.form.value.name;
+    this.co.description = this.form.value.description;
+    this.co.date = this.form.value.date;
 
-      this.loading = true;
-      this.culturalOfferService.edit(this.co).subscribe(
+    this.loading = true;
+    this.culturalOfferService.edit(this.co).subscribe(
         result => {
           this.loading = false;
           this.toastr.success('Cultural offer information saved!');
           this.form.reset();
           this.dialogRef.close();
-          
+
         },
         error => {
           this.loading = false;
-          this.toastr.error("Error saving data!");
+          this.toastr.error('Error saving data!');
         });
 
     }
 
-  cancel(){
+  cancel(): void{
     this.dialogRef.close();
   }
 
-  selectFiles(event: any) {
+  selectFiles(event: any): void {
     this.progressInfos = [];
     this.selectedFiles = event.target.files;
     this.uploadFiles();
   }
 
-  uploadFiles() {  
+  uploadFiles(): void {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.upload(i, this.selectedFiles[i]);
     }
   }
 
-  upload(idx: number, file: any) {
+  upload(idx: number, file: any): void{
     const formData = new FormData();
     formData.append('file', file);
     this.imageService.add(formData).subscribe(
       result => {
         this.progressInfos[idx] = { fileName: file.name };
         // add new image to the list
-        this.co.imageDTO?.push({id: result, description:'', relativePath:''});
+        this.co.imageDTO?.push({id: result, description: '', relativePath: ''});
       },
       error => {
-        this.toastr.error("Error saving image! Choose different one!");
+        this.toastr.error('Error saving image! Choose different one!');
       });
   }
 
-  placeSelected(place: any){
+  placeSelected(place: any): void{
     this.placeLat = place.properties.lat;
     this.placeLon = place.properties.lon;
-    this.city = place.properties.address_line1 + " " + place.properties.address_line2;
+    this.city = place.properties.address_line1 + ' ' + place.properties.address_line2;
     }
 }
 

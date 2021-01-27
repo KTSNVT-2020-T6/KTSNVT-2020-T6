@@ -19,9 +19,7 @@ import { ActivatedRouteStub } from 'src/app/testing/router-stubs';
 import { MaterialModule } from '../../material-module';
 
 class MatDialogRefMock {
-    close(value = '') {
-
-    }
+    close(value = ''): void { }
 }
 
 describe('AddPostComponent', () => {
@@ -30,27 +28,27 @@ describe('AddPostComponent', () => {
   let postService: PostService;
   let coService: CulturalOfferDetailsService;
   let imageService: ImageService;
-  let route : any;
-  let router : any;
+  let route: any;
+  let router: any;
   let toastr: any;
   let dialogRef: any;
 
- beforeEach(() => {
- 
-    let coServiceMock ={
-      getOne: jasmine.createSpy('getOne').and.returnValue(of({body: {id:1}}))
-    }
-    let postServiceMock = {
+  beforeEach(() => {
+
+    const coServiceMock = {
+      getOne: jasmine.createSpy('getOne').and.returnValue(of({body: {id: 1}}))
+    };
+    const postServiceMock = {
         addPost: jasmine.createSpy('addPost').and.returnValue(of({}))
-    }
-    let imageServiceMock = {
+    };
+    const imageServiceMock = {
         add: jasmine.createSpy('add').and.returnValue(of({}))
-    }
-    let routerMock= {
+    };
+    const routerMock = {
         navigate: jasmine.createSpy('navigate')
-    }
-    let activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
-    activatedRouteStub.testParams = {id: 1};
+    };
+    const activatedRouteStub: ActivatedRouteStub = new ActivatedRouteStub();
+    activatedRouteStub.testParamss = {id: 1};
 
 
     const toastrMocked = {
@@ -60,8 +58,9 @@ describe('AddPostComponent', () => {
 
     TestBed.configureTestingModule({
        declarations: [ AddPostComponent ],
-       imports: [ MaterialModule,FormsModule, ReactiveFormsModule, RouterModule, ToastrModule.forRoot(), MatCardModule, BrowserModule, BrowserAnimationsModule],
-       providers:    [ 
+       imports: [ MaterialModule, FormsModule, ReactiveFormsModule,
+         RouterModule, ToastrModule.forRoot(), MatCardModule, BrowserModule, BrowserAnimationsModule],
+       providers:    [
         { provide: CulturalOfferDetailsService, useValue: coServiceMock },
         { provide: ImageService, useValue: imageServiceMock },
         { provide: PostService, useValue: postServiceMock },
@@ -81,12 +80,12 @@ describe('AddPostComponent', () => {
     toastr = TestBed.inject(ToastrService);
     dialogRef = TestBed.inject(MatDialogRef);
     route = TestBed.inject(ActivatedRoute);
-  }); 
+  });
 
   it('should create component', fakeAsync(() => {
     expect(component).toBeTruthy();
   }));
-  
+
   it('should be initialized', () => {
     component.ngOnInit();
     expect(coService.getOne).toHaveBeenCalled();
@@ -95,62 +94,62 @@ describe('AddPostComponent', () => {
   });
 
   it('should set input in reactive form', fakeAsync(() => {
-    fixture.detectChanges();  
+    fixture.detectChanges();
     fixture.whenStable().then(() => {
         expect(fixture.debugElement.query(By.css('#textPost')).nativeElement.value).toEqual('');
- 
-        let text = fixture.debugElement.query(By.css('#textPost')).nativeElement;
-        text.value = 'Building with very poor horizontal and vertical isolation....';
-        
 
-        text.dispatchEvent(new Event('input')); 
-        
-        let controlText = component.postForm.controls['text'];
-        
+        const text = fixture.debugElement.query(By.css('#textPost')).nativeElement;
+        text.value = 'Building with very poor horizontal and vertical isolation....';
+
+
+        text.dispatchEvent(new Event('input'));
+
+        const controlText = component.postForm.controls.text;
+
 
         expect(controlText.value).toEqual('Building with very poor horizontal and vertical isolation....');
 
       });
 
-    
+
   }));
 
-  it('should add post', fakeAsync(() => {  
+  it('should add post', fakeAsync(() => {
     component.ngOnInit();
     spyOn(dialogRef, 'close');
     expect(component.postForm.valid).toBeFalsy();
-    component.postForm.controls['text'].setValue("Building with very poor horizontal and vertical isolation....");
-       
+    component.postForm.controls.text.setValue('Building with very poor horizontal and vertical isolation....');
+
     expect(component.postForm.valid).toBeTruthy();
-    component.addPost(); 
+    component.addPost();
 
     expect(postService.addPost).toHaveBeenCalledTimes(1);
     expect(toastr.success).toHaveBeenCalledTimes(1);
     expect(dialogRef.close).toHaveBeenCalledTimes(1);
     }));
 
-    it('should add post with image', fakeAsync(() => {  
+  it('should add post with image', fakeAsync(() => {
         component.ngOnInit();
         spyOn(dialogRef, 'close');
         expect(component.postForm.valid).toBeFalsy();
-        component.postForm.controls['text'].setValue("Building with very poor horizontal and vertical isolation....");
-        component.postForm.controls['image'].setValue("D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat.jpg");
+        component.postForm.controls.text.setValue('Building with very poor horizontal and vertical isolation....');
+        component.postForm.controls.image.setValue('D:\Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}\New folder\Private\Instagram-prebaceno OKTOBAR 2020\projekat.jpg');
 
         component.saveImage();
 
         expect(imageService.add).toHaveBeenCalledTimes(1);
         expect(component.post.imageDTO).toBeDefined();
         expect(component.postForm.valid).toBeTruthy();
-        component.addPost(); 
-    
+        component.addPost();
+
         expect(postService.addPost).toHaveBeenCalledTimes(1);
         expect(toastr.success).toHaveBeenCalledTimes(1);
         expect(dialogRef.close).toHaveBeenCalledTimes(1);
     }));
 
-    it('should be invalid form when text is empty', () => {
+  it('should be invalid form when text is empty', () => {
         expect(component.postForm.valid).toBeFalsy();
-        component.postForm.controls['text'].setValue("");
+        component.postForm.controls.text.setValue('');
 
         expect(component.postForm.invalid).toBeTruthy();
         fixture.detectChanges();
@@ -159,13 +158,13 @@ describe('AddPostComponent', () => {
         expect(submitButton.disabled).toBeTruthy();
     });
 
-    it('should close the dialog', fakeAsync(() => {
-        spyOn(dialogRef, 'close');   
+  it('should close the dialog', fakeAsync(() => {
+        spyOn(dialogRef, 'close');
         component.cancel();
 
         expect(dialogRef.close).toHaveBeenCalledTimes(1);
 
     }));
-   
+
 });
 

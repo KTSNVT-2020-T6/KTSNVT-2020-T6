@@ -12,16 +12,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogRef } from '@angular/material/dialog';
 
 class MatDialogRefMock {
-    close(value = '') {
-
-    }
+    close(value = ''): void{}
 }
 
 describe('StarRatingComponent', () => {
   let component: StarRatingComponent;
   let fixture: ComponentFixture<StarRatingComponent>;
 
- beforeEach(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
        declarations: [ StarRatingComponent ],
        imports: [BrowserModule, BrowserAnimationsModule],
@@ -31,7 +29,7 @@ describe('StarRatingComponent', () => {
     fixture = TestBed.createComponent(StarRatingComponent);
     component = fixture.componentInstance;
 
-  }); 
+  });
 
   it('should create component', fakeAsync(() => {
     expect(component).toBeTruthy();
@@ -42,7 +40,7 @@ describe('StarRatingComponent', () => {
     component.onClick(1);
     expect(component.ratingClick.emit).toHaveBeenCalled();
     expect(component.rating).toEqual(1);
-    
+
   }));
 
   it('should call onClick method when star 5 is clicked', fakeAsync(() => {
@@ -51,7 +49,7 @@ describe('StarRatingComponent', () => {
     rateFive.click();
     expect(component.ratingClick.emit).toHaveBeenCalled();
     expect(component.rating).toEqual(5);
-    
+
   }));
 
   it('should call onClick method when star 4 is clicked', fakeAsync(() => {
@@ -60,7 +58,7 @@ describe('StarRatingComponent', () => {
     rateFive.click();
     expect(component.ratingClick.emit).toHaveBeenCalled();
     expect(component.rating).toEqual(4);
-    
+
   }));
 
   it('should call onClick method when star 3 is clicked', fakeAsync(() => {
@@ -69,7 +67,7 @@ describe('StarRatingComponent', () => {
     rateFive.click();
     expect(component.ratingClick.emit).toHaveBeenCalled();
     expect(component.rating).toEqual(3);
-    
+
   }));
 
   it('should call onClick method when star 2 is clicked', fakeAsync(() => {
@@ -78,7 +76,7 @@ describe('StarRatingComponent', () => {
     rateFive.click();
     expect(component.ratingClick.emit).toHaveBeenCalled();
     expect(component.rating).toEqual(2);
-    
+
   }));
 
   it('should call onClick method when star 1 is clicked', fakeAsync(() => {
@@ -87,9 +85,9 @@ describe('StarRatingComponent', () => {
     rateFive.click();
     expect(component.ratingClick.emit).toHaveBeenCalled();
     expect(component.rating).toEqual(1);
-    
+
   }));
-   
+
 });
 
 

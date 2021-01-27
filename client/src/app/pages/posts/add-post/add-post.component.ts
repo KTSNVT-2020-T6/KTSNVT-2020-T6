@@ -23,17 +23,17 @@ export class AddPostComponent implements OnInit {
   postForm!: FormGroup;
   co!: CulturalOffer;
   todayDate!: Date;
-  
+
   constructor(
     private fb: FormBuilder,
     private postService: PostService,
     private coService: CulturalOfferDetailsService,
     private imageService: ImageService,
-    private route : ActivatedRoute,
-    private router : Router,
+    private route: ActivatedRoute,
+    private router: Router,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<AddPostComponent>
-  ) { 
+  ) {
     this.createForm();
     this.todayDate = new Date();
   }
@@ -46,51 +46,51 @@ export class AddPostComponent implements OnInit {
       }
     );
   }
-  createForm() {
+  createForm(): void {
     this.postForm = this.fb.group({
-      'text': ['', Validators.required],
-      'image':['']
+      text: ['', Validators.required],
+      image: ['']
        });
   }
-  addPost(){
-    this.post.text = this.postForm.controls['text'].value;
+  addPost(): void{
+    this.post.text = this.postForm.controls.text.value;
     this.post.date = new Date();
-    this.post.culturalOfferId = this.co.id; 
+    this.post.culturalOfferId = this.co.id;
     this.postService.addPost(this.post as Post).subscribe(
       result => {
-        this.toastr.success("Successfully added post!");
+        this.toastr.success('Successfully added post!');
         this.postForm.reset();
         this.dialogRef.close();
       }, error => {
-        this.toastr.error("Cannot create post!");
+        this.toastr.error('Cannot create post!');
       }
     );
-   
+
   }
-  onFileSelect(event: any) {
+  onFileSelect(event: any): void {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.postForm.value['image'] = file;
+      this.postForm.value.image = file;
     }
     this.saveImage();
-  };
+  }
 
-  saveImage(){
+  saveImage(): void{
     const formData = new FormData();
-    formData.append('file', this.postForm.value['image']);
+    formData.append('file', this.postForm.value.image);
 
     this.imageService.add(formData).subscribe(
       result => {
-        const img: Img = {'id':result};
+        const img: Img = {id: result};
         this.post.imageDTO = img;
       },
       error => {
-        this.toastr.error("Error saving image! Choose different one!");
+        this.toastr.error('Error saving image! Choose different one!');
       }
 
     );
   }
-  cancel(){
+  cancel(): void{
     this.dialogRef.close();
   }
 

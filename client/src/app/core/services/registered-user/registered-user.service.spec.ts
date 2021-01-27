@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { fakeAsync, tick} from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from "../../model/User";
+import { User } from '../../model/User';
 import { UserService } from '../user/user.service';
 import { RegisteredUserService } from './registered-user.service';
 
@@ -25,13 +25,13 @@ describe('RegisteredUserService', () => {
     httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
   });
-  
+
   afterEach(() => {
     httpMock.verify();
   });
 
   it('editUser() should query url and edit an registered user', fakeAsync(() => {
-    let user: User = {  
+    let user: User = {
       id: 1,
       firstName: 'Stefan',
       lastName: 'Stefic',
@@ -40,10 +40,10 @@ describe('RegisteredUserService', () => {
       active:  true,
       verified: true,
       idImageDTO: 1,
-      src: '' 
+      src: ''
     };
 
-    const mockUser: User = 
+    const mockUser: User =
     {
       id: 1,
       firstName: 'Stefan',
@@ -53,16 +53,16 @@ describe('RegisteredUserService', () => {
       active:  true,
       verified: true,
       idImageDTO: 1,
-      src: ''     
+      src: ''
     };
-    
+
     registeredUserService.editUser(user).subscribe(res => user = res);
-    
+
     const req = httpMock.expectOne('https://localhost:8443/api/registered_user/1');
     expect(req.request.method).toBe('PUT');
     req.flush(mockUser);
     tick();
- 
+
     expect(user).toBeDefined();
     expect(user.id).toEqual(1);
     expect(user.firstName).toEqual('Stefan');
@@ -80,11 +80,11 @@ describe('RegisteredUserService', () => {
 
     expect('OK').toBeDefined();
   });
-  
+
   it('getNumberOfSubscribed() should query url and get the number of subscribed users', fakeAsync(() => {
     let num = 2;
-    let mockNum = 2;
-    
+    const mockNum = 2;
+
     registeredUserService.getNumberOfSubscribed(1).subscribe(res => num = res.body);
     const req = httpMock.expectOne('https://localhost:8443/api/registered_user/interested/1');
     expect(req.request.method).toBe('GET');
@@ -92,11 +92,11 @@ describe('RegisteredUserService', () => {
 
     tick();
     expect(num).toEqual(2);
-    
+
   }));
 
   it('announceChange() should emit the event RegenerateData', fakeAsync(() => {
-    let counter: number = 0;
+    let counter = 0;
 
     registeredUserService.RegenerateData$.subscribe(() =>  counter++);
     registeredUserService.announceChange();
@@ -105,32 +105,28 @@ describe('RegisteredUserService', () => {
     expect(counter).toBe(1);
   }));
 
-  it("should throw deleting error",()=> {
-    let error:string = '';
-    registeredUserService.delete(1).subscribe(null,e => {
-      error = e.statusText;
-    });
+  it('should throw deleting error', () => {
+    let errorr = '';
+    registeredUserService.delete(1).subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/api/registered_user/1');
     expect(req.request.method).toBe('DELETE');
-    req.flush("Error on server",{
+    req.flush('Error on server', {
       status: 404,
       statusText: 'Error on server'
     });
-   
-    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
   });
-  it("should throw error",()=> {
-    let error:string = '';
-    registeredUserService.getNumberOfSubscribed(1).subscribe(null,e => {
-      error = e.statusText;
-    });
+  it('should throw error', () => {
+    let errorr = '';
+    registeredUserService.getNumberOfSubscribed(1).subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/api/registered_user/interested/1');
     expect(req.request.method).toBe('GET');
-    req.flush("Error on server",{
+    req.flush('Error on server', {
       status: 404,
       statusText: 'Error on server'
     });
-   
-    expect(error.toString().indexOf("Error on server") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Error on server') >= 0).toBeTruthy();
   });
 });

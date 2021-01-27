@@ -21,32 +21,32 @@ export class RegisterPageComponent implements OnInit {
   hide = true;
   passwordError = false;
 
-	constructor(
-		private fb: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private router: Router,
-    private toastr: ToastrService
-		
+    constructor(
+        private fb: FormBuilder,
+        private authenticationService: AuthenticationService,
+        private router: Router,
+        private toastr: ToastrService
+
   ) {
     this.createForm();
   }
-  
+
   ngOnInit(): void {
   }
 
-  createForm() {
+  createForm(): void {
     this.form = this.fb.group({
-      'firstName': ['', Validators.required],
-      'lastName': ['', Validators.required],
-      'email':['', [Validators.required, Validators.pattern(this.emailRegx)]],
-      'password':['', Validators.required],
-      'repeatPassword':['', [Validators.required]],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.emailRegx)]],
+      password: ['', Validators.required],
+      repeatPassword: ['', [Validators.required]],
     }
-  )};
+  ); }
 
-    addUser(){
+    addUser(): void{
       this.passwordError = false;
-      if(this.form.value['password'] != this.form.value['repeatPassword']){
+      if (this.form.value.password !== this.form.value.repeatPassword){
         this.passwordError = true;
         return;
       }
@@ -61,10 +61,10 @@ export class RegisterPageComponent implements OnInit {
         },
         error => {
           console.log(error);
-          this.toastr.error("Email already exists!");
+          this.toastr.error('Email already exists!');
         }
       );
-      
-      
+
+
     }
 }

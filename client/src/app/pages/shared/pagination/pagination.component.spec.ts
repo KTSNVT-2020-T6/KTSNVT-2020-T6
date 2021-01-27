@@ -12,16 +12,14 @@ describe('PaginationComponent', () => {
   let fixture: ComponentFixture<PaginationComponent>;
   let paginationService: PaginationService;
 
- beforeEach(() => {
- 
-    let paginationServiceMock ={
+  beforeEach(() => {
+    const paginationServiceMock = {
         getNoPages: jasmine.createSpy('getNoPages').and.returnValue(5)
-    }
-    
+    };
     TestBed.configureTestingModule({
        declarations: [ PaginationComponent ],
        imports: [ ],
-       providers:    [ 
+       providers: [
         { provide: PaginationService, useValue: paginationServiceMock },
     ]
     });
@@ -29,12 +27,12 @@ describe('PaginationComponent', () => {
     fixture = TestBed.createComponent(PaginationComponent);
     component = fixture.componentInstance;
     paginationService = TestBed.inject(PaginationService);
-  }); 
+  });
 
   it('should create component', fakeAsync(() => {
     expect(component).toBeTruthy();
   }));
-  
+
   it('should be initialized', () => {
     component.ngOnInit();
     expect(paginationService.getNoPages).toHaveBeenCalled();
@@ -44,10 +42,10 @@ describe('PaginationComponent', () => {
     component.ngOnInit();
     const previousValue = '';
     const currentValue = 10;
-    const changesObj: SimpleChanges = { totalItems : new SimpleChange(previousValue, currentValue, false),
-      };
+    const changesObj: SimpleChanges =
+    { totalItems : new SimpleChange(previousValue, currentValue, false)};
     component.ngOnChanges(changesObj);
-    let page = 2;
+    const page = 2;
     spyOn(component.pageSelected, 'emit');
     component.selected(page);
     expect(paginationService.getNoPages).toHaveBeenCalled();
@@ -58,19 +56,13 @@ describe('PaginationComponent', () => {
   it('should detect changes', fakeAsync(() => {
     const previousValue = '';
     const currentValue = 1;
-    const changesObj: SimpleChanges = { totalItems : new SimpleChange(previousValue, currentValue, false),
-      };
+    const changesObj: SimpleChanges =
+    { totalItems : new SimpleChange(previousValue, currentValue, false)};
     spyOn(component, 'ngOnChanges').and.callThrough();
     component.ngOnChanges(changesObj);
-   
     fixture.detectChanges();
     tick();
     expect(component.ngOnChanges).toHaveBeenCalled();
     expect(paginationService.getNoPages).toHaveBeenCalled();
-   
   }));
-
-
-
-   
 });

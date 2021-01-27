@@ -27,20 +27,20 @@ describe('NavbarUserComponent', () => {
   let fixture: ComponentFixture<NavbarUserComponent>;
   let location: Location;
   let router: Router;
- 
+
   let debugElement: DebugElement;
   let authenticationService: any;
 
   beforeEach(() => {
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate')
     };
-    let authenticationServiceMock ={
+    const authenticationServiceMock = {
         signOut: jasmine.createSpy('signOut').and.returnValue(of({ subscribe: () => {} })),
-    }
+    };
     TestBed.configureTestingModule({
        declarations: [HomePageComponent , NavbarUserComponent],
-       imports: [ MatToolbarModule,MatCardModule, MatIconModule,
+       imports: [ MatToolbarModule, MatCardModule, MatIconModule,
         RouterTestingModule.withRoutes([
             {path: '', component: HomePageComponent},
             {path: 'posts', component: PostsPageComponent},
@@ -48,31 +48,31 @@ describe('NavbarUserComponent', () => {
             {path: 'profileDetails', component: ProfileDetailsComponent}
         ])
       ],
-       providers:    [ 
-            { provide: AuthenticationService, useValue: authenticationServiceMock }]       
+       providers:    [
+            { provide: AuthenticationService, useValue: authenticationServiceMock }]
     });
-   
-    location = TestBed.get(Location);
+
+    location = TestBed.inject(Location);
     fixture = TestBed.createComponent(NavbarUserComponent);
     debugElement = fixture.debugElement;
     component = fixture.componentInstance;
     authenticationService = TestBed.inject(AuthenticationService);
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
 
-  }); 
+  });
   it('should create commponent', fakeAsync(() => {
     expect(component).toBeTruthy();
   }));
   it('check redirection on home page', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#home')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/');
    }));
   it('check redirection on news page', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#news')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/posts');
@@ -80,7 +80,7 @@ describe('NavbarUserComponent', () => {
 
   it('check redirection on subscribed cultural offer page', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#favorites')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/favorites');
@@ -88,7 +88,7 @@ describe('NavbarUserComponent', () => {
 
   it('check redirection on page for profile details', fakeAsync(() => {
     fixture.detectChanges();
-    //we trigger a click on our link
+    // we trigger a click on our link
     debugElement.query(By.css('#profile')).nativeElement.click();
     tick();
     expect(location.path()).toBe('/profileDetails');
@@ -104,6 +104,6 @@ describe('NavbarUserComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
 
   }));
-  
+
 
 });

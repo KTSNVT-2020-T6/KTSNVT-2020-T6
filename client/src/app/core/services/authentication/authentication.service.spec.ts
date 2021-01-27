@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { fakeAsync, tick} from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from "../../model/User";
+import { User } from '../../model/User';
 import { AuthenticationService } from './authentication.service';
 
 
@@ -25,36 +25,36 @@ describe('AuthenticationService', () => {
     httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
   });
-  
+
   afterEach(() => {
     httpMock.verify();
   });
 
-   
-  it('login() should query url and get a jwt token', fakeAsync(() => {  
-    let token: string = "tokenvalue";
-    const auth: any = { username: "email@gmail.com", password: "asdf"};
-  
+
+  it('login() should query url and get a jwt token', fakeAsync(() => {
+    let token = 'tokenvalue';
+    const auth: any = { username: 'email@gmail.com', password: 'asdf'};
+
     authenticationService.login(auth).subscribe(res => token = res);
     const req = httpMock.expectOne('https://localhost:8443/auth/log-in');
     expect(req.request.method).toBe('POST');
     req.flush(token);
     tick();
-    
+
     expect(token).toBeDefined();
-    expect(token).toEqual("tokenvalue");
-    
+    expect(token).toEqual('tokenvalue');
+
   }));
 
-  it('register() should query url and return a registered user', fakeAsync(() => {  
-    let user: User = {  
+  it('register() should query url and return a registered user', fakeAsync(() => {
+    let user: User = {
         firstName: 'Stefan',
         lastName: 'Stefic',
         email: 'stefa@gmail.com',
-        password: 'asdf' 
+        password: 'asdf'
       };
-  
-      const mockUser: User = 
+
+    const mockUser: User =
       {
         id: 1,
         firstName: 'Stefan',
@@ -62,15 +62,15 @@ describe('AuthenticationService', () => {
         email: 'stefa@gmail.com',
         password: 'asdf',
         active:  true,
-        verified: false     
+        verified: false
       };
-  
+
     authenticationService.register(user).subscribe(res => user = res);
     const req = httpMock.expectOne('https://localhost:8443/auth/sign-up');
     expect(req.request.method).toBe('POST');
     req.flush(mockUser);
     tick();
-    
+
     expect(user).toBeDefined();
     expect(user.id).toEqual(1);
     expect(user.firstName).toEqual('Stefan');
@@ -79,18 +79,18 @@ describe('AuthenticationService', () => {
     expect(user.password).toEqual('asdf');
     expect(user.active).toEqual(true);
     expect(user.verified).toEqual(false);
-    
+
   }));
 
-  it('registerAdmin() should query url and return an admin', fakeAsync(() => {  
-    let user: User = {  
+  it('registerAdmin() should query url and return an admin', fakeAsync(() => {
+    let user: User = {
         firstName: 'Stefan',
         lastName: 'Stefic',
         email: 'stefa@gmail.com',
-        password: 'asdf' 
+        password: 'asdf'
       };
-  
-      const mockUser: User = 
+
+    const mockUser: User =
       {
         id: 1,
         firstName: 'Stefan',
@@ -98,15 +98,15 @@ describe('AuthenticationService', () => {
         email: 'stefa@gmail.com',
         password: 'asdf',
         active:  true,
-        verified: true     
+        verified: true
       };
-  
+
     authenticationService.registerAdmin(user).subscribe(res => user = res);
     const req = httpMock.expectOne('https://localhost:8443/auth/sign-up-admin');
     expect(req.request.method).toBe('POST');
     req.flush(mockUser);
     tick();
-    
+
     expect(user).toBeDefined();
     expect(user.id).toEqual(1);
     expect(user.firstName).toEqual('Stefan');
@@ -115,20 +115,20 @@ describe('AuthenticationService', () => {
     expect(user.password).toEqual('asdf');
     expect(user.active).toEqual(true);
     expect(user.verified).toEqual(true);
-    
+
   }));
 
-  it('signOut() should query url and sign current user out', fakeAsync(() => {  
+  it('signOut() should query url and sign current user out', fakeAsync(() => {
     authenticationService.signOut().subscribe(res => {});
     const req = httpMock.expectOne('https://localhost:8443/auth/sign-out');
     expect(req.request.method).toBe('GET');
     req.flush({});
-    
+
   }));
 
-  
-  it('changePassword() should query url and change password', fakeAsync(() => {  
-    const passwordData: any = {  
+
+  it('changePassword() should query url and change password', fakeAsync(() => {
+    const passwordData: any = {
         oldPassword: 'asdf',
         newPassword: 'asdfghjkl',
     };
@@ -138,99 +138,90 @@ describe('AuthenticationService', () => {
     expect(req.request.method).toBe('POST');
     req.flush({});
     tick();
-    
+
   }));
 
-  it("should throw login error",()=> {
-    const auth: any = { username: "email@gmail.com", password: "asdfghsdj"};
-    let error:string = '';
-    authenticationService.login(auth).subscribe(null,e => {
-      error = e.statusText;
-    });
+  it('should throw login error', () => {
+    const auth: any = { username: 'email@gmail.com', password: 'asdfghsdj'};
+    let errorr = '';
+    authenticationService.login(auth).subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/auth/log-in');
     expect(req.request.method).toBe('POST');
-    req.flush("Bad request",{
+    req.flush('Bad request', {
       status: 400,
       statusText: 'Bad request'
     });
-   
-    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Bad request') >= 0).toBeTruthy();
   });
 
-  it("should throw register error",()=> {
-    let user: User = {  
+  it('should throw register error', () => {
+    const user: User = {
       firstName: 'Stefan',
       lastName: 'Stefic',
       email: 'stefa@gmail.com',
-      password: 'asdf' 
+      password: 'asdf'
     };
-    let error:string = '';
-    authenticationService.register(user).subscribe(null,e => {
-      error = e.statusText;
-    });
+    let errorr = '';
+    authenticationService.register(user).subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/auth/sign-up');
     expect(req.request.method).toBe('POST');
-    req.flush("Bad request",{
+    req.flush('Bad request', {
       status: 400,
       statusText: 'Bad request'
     });
-   
-    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Bad request') >= 0).toBeTruthy();
   });
 
-  it("should throw register admin error",()=> {
-    let user: User = {  
+  it('should throw register admin error', () => {
+    const user: User = {
       firstName: 'Stefan',
       lastName: 'Stefic',
       email: 'stefa@gmail.com',
-      password: 'asdf' 
+      password: 'asdf'
     };
-    let error:string = '';
-    authenticationService.registerAdmin(user).subscribe(null,e => {
-      error = e.statusText;
-    });
+    let errorr = '';
+    authenticationService.registerAdmin(user).subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/auth/sign-up-admin');
     expect(req.request.method).toBe('POST');
-    req.flush("Bad request",{
+    req.flush('Bad request', {
       status: 400,
       statusText: 'Bad request'
     });
-   
-    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Bad request') >= 0).toBeTruthy();
   });
 
-    it("should throw sign out error",()=> {
-    let error:string = '';
-    authenticationService.signOut().subscribe(null,e => {
-      error = e.statusText;
-    });
+  it('should throw sign out error', () => {
+    let errorr = '';
+    authenticationService.signOut().subscribe({error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/auth/sign-out');
     expect(req.request.method).toBe('GET');
-    req.flush("Bad request",{
+    req.flush('Bad request', {
       status: 400,
       statusText: 'Bad request'
     });
-   
-    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Bad request') >= 0).toBeTruthy();
   });
 
-  it("should throw change password error",()=> {
-    const passwordData: any = {  
+  it('should throw change password error', () => {
+    const passwordData: any = {
       oldPassword: 'asdf',
       newPassword: 'asdfghjkl',
   };
-    let error:string = '';
-    authenticationService.changePassword(passwordData).subscribe(null,e => {
-      error = e.statusText;
-    });
+    let errorr = '';
+    authenticationService.changePassword(passwordData).subscribe(
+        {error: (e) => errorr = e.statusText});
     const req = httpMock.expectOne('https://localhost:8443/auth/change-password');
     expect(req.request.method).toBe('POST');
-    req.flush("Bad request",{
+    req.flush('Bad request', {
       status: 400,
       statusText: 'Bad request'
     });
-   
-    expect(error.toString().indexOf("Bad request") >= 0).toBeTruthy();
+
+    expect(errorr.toString().indexOf('Bad request') >= 0).toBeTruthy();
   });
 
 });

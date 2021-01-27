@@ -1,9 +1,9 @@
-import { Img } from "./Image";
-import { Type } from "./Type";
+import { Img } from './Image';
+import { Type } from './Type';
 export interface Rate {
-	id?: number;
-	number?: number;
+    id?: number;
+    number?: number;
     registredUserId?: number;
     culturalOfferId?: number;
-	
+
 }

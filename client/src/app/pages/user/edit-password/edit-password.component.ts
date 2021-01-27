@@ -16,7 +16,8 @@ export class EditPasswordComponent implements OnInit {
   hide = true;
   passwordError = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
     private toastr: ToastrService,
@@ -27,43 +28,41 @@ export class EditPasswordComponent implements OnInit {
     ngOnInit(): void {
   }
 
-  createForm() {
+  createForm(): void {
     this.form = this.fb.group({
-      'oldPassword':['', Validators.required],
-      'newPassword':['', [Validators.required]]
-    }
-  )};
+      oldPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required]]
+    });
+  }
 
-  saveChanges(){
+  saveChanges(): void {
     this.passwordError = false;
-    if(this.form.value['oldPassword'] == this.form.value['newPassword']){
+    if (this.form.value.oldPassword === this.form.value.newPassword){
       this.passwordError = true;
-      this.toastr.error("Passwords are the same!");
+      this.toastr.error('Passwords are the same!');
       this.dialogRef.close();
       return;
     }
     const passwordData: any = {};
-		passwordData.oldPassword = this.form.value['oldPassword'];
-    passwordData.newPassword = this.form.value['newPassword'];
+    passwordData.oldPassword = this.form.value.oldPassword;
+    passwordData.newPassword = this.form.value.newPassword;
 
     this.authenticationService.changePassword(passwordData).subscribe(
       result => {
         this.toastr.success('New password saved! You have to sign in again.');
-        this.authenticationService.signOut().subscribe(result =>{
+        this.authenticationService.signOut().subscribe(res => {
           this.form.reset();
           this.dialogRef.close();
           localStorage.removeItem('user');
-				  this.router.navigate(['/login']);
+          this.router.navigate(['/login']);
         });
       },
       error => {
-        this.toastr.error("Error saving new password!");
+        this.toastr.error('Error saving new password!');
       }
     );
     }
-
-    cancel(){
+    cancel(): void {
       this.dialogRef.close();
     }
-
 }

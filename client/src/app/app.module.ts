@@ -11,14 +11,14 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list'
-import { MatSliderModule } from '@angular/material/slider'
+import { MatListModule } from '@angular/material/list';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FlexLayoutModule} from "@angular/flex-layout";
+import { FlexLayoutModule} from '@angular/flex-layout';
 import { Interceptor } from './interceptors/intercept.service';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule } from './pages/material-module';
@@ -59,6 +59,6 @@ import { UserModule } from './pages/user/user.module';
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
   bootstrap: [AppComponent],
-  schemas:[NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

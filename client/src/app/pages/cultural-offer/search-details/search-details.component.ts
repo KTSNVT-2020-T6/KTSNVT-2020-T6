@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, Output} from '@angular/core';
+import { Component, OnInit, Input, Output} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,8 +13,8 @@ import { SearchDetails } from '../../../core/model/SearchDetails';
   styleUrls: ['./search-details.component.scss']
 })
 export class SearchDetailsComponent implements OnInit {
-  
-  searchDetails: SearchDetails = {'content': '', 'city': ''};
+
+  searchDetails: SearchDetails = {content: '', city: ''};
   city: any;
   searchForm!: FormGroup;
 
@@ -22,10 +22,10 @@ export class SearchDetailsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-		private router: Router,
-		private route: ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute,
     private toastr: ToastrService,
-    private dialogRef: MatDialogRef<SearchDetailsComponent>) 
+    private dialogRef: MatDialogRef<SearchDetailsComponent>)
     {
       this.createForm();
     }
@@ -33,18 +33,18 @@ export class SearchDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  createForm() {
+  createForm(): void{
     this.searchForm = this.fb.group({
-      'content': [''],
-      'city': ['']
+      content: [''],
+      city: ['']
        });
     }
 
-  search(){
-    this.searchDetails.content = this.searchForm.value['content'];
-    this.searchDetails.city = this.searchForm.value['city'];
+  search(): void{
+    this.searchDetails.content = this.searchForm.value.content;
+    this.searchDetails.city = this.searchForm.value.city;
     this.done.emit(this.searchDetails);
     this.dialogRef.close();
   }
- 
+
 }
